@@ -1,5 +1,6 @@
 package model;
-
+import java.util.List;
+import java.util.ArrayList;
 public class Order {
 	
 	private String code;
@@ -9,6 +10,7 @@ public class Order {
 	private Date date;
 	private Customer customer;
 	private Employee employee;
+	private List<Product> products;
 	public Order(){
 		code = new String();
 		amount = 0;
