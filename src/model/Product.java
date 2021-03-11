@@ -1,30 +1,31 @@
 package model;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Product {
 	private String name;
-	private double price;
-	private String size;
+	private List<Double> price;
+	private List<String> size;
 	private Type type;
 	public Product(){
 		name = new String();
-		price = 0;
-		size = new String();
+		price = new ArrayList<Double>();
+		size = new ArrayList<String>();
 		type = Type.PLATO_PRINCIPAL;
 	}//End constructor1
-	public Product(String name, double price, String size,String type){
+	public Product(String name, List<Double> price, List<String> size,String type){
 		this.name = name;
 		this.price = price;
 		this.size = size;
 		this.type = Type.valueOf(type);
 	}//End constructor2
-	
 	public void setName(String name){
 		this.name = name;
 	}//End setName
-	public void setPrice(double price){
+	public void setPrice(List<Double> price){
 		this.price = price;
 	}//End setName
-	public void setSize(String size){
+	public void setSize(List<String> size){
 		this.size = size;
 	}//End setName
 	public void setType(String type){
@@ -33,10 +34,10 @@ public class Product {
 	public String getName(){
 		return name;
 	}//End getName
-	public double getPrice(){
+	public List<Double> getPrice(){
 		return price;
 	}//End getName
-	public String getSize(){
+	public List<String> getSize(){
 		return size;
 	}//End getName
 	public String getType(){
