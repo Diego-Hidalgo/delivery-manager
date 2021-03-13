@@ -1,6 +1,6 @@
 package model;
 
-public class PlateType {
+public class DishType {
 	
 	private String name;
 	
