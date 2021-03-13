@@ -6,19 +6,23 @@ public class Product {
 	private String name;
 	private List<Double> price;
 	private List<String> size;
-	private Type type;
+	private List<Ingredient> ingredients;
+	private PlateType type;
 	public Product(){
 		name = new String();
 		price = new ArrayList<Double>();
 		size = new ArrayList<String>();
-		type = Type.PLATO_PRINCIPAL;
+		type = new PlateType();
 	}//End constructor1
 	public Product(String name, List<Double> price, List<String> size,String type){
 		this.name = name;
 		this.price = price;
 		this.size = size;
-		this.type = Type.valueOf(type);
+		this.type = new PlateType(type);
 	}//End constructor2
+	public void addIngredients(String name){
+		ingredients.add(new Ingredient(name));
+	}//End addIngredients
 	public void setName(String name){
 		this.name = name;
 	}//End setName
@@ -29,7 +33,7 @@ public class Product {
 		this.size = size;
 	}//End setName
 	public void setType(String type){
-		this.type = Type.valueOf(type);
+		this.type.setPlateType(type);
 	}//End setName
 	public String getName(){
 		return name;
