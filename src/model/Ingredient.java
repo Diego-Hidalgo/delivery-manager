@@ -1,7 +1,9 @@
 package model;
 
 public class Ingredient {
-private String name;
+	
+	private boolean linked;
+	private String name;
 	
 	public Ingredient(){
 		name = new String();
@@ -15,4 +17,10 @@ private String name;
 	public String getIngredient() {
 		return name;
 	}//End getIngredients
+	public void setLinked(boolean linked) {
+		this.linked = linked;
+	}//End setLinked
+	public boolean getLinked() {
+		return linked;
+	}//End getLinked
 }//End Ingredients

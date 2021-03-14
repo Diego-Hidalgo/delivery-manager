@@ -4,6 +4,7 @@ public class Entity {
 	private String name;
 	private String lastName;
 	private String id;
+	private boolean linked;
 	
 	public Entity(){
 		name = new String();
@@ -33,4 +34,10 @@ public class Entity {
 	public String getId(){
 		return id;
 	}//End getName
+	public void setLinked(boolean linked) {
+		this.linked = linked;
+	}//End setLinked
+	public boolean getLinked() {
+		return linked;
+	}//End getLinked
 }//End entity

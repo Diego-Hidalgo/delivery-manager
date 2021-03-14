@@ -8,6 +8,8 @@ public class Product {
 	private List<String> size;
 	private List<Ingredient> ingredients;
 	private DishType type;
+	private boolean linked;
+	
 	public Product(){
 		name = new String();
 		price = new ArrayList<Double>();
@@ -47,4 +49,10 @@ public class Product {
 	public String getType(){
 		return type.toString();
 	}//End getName
-}
+	public void setLinked(boolean linked) {
+		this.linked = linked;
+	}//End setLinked
+	public boolean getLinked() {
+		return linked;
+	}//End getLinked
+}//End Product
