@@ -4,16 +4,16 @@ public class DishType {
 	
 	private String name;
 	
-	public PlateType(){
+	public DishType(){
 		name = new String();
 	}//End Constructor
-	public PlateType(String name){
+	public DishType(String name){
 		this.name = name;
 	}//End Constructor
-	public void setPlateType(String name) {
+	public void setDishType(String name) {
 		this.name = name;
 	}//End setPlateType
-	public String getPlateType() {
+	public String getDishType() {
 		return name;
 	}//End setPlateType
 }//End PlateType

@@ -7,18 +7,18 @@ public class Product {
 	private List<Double> price;
 	private List<String> size;
 	private List<Ingredient> ingredients;
-	private PlateType type;
+	private DishType type;
 	public Product(){
 		name = new String();
 		price = new ArrayList<Double>();
 		size = new ArrayList<String>();
-		type = new PlateType();
+		type = new DishType();
 	}//End constructor1
 	public Product(String name, List<Double> price, List<String> size,String type){
 		this.name = name;
 		this.price = price;
 		this.size = size;
-		this.type = new PlateType(type);
+		this.type = new DishType(type);
 	}//End constructor2
 	public void addIngredients(String name){
 		ingredients.add(new Ingredient(name));
@@ -33,7 +33,7 @@ public class Product {
 		this.size = size;
 	}//End setName
 	public void setType(String type){
-		this.type.setPlateType(type);
+		this.type.setDishType(type);
 	}//End setName
 	public String getName(){
 		return name;
