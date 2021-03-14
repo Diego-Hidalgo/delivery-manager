@@ -1,20 +1,25 @@
 package model;
 
-public class Ingredient {
+public class Ingredient implements Comparable<Ingredient> {
 	
 	private boolean linked;
+	private boolean enable;
 	private String name;
 	
 	public Ingredient(){
 		name = new String();
+		enable = true;
+		linked = false;
 	}//End Constructor
 	public Ingredient(String name){
 		this.name = name;
+		enable = true;
+		linked = false;
 	}//End Constructor
-	public void setIngredient(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}//End setIngredients
-	public String getIngredient() {
+	public String getName() {
 		return name;
 	}//End getIngredients
 	public void setLinked(boolean linked) {
@@ -23,4 +28,15 @@ public class Ingredient {
 	public boolean getLinked() {
 		return linked;
 	}//End getLinked
+	public void setEnable(boolean enable){
+		this.enable = enable;
+	}//End setEnable
+	public boolean getEnable(){
+		return enable;
+	}//End setEnable
+	@Override
+	public int compareTo(Ingredient ingredient) {
+		return name.compareTo(ingredient.getName());
+	}//End compareTo
+	
 }//End Ingredients
