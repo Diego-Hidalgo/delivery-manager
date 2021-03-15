@@ -48,7 +48,9 @@ public class DeliveryManagerController {
 	}//End findIngredient
 	
 	public void changeIngredient(String oldName, String newName){
-		
+		int index = findIngredient(oldName);
+		if(index >= 0)
+			ingredients.get(index).setName(newName);
 	}//End changeIngredient
 	
 }//End DeliveryManagerController
