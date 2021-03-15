@@ -32,7 +32,6 @@ public class DeliveryManagerController {
 		}//End if
 		return added;
 	}//End addIngredient
-	
 	public int findIngredient(String ingredient){
 		int index = -1;
 		int start = 0;
@@ -49,13 +48,11 @@ public class DeliveryManagerController {
 		}//End while
 		return index;
 	}//End findIngredient
-	
 	public void changeIngredient(String oldName, String newName){
 		int index = findIngredient(oldName);
-		if(index >= 0)
+		if(index >= 0 && findIngredient(newName) < 0)
 			ingredients.get(index).setName(newName);
 	}//End changeIngredient
-	
 	public boolean removeIngredient(String name){
 		int index = findIngredient(name);
 		boolean removed = false;
@@ -63,8 +60,12 @@ public class DeliveryManagerController {
 			if(!ingredients.get(index).getLinked()){
 				ingredients.remove(index);
 				removed = true;
-			}
+			}//End if
 		return removed;
 	}//End deleteIngredient
-	
+	public void disableIngredient(String name){
+		int index = findIngredient(name);
+		if(index >= 0)
+			ingredients.get(index).setEnable(false);
+	}//End disableIngredient
 }//End DeliveryManagerController
