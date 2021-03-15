@@ -53,5 +53,19 @@ public class DeliveryManagerController {
 		if(index >= 0 && findDishType(newName) < 0)
 			types.get(index).setName(newName);
 	}//End changeIngredient
-	
+	public boolean removeIngredient(String name){
+		int index = findDishType(name);
+		boolean removed = false;
+		if(index >= 0)
+			if(!types.get(index).getLinked()){
+				types.remove(index);
+				removed = true;
+			}//End if
+		return removed;
+	}//End deleteIngredient
+	public void disableDishType(String name){
+		int index = findDishType(name);
+		if(index >= 0)
+			types.get(index).setEnable(false);
+	}//End disableIngredient
 }//End DeliveryManagerController
