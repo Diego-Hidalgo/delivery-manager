@@ -17,7 +17,8 @@ public class DeliveryManagerController {
 		ingredients = new ArrayList<Ingredient>();
 	}//End DeliveryManagerController
 	
-	public void addIngredient(String ingredient){
+	public boolean addIngredient(String ingredient){
+		boolean added = false;
 		if( findIngredient(ingredient) < 0){
 			if(ingredients.isEmpty()){
 				ingredients.add(new Ingredient(ingredient));
@@ -27,7 +28,9 @@ public class DeliveryManagerController {
 				while(ingredients.get(j).compareTo(in) < 0){j++;}//End while
 				ingredients.add(j,in);
 			}//End else
+			added = true;
 		}//End if
+		return added;
 	}//End addIngredient
 	
 	public int findIngredient(String ingredient){
@@ -52,5 +55,16 @@ public class DeliveryManagerController {
 		if(index >= 0)
 			ingredients.get(index).setName(newName);
 	}//End changeIngredient
+	
+	public boolean removeIngredient(String name){
+		int index = findIngredient(name);
+		boolean removed = false;
+		if(index >= 0)
+			if(!ingredients.get(index).getLinked()){
+				ingredients.remove(index);
+				removed = true;
+			}
+		return removed;
+	}//End deleteIngredient
 	
 }//End DeliveryManagerController
