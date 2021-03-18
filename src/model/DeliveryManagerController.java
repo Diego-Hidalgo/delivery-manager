@@ -43,5 +43,9 @@ public class DeliveryManagerController {
 			customers.add(i, newCustomer);
 		}
 	}//End addCustomer
+	public void addEmployee(String name, String lastName, String id) {
+		Employee employee = new Employee(name, lastName, id);
+		employees.add(employee);
+	}//End addEmployee
 
 }//End DeliveryManagerController
