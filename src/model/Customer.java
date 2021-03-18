@@ -10,13 +10,19 @@ public class Customer extends Entity{
 		address = new String();
 		nPhone = new String();
 		remark = new String();
-	}//End constructor1
+	}//End Constructor1
+	public Customer(String name, String lastName, String address, String nPhone, String remark) {
+		super(name, lastName);
+		this.address = address;
+		this.nPhone = nPhone;
+		this.remark = remark;
+	}//End Constructor2
 	public Customer(String name, String lastName, String id,String address, String nPhone, String remark){
 		super(name,lastName,id);
 		this.address = address;
 		this.nPhone = nPhone;
 		this.remark = remark;
-	}//End constructor2
+	}//End Constructor3
 	public void setAddress(String address){
 		this.address = address;
 	}//End setAddress.
