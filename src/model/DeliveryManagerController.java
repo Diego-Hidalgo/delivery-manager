@@ -26,7 +26,7 @@ public class DeliveryManagerController {
 			int i = 0;
 			while(i < customers.size() && lastNameAndNameComparator.compare(newCustomer, customers.get(i)) < 0){
 				i ++;
-			}
+			}//End while
 			customers.add(i, newCustomer);
 		}
 	}//End addCustomer
@@ -39,7 +39,7 @@ public class DeliveryManagerController {
 			int i = 0;
 			while(i < customers.size() && lastNameAndNameComparator.compare(newCustomer, customers.get(i)) < 0){
 				i ++;
-			}
+			}//End while
 			customers.add(i, newCustomer);
 		}
 	}//End addCustomer
