@@ -1,6 +1,6 @@
 package model;
 
-public class Entity {
+public abstract class Entity {
 	private String name;
 	private String lastName;
 	private String id;
@@ -11,11 +11,16 @@ public class Entity {
 		lastName = new String();
 		id = new String();
 	}//End constructor1
+	public Entity(String name, String lastName){
+		this.name = name;
+		this.lastName = lastName;
+		id = new String();
+	}//End Constructor2
 	public Entity(String name, String lastName, String id){
 		this.name = name;
 		this.lastName = lastName;
 		this.id = id;
-	}//End constructor2
+	}//End constructor3
 	public void setName(String name){
 		this.name = name;
 	}//End setName
