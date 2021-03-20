@@ -44,8 +44,16 @@ public class DeliveryManagerController {
 		}
 	}//End addCustomer
 	public void addEmployee(String name, String lastName, String id) {
-		Employee employee = new Employee(name, lastName, id);
-		employees.add(employee);
+		Employee newEmployee = new Employee(name, lastName, id);
+		if(employees.isEmpty()) {
+			employees.add(newEmployee);
+		} else {
+			int i = 0;
+			while(i < employees.size() && employees.get(i).getId().compareTo(newEmployee.getId()) < 0) {
+				i ++;
+			}//End while
+			employees.add(i, newEmployee);
+		}
 	}//End addEmployee
 
 }//End DeliveryManagerController
