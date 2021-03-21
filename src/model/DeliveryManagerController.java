@@ -180,9 +180,11 @@ public class DeliveryManagerController {
 		}
 	}//End addEmployee
 
-	public void disableEmployee(String employeeId) {
+	public void disableEmployee(String userId, String employeeId) {
+		User userModifier = users.get(searchUserPosition(userId));
 		Employee employee = employees.get(searchEmployeePosition(employeeId));
 		employee.setStatus(false);
+		employee.setModifier(userModifier);
 	}//End disableEmployee
 
 	public void removeEmployee(String employeeId) {
