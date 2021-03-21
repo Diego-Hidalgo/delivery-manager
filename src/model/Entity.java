@@ -8,13 +8,17 @@ public abstract class Entity {
 	private String id;
 	private boolean linked;
 	
-	public Entity(){
+	public Entity(User creator, User modifier){
+		this.creator = creator;
+		this.modifier = modifier;
 		name = new String();
 		lastName = new String();
 		id = new String();
 	}//End constructor
 
-	public Entity(String name, String lastName){
+	public Entity(User creator, User modifier, String name, String lastName){
+		this.creator = creator;
+		this.modifier = modifier;
 		this.name = name;
 		this.lastName = lastName;
 		id = new String();

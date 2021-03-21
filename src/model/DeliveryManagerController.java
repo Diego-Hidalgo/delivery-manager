@@ -18,8 +18,42 @@ public class DeliveryManagerController {
 		employees = new ArrayList<Employee>();
 	}//End DeliveryManagerController
 
-	public void addCustomer(String name, String lastName, String address, String nPhone, String remark) {
-		Customer newCustomer = new Customer(name, lastName, address, nPhone, remark);
+	public int searchUserPosition(String idToSearch) {
+		int start = 0;
+		int end = users.size() - 1;
+		while(start <= end) {
+			int mid = (start + end) / 2;
+			if (users.get(mid).getId().compareTo(idToSearch) == 0) {
+				return mid;
+			} else if (users.get(mid).getId().compareTo(idToSearch) < 0) {
+				start = mid + 1;
+			} else {
+				end = mid - 1;
+			}
+		}
+		return -1;
+	}
+
+	public int searchEmployeePosition(String idTosearch) {
+		int start = 0;
+		int end = employees.size() - 1;
+		while(start <= end) {
+			int mid = (start + end) / 2;
+			if(employees.get(mid).getId().compareTo(idTosearch) == 0) {
+				return mid;
+			} else if (employees.get(mid).getId().compareTo(idTosearch) < 0) {
+				start = mid + 1;
+			} else {
+				end = mid - 1;
+			}
+		}
+		return -1;
+	}
+
+	public void addCustomer(String idCreator, String name, String lastName, String address, String nPhone, String remark) {
+		User creator = users.get(searchUserPosition(idCreator));
+		Customer newCustomer = new Customer(creator, null, name, lastName, address, nPhone, remark);
+		creator.setLinked(true);
 		if(customers.isEmpty()) {
 			customers.add(newCustomer);
 		} else {
@@ -32,8 +66,10 @@ public class DeliveryManagerController {
 		}
 	}//End addCustomer
 
-	public void addCustomer(String name, String lastName, String id,String address, String nPhone, String remark){
-		Customer newCustomer = new Customer(name, lastName, id, address, nPhone, remark);
+	public void addCustomer(String idCreator, String name, String lastName, String id,String address, String nPhone, String remark){
+		User creator = users.get(searchUserPosition(idCreator));
+		Customer newCustomer = new Customer(creator, null, name, lastName, id, address, nPhone, remark);
+		creator.setLinked(true);
 		if(customers.isEmpty()) {
 			customers.add(newCustomer);
 		} else {
@@ -47,7 +83,22 @@ public class DeliveryManagerController {
 	}//End addCustomer
 
 	public void addEmployee(String name, String lastName, String id) {
-		Employee newEmployee = new Employee(name, lastName, id);
+		Employee newEmployee = new Employee(null, null, name, lastName, id);
+		if(employees.isEmpty()) {
+			employees.add(newEmployee);
+		} else {
+			int i = 0;
+			while(i < employees.size() && employees.get(i).getId().compareTo(newEmployee.getId()) < 0) {
+				i ++;
+			}
+			employees.add(i, newEmployee);
+		}
+	}
+
+	public void addEmployee(String idCreator, String name, String lastName, String id) {
+		User creator = users.get(searchUserPosition(idCreator));
+		Employee newEmployee = new Employee(creator, null, name, lastName, id);
+		creator.setLinked(true);
 		if(employees.isEmpty()) {
 			employees.add(newEmployee);
 		} else {
@@ -58,5 +109,42 @@ public class DeliveryManagerController {
 			employees.add(i, newEmployee);
 		}
 	}//End addEmployee
+
+	public void addUser(String idEmployee, String userName, String password) {
+		Employee employee = employees.get(searchEmployeePosition(idEmployee));
+		employee.setLinked(true);
+		String name = employee.getName();
+		String lastName = employee.getLastName();
+		String id = employee.getId();
+		User newUser = new User(null, null, name, lastName, id, userName, password);
+		if(users.isEmpty()) {
+			users.add(newUser);
+		} else {
+			int i = 0;
+			while(i < users.size() && users.get(i).getId().compareTo(newUser.getId()) < 0) {
+				i ++;
+			}
+			users.add(i, newUser);
+		}
+	}
+
+	public void addUser(String idCreator, String idEmployee, String userName, String password) {
+		User creator = users.get(searchUserPosition(idCreator));
+		Employee employee = employees.get(searchEmployeePosition(idEmployee));
+		employee.setLinked(true);
+		String name = employee.getName();
+		String lastName = employee.getLastName();
+		String id = employee.getId();
+		User newUser = new User(creator, null, name, lastName, id, userName, password);
+		if(users.isEmpty()) {
+			users.add(newUser);
+		} else {
+			int i = 0;
+			while(i < users.size() && users.get(i).getId().compareTo(newUser.getId()) < 0) {
+				i ++;
+			}//End while
+			users.add(i, newUser);
+		}
+	}//End addUser
 
 }//End DeliveryManagerController
