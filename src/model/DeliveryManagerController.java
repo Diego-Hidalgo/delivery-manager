@@ -18,6 +18,16 @@ public class DeliveryManagerController {
 		employees = new ArrayList<Employee>();
 	}//End DeliveryManagerController
 
+	public int searchCustomerPositionById(String idToSearch) {
+		for(int i = 0; i < customers.size(); i ++) {
+			Customer customer = customers.get(i);
+			if(customer.getId().equals(idToSearch)) {
+				return i;
+			}
+		}
+		return -1;
+	}//End searchCustomerPositionById
+
 	public int searchUserPosition(String idToSearch) {
 		int start = 0;
 		int end = users.size() - 1;
