@@ -113,14 +113,7 @@ public class DeliveryManagerController {
 	}//End disableCustomerByPhone
 
 	public void removeCustomerById(String customerId) {
-		boolean stop = false;
-		for(int i = 0; i < customers.size() && !stop; i ++) {
-			Customer customer = customers.get(i);
-			if(customer.getId().equals(customerId)) {
-				customers.remove(i);
-				stop = true;
-			}
-		}
+		customers.remove(searchCustomerPositionById(customerId));
 	}//End removeCustomerById
 
 	public void removeCustomerByPhone(String customerNPhone) {
