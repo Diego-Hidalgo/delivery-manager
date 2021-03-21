@@ -102,6 +102,20 @@ public class DeliveryManagerController {
 		}
 	}//End addCustomer
 
+	public void modifyCustomerNameById(String idModifier, String idCustomer, String newName) {
+		User userModifier = users.get(searchUserPosition(idModifier));
+		Customer customerToModify = customers.get(searchCustomerPositionById(idCustomer));
+		customerToModify.setName(newName);
+		customerToModify.setModifier(userModifier);
+	}//End modifyCustomerNameById
+
+	public void modifyCustomerNameByPhone(String idModifier, String nPhoneCustomer, String newName) {
+		User userModifier = users.get(searchUserPosition(idModifier));
+		Customer customerToModify = customers.get(searchCustomerPositionByPhone(nPhoneCustomer));
+		customerToModify.setName(newName);
+		customerToModify.setModifier(userModifier);
+	}//End modifyCustomerNameByPhone
+
 	public void disableCustomerById(String customerId) {
 		Customer customer = customers.get(searchCustomerPositionById(customerId));
 		customer.setStatus(false);

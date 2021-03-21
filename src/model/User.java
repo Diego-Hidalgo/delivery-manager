@@ -14,7 +14,7 @@ public class User extends Employee {
 		super(creator, modifier, name,lastName,id);
 		this.userName = userName;
 		this.password = password;
-	}//End constructor1
+	}//End constructor2
 	
 	public void setUserName(String userName){
 		this.userName = userName;
