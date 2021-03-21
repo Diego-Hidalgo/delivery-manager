@@ -250,6 +250,13 @@ public class DeliveryManagerController {
 		employeeToModify.setModifier(userModifier);
 	}//End modifyEmployeeLastName
 
+	public void modifyEmployeeId(String idModifier, String idEmployee, String newId) {
+		User userModifier = users.get(searchUserPosition(idModifier));
+		Employee employeeToModify = employees.get(searchEmployeePosition(idEmployee));
+		employeeToModify.setId(newId);
+		employeeToModify.setModifier(userModifier);
+	}//End modifyEmployeeId
+
 	public void disableEmployee(String userId, String employeeId) {
 		User userModifier = users.get(searchUserPosition(userId));
 		Employee employee = employees.get(searchEmployeePosition(employeeId));
