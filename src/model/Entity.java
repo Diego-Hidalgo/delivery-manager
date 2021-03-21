@@ -1,6 +1,7 @@
 package model;
 
 public abstract class Entity {
+
 	private User creator;
 	private User modifier;
 	private String name;
@@ -9,32 +10,23 @@ public abstract class Entity {
 	private boolean status;
 	private boolean linked;
 	
-	public Entity(User creator, User modifier){
+	public Entity(User creator){
 		this.creator = creator;
-		this.modifier = modifier;
+		this.modifier = null;
 		name = new String();
 		lastName = new String();
 		id = new String();
 		status = true;
 	}//End constructor
 
-	public Entity(User creator, User modifier, String name, String lastName){
+	public Entity(User creator, String name, String lastName, String id){
 		this.creator = creator;
-		this.modifier = modifier;
-		this.name = name;
-		this.lastName = lastName;
-		id = new String();
-		status = true;
-	}//End Constructor2
-
-	public Entity(User creator, User modifier, String name, String lastName, String id){
-		this.creator = creator;
-		this.modifier = modifier;
+		this.modifier = null;
 		this.name = name;
 		this.lastName = lastName;
 		this.id = id;
 		status = true;
-	}//End constructor3
+	}//End constructor2
 
 	public void setCreator(User creator) {
 		this.creator = creator;

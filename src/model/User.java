@@ -1,17 +1,18 @@
 package model;
 
 public class User extends Employee {
+
 	private String userName;
 	private String password;
 	
-	public User(User creator, User modifier){
-		super(creator, modifier);
+	public User(User creator){
+		super(creator);
 		userName = new String();
 		password = new String();
 	}//End constructor1
 
-	public User(User creator, User modifier, String name, String lastName, String id, String userName, String password){
-		super(creator, modifier, name,lastName,id);
+	public User(User creator, String name, String lastName, String id, String userName, String password){
+		super(creator, name, lastName, id);
 		this.userName = userName;
 		this.password = password;
 	}//End constructor2

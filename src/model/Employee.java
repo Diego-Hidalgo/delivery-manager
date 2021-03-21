@@ -2,11 +2,12 @@ package model;
 
 public class Employee extends Entity{
 	
-	public Employee(User creator, User modifier){
-		super(creator, modifier);
+	public Employee(User creator){
+		super(creator);
 	}//End constructor1
 
-	public Employee(User creator, User modifier, String name, String lastName, String id){
-		super(creator, modifier, name,lastName,id);
+	public Employee(User creator, String name, String lastName, String id){
+		super(creator, name, lastName, id);
 	}//End constructor2
+
 }//End Employee

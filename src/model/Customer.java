@@ -1,30 +1,24 @@
 package model;
 
 public class Customer extends Entity{
+
 	private String address;
 	private String nPhone;
 	private String remark;
 	
-	public Customer(User creator, User modifier){
-		super(creator, modifier);
+	public Customer(User creator){
+		super(creator);
 		address = new String();
 		nPhone = new String();
 		remark = new String();
 	}//End Constructor1
 
-	public Customer(User creator, User modifier, String name, String lastName, String address, String nPhone, String remark) {
-		super(creator, modifier, name, lastName);
+	public Customer(User creator, String name, String lastName, String id,String address, String nPhone, String remark){
+		super(creator, name, lastName,id);
 		this.address = address;
 		this.nPhone = nPhone;
 		this.remark = remark;
 	}//End Constructor2
-
-	public Customer(User creator, User modifier, String name, String lastName, String id,String address, String nPhone, String remark){
-		super(creator, modifier, name, lastName,id);
-		this.address = address;
-		this.nPhone = nPhone;
-		this.remark = remark;
-	}//End Constructor3
 
 	public void setAddress(String address){
 		this.address = address;

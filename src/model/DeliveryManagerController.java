@@ -18,7 +18,7 @@ public class DeliveryManagerController {
 		employees = new ArrayList<Employee>();
 	}//End DeliveryManagerController
 
-	public int searchCustomerPositionById(String idToSearch) {
+	public int searchCustomerPosition(String idToSearch) {
 		for(int i = 0; i < customers.size(); i ++) {
 			Customer customer = customers.get(i);
 			if(customer.getId().equals(idToSearch)) {
@@ -27,16 +27,6 @@ public class DeliveryManagerController {
 		}
 		return -1;
 	}//End searchCustomerPositionById
-
-	public int searchCustomerPositionByPhone(String nPhoneToSeach) {
-		for(int i = 0; i < customers.size(); i ++) {
-			Customer customer = customers.get(i);
-			if(customer.getNPhone().equals(nPhoneToSeach)) {
-				return i;
-			}
-		}
-		return -1;
-	}//End searchCustomerPositionByPhone
 
 	public int searchUserPosition(String idToSearch) {
 		int start = 0;
@@ -70,25 +60,9 @@ public class DeliveryManagerController {
 		return -1;
 	}
 
-	public void addCustomer(String idCreator, String name, String lastName, String address, String nPhone, String remark) {
-		User creator = users.get(searchUserPosition(idCreator));
-		Customer newCustomer = new Customer(creator, null, name, lastName, address, nPhone, remark);
-		creator.setLinked(true);
-		if(customers.isEmpty()) {
-			customers.add(newCustomer);
-		} else {
-			Comparator<Customer> lastNameAndNameComparator = new LastNameAndNameComparator();
-			int i = 0;
-			while(i < customers.size() && lastNameAndNameComparator.compare(newCustomer, customers.get(i)) < 0){
-				i ++;
-			}//End while
-			customers.add(i, newCustomer);
-		}
-	}//End addCustomer
-
 	public void addCustomer(String idCreator, String name, String lastName, String id,String address, String nPhone, String remark){
 		User creator = users.get(searchUserPosition(idCreator));
-		Customer newCustomer = new Customer(creator, null, name, lastName, id, address, nPhone, remark);
+		Customer newCustomer = new Customer(creator, name, lastName, id, address, nPhone, remark);
 		creator.setLinked(true);
 		if(customers.isEmpty()) {
 			customers.add(newCustomer);
@@ -102,114 +76,61 @@ public class DeliveryManagerController {
 		}
 	}//End addCustomer
 
-	public void modifyCustomerNameById(String idModifier, String idCustomer, String newName) {
+	public void modifyCustomerName(String idModifier, String idCustomer, String newName) {
 		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionById(idCustomer));
+		Customer customerToModify = customers.get(searchCustomerPosition(idCustomer));
 		customerToModify.setName(newName);
 		customerToModify.setModifier(userModifier);
 	}//End modifyCustomerNameById
 
-	public void modifyCustomerNameByPhone(String idModifier, String nPhoneCustomer, String newName) {
+	public void modifyCustomerLastName(String idModifier, String idCustomer, String newLastName) {
 		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionByPhone(nPhoneCustomer));
-		customerToModify.setName(newName);
-		customerToModify.setModifier(userModifier);
-	}//End modifyCustomerNameByPhone
-
-	public void modifyCustomerLastNameById(String idModifier, String idCustomer, String newLastName) {
-		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionById(idCustomer));
+		Customer customerToModify = customers.get(searchCustomerPosition(idCustomer));
 		customerToModify.setLastName(newLastName);
 		customerToModify.setModifier(userModifier);
 	}//End modifyCustomerLastNameById
 
-	public void modifyCustomerLastNameByPhone(String idModifier, String nPhoneCustomer, String newLastName) {
+	public void modifyCustomerId(String idModifier, String idCustomer, String newId) {
 		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionByPhone(nPhoneCustomer));
-		customerToModify.setLastName(newLastName);
-		customerToModify.setModifier(userModifier);
-	}//End modifyCustomerLastNameById
-
-	public void modifyCustomerIdById(String idModifier, String idCustomer, String newId) {
-		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionById(idCustomer));
+		Customer customerToModify = customers.get(searchCustomerPosition(idCustomer));
 		customerToModify.setId(newId);
 		customerToModify.setModifier(userModifier);
 	}//End modifyCustomerIdById
 
-	public void modifyCustomerIdByPhone(String idModifier, String nPhoneCustomer, String newId) {
+	public void modifyCustomerAddress(String idModifier, String idCustomer, String newAddress) {
 		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionByPhone(nPhoneCustomer));
-		customerToModify.setId(newId);
-		customerToModify.setModifier(userModifier);
-	}//End modifyCustomerIdByPhone
-
-	public void modifyCustomerAddressById(String idModifier, String idCustomer, String newAddress) {
-		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionById(idCustomer));
+		Customer customerToModify = customers.get(searchCustomerPosition(idCustomer));
 		customerToModify.setAddress(newAddress);
 		customerToModify.setModifier(userModifier);
 	}//End modifyCustomerAddressById
 
-	public void modifyCustomerAddressByPhone(String idModifier, String nPhoneCustomer, String newAddress) {
+	public void modifyCustomerPhone(String idModifier, String idCustomer, String newNPhone) {
 		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionByPhone(nPhoneCustomer));
-		customerToModify.setAddress(newAddress);
-		customerToModify.setModifier(userModifier);
-	}//End modifyCustomerAddressByPhone
-
-	public void modifyCustomerPhoneById(String idModifier, String idCustomer, String newNPhone) {
-		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionById(idCustomer));
+		Customer customerToModify = customers.get(searchCustomerPosition(idCustomer));
 		customerToModify.setNPhone(newNPhone);
 		customerToModify.setModifier(userModifier);
 	}//End modifyCustomerPhoneById
 
-	public void modifyCustomerPhoneByPhone(String idModifier, String nPhoneCustomer, String newNPhone) {
+	public void modifyCustomerRemark(String idModifier, String idCustomer, String newRemark) {
 		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionByPhone(nPhoneCustomer));
-		customerToModify.setNPhone(newNPhone);
-		customerToModify.setModifier(userModifier);
-	}//End modifyCustomerPhoneByPhone
-
-	public void modifyCustomerRemarkById(String idModifier, String idCustomer, String newRemark) {
-		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionById(idCustomer));
+		Customer customerToModify = customers.get(searchCustomerPosition(idCustomer));
 		customerToModify.setRemark(newRemark);
 		customerToModify.setModifier(userModifier);
 	}//End modifyCustomerRemarkById
 
-	public void modifyCustomerRemarkByPhone(String idModifier, String nPhoneCustomer, String newRemark) {
-		User userModifier = users.get(searchUserPosition(idModifier));
-		Customer customerToModify = customers.get(searchCustomerPositionByPhone(nPhoneCustomer));
-		customerToModify.setRemark(newRemark);
-		customerToModify.setModifier(userModifier);
-	}//End modifyCustomerRemarkByPhone
-
-	public void disableCustomerById(String userId, String customerId) {
+	public void disableCustomer(String userId, String customerId) {
 		User userModifier = users.get(searchUserPosition(userId));
-		Customer customer = customers.get(searchCustomerPositionById(customerId));
+		Customer customer = customers.get(searchCustomerPosition(customerId));
 		customer.setStatus(false);
 		customer.setModifier(userModifier);
 	}//End disableCustomerById
 
-	public void disableCustomerByPhone(String userId, String customerNPhone) {
-		User userModifier = users.get(searchUserPosition(userId));
-		Customer customer = customers.get(searchCustomerPositionByPhone(customerNPhone));
-		customer.setStatus(false);
-		customer.setModifier(userModifier);
-	}//End disableCustomerByPhone
-
-	public void removeCustomerById(String customerId) {
-		customers.remove(searchCustomerPositionById(customerId));
+	public void removeCustomer(String customerId) {
+		customers.remove(searchCustomerPosition(customerId));
 	}//End removeCustomerById
 
-	public void removeCustomerByPhone(String customerNPhone) {
-		customers.remove(searchCustomerPositionByPhone(customerNPhone));
-	}//End removeCustomerByPhone
-
 	public void addEmployee(String name, String lastName, String id) {
-		Employee newEmployee = new Employee(null, null, name, lastName, id);
+		Employee newEmployee = new Employee(null, name, lastName, id);
 		if(employees.isEmpty()) {
 			employees.add(newEmployee);
 		} else {
@@ -223,7 +144,7 @@ public class DeliveryManagerController {
 
 	public void addEmployee(String idCreator, String name, String lastName, String id) {
 		User creator = users.get(searchUserPosition(idCreator));
-		Employee newEmployee = new Employee(creator, null, name, lastName, id);
+		Employee newEmployee = new Employee(creator, name, lastName, id);
 		creator.setLinked(true);
 		if(employees.isEmpty()) {
 			employees.add(newEmployee);
@@ -241,6 +162,11 @@ public class DeliveryManagerController {
 		Employee employeeToModify = employees.get(searchEmployeePosition(idEmployee));
 		employeeToModify.setName(newName);
 		employeeToModify.setModifier(userModifier);
+		if(searchUserPosition(idEmployee) != -1) {
+			User employeeUser = users.get(searchEmployeePosition(idEmployee));
+			employeeUser.setName(newName);
+			employeeUser.setModifier(userModifier);
+		}
 	}//End modifyEmployeeName
 
 	public void modifyEmployeeLastName(String idModifier, String idEmployee, String newLastName) {
@@ -248,6 +174,11 @@ public class DeliveryManagerController {
 		Employee employeeToModify = employees.get(searchEmployeePosition(idEmployee));
 		employeeToModify.setLastName(newLastName);
 		employeeToModify.setModifier(userModifier);
+		if(searchUserPosition(idEmployee) != -1) {
+			User employeeUser = users.get(searchEmployeePosition(idEmployee));
+			employeeUser.setLastName(newLastName);
+			employeeUser.setModifier(userModifier);
+		}
 	}//End modifyEmployeeLastName
 
 	public void modifyEmployeeId(String idModifier, String idEmployee, String newId) {
@@ -255,6 +186,11 @@ public class DeliveryManagerController {
 		Employee employeeToModify = employees.get(searchEmployeePosition(idEmployee));
 		employeeToModify.setId(newId);
 		employeeToModify.setModifier(userModifier);
+		if(searchUserPosition(idEmployee) != -1) {
+			User employeeUser = users.get(searchEmployeePosition(idEmployee));
+			employeeUser.setId(newId);
+			employeeUser.setModifier(userModifier);
+		}
 	}//End modifyEmployeeId
 
 	public void disableEmployee(String userId, String employeeId) {
@@ -275,7 +211,7 @@ public class DeliveryManagerController {
 		String name = employee.getName();
 		String lastName = employee.getLastName();
 		String id = employee.getId();
-		User newUser = new User(null, null, name, lastName, id, userName, password);
+		User newUser = new User(null, name, lastName, id, userName, password);
 		if(users.isEmpty()) {
 			users.add(newUser);
 		} else {
@@ -294,7 +230,7 @@ public class DeliveryManagerController {
 		String name = employee.getName();
 		String lastName = employee.getLastName();
 		String id = employee.getId();
-		User newUser = new User(creator, null, name, lastName, id, userName, password);
+		User newUser = new User(creator, name, lastName, id, userName, password);
 		if(users.isEmpty()) {
 			users.add(newUser);
 		} else {
