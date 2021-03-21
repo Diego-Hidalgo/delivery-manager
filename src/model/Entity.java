@@ -7,7 +7,7 @@ public abstract class Entity {
 	private String name;
 	private String lastName;
 	private String id;
-	private boolean status;
+	private boolean enabled;
 	private boolean linked;
 	
 	public Entity(User creator){
@@ -16,7 +16,7 @@ public abstract class Entity {
 		name = new String();
 		lastName = new String();
 		id = new String();
-		status = true;
+		enabled = true;
 	}//End constructor
 
 	public Entity(User creator, String name, String lastName, String id){
@@ -25,7 +25,7 @@ public abstract class Entity {
 		this.name = name;
 		this.lastName = lastName;
 		this.id = id;
-		status = true;
+		enabled = true;
 	}//End constructor2
 
 	public void setCreator(User creator) {
@@ -56,8 +56,8 @@ public abstract class Entity {
 		this.id = id;
 	}//End setId
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public String getName(){
@@ -72,8 +72,8 @@ public abstract class Entity {
 		return id;
 	}//End getName
 
-	public boolean getStatus() {
-		return status;
+	public boolean getEnabled() {
+		return enabled;
 	}
 
 	public void setLinked(boolean linked) {

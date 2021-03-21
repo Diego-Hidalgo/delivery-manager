@@ -335,7 +335,7 @@ public class DeliveryManagerController {
 
 	public void disableCustomer(String customerId) {
 		Customer customer = customers.get(searchCustomerPosition(customerId));
-		customer.setStatus(false);
+		customer.setEnabled(false);
 		customer.setModifier(loggedUser);
 	}//End disableCustomerById
 
@@ -405,7 +405,7 @@ public class DeliveryManagerController {
 
 	public void disableEmployee(String employeeId) {
 		Employee employee = employees.get(searchEmployeePosition(employeeId));
-		employee.setStatus(false);
+		employee.setEnabled(false);
 		employee.setModifier(loggedUser);
 	}//End disableEmployee
 
@@ -452,7 +452,7 @@ public class DeliveryManagerController {
 
 	public void disableUser(String userId) {
 		User user = users.get(searchUserPosition(userId));
-		user.setStatus(false);
+		user.setEnabled(false);
 		user.setModifier(loggedUser);
 	}//End disableUser
 
