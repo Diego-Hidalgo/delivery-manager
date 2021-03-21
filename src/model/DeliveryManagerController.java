@@ -115,7 +115,7 @@ public class DeliveryManagerController {
 			}
 			employees.add(i, newEmployee);
 		}
-	}
+	}//End addEmployee
 
 	public void addEmployee(String idCreator, String name, String lastName, String id) {
 		User creator = users.get(searchUserPosition(idCreator));
@@ -135,7 +135,7 @@ public class DeliveryManagerController {
 	public void disableEmployee(String employeeId) {
 		Employee employee = employees.get(searchEmployeePosition(employeeId));
 		employee.setStatus(false);
-	}
+	}//End disableEmployee
 
 	public void addUser(String idEmployee, String userName, String password) {
 		Employee employee = employees.get(searchEmployeePosition(idEmployee));
@@ -173,5 +173,10 @@ public class DeliveryManagerController {
 			users.add(i, newUser);
 		}
 	}//End addUser
+
+	public void disableUser(String userId) {
+		User user = users.get(searchUserPosition(userId));
+		user.setStatus(false);
+	}
 
 }//End DeliveryManagerController
