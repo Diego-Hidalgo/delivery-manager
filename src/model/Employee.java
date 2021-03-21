@@ -5,7 +5,7 @@ public class Employee extends Entity{
 	public Employee(){
 		super();
 	}//End constructor1
-	public Employee(String name, String lastName, String id){
-		super(name,lastName,id);
+	public Employee(User creator, User modifier, String name, String lastName, String id){
+		super(creator, modifier, name,lastName,id);
 	}//End constructor2
 }//End Employee
