@@ -158,6 +158,20 @@ public class DeliveryManagerController {
 		customerToModify.setModifier(userModifier);
 	}//End modifyCustomerAddressByPhone
 
+	public void modifyCustomerPhoneById(String idModifier, String idCustomer, String newNPhone) {
+		User userModifier = users.get(searchUserPosition(idModifier));
+		Customer customerToModify = customers.get(searchCustomerPositionById(idCustomer));
+		customerToModify.setNPhone(newNPhone);
+		customerToModify.setModifier(userModifier);
+	}//End modifyCustomerPhoneById
+
+	public void modifyCustomerPhoneByPhone(String idModifier, String nPhoneCustomer, String newNPhone) {
+		User userModifier = users.get(searchUserPosition(idModifier));
+		Customer customerToModify = customers.get(searchCustomerPositionByPhone(nPhoneCustomer));
+		customerToModify.setNPhone(newNPhone);
+		customerToModify.setModifier(userModifier);
+	}//End modifyCustomerPhoneByPhone
+
 	public void disableCustomerById(String userId, String customerId) {
 		User userModifier = users.get(searchUserPosition(userId));
 		Customer customer = customers.get(searchCustomerPositionById(customerId));
