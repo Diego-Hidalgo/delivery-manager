@@ -103,14 +103,8 @@ public class DeliveryManagerController {
 	}//End addCustomer
 
 	public void disableCustomerById(String customerId) {
-		boolean stop = false;
-		for(int i = 0; i < customers.size() && !stop; i ++) {
-			Customer customer = customers.get(i);
-			if(customer.getId().equals(customerId)) {
-				customer.setStatus(false);
-				stop = true;
-			}
-		}
+		Customer customer = customers.get(searchCustomerPositionById(customerId));
+		customer.setStatus(false);
 	}//End disableCustomerById
 
 	public void disableCustomerByPhone(String customerNPhone) {
