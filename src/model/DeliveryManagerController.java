@@ -17,6 +17,7 @@ public class DeliveryManagerController {
 		products = new ArrayList<Product>();
 		employees = new ArrayList<Employee>();
 	}//End DeliveryManagerController
+
 	public void addCustomer(String name, String lastName, String address, String nPhone, String remark) {
 		Customer newCustomer = new Customer(name, lastName, address, nPhone, remark);
 		if(customers.isEmpty()) {
@@ -30,6 +31,7 @@ public class DeliveryManagerController {
 			customers.add(i, newCustomer);
 		}
 	}//End addCustomer
+
 	public void addCustomer(String name, String lastName, String id,String address, String nPhone, String remark){
 		Customer newCustomer = new Customer(name, lastName, id, address, nPhone, remark);
 		if(customers.isEmpty()) {
@@ -43,6 +45,7 @@ public class DeliveryManagerController {
 			customers.add(i, newCustomer);
 		}
 	}//End addCustomer
+
 	public void addEmployee(String name, String lastName, String id) {
 		Employee newEmployee = new Employee(name, lastName, id);
 		if(employees.isEmpty()) {
