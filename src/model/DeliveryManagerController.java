@@ -229,9 +229,11 @@ public class DeliveryManagerController {
 		}
 	}//End addUser
 
-	public void disableUser(String userId) {
+	public void disableUser(String userModifierId, String userId) {
+		User userModifier = users.get(searchUserPosition(userModifierId));
 		User user = users.get(searchUserPosition(userId));
 		user.setStatus(false);
+		user.setModifier(userModifier);
 	}//End disableUser
 
 	public void removeUser(String userId) {
