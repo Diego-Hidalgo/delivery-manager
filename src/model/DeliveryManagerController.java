@@ -82,6 +82,28 @@ public class DeliveryManagerController {
 		}
 	}//End addCustomer
 
+	public void disableCustomerById(String customerId) {
+		boolean stop = false;
+		for(int i = 0; i < customers.size() && !stop; i ++) {
+			Customer customer = customers.get(i);
+			if(customer.getId().equals(customerId)) {
+				customer.setStatus(false);
+				stop = true;
+			}
+		}
+	}
+
+	public void disableCustomerByPhone(String nPhone) {
+		boolean stop = false;
+		for(int i = 0; i < customers.size() && !stop; i ++) {
+			Customer customer = customers.get(i);
+			if(customer.getNPhone().equals(nPhone)) {
+				customer.setStatus(false);
+				stop = true;
+			}
+		}
+	}
+
 	public void addEmployee(String name, String lastName, String id) {
 		Employee newEmployee = new Employee(null, null, name, lastName, id);
 		if(employees.isEmpty()) {
@@ -126,7 +148,7 @@ public class DeliveryManagerController {
 			}
 			users.add(i, newUser);
 		}
-	}
+	}//End addUser
 
 	public void addUser(String idCreator, String idEmployee, String userName, String password) {
 		User creator = users.get(searchUserPosition(idCreator));

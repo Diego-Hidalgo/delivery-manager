@@ -6,6 +6,7 @@ public abstract class Entity {
 	private String name;
 	private String lastName;
 	private String id;
+	private boolean status;
 	private boolean linked;
 	
 	public Entity(User creator, User modifier){
@@ -14,6 +15,7 @@ public abstract class Entity {
 		name = new String();
 		lastName = new String();
 		id = new String();
+		status = true;
 	}//End constructor
 
 	public Entity(User creator, User modifier, String name, String lastName){
@@ -22,6 +24,7 @@ public abstract class Entity {
 		this.name = name;
 		this.lastName = lastName;
 		id = new String();
+		status = true;
 	}//End Constructor2
 
 	public Entity(User creator, User modifier, String name, String lastName, String id){
@@ -30,6 +33,7 @@ public abstract class Entity {
 		this.name = name;
 		this.lastName = lastName;
 		this.id = id;
+		status = true;
 	}//End constructor3
 
 	public void setCreator(User creator) {
@@ -60,6 +64,10 @@ public abstract class Entity {
 		this.id = id;
 	}//End setId
 
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	public String getName(){
 		return name;
 	}//End getName
@@ -71,6 +79,10 @@ public abstract class Entity {
 	public String getId(){
 		return id;
 	}//End getName
+
+	public boolean getStatus() {
+		return status;
+	}
 
 	public void setLinked(boolean linked) {
 		this.linked = linked;
