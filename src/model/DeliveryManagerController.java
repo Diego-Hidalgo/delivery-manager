@@ -1,4 +1,5 @@
 package model;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
@@ -301,12 +302,16 @@ public class DeliveryManagerController {
 		Customer customerToModify = customers.get(searchCustomerPosition(idCustomer));
 		customerToModify.setName(newName);
 		customerToModify.setModifier(loggedUser);
+		Comparator<Customer> lastNameAndNameComparator = new LastNameAndNameComparator();
+		Collections.sort(customers, lastNameAndNameComparator);
 	}//End modifyCustomerNameById
 
 	public void modifyCustomerLastName(String idCustomer, String newLastName) {
 		Customer customerToModify = customers.get(searchCustomerPosition(idCustomer));
 		customerToModify.setLastName(newLastName);
 		customerToModify.setModifier(loggedUser);
+		Comparator<Customer> lastNameAndNameComparator = new LastNameAndNameComparator();
+		Collections.sort(customers, lastNameAndNameComparator);
 	}//End modifyCustomerLastNameById
 
 	public void modifyCustomerId(String idCustomer, String newId) {
