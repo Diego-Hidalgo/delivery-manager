@@ -91,18 +91,40 @@ public class DeliveryManagerController {
 				stop = true;
 			}
 		}
-	}
+	}//End disableCustomerById
 
-	public void disableCustomerByPhone(String nPhone) {
+	public void disableCustomerByPhone(String customerNPhone) {
 		boolean stop = false;
 		for(int i = 0; i < customers.size() && !stop; i ++) {
 			Customer customer = customers.get(i);
-			if(customer.getNPhone().equals(nPhone)) {
+			if(customer.getNPhone().equals(customerNPhone)) {
 				customer.setStatus(false);
 				stop = true;
 			}
 		}
-	}
+	}//End disableCustomerByPhone
+
+	public void removeCustomerById(String customerId) {
+		boolean stop = false;
+		for(int i = 0; i < customers.size() && !stop; i ++) {
+			Customer customer = customers.get(i);
+			if(customer.getId().equals(customerId)) {
+				customers.remove(i);
+				stop = true;
+			}
+		}
+	}//End removeCustomerById
+
+	public void removeCustomerByPhone(String customerNPhone) {
+		boolean stop = false;
+		for(int i = 0; i < customers.size() && !stop; i ++) {
+			Customer customer = customers.get(i);
+			if(customer.getNPhone().equals(customerNPhone)) {
+				customers.remove(i);
+				stop = true;
+			}
+		}
+	}//End removeCustomerByPhone
 
 	public void addEmployee(String name, String lastName, String id) {
 		Employee newEmployee = new Employee(null, null, name, lastName, id);
