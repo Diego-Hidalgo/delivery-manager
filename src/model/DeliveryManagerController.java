@@ -236,6 +236,13 @@ public class DeliveryManagerController {
 		}
 	}//End addEmployee
 
+	public void modifyEmployeeName(String idModifier, String idEmployee, String newName) {
+		User userModifier = users.get(searchUserPosition(idModifier));
+		Employee employeeToModify = employees.get(searchEmployeePosition(idEmployee));
+		employeeToModify.setName(newName);
+		employeeToModify.setModifier(userModifier);
+	}//End modifyEmployeeName
+
 	public void disableEmployee(String userId, String employeeId) {
 		User userModifier = users.get(searchUserPosition(userId));
 		Employee employee = employees.get(searchEmployeePosition(employeeId));
