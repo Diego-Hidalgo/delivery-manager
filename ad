@@ -1,0 +1,66 @@
+[33mcommit 84f45e8c69bcd1db97e94e194fb0723b0b5564b5[m[33m ([m[1;36mHEAD -> [m[1;32mgestionar_productos[m[33m)[m
+Author: Brian Romero <briomero76@gmail.com>
+Date:   Sun Mar 14 23:32:55 2021 -0500
+
+    Remove and disable dishtype methods has beed added
+
+[33mcommit bde8885b129823e35124c60aa909a49328d5ee1e[m
+Author: Brian Romero <briomero76@gmail.com>
+Date:   Sun Mar 14 23:32:09 2021 -0500
+
+    change dishtype has been added
+
+[33mcommit b199f43687c85b4b106f921cc7e2ce4f3fb08264[m
+Author: Brian Romero <briomero76@gmail.com>
+Date:   Sun Mar 14 23:30:57 2021 -0500
+
+    add dishtype has been added
+
+[33mcommit 96bf61a7e4e3ff10104444fea1c00320122dd73f[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mmaster[m[33m, [m[1;32mdevelop[m[33m)[m
+Author: Brian Romero <briomero76@gmail.com>
+Date:   Sun Mar 14 14:26:49 2021 -0500
+
+    The linked variable has been added
+
+[33mcommit 57449fccf2ae65571ea8784f44f0c74318cd9a7a[m
+Author: Brian Romero <briomero76@gmail.com>
+Date:   Sat Mar 13 19:21:38 2021 -0500
+
+    Model controller has been added
+
+[33mcommit e2cf3a9adec7dcc0b233a84b7a30b104b0322d86[m
+Author: Diego Hidalgo Lopez <d13g0fhl@gmail.com>
+Date:   Sat Mar 13 18:35:22 2021 -0500
+
+    Renamed class PlateType to DishType
+
+[33mcommit 95f961b89117a20662e51f8acf354606c2227b1e[m
+Author: Brian Romero <briomero76@gmail.com>
+Date:   Sat Mar 13 18:19:37 2021 -0500
+
+    Little changes
+
+[33mcommit 892cf50c863a91c2031c0dc37400c269e0fcfd36[m
+Merge: 890f866 1774ea6
+Author: Diego Hidalgo Lopez <d13g0fhl@gmail.com>
+Date:   Thu Mar 11 08:13:14 2021 -0500
+
+    Merge branch 'master' of https://github.com/Diego-Hidalgo/delivery-manager
+
+[33mcommit 890f866dd64acfe7e19caa8e827f3c2b4a41400d[m
+Author: Diego Hidalgo Lopez <d13g0fhl@gmail.com>
+Date:   Thu Mar 11 08:13:00 2021 -0500
+
+    Modifications on file .gitignore
+
+[33mcommit 1774ea6949735e31117a0e46bc5af86789a1f35f[m
+Author: Brian Romero <briomero76@gmail.com>
+Date:   Thu Mar 11 08:12:15 2021 -0500
+
+    Little changes
+
+[33mcommit b07ecc15d61e722ac876ecf3dec47e59713c1740[m
+Author: Brian Romero <briomero76@gmail.com>
+Date:   Sun Mar 7 20:52:49 2021 -0500
+
+    Model template
