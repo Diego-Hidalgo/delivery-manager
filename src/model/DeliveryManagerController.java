@@ -28,6 +28,16 @@ public class DeliveryManagerController {
 		return -1;
 	}//End searchCustomerPositionById
 
+	public int searchCustomerPositionByPhone(String nPhoneToSeach) {
+		for(int i = 0; i < customers.size(); i ++) {
+			Customer customer = customers.get(i);
+			if(customer.getNPhone().equals(nPhoneToSeach)) {
+				return i;
+			}
+		}
+		return -1;
+	}//End searchCustomerPositionByPhone
+
 	public int searchUserPosition(String idToSearch) {
 		int start = 0;
 		int end = users.size() - 1;
