@@ -159,6 +159,11 @@ public class DeliveryManagerController {
 		employee.setStatus(false);
 	}//End disableEmployee
 
+	public void removeEmployee(String employeeId) {
+		int index = searchEmployeePosition(employeeId);
+		employees.remove(index);
+	}//End removeEmployee
+
 	public void addUser(String idEmployee, String userName, String password) {
 		Employee employee = employees.get(searchEmployeePosition(idEmployee));
 		employee.setLinked(true);
