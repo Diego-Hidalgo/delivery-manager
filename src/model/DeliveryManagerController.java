@@ -132,6 +132,11 @@ public class DeliveryManagerController {
 		}
 	}//End addEmployee
 
+	public void disableEmployee(String employeeId) {
+		Employee employee = employees.get(searchEmployeePosition(employeeId));
+		employee.setStatus(false);
+	}
+
 	public void addUser(String idEmployee, String userName, String password) {
 		Employee employee = employees.get(searchEmployeePosition(idEmployee));
 		employee.setLinked(true);
