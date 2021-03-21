@@ -204,6 +204,11 @@ public class DeliveryManagerController {
 	public void disableUser(String userId) {
 		User user = users.get(searchUserPosition(userId));
 		user.setStatus(false);
-	}
+	}//End disableUser
+
+	public void removeUser(String userId) {
+		int index = searchUserPosition(userId);
+		users.remove(index);
+	}//End removeUser
 
 }//End DeliveryManagerController
