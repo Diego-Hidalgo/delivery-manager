@@ -130,6 +130,20 @@ public class DeliveryManagerController {
 		customerToModify.setModifier(userModifier);
 	}//End modifyCustomerLastNameById
 
+	public void modifyCustomerIdById(String idModifier, String idCustomer, String newId) {
+		User userModifier = users.get(searchUserPosition(idModifier));
+		Customer customerToModify = customers.get(searchCustomerPositionById(idCustomer));
+		customerToModify.setId(newId);
+		customerToModify.setModifier(userModifier);
+	}//End modifyCustomerIdById
+
+	public void modifyCustomerIdByPhone(String idModifier, String nPhoneCustomer, String newId) {
+		User userModifier = users.get(searchUserPosition(idModifier));
+		Customer customerToModify = customers.get(searchCustomerPositionByPhone(nPhoneCustomer));
+		customerToModify.setId(newId);
+		customerToModify.setModifier(userModifier);
+	}//End modifyCustomerIdByPhone
+
 	public void disableCustomerById(String userId, String customerId) {
 		User userModifier = users.get(searchUserPosition(userId));
 		Customer customer = customers.get(searchCustomerPositionById(customerId));
@@ -213,7 +227,7 @@ public class DeliveryManagerController {
 	public void addUser(String idCreator, String idEmployee, String userName, String password) {
 		User creator = users.get(searchUserPosition(idCreator));
 		Employee employee = employees.get(searchEmployeePosition(idEmployee));
-		employee.setLinked(true);
+		creator.setLinked(true);
 		String name = employee.getName();
 		String lastName = employee.getLastName();
 		String id = employee.getId();
