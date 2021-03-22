@@ -17,13 +17,13 @@ public class DeliveryManagerController {
 	
 	public DeliveryManagerController(){
 		loggedUser = null;
-		orders = new ArrayList<Order>();
-		customers = new ArrayList<Customer>();
-		users = new ArrayList<User>();
-		products = new ArrayList<Product>();
-		employees = new ArrayList<Employee>();
-		types = new ArrayList<DishType>();
-		ingredients = new ArrayList<Ingredient>();
+		orders = new ArrayList<>();
+		customers = new ArrayList<>();
+		users = new ArrayList<>();
+		products = new ArrayList<>();
+		employees = new ArrayList<>();
+		types = new ArrayList<>();
+		ingredients = new ArrayList<>();
 	}//End DeliveryManagerController
 
 	public void setLoggedUser(String idLoggedUser) {
@@ -85,7 +85,7 @@ public class DeliveryManagerController {
 	}//End findIngredient
 
 	private void changeIngredient(final List<String> Newingredients,final int productIndex){
-		List<Ingredient> newIngredients = new ArrayList<Ingredient>();
+		List<Ingredient> newIngredients = new ArrayList<>();
 		for(int i = 0; i < Newingredients.size(); i++){
 			int ingredientIndex = findIngredient(Newingredients.get(i));
 			if(ingredientIndex < 0){
@@ -397,6 +397,7 @@ public class DeliveryManagerController {
 			User employeeUser = users.get(searchEmployeePosition(idEmployee));
 			employeeUser.setId(newId);
 			employeeUser.setModifier(loggedUser);
+			Collections.sort(users);
 		}
 		Collections.sort(employees);
 	}//End modifyEmployeeId
