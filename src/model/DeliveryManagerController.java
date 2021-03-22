@@ -350,15 +350,7 @@ public class DeliveryManagerController {
 
 	public void addFirstEmployee(String name, String lastName, String id) {
 		Employee newEmployee = new Employee(null, name, lastName, id);
-		if(employees.isEmpty()) {
-			employees.add(newEmployee);
-		} else {
-			int i = 0;
-			while(i < employees.size() && employees.get(i).getId().compareTo(newEmployee.getId()) < 0) {
-				i ++;
-			}
-			employees.add(i, newEmployee);
-		}
+		employees.add(newEmployee);
 	}//End addEmployee
 
 	public void addEmployee(String name, String lastName, String id) {
@@ -406,6 +398,7 @@ public class DeliveryManagerController {
 			employeeUser.setId(newId);
 			employeeUser.setModifier(loggedUser);
 		}
+		Collections.sort(employees);
 	}//End modifyEmployeeId
 
 	public void disableEmployee(String employeeId) {
@@ -426,15 +419,7 @@ public class DeliveryManagerController {
 		String lastName = employee.getLastName();
 		String id = employee.getId();
 		User newUser = new User(null, name, lastName, id, userName, password);
-		if(users.isEmpty()) {
-			users.add(newUser);
-		} else {
-			int i = 0;
-			while(i < users.size() && users.get(i).getId().compareTo(newUser.getId()) < 0) {
-				i ++;
-			}
-			users.add(i, newUser);
-		}
+		users.add(newUser);
 	}//End addUser
 
 	public void addUser(String idEmployee, String userName, String password) {
