@@ -1,8 +1,12 @@
 package model;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Product implements Comparable<Double>{
+public class Product implements Comparable<Double>, Serializable {
+
+	public final static long serialVesionUID = 1;
+
 	private String name;
 	private List<Double> price;
 	private List<String> size;

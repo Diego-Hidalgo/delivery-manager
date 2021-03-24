@@ -1,8 +1,11 @@
 package model;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
-public class Order {
-	
+public class Order implements Serializable {
+
+	public final static long serialVesionUID = 1;
+
 	private String code;
 	private int amount;
 	private String remark;

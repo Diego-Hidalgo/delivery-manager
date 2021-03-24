@@ -1,7 +1,11 @@
 package model;
 
-public class Ingredient implements Comparable<Ingredient> {
-	
+import java.io.Serializable;
+
+public class Ingredient implements Comparable<Ingredient>, Serializable {
+
+	public final static long serialVesionUID = 1;
+
 	private boolean linked;
 	private boolean enable;
 	private String name;

@@ -1,7 +1,11 @@
 package model;
 
-public class DishType implements Comparable<DishType>{
-	
+import java.io.Serializable;
+
+public class DishType implements Comparable<DishType>, Serializable {
+
+	public final static long serialVesionUID = 1;
+
 	private boolean linked;
 	private boolean enabled;
 	private String name;

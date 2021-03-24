@@ -1,6 +1,10 @@
 package model;
 
-public abstract class Entity {
+import java.io.Serializable;
+
+public abstract class Entity implements Serializable {
+
+	public final static long serialVesionUID = 1;
 
 	private User creator;
 	private User modifier;
