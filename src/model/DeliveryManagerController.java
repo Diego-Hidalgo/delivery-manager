@@ -25,7 +25,7 @@ public class DeliveryManagerController {
 		ingredients = new ArrayList<Ingredient>();
 	}//End DeliveryManagerController
 
-	public void setLoggedUser(String idLoggedUser) {
+	public void setLoggedUser(final String idLoggedUser) {
 		this.loggedUser = users.get(searchUserPosition(idLoggedUser));
 	}//End setLoggedUser
 
@@ -37,7 +37,7 @@ public class DeliveryManagerController {
 		return loggedUser;
 	}//End getLoggedUser
 	
-	public void addOrder(List<String> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
+	public void addOrder(final List<String> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
 		List<Product> ps = new ArrayList<Product>();
@@ -61,7 +61,7 @@ public class DeliveryManagerController {
 		order.setEmployee(employees.get(employeeIndex));
 		order.setModifier(getLoggedUser());
 	}//End changeOrder
-	public int findOrder(String code){
+	public int findOrder(final String code){
 		int index = -1;
 		boolean found = false;
 		for(int i = 0; i < orders.size() && !found;i++){
@@ -139,7 +139,7 @@ public class DeliveryManagerController {
 		products.get(productIndex).setModifier(loggedUser);
 	}//End changeIngredient
 
-	public int searchCustomerPosition(String idToSearch) {
+	public int searchCustomerPosition(final String idToSearch) {
 		for(int i = 0; i < customers.size(); i ++) {
 			Customer customer = customers.get(i);
 			if(customer.getId().equals(idToSearch)) {
@@ -149,7 +149,7 @@ public class DeliveryManagerController {
 		return -1;
 	}//End searchCustomerPositionById
 
-	public int searchUserPosition(String idToSearch) {
+	public int searchUserPosition(final String idToSearch) {
 		int start = 0;
 		int end = users.size() - 1;
 		while(start <= end) {
@@ -165,7 +165,7 @@ public class DeliveryManagerController {
 		return -1;
 	}
 
-	public int searchEmployeePosition(String idTosearch) {
+	public int searchEmployeePosition(final String idTosearch) {
 		int start = 0;
 		int end = employees.size() - 1;
 		while(start <= end) {
@@ -215,7 +215,7 @@ public class DeliveryManagerController {
 		
 	}//End changeProduct
 
-	public boolean removeProduct(String productName){
+	public boolean removeProduct(final String productName){
 		boolean removed = false;
 		int productIndex = findProduct(productName);
 		if(productIndex >= 0)
