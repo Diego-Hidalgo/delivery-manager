@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Product implements Comparable<Double>{
+	private User creator;
+	private User modifier;
 	private String name;
 	private List<Double> price;
 	private List<String> size;
@@ -11,19 +13,21 @@ public class Product implements Comparable<Double>{
 	private boolean linked;
 	private boolean enable;
 	
-	public Product(){
+	public Product(User creator){
 		name = new String();
 		price = new ArrayList<Double>();
 		size = new ArrayList<String>();
-		type = new DishType();
+		type = new DishType(creator);
+		this.creator= creator;
 		linked = false;
 		enable = true;
 	}//End constructor1
-	public Product(String name, List<Double> price, List<String> size,String type){
+	public Product(User creator,String name, List<Double> price, List<String> size,DishType type){
 		this.name = name;
 		this.price = price;
 		this.size = size;
-		this.type = new DishType(type);
+		this.creator= creator;
+		this.type = type;
 		linked = false;
 		enable = true;
 	}//End constructor2
@@ -79,6 +83,18 @@ public class Product implements Comparable<Double>{
 	public boolean getEnable() {
 		return enable;
 	}//End getLinked
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}//End setCreator
+	public User getCreator() {
+		return creator;
+	}//End getCreator
+	public void setModifier(User modifier) {
+		this.modifier = modifier;
+	}//End setModifier
+	public User getModifier() {
+		return modifier;
+	}//End getModifier
 	@Override
 	public int compareTo(Double tPrice) {
 		double p = 0;

@@ -1,17 +1,20 @@
 package model;
 
 public class Ingredient implements Comparable<Ingredient> {
-	
+	private User creator;
+	private User modifier;
 	private boolean linked;
 	private boolean enable;
 	private String name;
 	
-	public Ingredient(){
+	public Ingredient(User creator){
 		name = new String();
+		this.creator= creator;
 		enable = true;
 		linked = false;
 	}//End Constructor
-	public Ingredient(String name){
+	public Ingredient(User creator,String name){
+		this.creator= creator;
 		this.name = name;
 		enable = true;
 		linked = false;
@@ -34,6 +37,18 @@ public class Ingredient implements Comparable<Ingredient> {
 	public boolean getEnable(){
 		return enable;
 	}//End setEnable
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}//End setCreator
+	public User getCreator() {
+		return creator;
+	}//End getCreator
+	public void setModifier(User modifier) {
+		this.modifier = modifier;
+	}//End setModifier
+	public User getModifier() {
+		return modifier;
+	}//End getModifier
 	@Override
 	public int compareTo(Ingredient ingredient) {
 		return name.compareTo(ingredient.getName());

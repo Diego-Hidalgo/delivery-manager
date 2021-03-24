@@ -1,16 +1,19 @@
 package model;
 
 public class DishType implements Comparable<DishType>{
-	
+	private User creator;
+	private User modifier;
 	private boolean linked;
 	private boolean enabled;
 	private String name;
 	
-	public DishType(){
+	public DishType(User creator){
 		name = new String();
+		this.creator= creator;
 		linked = false;
 	}//End Constructor
-	public DishType(String name){
+	public DishType(User creator,String name){
+		this.creator= creator;
 		this.name = name;
 	}//End Constructor
 	public void setName(String name) {
@@ -31,6 +34,18 @@ public class DishType implements Comparable<DishType>{
 	public boolean getEnable() {
 		return enabled;
 	}//End getEnabled
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}//End setCreator
+	public User getCreator() {
+		return creator;
+	}//End getCreator
+	public void setModifier(User modifier) {
+		this.modifier = modifier;
+	}//End setModifier
+	public User getModifier() {
+		return modifier;
+	}//End getModifier
 	@Override
 	public int compareTo(DishType dt) {
 		return name.compareTo(dt.getName());
