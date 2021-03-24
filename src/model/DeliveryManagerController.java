@@ -35,7 +35,7 @@ public class DeliveryManagerController {
 		ingredients = new ArrayList<>();
 	}//End DeliveryManagerController
 
-	public void setLoggedUser(String idLoggedUser) {
+	public void setLoggedUser(final String idLoggedUser) {
 		this.loggedUser = users.get(searchUserPosition(idLoggedUser));
 	}//End setLoggedUser
 
@@ -43,7 +43,7 @@ public class DeliveryManagerController {
 		this.loggedUser = null;
 	}//End logOutUser
 
-	public User getLoggedUser() {
+	public User getLoggedUser(){
 		return loggedUser;
 	}//End getLoggedUser
 
@@ -147,6 +147,52 @@ public class DeliveryManagerController {
 		loadTypesData();
 		loadOrdersData();
 	}//End loadAllData
+	
+	public void addOrder(final List<String> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
+		int customerIndex = searchCustomerPosition(idCustomer);
+		int employeeIndex = searchEmployeePosition(idEmployee);
+		List<Product> ps = new ArrayList<Product>();
+		for(int i = 0; i < nProducts.size(); i++){
+			ps.add(this.products.get(findProduct(nProducts.get(i))));
+		}//End for
+		orders.add(new Order(ps,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
+	}//End addOrder
+
+	public void changeOrder(Order order,List<String> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
+		int customerIndex = searchCustomerPosition(idCustomer);
+		int employeeIndex = searchEmployeePosition(idEmployee);
+		List<Product> ps = new ArrayList<Product>();
+		for(int i = 0; i < nProducts.size(); i++){
+			ps.add(this.products.get(findProduct(nProducts.get(i))));
+		}//End for
+		order.setProduct(ps);
+		order.setAmount(amount);
+		order.setRemark(remark);
+		order.setStatus(status);
+		order.setCustomer(customers.get(customerIndex));
+		order.setEmployee(employees.get(employeeIndex));
+		order.setModifier(getLoggedUser());
+	}//End changeOrder
+
+	public int findOrder(final String code){
+		int index = -1;
+		boolean found = false;
+		for(int i = 0; i < orders.size() && !found;i++){
+			if(orders.get(i).getCode().equals(code)){
+				index = i;
+				found = true;
+			}//End if
+		}//End for
+		return index;
+	}//End findOrder
+
+	public void removeOrder(Order order){
+		orders.remove(order);
+	}//End removeOrder
+
+	public void disableOrder(Order order){
+		order.setEnable(false);
+	}//End disableOrder
 
 	private int findProduct(final String name){
 		boolean found = false;
@@ -199,16 +245,17 @@ public class DeliveryManagerController {
 		for(int i = 0; i < Newingredients.size(); i++){
 			int ingredientIndex = findIngredient(Newingredients.get(i));
 			if(ingredientIndex < 0){
-				Ingredient ingredient = new Ingredient(Newingredients.get(i));
+				Ingredient ingredient = new Ingredient(getLoggedUser(),Newingredients.get(i));
 				addIngredient(ingredient);
 				newIngredients.add(ingredient);
 			}else
 				newIngredients.add(ingredients.get(ingredientIndex));
 		}//End for
 		products.get(productIndex).setIngredient(newIngredients);
+		products.get(productIndex).setModifier(loggedUser);
 	}//End changeIngredient
 
-	public int searchCustomerPosition(String idToSearch) {
+	public int searchCustomerPosition(final String idToSearch) {
 		for(int i = 0; i < customers.size(); i ++) {
 			Customer customer = customers.get(i);
 			if(customer.getId().equals(idToSearch)) {
@@ -218,7 +265,7 @@ public class DeliveryManagerController {
 		return -1;
 	}//End searchCustomerPositionById
 
-	public int searchUserPosition(String idToSearch) {
+	public int searchUserPosition(final String idToSearch) {
 		int start = 0;
 		int end = users.size() - 1;
 		while(start <= end) {
@@ -234,7 +281,7 @@ public class DeliveryManagerController {
 		return -1;
 	}
 
-	public int searchEmployeePosition(String idTosearch) {
+	public int searchEmployeePosition(final String idTosearch) {
 		int start = 0;
 		int end = employees.size() - 1;
 		while(start <= end) {
@@ -252,12 +299,18 @@ public class DeliveryManagerController {
 
 	public void addProduct(final String name,final List<Double> price,final List<String> size,final String type){
 		if(findProduct(name) < 0){
+			int dtIndex = findDishType(type);
+			DishType t;
+			if(dtIndex < 0){
+				t = new DishType(getLoggedUser(),type);
+				addDishType(t);
+			}else{t = types.get(dtIndex);}//End else
 			if(products.isEmpty()){
-				products.add(new Product(name,price,size,type));
+				products.add(new Product(getLoggedUser(),name,price,size,t));
 			}else{
 				double tp = 0;
 				for(int i = 0; i < price.size(); i++){tp += price.get(i);}//End for
-				Product pd = new Product(name,price,size,type);
+				Product pd = new Product(getLoggedUser(),name,price,size,t);
 				int j = 0;
 				while(products.get(j).compareTo(tp) < 0){j++;}//End while
 				products.add(j,pd);
@@ -265,19 +318,19 @@ public class DeliveryManagerController {
 		}//End if
 	}//End addProduct
 
-	public void changeProduct(final String oldName,final String newName,final List<String> Newingredients,final List<Double> prices,final List<String> sizes,final String typeName){
-		int productIndex = findProduct(oldName);
+	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final List<Double> prices,final List<String> sizes,final String typeName){
+		int productIndex = findProduct(newName);
 		int dishIndex = findDishType(typeName);
-		if(productIndex >= 0){
+		if(productIndex >= 0)
 			products.get(productIndex).setName(newName);
-			products.get(productIndex).setPrice(prices);
-			products.get(productIndex).setSize(sizes);
-			changeDishType(dishIndex,productIndex,typeName);
-			changeIngredient(Newingredients,productIndex);
-		}//End if
+		products.get(productIndex).setPrice(prices);
+		products.get(productIndex).setSize(sizes);
+		changeDishType(dishIndex,productIndex,typeName);
+		changeIngredient(Newingredients,productIndex);
+		products.get(productIndex).setModifier(loggedUser);
 	}//End changeProduct
 
-	public boolean removeProduct(String productName){
+	public boolean removeProduct(final String productName){
 		boolean removed = false;
 		int productIndex = findProduct(productName);
 		if(productIndex >= 0)
@@ -287,10 +340,12 @@ public class DeliveryManagerController {
 			}//End if
 		return removed;
 	}//removeProduct
+
 	public void disableProduct(String productName){
 		int productIndex = findProduct(productName);
 		if(productIndex >= 0){
 			products.get(productIndex).setEnable(false);
+			products.get(productIndex).setModifier(loggedUser);
 		}//End if
 	}//End disableProduct
 
@@ -298,9 +353,9 @@ public class DeliveryManagerController {
 		boolean added = false;
 		if(findDishType(dishType) < 0){
 			if(types.isEmpty()){
-				types.add(new DishType(dishType));
+				types.add(new DishType(getLoggedUser(),dishType));
 			}else {
-				DishType dt = new DishType(dishType);
+				DishType dt = new DishType(getLoggedUser(),dishType);
 				int j = 0;
 				while(types.get(j).compareTo(dt) < 0){j++;}//End while
 				types.add(dt);
@@ -316,19 +371,21 @@ public class DeliveryManagerController {
 		types.add(dishType);
 	}//End addProduct
 
-	public void changeDishType(final String oldName,final String newName){
-		int index = findDishType(oldName);
-		if(index >= 0 && findDishType(newName) < 0)
-			types.get(index).setName(newName);
+	public void changeDishType(DishType dType,final String newName){
+		if(findDishType(newName) < 0){
+			dType.setName(newName);
+			dType.setModifier(loggedUser);
+		}//End if
 	}//End changeDishType
 
 	private void changeDishType(final int dishIndex,final int productIndex,final String typeName){
 		if(dishIndex < 0){
-			DishType dish = new DishType(typeName);
+			DishType dish = new DishType(getLoggedUser(),typeName);
 			addDishType(dish);
 			products.get(productIndex).setType(dish);
-		}else
+		}else{
 			products.get(productIndex).setType(types.get(dishIndex));
+		}//End else
 	}//End changeDishType
 
 	public boolean removeDishType(final String name){
@@ -342,19 +399,18 @@ public class DeliveryManagerController {
 		return removed;
 	}//End removeDishType
 
-	public void disableDishType(final String name){
-		int index = findDishType(name);
-		if(index >= 0)
-			types.get(index).setEnable(false);
+	public void disableDishType(DishType dType){
+		dType.setEnable(false);
+		dType.setModifier(loggedUser);
 	}//End disableIngredient
 
 	public boolean addIngredient(final String ingredient){
 		boolean added = false;
 		if(findIngredient(ingredient) < 0){
 			if(ingredients.isEmpty()){
-				ingredients.add(new Ingredient(ingredient));
+				ingredients.add(new Ingredient(getLoggedUser(),ingredient));
 			}else {
-				Ingredient in = new Ingredient(ingredient);
+				Ingredient in = new Ingredient(getLoggedUser(),ingredient);
 				int j = 0;
 				while(ingredients.get(j).compareTo(in) < 0){j++;}//End while
 				ingredients.add(j,in);
@@ -364,16 +420,20 @@ public class DeliveryManagerController {
 		return added;
 	}//End addIngredient
 
-	private void addIngredient(final Ingredient ingredient){
+	private void addIngredient(Ingredient ingredient){
 		int j = 0;
 		while(ingredients.get(j).compareTo(ingredient) < 0){j++;}//End while
 		ingredients.add(j,ingredient);
 	}//End addIngredient
 
-	public void changeIngredient(final String oldName,final String newName){
-		int index = findIngredient(oldName);
-		if(index >= 0 && findIngredient(newName) < 0)
-			ingredients.get(index).setName(newName);
+	public String changeIngredient(Ingredient ingredient,final String newName){
+		String msg = "Tal parece que ya existe un ingrediente con ese nombre.";
+		if(findIngredient(newName) < 0){
+			ingredient.setName(newName);
+			ingredient.setModifier(loggedUser);
+			msg = "Ingrediente modificado";
+		}//End if
+		return msg;
 	}//End changeIngredient
 
 	public boolean removeIngredient(final String name){
@@ -387,10 +447,9 @@ public class DeliveryManagerController {
 		return removed;
 	}//End removeIngredient
 
-	public void disableIngredient(final String name){
-		int index = findIngredient(name);
-		if(index >= 0)
-			ingredients.get(index).setEnable(false);
+	public void disableIngredient(Ingredient ingredient){
+		ingredient.setEnable(false);
+		ingredient.setModifier(loggedUser);
 	}//End disableIngredient
 
 	public void addCustomer(String name, String lastName, String id,String address, String nPhone, String remark){
