@@ -2,6 +2,7 @@ package model;
 
 public class Customer extends Entity{
 
+	private static final long serialVersionUID = 1;
 	private String address;
 	private String nPhone;
 	private String remark;

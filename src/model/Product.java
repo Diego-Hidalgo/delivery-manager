@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Product implements Comparable<Double>, Serializable {
+public class Product implements Comparable<Product>, Serializable {
 
 	public final static long serialVersionUID = 1;
 
@@ -121,13 +121,16 @@ public class Product implements Comparable<Double>, Serializable {
 	public User getModifier() {
 		return modifier;
 	}//End getModifier
-
-	@Override
-	public int compareTo(Double tPrice) {
+	private Double getTotalPrice(){
 		double p = 0;
-		for(int i = 0; i < price.size(); i++){p += price.get(i);}//End for
-		tPrice.compareTo(p);
-		return 0;
-	}
+		for(int i = 0; i < price.size(); i++){
+			p += price.get(i);
+		}//End for
+		return p;
+	}//End getTotalPrice
+	@Override
+	public int compareTo(Product tPrice) {
+		return (getTotalPrice()).compareTo(tPrice.getTotalPrice());
+	}//End compareTo
 
 }//End Product

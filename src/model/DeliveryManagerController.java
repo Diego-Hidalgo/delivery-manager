@@ -23,13 +23,13 @@ public class DeliveryManagerController {
 
 	public DeliveryManagerController(){
 		loggedUser = null;
-		employees = new ArrayList<>();
-		users = new ArrayList<>();
-		customers = new ArrayList<>();
-		products = new ArrayList<>();
-		types = new ArrayList<>();
-		ingredients = new ArrayList<>();
-		orders = new ArrayList<>();
+		employees = new ArrayList<Employee>();
+		users = new ArrayList<User>();
+		customers = new ArrayList<Customer>();
+		products = new ArrayList<Product>();
+		types = new ArrayList<DishType>();
+		ingredients = new ArrayList<Ingredient>();
+		orders = new ArrayList<Order>();
 	}//End DeliveryManagerController
 
 	public void setLoggedUser(final String idLoggedUser) {
@@ -57,13 +57,16 @@ public class DeliveryManagerController {
 	public void saveEmployeesData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(EMPLOYEES_SAVEFILE_PATH));
 		oos.writeObject(employees);
+		oos.close();
 	}//End saveEmployeesData
 
+	@SuppressWarnings("unchecked")
 	public void loadEmployeesData() throws IOException, ClassNotFoundException {
 		File f = new File(EMPLOYEES_SAVEFILE_PATH);
 		if(f.exists()) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			employees = (List)ois.readObject();
+			employees = (ArrayList<Employee>) ois.readObject();
+			ois.close();
 		}//End if
 	}//End loadEmployeesData
 
@@ -133,13 +136,16 @@ public class DeliveryManagerController {
 	public void saveUsersData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USERS_SAVEFILE_PATH));
 		oos.writeObject(users);
+		oos.close();
 	}//End saveUsersData
 
+	@SuppressWarnings("unchecked")
 	public void loadUsersData() throws IOException, ClassNotFoundException {
 		File f = new File(USERS_SAVEFILE_PATH);
 		if(f.exists()) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			users = (List)ois.readObject();
+			users = (ArrayList<User>)ois.readObject();
+			ois.close();
 		}//End if
 	}//End loadUsersData
 
@@ -207,13 +213,16 @@ public class DeliveryManagerController {
 	public void saveCustomersData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CUSTOMERS_SAVEFILE_PATH));
 		oos.writeObject(customers);
+		oos.close();
 	}//End saveCustomersData
 
+	@SuppressWarnings("unchecked")
 	public void loadCustomersData() throws IOException, ClassNotFoundException {
 		File f = new File(CUSTOMERS_SAVEFILE_PATH);
 		if(f.exists()) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			customers = (List)ois.readObject();
+			customers = (ArrayList<Customer>) ois.readObject();
+			ois.close();
 		}//End if
 	}//End loadCustomersData
 
@@ -267,13 +276,16 @@ public class DeliveryManagerController {
 	public void saveProductsData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PRODUCTS_SAVEFILE_PATH));
 		oos.writeObject(products);
+		oos.close();
 	}//End saveProductsData
 
+	@SuppressWarnings("unchecked")
 	public void loadProductsData() throws IOException, ClassNotFoundException {
 		File f = new File(PRODUCTS_SAVEFILE_PATH);
 		if(f.exists()) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			products = (List)ois.readObject();
+			products = (ArrayList<Product>) ois.readObject();
+			ois.close();
 		}//End if
 	}//End loadProductsData
 
@@ -300,11 +312,9 @@ public class DeliveryManagerController {
 			if(products.isEmpty()){
 				products.add(new Product(getLoggedUser(),name,price,size,t));
 			}else{
-				double tp = 0;
-				for(int i = 0; i < price.size(); i++){tp += price.get(i);}//End for
 				Product pd = new Product(getLoggedUser(),name,price,size,t);
 				int j = 0;
-				while(products.get(j).compareTo(tp) < 0){j++;}//End while
+				while(products.get(j).compareTo(pd) < 0){j++;}//End while
 				products.add(j,pd);
 			}//End else
 		}//End if
@@ -320,6 +330,7 @@ public class DeliveryManagerController {
 		changeDishType(dishIndex,productIndex,typeName);
 		changeIngredient(Newingredients,productIndex);
 		products.get(productIndex).setModifier(loggedUser);
+		Collections.sort(this.products);
 	}//End changeProduct
 
 	public void disableProduct(String productName){
@@ -344,13 +355,16 @@ public class DeliveryManagerController {
 	public void saveIngredientsData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(INGREDIENTS_SAVEFILE_PATH));
 		oos.writeObject(ingredients);
+		oos.close();
 	}//End saveIngredientsData
 
+	@SuppressWarnings("unchecked")
 	public void loadIngredientsData() throws IOException, ClassNotFoundException {
 		File f = new File(INGREDIENTS_SAVEFILE_PATH);
 		if(f.exists()) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			ingredients = (List)ois.readObject();
+			ingredients = (ArrayList<Ingredient>)ois.readObject();
+			ois.close();
 		}//End if
 	}//End loadIngredientsData
 
@@ -398,6 +412,7 @@ public class DeliveryManagerController {
 		if(findIngredient(newName) < 0){
 			ingredient.setName(newName);
 			ingredient.setModifier(loggedUser);
+			Collections.sort(ingredients);
 			msg = "Ingrediente modificado";
 		}//End if
 		return msg;
@@ -437,13 +452,16 @@ public class DeliveryManagerController {
 	public void saveTypesData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(TYPES_SAVEFILE_PATH));
 		oos.writeObject(types);
+		oos.close();
 	}//End saveTypesData
 
+	@SuppressWarnings("unchecked")
 	public void loadTypesData() throws IOException, ClassNotFoundException {
 		File f = new File(TYPES_SAVEFILE_PATH);
 		if(f.exists()) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			types = (List)ois.readObject();
+			types = (ArrayList<DishType>) ois.readObject();
+			ois.close();
 		}//End if
 	}//End loadTypesData
 
@@ -490,9 +508,9 @@ public class DeliveryManagerController {
 		if(findDishType(newName) < 0){
 			dType.setName(newName);
 			dType.setModifier(loggedUser);
+			Collections.sort(types);
 		}//End if
 	}//End changeDishType
-
 	private void changeDishType(final int dishIndex,final int productIndex,final String typeName){
 		if(dishIndex < 0){
 			DishType dish = new DishType(getLoggedUser(),typeName);
@@ -522,13 +540,16 @@ public class DeliveryManagerController {
 	public void saveOrdersData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ORDERS_SAVEFILE_PATH));
 		oos.writeObject(orders);
+		oos.close();
 	}//End saveOrdersData
 
+	@SuppressWarnings("unchecked")
 	public void loadOrdersData() throws IOException, ClassNotFoundException {
 		File f = new File(ORDERS_SAVEFILE_PATH);
 		if(f.exists()) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			orders = (List)ois.readObject();
+			orders = (ArrayList<Order>)ois.readObject();
+			ois.close();
 		}//End if
 	}//End loadOrdersData
 

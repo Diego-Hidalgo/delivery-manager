@@ -2,6 +2,8 @@ package model;
 
 public class Employee extends Entity  implements Comparable<Employee> {
 	
+	private static final long serialVersionUID = 1;
+
 	public Employee(User creator){
 		super(creator);
 	}//End constructor1
