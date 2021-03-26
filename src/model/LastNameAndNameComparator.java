@@ -12,5 +12,4 @@ public class LastNameAndNameComparator implements Comparator<Customer>{
             return c2.getName().compareTo(c1.getName());
         }
     }
-
 }
