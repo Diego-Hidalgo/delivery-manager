@@ -14,7 +14,7 @@ public class Customer extends Entity{
 		remark = new String();
 	}//End Constructor1
 
-	public Customer(User creator, String name, String lastName, String id,String address, String nPhone, String remark){
+	public Customer(User creator, String name, String lastName, String id, String address, String nPhone, String remark){
 		super(creator, name, lastName,id);
 		this.address = address;
 		this.nPhone = nPhone;

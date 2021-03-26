@@ -221,6 +221,26 @@ public class DeliveryManagerController {
 		saveUsersData();
 	}//End removeUser
 
+	public void importCustomersData(final String fileName, final String separator) throws IOException{
+		String line;
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		while((line = br.readLine()) != null) {
+			String[] attributes = line.split(separator);
+			if(searchCustomerPosition(attributes[2]) == -1) {
+				Comparator<Customer> lastNameAndNameComparator = new LastNameAndNameComparator();
+				String name = attributes[0];
+				String lastName = attributes[1];
+				String id = attributes[2];
+				String address = attributes[3];
+				String nPhone = attributes[4];
+				String remark = attributes[5];
+				Customer customer = new Customer(getLoggedUser(), name, lastName, id, address, nPhone, remark);
+				customers.add(customer);
+				Collections.sort(customers, lastNameAndNameComparator);
+			}//End if
+		}//End while
+	}//End importCustomersData
+
 	public void saveCustomersData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CUSTOMERS_SAVEFILE_PATH));
 		oos.writeObject(customers);
