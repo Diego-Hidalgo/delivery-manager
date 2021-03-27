@@ -616,8 +616,8 @@ public class DeliveryManagerController {
 		}//End for
 		return index;
 	}//End findOrder
-	
-	public void addOrder(final List<String> nProducts, List<Integer> amount, String remark, String status, String idCustomer, String idEmployee) throws IOException {
+
+	public void addOrder(final List<String> nProducts,List<Double> productsPrices,List<String> productsSizes,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
 		List<Product> ps = new ArrayList<Product>();
@@ -628,7 +628,7 @@ public class DeliveryManagerController {
 		saveOrdersData();
 	}//End addOrder
 
-	public void changeOrder(Order order, List<String> nProducts, List<Integer> amount, String remark, String status, String idCustomer, String idEmployee) throws IOException {
+	public void changeOrder(Order order,List<Double> productsPrices,List<String> productsSizes,List<String> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
 		List<Product> ps = new ArrayList<Product>();
@@ -643,6 +643,8 @@ public class DeliveryManagerController {
 		order.setEmployee(employees.get(employeeIndex));
 		order.setModifier(getLoggedUser());
 		saveOrdersData();
+		order.setProductsPrices(productsPrices);
+		order.setProductsSizes(productsSizes);
 	}//End changeOrder
 
 	public void disableOrder(Order order) throws IOException {
