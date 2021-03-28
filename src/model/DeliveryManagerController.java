@@ -313,6 +313,7 @@ public class DeliveryManagerController {
 			createSubproduct(pd,price,size);
 		}//End if
 	}//End addProduct
+
 	private void createSubproduct(ProductBase pd,List<Double> price,final List<String> size){
 		for(int i = 0; i < price.size();i++){
 			int sizeIndex = findProductSize(size.get(i));
@@ -325,6 +326,7 @@ public class DeliveryManagerController {
 			products.add(new Product(pd,s,price.get(i)));
 		}//End for
 	}//End createSubproduct
+
 	private int findProductSize(final String s){
 		boolean found = false;
 		int index = -1;
@@ -336,6 +338,7 @@ public class DeliveryManagerController {
 		}//End
 		return index;
 	}//End findProductSize
+
 	private List<Ingredient> ingredientsToAdd(List<String> ingredients){
 		List<Ingredient> ingd = new ArrayList<Ingredient>();
 		for(int i = 0; i < ingredients.size();i++){
@@ -349,6 +352,7 @@ public class DeliveryManagerController {
 		}//End for
 		return ingd;
 	}//End ingredientsToAdd
+
 	private DishType dishTypeToAdd(String dish){
 		int dtIndex = findDishType(dish);
 		DishType t;
@@ -359,6 +363,7 @@ public class DeliveryManagerController {
 			t = types.get(dtIndex);
 		return t;
 	}//End dishTypeToAdd
+
 	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName){
 		int productIndex = findProductBase(newName);
 		String n = (productIndex >= 0)?newName: (product.getProductBase()).getName();
@@ -394,6 +399,7 @@ public class DeliveryManagerController {
 		}//End if
 		return removed;
 	}//removeProduct
+
 	public List<Integer> findSubProducts(String name){
 		List<Integer> index = new ArrayList<Integer>();
 		for(int i = 0; i < products.size();i++){
@@ -403,6 +409,7 @@ public class DeliveryManagerController {
 		}//End for
 		return index;
 	}//End findSubProducts
+
 	public void saveIngredientsData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(INGREDIENTS_SAVEFILE_PATH));
 		oos.writeObject(ingredients);
@@ -468,6 +475,7 @@ public class DeliveryManagerController {
 		}//End if
 		return msg;
 	}//End changeIngredient
+
 	public void disableIngredient(Ingredient ingredient){
 		ingredient.setEnable(false);
 		ingredient.setModifier(loggedUser);
@@ -546,6 +554,7 @@ public class DeliveryManagerController {
 			Collections.sort(types);
 		}//End if
 	}//End changeDishType
+
 	public void disableDishType(DishType dType){
 		dType.setEnable(false);
 		dType.setModifier(loggedUser);
@@ -615,6 +624,7 @@ public class DeliveryManagerController {
 	public void removeOrder(Order order){
 		orders.remove(order);
 	}//End removeOrder
+
 	public void exportOrderData(File ordersData, String separator) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(ordersData);
 		pw.close();
