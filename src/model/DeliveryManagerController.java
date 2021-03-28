@@ -320,9 +320,25 @@ public class DeliveryManagerController {
 
 	public void exportProductsData(File productsData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException{
 		PrintWriter pw = new PrintWriter(productsData);
-		for(int i = 0; i < products.size(); i++){
-			pw.println( products.get(i).getProductBase().getName() + separator
-					+ products.get(i).getNtr() + separator + (products.get(i).getNtr() * products.get(i).getPrice()));
+		List<Order> ords = getOrdersInRange(initialDate, finishDate);
+		String columns = "Nombre" + separator + "Tamaño" + separator + "Precio" +
+				         separator + "Cantidad de veces pedido" + separator + "Total";
+		pw.write(columns);
+		for(int i = 0; i < products.size(); i ++) {
+			int times = 0;
+			for(int j = 0; j < ords.size(); j ++) {
+				Product product = products.get(i);
+				Order order = ords.get(j);
+				if(order.getStatus().equals("ENTREGADO")) {
+					if(order.findProductInOrder(product.getProductBase().getName())) {
+						times ++;
+					}//End if
+				}//End if
+				String toWrite = product.getProductBase().getName() + separator + product.getSize() +
+						         separator + product.getPrice() + separator + times + separator +
+						         (times * product.getPrice());
+				pw.write(toWrite);
+			}//End for
 		}//End for
 		pw.close();
 	}//End exportProductsData

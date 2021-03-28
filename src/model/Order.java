@@ -171,6 +171,16 @@ public class Order implements Serializable, Comparable<Order>{
 		return totalPrice;
 	}//End calculateTotalPrice
 
+	public boolean findProductInOrder(String productToSearch) {
+		boolean found = false;
+		for(int i = 0; i < products.size() && !found; i ++) {
+			if(products.get(i).getProductBase().getName().equals(productToSearch)) {
+				found = true;
+			}//End if
+		}//End if
+		return found;
+	}//End findProductOrder
+
 	@Override
 	public int compareTo(Order dateToCompare) {
 		return date.compareTo(dateToCompare.getCompleteDate());
