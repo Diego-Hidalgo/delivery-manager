@@ -39,11 +39,11 @@
             </VBox>
             <VBox prefHeight="260.0" prefWidth="145.0">
                <children>
-                  <TextField prefHeight="20.0" prefWidth="120.0" />
+                  <TextField fx:id="employeeNameTxt" prefHeight="20.0" prefWidth="120.0" />
                   <HBox prefHeight="50.0" prefWidth="145.0" />
-                  <TextField prefHeight="20.0" prefWidth="120.0" />
+                  <TextField fx:id="employeeLastNameTxt" prefHeight="20.0" prefWidth="120.0" />
                   <Pane prefHeight="50.0" prefWidth="145.0" />
-                  <TextField prefHeight="20.0" prefWidth="120.0" />
+                  <TextField fx:id="employeeIdTxt" prefHeight="20.0" prefWidth="120.0" />
                   <Pane prefHeight="35.0" prefWidth="145.0" />
                </children>
             </VBox>
@@ -53,7 +53,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Agregar empleado">
+            <Button fx:id="addEmployeeBtn" mnemonicParsing="false" text="Agregar empleado">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
