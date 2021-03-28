@@ -73,6 +73,32 @@ public class DeliveryManagerController {
 		}//End if
 	}//End loadEmployeesData
 
+	public void exportEmployeesData(File employeesData, String separator, Date initialDate, Date finalDate) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(employeesData);
+		List<Order> ords = getOrdersInRange(initialDate, finalDate);
+		String columns = "ID" + separator + "Nombre" + separator + "Apellido" + separator +
+				"Pedidos entregados" + separator + "Precio total";
+		pw.write(columns);
+		for(int i = 0; i < employees.size(); i ++) {
+			int amount = 0;
+			int totalPrice = 0;
+			for(int j = 0; j < ords.size(); i ++) {
+				Employee employee = employees.get(i);
+				Order order = ords.get(j);
+				if(order.getStatus().equals("ENTREGADO")) {
+					if(order.getEmployee().getId().equals(employee.getId())) {
+						amount ++;
+						totalPrice += order.calculateTotalPrice();
+					}//End if
+					String toWrite = employee.getId() + separator + employee.getName() + separator +
+							employee.getLastName() + separator + amount + separator + totalPrice + "\n";
+					pw.write(toWrite);
+				}
+			}//End for
+		}//End for
+		pw.close();
+	}//End exportEmployeesData
+
 	public int searchEmployeePosition(final String idTosearch) {
 		int start = 0;
 		int end = employees.size() - 1;
@@ -598,7 +624,7 @@ public class DeliveryManagerController {
 
 	public void exportOrdersData(File ordersData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(ordersData);
-		List<Order> ords = getOrdesInRange(initialDate,finishDate);
+		List<Order> ords = getOrdersInRange(initialDate,finishDate);
 		String report = new String();
 		for(int i = 0; i < ords.size();i++){
 			List<Product> pds = ords.get(i).getProducts();
@@ -608,7 +634,7 @@ public class DeliveryManagerController {
 					+ ords.get(i).getEmployee().getName() + " " + ords.get(i).getEmployee().getLastName() + separator
 					+ ords.get(i).getDate() + separator + ords.get(i).getHour() + separator + ords.get(i).getRemark() + separator;
 			for(int j = 0; j < ords.size();i++){
-				report += pds.get(j).getProductBase().getName() + separator + amo.get(j)+ separator + pds.get(j).getPrice();
+				report += pds.get(j).getProductBase().getName() + separator + amo.get(j) + separator + pds.get(j).getPrice();
 			}//End for
 			report += "\n";
 		}//End for
@@ -628,7 +654,7 @@ public class DeliveryManagerController {
 		return index;
 	}//End findOrder
 
-	private List<Order> getOrdesInRange(Date initialDate,Date finishDate){
+	private List<Order> getOrdersInRange(Date initialDate, Date finishDate){
 		List<Order> or = new ArrayList<Order>();
 		for(int i = 0; i < orders.size();i++){
 			if( orders.get(i).compareDate(initialDate) >= 0 && orders.get(i).compareDate(finishDate) <= 0){
@@ -637,7 +663,7 @@ public class DeliveryManagerController {
 		}//End for
 		Collections.sort(or);
 		return or;
-	}//End getOrdesInRange
+	}//End getOrdersInRange
 
 	public void addOrder(List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
 		int customerIndex = searchCustomerPosition(idCustomer);

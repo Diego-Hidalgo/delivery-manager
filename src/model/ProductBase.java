@@ -53,6 +53,7 @@ public class ProductBase implements Serializable {//Comparable<ProductBase>
 	public String getType(){
 		return type.getName();
 	}//End getName
+
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}//End setLinked
@@ -76,6 +77,7 @@ public class ProductBase implements Serializable {//Comparable<ProductBase>
 	public User getModifier() {
 		return modifier;
 	}//End getModifier
+
 	/**@Override
 	public int compareTo(ProductBase tPrice) {
 		return (getTotalPrice()).compareTo(tPrice.getTotalPrice());

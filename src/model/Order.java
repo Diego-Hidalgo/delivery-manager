@@ -110,6 +110,7 @@ public class Order implements Serializable, Comparable<Order>{
 	public void setEmployee(Employee employee){
 		this.employee = employee;
 	}//End setCustomer
+
 	public String getCode(){
 		return code;
 	}//End getCode
@@ -162,9 +163,17 @@ public class Order implements Serializable, Comparable<Order>{
 		return products;
 	}//End getProducts
 
+	public double calculateTotalPrice() {
+		double totalPrice = 0;
+		for(int i = 0; i < products.size(); i ++) {
+			totalPrice += products.get(i).getPrice();
+		}//End for
+		return totalPrice;
+	}//End calculateTotalPrice
+
 	@Override
 	public int compareTo(Order dateToCompare) {
 		return date.compareTo(dateToCompare.getCompleteDate());
-	}
+	}//End compareTo
 
 }//End Order
