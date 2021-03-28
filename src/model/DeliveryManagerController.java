@@ -292,7 +292,7 @@ public class DeliveryManagerController {
 		}//End if
 	}//End loadProductsData
 
-	private int findProduct(final String name){
+	private int findProductBase(final String name){
 		boolean found = false;
 		int index = -1;
 		for(int i = 0; i < productBase.size() && !found; i++) {
@@ -305,7 +305,7 @@ public class DeliveryManagerController {
 	}//End findProduct
 
 	public void addProduct(final String name,List<String> ingredients,final List<Double> price,final List<String> size,final String type){
-		if(findProduct(name) < 0){
+		if(findProductBase(name) < 0){
 			DishType dishType = dishTypeToAdd(type);
 			List<Ingredient> ingd = ingredientsToAdd(ingredients);
 			ProductBase pd = new ProductBase(getLoggedUser(),name,dishType,ingd);
@@ -360,7 +360,7 @@ public class DeliveryManagerController {
 		return t;
 	}//End dishTypeToAdd
 	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName){
-		int productIndex = findProduct(newName);
+		int productIndex = findProductBase(newName);
 		String n = (productIndex >= 0)?newName: (product.getProductBase()).getName();
 		product.changesProductBase(n, ingredientsToAdd(Newingredients), dishTypeToAdd(typeName));
 		products.get(productIndex).setPrice(prices);
@@ -369,7 +369,7 @@ public class DeliveryManagerController {
 	}//End changeProduct
 
 	public void disableProduct(String productName){
-		int productIndex = findProduct(productName);
+		int productIndex = findProductBase(productName);
 		if(productIndex >= 0){
 			productBase.get(productIndex).setEnable(false);
 			productBase.get(productIndex).setModifier(loggedUser);
@@ -378,15 +378,31 @@ public class DeliveryManagerController {
 
 	public boolean removeProduct(final String productName){
 		boolean removed = false;
-		int productIndex = findProduct(productName);
-		if(productIndex >= 0)
-			if(!products.get(productIndex).getLinked()){
-				products.remove(productIndex);
+		int productIndex = findProductBase(productName);
+		boolean linked = false;
+		if(productIndex >= 0){
+			List<Integer> index = findSubProducts(productName);
+			for(int i = 0; i < index.size() && !linked;i++){
+				linked = linked || products.get(index.get(i)).getEnable();
+			}//End for
+			if(!linked){
+				for(int i = 0; i < index.size() && !linked;i++)
+					products.remove( (int) index.get(i));
+				productBase.remove(productIndex);
 				removed = true;
 			}//End if
+		}//End if
 		return removed;
 	}//removeProduct
-
+	public List<Integer> findSubProducts(String name){
+		List<Integer> index = new ArrayList<Integer>();
+		for(int i = 0; i < products.size();i++){
+			if(name.equals((products.get(i).getProductBase()).getName())){
+				index.add((Integer) i);
+			}//End if
+		}//End for
+		return index;
+	}//End findSubProducts
 	public void saveIngredientsData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(INGREDIENTS_SAVEFILE_PATH));
 		oos.writeObject(ingredients);
@@ -579,7 +595,7 @@ public class DeliveryManagerController {
 		int employeeIndex = searchEmployeePosition(idEmployee);
 		List<Product> ps = new ArrayList<Product>();
 		for(int i = 0; i < nProducts.size(); i++){
-			ps.add(this.products.get(findProduct(nProducts.get(i))));
+			ps.add(this.products.get(findProductBase(nProducts.get(i))));
 		}//End for
 		orders.add(new Order(ps,productsPrices,productsSizes,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
 	}//End addOrder
@@ -589,7 +605,7 @@ public class DeliveryManagerController {
 		int employeeIndex = searchEmployeePosition(idEmployee);
 		List<Product> ps = new ArrayList<Product>();
 		for(int i = 0; i < nProducts.size(); i++){
-			ps.add(this.products.get(findProduct(nProducts.get(i))));
+			ps.add(this.products.get(findProductBase(nProducts.get(i)))); 
 		}//End for
 		order.setProduct(ps);
 		order.setAmount(amount);

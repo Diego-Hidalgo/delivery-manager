@@ -8,6 +8,7 @@ public class Product {
 	private ProductSize size;
 	private ProductBase product;
 	private User modifier;
+	private boolean linked;
 	
 	public Product(ProductBase product,ProductSize size,double price){
 		this.product = product;
@@ -43,8 +44,17 @@ public class Product {
 	}//End getNtr
 	public void setModifier(User modifier) {
 		this.modifier = modifier;
+		product.setModifier(modifier);
 	}//End setModifier
-
+	public void setLinked(boolean linked) {
+		this.linked = linked;
+	}//End setLinked
+	public boolean getEnable(){
+		return product.getEnable();
+	}//End getEnable
+	public boolean getLinked() {
+		return linked;
+	}//End getLinked
 	public User getModifier() {
 		return modifier;
 	}//End getModifier

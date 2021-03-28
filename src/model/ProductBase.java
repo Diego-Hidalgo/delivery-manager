@@ -12,7 +12,6 @@ public class ProductBase implements Serializable {//Comparable<ProductBase>
 	private String name;
 	private List<Ingredient> ingredients;
 	private DishType type;
-	private boolean linked;
 	private boolean enable;
 	
 	public ProductBase(User creator){
@@ -20,7 +19,6 @@ public class ProductBase implements Serializable {//Comparable<ProductBase>
 		type = new DishType(creator);
 		this.creator= creator;
 		ingredients = new ArrayList<Ingredient>();
-		linked = false;
 		enable = true;
 	}//End constructor1
 
@@ -29,7 +27,6 @@ public class ProductBase implements Serializable {//Comparable<ProductBase>
 		this.creator= creator;
 		this.type = type;
 		this.ingredients = ingredients;
-		linked = false;
 		enable = true;
 	}//End constructor2
 
@@ -56,15 +53,6 @@ public class ProductBase implements Serializable {//Comparable<ProductBase>
 	public String getType(){
 		return type.getName();
 	}//End getName
-
-	public void setLinked(boolean linked) {
-		this.linked = linked;
-	}//End setLinked
-
-	public boolean getLinked() {
-		return linked;
-	}//End getLinked
-
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}//End setLinked
