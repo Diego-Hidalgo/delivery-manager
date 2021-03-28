@@ -336,7 +336,7 @@ public class DeliveryManagerController {
 				}//End if
 				String toWrite = product.getProductBase().getName() + separator + product.getSize() +
 						         separator + product.getPrice() + separator + times + separator +
-						         (times * product.getPrice());
+						         (times * product.getPrice()) + "\n";
 				pw.write(toWrite);
 			}//End for
 		}//End for
