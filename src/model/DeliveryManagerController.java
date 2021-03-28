@@ -615,8 +615,33 @@ public class DeliveryManagerController {
 	public void removeOrder(Order order){
 		orders.remove(order);
 	}//End removeOrder
-	public void exportOrderData(File ordersData, String separator) throws FileNotFoundException {
+	public void exportOrderData(File ordersData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(ordersData);
+		List<Order> ords = getOrdesInRange(initialDate,finishDate);
+		String report = new String();
+		for(int i = 0; i < ords.size();i++){
+			List<Product> pds = ords.get(i).getProducts();
+			List<Integer> amo = ords.get(i).getAmount();
+			report += ords.get(i).getCustomer().getName() + " " + ords.get(i).getCustomer().getLastName() + separator
+					+ ords.get(i).getCustomer().getAddress() + separator + ords.get(i).getCustomer().getNPhone() + separator
+					+ ords.get(i).getEmployee().getName() + " " + ords.get(i).getEmployee().getLastName() + separator
+					+ ords.get(i).getDate() + separator + ords.get(i).getHour() + separator + ords.get(i).getRemark() + separator;
+			for(int j = 0; j < ords.size();i++){
+				report += pds.get(j).getProductBase().getName() + separator + amo.get(j)+ separator + pds.get(j).getPrice();
+			}//End for
+			report += "\n";
+		}//End for
+		pw.print(report);
 		pw.close();
 	}//End exportOrderData
+	private List<Order> getOrdesInRange(Date initialDate,Date finishDate){
+		List<Order> or = new ArrayList<Order>();
+		for(int i = 0; i < orders.size();i++){
+			if( orders.get(i).compareDate(initialDate) >= 0 && orders.get(i).compareDate(finishDate) <= 0){
+				or.add(orders.get(i));
+			}//End if
+		}//End for
+		Collections.sort(or);
+		return or;
+	}//End getOrdesInRange
 }//End DeliveryManagerController

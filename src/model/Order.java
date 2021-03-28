@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
-public class Order implements Serializable {
+public class Order implements Serializable, Comparable<Order>{
 
 	private static final long serialVersionUID = 1;
 
@@ -79,6 +79,9 @@ public class Order implements Serializable {
 	public String getHour(){
 		return String.valueOf(date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
 	}//End getDates
+	public Date getCompleteDate(){
+		return date;
+	}//End 
 	public void setAmount(List<Integer> amount){
 		this.amount = amount;
 	}//End setAmount
@@ -152,4 +155,9 @@ public class Order implements Serializable {
 	public List<Product> getProducts(){
 		return products;
 	}//End getProducts
+
+	@Override
+	public int compareTo(Order dateToCompare) {
+		return date.compareTo(dateToCompare.getCompleteDate());
+	}
 }//End Order
