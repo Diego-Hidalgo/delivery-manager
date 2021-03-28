@@ -76,9 +76,12 @@ public class DeliveryManagerController {
 	public void exportEmployeesData(File employeesData, String separator, Date initialDate, Date finalDate) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(employeesData);
 		List<Order> ords = getOrdersInRange(initialDate, finalDate);
+		String info = "Reporte creado con los datos recolectados desde " + initialDate + " hasta " + finalDate + "\n";
+		pw.write(info);
 		String columns = "ID" + separator + "Nombre" + separator + "Apellido" + separator +
-				"Pedidos entregados" + separator + "Precio total";
+				"Pedidos entregados" + separator + "Precio total" + "\n";
 		pw.write(columns);
+		int totalLines = 0;
 		for(int i = 0; i < employees.size(); i ++) {
 			int amount = 0;
 			int totalPrice = 0;
@@ -93,9 +96,12 @@ public class DeliveryManagerController {
 					String toWrite = employee.getId() + separator + employee.getName() + separator +
 							employee.getLastName() + separator + amount + separator + totalPrice + "\n";
 					pw.write(toWrite);
+					totalLines ++;
 				}
 			}//End for
 		}//End for
+		String lines = "Lineas totales: " + totalLines;
+		pw.write(lines);
 		pw.close();
 	}//End exportEmployeesData
 
@@ -113,7 +119,7 @@ public class DeliveryManagerController {
 			}
 		}
 		return -1;
-	}
+	}//End searchEmployeePosition
 
 	public void addFirstEmployee(String name, String lastName, String id) {
 		Employee newEmployee = new Employee(null, name, lastName, id);
@@ -319,6 +325,7 @@ public class DeliveryManagerController {
 	}//End loadProductsData
 
 	public void exportProductsData(File productsData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException{
+		int totalLines = 0;
 		PrintWriter pw = new PrintWriter(productsData);
 		List<Order> ords = getOrdersInRange(initialDate, finishDate);
 		String columns = "Nombre" + separator + "Tamaño" + separator + "Precio" +
@@ -338,8 +345,11 @@ public class DeliveryManagerController {
 						         separator + product.getPrice() + separator + times + separator +
 						         (times * product.getPrice()) + "\n";
 				pw.write(toWrite);
+				totalLines ++;
 			}//End for
 		}//End for
+		String lines = "Lineas totales: " + totalLines;
+		pw.write(lines);
 		pw.close();
 	}//End exportProductsData
 
@@ -493,12 +503,14 @@ public class DeliveryManagerController {
 		}//End while
 		return index;
 	}//End findIngredient
+
 	public String getIngredients(){
 		String ingreds = new String();
 		for(int i = 0; i < this.ingredients.size();i++)
 			ingreds += ingredients.get(i).getName() + "\n";
 		return ingreds;
 	}//End getIngredients
+
 	public boolean addIngredient(final String ingredient){
 		boolean added = false;
 		if(findIngredient(ingredient) < 0){
@@ -644,8 +656,16 @@ public class DeliveryManagerController {
 	}//End loadOrdersData
 
 	public void exportOrdersData(File ordersData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException {
+		int totalLines = 0;
 		PrintWriter pw = new PrintWriter(ordersData);
 		List<Order> ords = getOrdersInRange(initialDate,finishDate);
+		String info = "Reporte creado con los datos recolectados desde: " + initialDate + " hasta " + finishDate + "\n";
+		pw.write(info);
+		String columns = "Nombre del cliente" + separator + "Apellido del cliente" + separator + "Dirección del cliente" +
+						  separator + "Telefono del cliente" + separator + "Nombre del empleado" + separator + "Apellido del empleado" +
+					      separator + "Fecha" + separator + "Hora" + separator + "Observaciones" + separator + "Nombre del producto" +
+						  separator + "Cantidad" + separator +"Precio" + "\n";
+		pw.write(columns);
 		String report = new String();
 		for(int i = 0; i < ords.size();i++){
 			List<Product> pds = ords.get(i).getProducts();
@@ -658,8 +678,11 @@ public class DeliveryManagerController {
 				report += pds.get(j).getProductBase().getName() + separator + amo.get(j) + separator + pds.get(j).getPrice();
 			}//End for
 			report += "\n";
+			totalLines ++;
 		}//End for
 		pw.print(report);
+		String lines = "lineas totales: " + totalLines;
+		pw.write(lines);
 		pw.close();
 	}//End exportOrderData
 
