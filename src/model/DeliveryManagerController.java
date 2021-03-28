@@ -361,15 +361,11 @@ public class DeliveryManagerController {
 	}//End dishTypeToAdd
 	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName){
 		int productIndex = findProduct(newName);
-		int dishIndex = findDishType(typeName);
-		if(productIndex >= 0)
-			products.get(productIndex).setName(newName);
+		String n = (productIndex >= 0)?newName: (product.getProductBase()).getName();
+		product.changesProductBase(n, ingredientsToAdd(Newingredients), dishTypeToAdd(typeName));
 		products.get(productIndex).setPrice(prices);
 		products.get(productIndex).setSize(sizes);
-		changeDishType(dishIndex,productIndex,typeName);
-		changeIngredient(Newingredients,productIndex);
 		products.get(productIndex).setModifier(loggedUser);
-		Collections.sort(this.products);
 	}//End changeProduct
 
 	public void disableProduct(String productName){
@@ -456,22 +452,6 @@ public class DeliveryManagerController {
 		}//End if
 		return msg;
 	}//End changeIngredient
-
-	private void changeIngredient(final List<String> Newingredients,final int productIndex){
-		List<Ingredient> newIngredients = new ArrayList<>();
-		for(int i = 0; i < Newingredients.size(); i++){
-			int ingredientIndex = findIngredient(Newingredients.get(i));
-			if(ingredientIndex < 0){
-				Ingredient ingredient = new Ingredient(getLoggedUser(),Newingredients.get(i));
-				addIngredient(ingredient);
-				newIngredients.add(ingredient);
-			}else
-				newIngredients.add(ingredients.get(ingredientIndex));
-		}//End for
-		products.get(productIndex).setIngredient(newIngredients);
-		products.get(productIndex).setModifier(loggedUser);
-	}//End changeIngredient
-
 	public void disableIngredient(Ingredient ingredient){
 		ingredient.setEnable(false);
 		ingredient.setModifier(loggedUser);
@@ -550,16 +530,6 @@ public class DeliveryManagerController {
 			Collections.sort(types);
 		}//End if
 	}//End changeDishType
-	private void changeDishType(final int dishIndex,final int productIndex,final String typeName){
-		if(dishIndex < 0){
-			DishType dish = new DishType(getLoggedUser(),typeName);
-			addDishType(dish);
-			products.get(productIndex).setType(dish);
-		}else{
-			products.get(productIndex).setType(types.get(dishIndex));
-		}//End else
-	}//End changeDishType
-
 	public void disableDishType(DishType dType){
 		dType.setEnable(false);
 		dType.setModifier(loggedUser);

@@ -7,6 +7,7 @@ public class Product {
 	private double price;
 	private ProductSize size;
 	private ProductBase product;
+	private User modifier;
 	
 	public Product(ProductBase product,ProductSize size,double price){
 		this.product = product;
@@ -40,4 +41,11 @@ public class Product {
 	public int getNtr(){
 		return ntr;
 	}//End getNtr
+	public void setModifier(User modifier) {
+		this.modifier = modifier;
+	}//End setModifier
+
+	public User getModifier() {
+		return modifier;
+	}//End getModifier
 }//End Product
