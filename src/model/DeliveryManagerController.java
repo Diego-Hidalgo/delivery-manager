@@ -1,7 +1,6 @@
 package model;
 import java.io.*;
 import java.util.*;
-
 public class DeliveryManagerController {
 
 	private final static String EMPLOYEES_SAVEFILE_PATH = "save-files/employees-saveFile.csv";
@@ -16,20 +15,24 @@ public class DeliveryManagerController {
 	private List<Employee> employees;
 	private List<User> users;
 	private List<Customer> customers;
+	private List<ProductBase> productBase;
 	private List<Product> products;
+	private List<ProductSize> sizes;
 	private List<DishType> types;
 	private List<Ingredient> ingredients;
 	private List<Order> orders;
-
+	
 	public DeliveryManagerController(){
 		loggedUser = null;
 		employees = new ArrayList<Employee>();
 		users = new ArrayList<User>();
 		customers = new ArrayList<Customer>();
 		products = new ArrayList<Product>();
+		productBase = new ArrayList<ProductBase>();
 		types = new ArrayList<DishType>();
 		ingredients = new ArrayList<Ingredient>();
 		orders = new ArrayList<Order>();
+		sizes = new ArrayList<ProductSize>();
 	}//End DeliveryManagerController
 
 	public void setLoggedUser(final String idLoggedUser) {
@@ -164,7 +167,7 @@ public class DeliveryManagerController {
 		}//End while
 		return -1;
 	}//End searchUserPositon
-
+	
 	public void addFirstUser(String idEmployee, String userName, String password) {
 		Employee employee = employees.get(searchEmployeePosition(idEmployee));
 		employee.setLinked(true);
@@ -292,8 +295,8 @@ public class DeliveryManagerController {
 	private int findProduct(final String name){
 		boolean found = false;
 		int index = -1;
-		for(int i = 0; i < products.size() && !found; i++) {
-			if(products.get(i).getName().equalsIgnoreCase(name)) {
+		for(int i = 0; i < productBase.size() && !found; i++) {
+			if(productBase.get(i).getName().equalsIgnoreCase(name)) {
 				index = i;
 				found = true;
 			}//End if
@@ -301,26 +304,62 @@ public class DeliveryManagerController {
 		return index;
 	}//End findProduct
 
-	public void addProduct(final String name,final List<Double> price,final List<String> size,final String type){
+	public void addProduct(final String name,List<String> ingredients,final List<Double> price,final List<String> size,final String type){
 		if(findProduct(name) < 0){
-			int dtIndex = findDishType(type);
-			DishType t;
-			if(dtIndex < 0){
-				t = new DishType(getLoggedUser(),type);
-				addDishType(t);
-			}else{t = types.get(dtIndex);}//End else
-			if(products.isEmpty()){
-				products.add(new Product(getLoggedUser(),name,price,size,t));
-			}else{
-				Product pd = new Product(getLoggedUser(),name,price,size,t);
-				int j = 0;
-				while(products.get(j).compareTo(pd) < 0){j++;}//End while
-				products.add(j,pd);
-			}//End else
+			DishType dishType = dishTypeToAdd(type);
+			List<Ingredient> ingd = ingredientsToAdd(ingredients);
+			ProductBase pd = new ProductBase(getLoggedUser(),name,dishType,ingd);
+			productBase.add(pd);
+			createSubproduct(pd,price,size);
 		}//End if
 	}//End addProduct
-
-	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final List<Double> prices,final List<String> sizes,final String typeName){
+	private void createSubproduct(ProductBase pd,List<Double> price,final List<String> size){
+		for(int i = 0; i < price.size();i++){
+			int sizeIndex = findProductSize(size.get(i));
+			ProductSize s;
+			if(sizeIndex < 0){
+				s = new ProductSize(size.get(i));
+				this.sizes.add(s);
+			}else
+				s = sizes.get(sizeIndex);
+			products.add(new Product(pd,s,price.get(i)));
+		}//End for
+	}//End createSubproduct
+	private int findProductSize(final String s){
+		boolean found = false;
+		int index = -1;
+		for(int i = 0; i < sizes.size() && !found;i++){
+			if(s.equalsIgnoreCase(sizes.get(i).getSize())){
+				index = i;
+				found = true;
+			}//End if
+		}//End 
+		return index;
+	}//End findProductSize
+	private List<Ingredient> ingredientsToAdd(List<String> ingredients){
+		List<Ingredient> ingd = new ArrayList<Ingredient>();
+		for(int i = 0; i < ingredients.size();i++){
+			int ingdIndex = findIngredient(ingredients.get(i));
+			if(ingdIndex < 0){
+				Ingredient in = new Ingredient(getLoggedUser(),ingredients.get(i));
+				addIngredient(in);
+				ingd.add(in);
+			}else
+				ingd.add(this.ingredients.get(ingdIndex));
+		}//End for
+		return ingd;
+	}//End ingredientsToAdd
+	private DishType dishTypeToAdd(String dish){
+		int dtIndex = findDishType(dish);
+		DishType t;
+		if(dtIndex < 0){
+			t = new DishType(getLoggedUser(),dish);
+			addDishType(t);
+		}else
+			t = types.get(dtIndex);
+		return t;
+	}//End dishTypeToAdd
+	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName){
 		int productIndex = findProduct(newName);
 		int dishIndex = findDishType(typeName);
 		if(productIndex >= 0)
@@ -336,8 +375,8 @@ public class DeliveryManagerController {
 	public void disableProduct(String productName){
 		int productIndex = findProduct(productName);
 		if(productIndex >= 0){
-			products.get(productIndex).setEnable(false);
-			products.get(productIndex).setModifier(loggedUser);
+			productBase.get(productIndex).setEnable(false);
+			productBase.get(productIndex).setModifier(loggedUser);
 		}//End if
 	}//End disableProduct
 
@@ -600,5 +639,8 @@ public class DeliveryManagerController {
 	public void removeOrder(Order order){
 		orders.remove(order);
 	}//End removeOrder
-
+	public void exportOrderData(File ordersData, String separator) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(ordersData);
+		pw.close();
+	}//End exportOrderData
 }//End DeliveryManagerController
