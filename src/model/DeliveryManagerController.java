@@ -1,7 +1,6 @@
 package model;
 import java.io.*;
 import java.util.*;
-
 public class DeliveryManagerController {
 
 	private final static String EMPLOYEES_SAVEFILE_PATH = "save-files/employees-saveFile.csv";
@@ -16,7 +15,9 @@ public class DeliveryManagerController {
 	private List<Employee> employees;
 	private List<User> users;
 	private List<Customer> customers;
+	private List<ProductBase> productBase;
 	private List<Product> products;
+	private List<ProductSize> sizes;
 	private List<DishType> types;
 	private List<Ingredient> ingredients;
 	private List<Order> orders;
@@ -27,9 +28,11 @@ public class DeliveryManagerController {
 		users = new ArrayList<User>();
 		customers = new ArrayList<Customer>();
 		products = new ArrayList<Product>();
+		productBase = new ArrayList<ProductBase>();
 		types = new ArrayList<DishType>();
 		ingredients = new ArrayList<Ingredient>();
 		orders = new ArrayList<Order>();
+		sizes = new ArrayList<ProductSize>();
 	}//End DeliveryManagerController
 
 	public void setLoggedUser(final String idLoggedUser) {
@@ -86,13 +89,12 @@ public class DeliveryManagerController {
 		return -1;
 	}
 
-	public void addFirstEmployee(final String name, final String lastName, final String id) throws IOException {
+	public void addFirstEmployee(String name, String lastName, String id) {
 		Employee newEmployee = new Employee(null, name, lastName, id);
 		employees.add(newEmployee);
-		saveEmployeesData();
 	}//End addEmployee
 
-	public void addEmployee(final String name, final String lastName, final String id) throws IOException{
+	public void addEmployee(String name, String lastName, String id) {
 		Employee newEmployee = new Employee(loggedUser, name, lastName, id);
 		loggedUser.setLinked(true);
 		if(employees.isEmpty()) {
@@ -104,10 +106,9 @@ public class DeliveryManagerController {
 			}//End while
 			employees.add(i, newEmployee);
 		}
-		saveEmployeesData();
 	}//End addEmployee
 
-	public void changeEmployee(Employee employee, final String name, final String lastName, final String id) throws IOException{
+	public void changeEmployee(Employee employee, final String name, final String lastName, final String id) {
 		String oldId = employee.getId();
 		employee.setName(name);
 		employee.setLastName(lastName);
@@ -121,22 +122,18 @@ public class DeliveryManagerController {
 			user.setId(id);
 			user.setModifier(getLoggedUser());
 			Collections.sort(users);
-			saveUsersData();
 		}//End if
-		saveEmployeesData();
 	}//End changeEmployee
 
-	public void disableEmployee(final String employeeId) throws IOException {
+	public void disableEmployee(String employeeId) {
 		Employee employee = employees.get(searchEmployeePosition(employeeId));
 		employee.setEnabled(false);
 		employee.setModifier(loggedUser);
-		saveEmployeesData();
 	}//End disableEmployee
 
-	public void removeEmployee(final String employeeId) throws IOException {
+	public void removeEmployee(String employeeId) {
 		int index = searchEmployeePosition(employeeId);
 		employees.remove(index);
-		saveEmployeesData();
 	}//End removeEmployee
 
 	public void saveUsersData() throws IOException {
@@ -171,7 +168,7 @@ public class DeliveryManagerController {
 		return -1;
 	}//End searchUserPositon
 
-	public void addFirstUser(final String idEmployee, final String userName, final String password) throws IOException {
+	public void addFirstUser(String idEmployee, String userName, String password) {
 		Employee employee = employees.get(searchEmployeePosition(idEmployee));
 		employee.setLinked(true);
 		String name = employee.getName();
@@ -179,10 +176,9 @@ public class DeliveryManagerController {
 		String id = employee.getId();
 		User newUser = new User(null, name, lastName, id, userName, password);
 		users.add(newUser);
-		saveUsersData();
 	}//End addUser
 
-	public void addUser(final String idEmployee, final String userName, final String password) throws IOException {
+	public void addUser(String idEmployee, String userName, String password) {
 		Employee employee = employees.get(searchEmployeePosition(idEmployee));
 		loggedUser.setLinked(true);
 		String name = employee.getName();
@@ -198,48 +194,24 @@ public class DeliveryManagerController {
 			}//End while
 			users.add(i, newUser);
 		}
-		saveUsersData();
 	}//End addUser
 
-	public void changeUser(User user, final String userName, final String password) throws IOException {
+	public void changeUser(User user, final String userName, final String password) {
 		user.setUserName(userName);
 		user.setPassword(password);
 		user.setModifier(loggedUser);
-		saveUsersData();
 	}//End changeUser
 
-	public void disableUser(final String userId) throws IOException {
+	public void disableUser(String userId) {
 		User user = users.get(searchUserPosition(userId));
 		user.setEnabled(false);
 		user.setModifier(loggedUser);
-		saveUsersData();
 	}//End disableUser
 
-	public void removeUser(final String userId) throws IOException {
+	public void removeUser(String userId) {
 		int index = searchUserPosition(userId);
 		users.remove(index);
-		saveUsersData();
 	}//End removeUser
-
-	public void importCustomersData(final String fileName, final String separator) throws IOException{
-		String line;
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		while((line = br.readLine()) != null) {
-			String[] attributes = line.split(separator);
-			if(searchCustomerPosition(attributes[2]) == -1) {
-				Comparator<Customer> lastNameAndNameComparator = new LastNameAndNameComparator();
-				String name = attributes[0];
-				String lastName = attributes[1];
-				String id = attributes[2];
-				String address = attributes[3];
-				String nPhone = attributes[4];
-				String remark = attributes[5];
-				Customer customer = new Customer(getLoggedUser(), name, lastName, id, address, nPhone, remark);
-				customers.add(customer);
-				Collections.sort(customers, lastNameAndNameComparator);
-			}//End if
-		}//End while
-	}//End importCustomersData
 
 	public void saveCustomersData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CUSTOMERS_SAVEFILE_PATH));
@@ -267,7 +239,7 @@ public class DeliveryManagerController {
 		return -1;
 	}//End searchCustomerPositionById
 
-	public void addCustomer(String name, String lastName, String id, String address, String nPhone, String remark) throws IOException {
+	public void addCustomer(String name, String lastName, String id, String address, String nPhone, String remark){
 		Customer newCustomer = new Customer(loggedUser, name, lastName, id, address, nPhone, remark);
 		loggedUser.setLinked(true);
 		if(customers.isEmpty()) {
@@ -280,10 +252,9 @@ public class DeliveryManagerController {
 			}//End while
 			customers.add(i, newCustomer);
 		}
-		saveCustomersData();
 	}//End addCustomer
 
-	public void changeCustomer(Customer customer, String name, String lastName, String id, String address, String nPhone, String remark) throws IOException {
+	public void changeCustomer(Customer customer, String name, String lastName, String id, String address, String nPhone, String remark) {
 		customer.setName(name);
 		customer.setLastName(lastName);
 		customer.setId(id);
@@ -293,19 +264,16 @@ public class DeliveryManagerController {
 		customer.setModifier(getLoggedUser());
 		Comparator<Customer> lastNameAndNameComparator = new LastNameAndNameComparator();
 		Collections.sort(customers, lastNameAndNameComparator);
-		saveCustomersData();
 	}//End changeCustomer
 
-	public void disableCustomer(final String customerId) throws IOException {
+	public void disableCustomer(String customerId) {
 		Customer customer = customers.get(searchCustomerPosition(customerId));
 		customer.setEnabled(false);
 		customer.setModifier(loggedUser);
-		saveCustomersData();
 	}//End disableCustomerById
 
-	public void removeCustomer(final String customerId) throws IOException {
+	public void removeCustomer(String customerId) {
 		customers.remove(searchCustomerPosition(customerId));
-		saveCustomersData();
 	}//End removeCustomerById
 
 	public void saveProductsData() throws IOException {
@@ -324,11 +292,11 @@ public class DeliveryManagerController {
 		}//End if
 	}//End loadProductsData
 
-	private int findProduct(final String name){
+	private int findProductBase(final String name){
 		boolean found = false;
 		int index = -1;
-		for(int i = 0; i < products.size() && !found; i++) {
-			if(products.get(i).getName().equalsIgnoreCase(name)) {
+		for(int i = 0; i < productBase.size() && !found; i++) {
+			if(productBase.get(i).getName().equalsIgnoreCase(name)) {
 				index = i;
 				found = true;
 			}//End if
@@ -336,61 +304,105 @@ public class DeliveryManagerController {
 		return index;
 	}//End findProduct
 
-	public void addProduct(final String name,final List<Double> price,final List<String> size,final String type) throws IOException {
-		if(findProduct(name) < 0){
-			int dtIndex = findDishType(type);
-			DishType t;
-			if(dtIndex < 0){
-				t = new DishType(getLoggedUser(),type);
-				addDishType(t);
-			}else{t = types.get(dtIndex);}//End else
-			if(products.isEmpty()){
-				products.add(new Product(getLoggedUser(),name,price,size,t));
-			}else{
-				Product pd = new Product(getLoggedUser(),name,price,size,t);
-				int j = 0;
-				while(products.get(j).compareTo(pd) < 0){j++;}//End while
-				products.add(j,pd);
-			}//End else
+	public void addProduct(final String name,List<String> ingredients,final List<Double> price,final List<String> size,final String type){
+		if(findProductBase(name) < 0){
+			DishType dishType = dishTypeToAdd(type);
+			List<Ingredient> ingd = ingredientsToAdd(ingredients);
+			ProductBase pd = new ProductBase(getLoggedUser(),name,dishType,ingd);
+			productBase.add(pd);
+			createSubproduct(pd,price,size);
 		}//End if
-		saveProductsData();
 	}//End addProduct
-
-	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final List<Double> prices,final List<String> sizes,final String typeName) throws IOException {
-		int productIndex = findProduct(newName);
-		int dishIndex = findDishType(typeName);
-		if(productIndex >= 0)
-			products.get(productIndex).setName(newName);
+	private void createSubproduct(ProductBase pd,List<Double> price,final List<String> size){
+		for(int i = 0; i < price.size();i++){
+			int sizeIndex = findProductSize(size.get(i));
+			ProductSize s;
+			if(sizeIndex < 0){
+				s = new ProductSize(size.get(i));
+				this.sizes.add(s);
+			}else
+				s = sizes.get(sizeIndex);
+			products.add(new Product(pd,s,price.get(i)));
+		}//End for
+	}//End createSubproduct
+	private int findProductSize(final String s){
+		boolean found = false;
+		int index = -1;
+		for(int i = 0; i < sizes.size() && !found;i++){
+			if(s.equalsIgnoreCase(sizes.get(i).getSize())){
+				index = i;
+				found = true;
+			}//End if
+		}//End
+		return index;
+	}//End findProductSize
+	private List<Ingredient> ingredientsToAdd(List<String> ingredients){
+		List<Ingredient> ingd = new ArrayList<Ingredient>();
+		for(int i = 0; i < ingredients.size();i++){
+			int ingdIndex = findIngredient(ingredients.get(i));
+			if(ingdIndex < 0){
+				Ingredient in = new Ingredient(getLoggedUser(),ingredients.get(i));
+				addIngredient(in);
+				ingd.add(in);
+			}else
+				ingd.add(this.ingredients.get(ingdIndex));
+		}//End for
+		return ingd;
+	}//End ingredientsToAdd
+	private DishType dishTypeToAdd(String dish){
+		int dtIndex = findDishType(dish);
+		DishType t;
+		if(dtIndex < 0){
+			t = new DishType(getLoggedUser(),dish);
+			addDishType(t);
+		}else
+			t = types.get(dtIndex);
+		return t;
+	}//End dishTypeToAdd
+	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName){
+		int productIndex = findProductBase(newName);
+		String n = (productIndex >= 0)?newName: (product.getProductBase()).getName();
+		product.changesProductBase(n, ingredientsToAdd(Newingredients), dishTypeToAdd(typeName));
 		products.get(productIndex).setPrice(prices);
 		products.get(productIndex).setSize(sizes);
-		changeDishType(dishIndex,productIndex,typeName);
-		changeIngredient(Newingredients,productIndex);
 		products.get(productIndex).setModifier(loggedUser);
-		Collections.sort(this.products);
-		saveProductsData();
 	}//End changeProduct
 
-	public void disableProduct(String productName) throws IOException {
-		int productIndex = findProduct(productName);
+	public void disableProduct(String productName){
+		int productIndex = findProductBase(productName);
 		if(productIndex >= 0){
-			products.get(productIndex).setEnable(false);
-			products.get(productIndex).setModifier(loggedUser);
+			productBase.get(productIndex).setEnable(false);
+			productBase.get(productIndex).setModifier(loggedUser);
 		}//End if
-		saveProductsData();
 	}//End disableProduct
 
-	public boolean removeProduct(final String productName) throws IOException {
+	public boolean removeProduct(final String productName){
 		boolean removed = false;
-		int productIndex = findProduct(productName);
-		if(productIndex >= 0)
-			if(!products.get(productIndex).getLinked()){
-				products.remove(productIndex);
+		int productIndex = findProductBase(productName);
+		boolean linked = false;
+		if(productIndex >= 0){
+			List<Integer> index = findSubProducts(productName);
+			for(int i = 0; i < index.size() && !linked;i++){
+				linked = linked || products.get(index.get(i)).getEnable();
+			}//End for
+			if(!linked){
+				for(int i = 0; i < index.size() && !linked;i++)
+					products.remove( (int) index.get(i));
+				productBase.remove(productIndex);
 				removed = true;
 			}//End if
-		saveProductsData();
+		}//End if
 		return removed;
 	}//removeProduct
-
+	public List<Integer> findSubProducts(String name){
+		List<Integer> index = new ArrayList<Integer>();
+		for(int i = 0; i < products.size();i++){
+			if(name.equals((products.get(i).getProductBase()).getName())){
+				index.add((Integer) i);
+			}//End if
+		}//End for
+		return index;
+	}//End findSubProducts
 	public void saveIngredientsData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(INGREDIENTS_SAVEFILE_PATH));
 		oos.writeObject(ingredients);
@@ -424,7 +436,7 @@ public class DeliveryManagerController {
 		return index;
 	}//End findIngredient
 
-	public boolean addIngredient(final String ingredient) throws IOException {
+	public boolean addIngredient(final String ingredient){
 		boolean added = false;
 		if(findIngredient(ingredient) < 0){
 			if(ingredients.isEmpty()){
@@ -437,18 +449,16 @@ public class DeliveryManagerController {
 			}//End else
 			added = true;
 		}//End if
-		saveIngredientsData();
 		return added;
 	}//End addIngredient
 
-	private void addIngredient(Ingredient ingredient) throws IOException {
+	private void addIngredient(Ingredient ingredient){
 		int j = 0;
 		while(ingredients.get(j).compareTo(ingredient) < 0){j++;}//End while
 		ingredients.add(j,ingredient);
-		saveIngredientsData();
 	}//End addIngredient
 
-	public String changeIngredient(Ingredient ingredient,final String newName) throws IOException {
+	public String changeIngredient(Ingredient ingredient,final String newName){
 		String msg = "Tal parece que ya existe un ingrediente con ese nombre.";
 		if(findIngredient(newName) < 0){
 			ingredient.setName(newName);
@@ -456,33 +466,14 @@ public class DeliveryManagerController {
 			Collections.sort(ingredients);
 			msg = "Ingrediente modificado";
 		}//End if
-		saveIngredientsData();
 		return msg;
 	}//End changeIngredient
-
-	private void changeIngredient(final List<String> Newingredients,final int productIndex) throws IOException {
-		List<Ingredient> newIngredients = new ArrayList<>();
-		for(int i = 0; i < Newingredients.size(); i++){
-			int ingredientIndex = findIngredient(Newingredients.get(i));
-			if(ingredientIndex < 0){
-				Ingredient ingredient = new Ingredient(getLoggedUser(),Newingredients.get(i));
-				addIngredient(ingredient);
-				newIngredients.add(ingredient);
-			}else
-				newIngredients.add(ingredients.get(ingredientIndex));
-		}//End for
-		products.get(productIndex).setIngredient(newIngredients);
-		products.get(productIndex).setModifier(loggedUser);
-		saveIngredientsData();
-	}//End changeIngredient
-
-	public void disableIngredient(Ingredient ingredient) throws IOException {
+	public void disableIngredient(Ingredient ingredient){
 		ingredient.setEnable(false);
 		ingredient.setModifier(loggedUser);
-		saveIngredientsData();
 	}//End disableIngredient
 
-	public boolean removeIngredient(final String name) throws IOException {
+	public boolean removeIngredient(final String name){
 		int index = findIngredient(name);
 		boolean removed = false;
 		if(index >= 0)
@@ -490,7 +481,6 @@ public class DeliveryManagerController {
 				ingredients.remove(index);
 				removed = true;
 			}//End if
-		saveIngredientsData();
 		return removed;
 	}//End removeIngredient
 
@@ -527,7 +517,7 @@ public class DeliveryManagerController {
 		return index;
 	}//End findDishType
 
-	public boolean addDishType(final String dishType) throws IOException {
+	public boolean addDishType(final String dishType){
 		boolean added = false;
 		if(findDishType(dishType) < 0){
 			if(types.isEmpty()){
@@ -540,44 +530,28 @@ public class DeliveryManagerController {
 			}//End else
 			added = true;
 		}//end if
-		saveTypesData();
 		return added;
 	}//End addProduct
 
-	private void addDishType(final DishType dishType) throws IOException {
+	private void addDishType(final DishType dishType){
 		int j = 0;
 		while(types.get(j).compareTo(dishType) < 0){j++;}//End while
 		types.add(dishType);
-		saveTypesData();
 	}//End addProduct
 
-	public void changeDishType(DishType dType,final String newName) throws IOException {
+	public void changeDishType(DishType dType,final String newName){
 		if(findDishType(newName) < 0){
 			dType.setName(newName);
 			dType.setModifier(loggedUser);
 			Collections.sort(types);
 		}//End if
-		saveTypesData();
 	}//End changeDishType
-
-	private void changeDishType(final int dishIndex,final int productIndex,final String typeName) throws IOException {
-		if(dishIndex < 0){
-			DishType dish = new DishType(getLoggedUser(),typeName);
-			addDishType(dish);
-			products.get(productIndex).setType(dish);
-		}else{
-			products.get(productIndex).setType(types.get(dishIndex));
-		}//End else
-		saveTypesData();
-	}//End changeDishType
-
-	public void disableDishType(DishType dType) throws IOException {
+	public void disableDishType(DishType dType){
 		dType.setEnable(false);
 		dType.setModifier(loggedUser);
-		saveTypesData();
 	}//End disableIngredient
 
-	public boolean removeDishType(final String name) throws IOException {
+	public boolean removeDishType(final String name){
 		int index = findDishType(name);
 		boolean removed = false;
 		if(index >= 0)
@@ -585,7 +559,6 @@ public class DeliveryManagerController {
 				types.remove(index);
 				removed = true;
 			}//End if
-		saveTypesData();
 		return removed;
 	}//End removeDishType
 
@@ -617,44 +590,34 @@ public class DeliveryManagerController {
 		return index;
 	}//End findOrder
 
-	public void addOrder(final List<String> nProducts,List<Double> productsPrices,List<String> productsSizes,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
+	public void addOrder(List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
-		List<Product> ps = new ArrayList<Product>();
-		for(int i = 0; i < nProducts.size(); i++){
-			ps.add(this.products.get(findProduct(nProducts.get(i))));
-		}//End for
-		orders.add(new Order(ps,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
-		saveOrdersData();
+		orders.add(new Order(nProducts,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
 	}//End addOrder
 
-	public void changeOrder(Order order,List<Double> productsPrices,List<String> productsSizes,List<String> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
+	public void changeOrder(Order order,List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
-		List<Product> ps = new ArrayList<Product>();
-		for(int i = 0; i < nProducts.size(); i++){
-			ps.add(this.products.get(findProduct(nProducts.get(i))));
-		}//End for
-		order.setProduct(ps);
+		order.setProduct(nProducts);
 		order.setAmount(amount);
 		order.setRemark(remark);
 		order.setStatus(status);
 		order.setCustomer(customers.get(customerIndex));
 		order.setEmployee(employees.get(employeeIndex));
 		order.setModifier(getLoggedUser());
-		saveOrdersData();
-		order.setProductsPrices(productsPrices);
-		order.setProductsSizes(productsSizes);
 	}//End changeOrder
 
-	public void disableOrder(Order order) throws IOException {
+	public void disableOrder(Order order){
 		order.setEnable(false);
-		saveOrdersData();
 	}//End disableOrder
 
-	public void removeOrder(Order order) throws IOException {
+	public void removeOrder(Order order){
 		orders.remove(order);
-		saveOrdersData();
 	}//End removeOrder
+	public void exportOrderData(File ordersData, String separator) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(ordersData);
+		pw.close();
+	}//End exportOrderData
 
 }//End DeliveryManagerController

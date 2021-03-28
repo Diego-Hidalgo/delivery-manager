@@ -13,8 +13,6 @@ public class Order implements Serializable {
 	private String code;
 	private List<Integer> amount;
 	private List<Product> products;
-	private List<Double> productsPrices;
-	private List<String> productsSizes;
 	private String remark;
 	private Status status;
 	private Date date;
@@ -27,12 +25,10 @@ public class Order implements Serializable {
 		remark = new String();
 		status = Status.SOLICITADO;
 		date = new Date();
-		productsPrices = new ArrayList<Double>();
-		productsSizes = new ArrayList<String>();
 		generateCode();
 	}//End constructor1
 
-	public Order(List<Product> products,List<Double> productsPrices,List<String> productsSizes,List<Integer> amount,String remark,String status,Customer customer,Employee employee,User creator){
+	public Order(List<Product> products,List<Integer> amount,String remark,String status,Customer customer,Employee employee,User creator){
 		this.products = products;
 		this.amount = amount;
 		this.remark = remark;
@@ -41,8 +37,6 @@ public class Order implements Serializable {
 		this.employee = employee;
 		this.creator = creator;
 		date = new Date();
-		this.productsPrices = productsPrices;
-		this.productsSizes = productsSizes;
 		generateCode();
 	}//End constructor2
 
@@ -108,18 +102,6 @@ public class Order implements Serializable {
 	public void setEmployee(Employee employee){
 		this.employee = employee;
 	}//End setCustomer
-	public void setProductsPrices(List<Double> productsPrices){
-		this.productsPrices = productsPrices;
-	}//End setProductsPrices
-	public List<Double> getProductsPrices(){
-		return productsPrices;
-	}//End getProductsPrices
-	public void setProductsSizes(List<String> productsSizes){
-		this.productsSizes = productsSizes;
-	}//End setProductsPrices
-	public List<String> getProductsSizes(){
-		return productsSizes;
-	}//End getProductsPrices
 	public String getCode(){
 		return code;
 	}//End getCode
@@ -170,4 +152,5 @@ public class Order implements Serializable {
 	public List<Product> getProducts(){
 		return products;
 	}//End getProducts
+
 }//End Order
