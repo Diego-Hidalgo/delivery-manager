@@ -435,7 +435,12 @@ public class DeliveryManagerController {
 		}//End while
 		return index;
 	}//End findIngredient
-
+	public String getIngredients(){
+		String ingreds = new String();
+		for(int i = 0; i < this.ingredients.size();i++)
+			ingreds += ingredients.get(i).getName() + "\n";
+		return ingreds;
+	}//End getIngredients
 	public boolean addIngredient(final String ingredient){
 		boolean added = false;
 		if(findIngredient(ingredient) < 0){
