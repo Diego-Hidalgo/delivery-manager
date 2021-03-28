@@ -599,6 +599,7 @@ public class DeliveryManagerController {
 	public void changeOrder(Order order,List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
+		updateProductsNtr(nProducts);
 		order.setProduct(nProducts);
 		order.setAmount(amount);
 		order.setRemark(remark);
@@ -607,7 +608,11 @@ public class DeliveryManagerController {
 		order.setEmployee(employees.get(employeeIndex));
 		order.setModifier(getLoggedUser());
 	}//End changeOrder
-
+	private void updateProductsNtr(List<Product> p){
+		for(int i = 0; i < p.size(); i++){
+			p.get(i).updateNtr();
+		}//End for
+	}//End updateProductsNtr
 	public void disableOrder(Order order){
 		order.setEnable(false);
 	}//End disableOrder
@@ -615,7 +620,7 @@ public class DeliveryManagerController {
 	public void removeOrder(Order order){
 		orders.remove(order);
 	}//End removeOrder
-	public void exportOrderData(File ordersData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException {
+	public void exportOrdersData(File ordersData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(ordersData);
 		List<Order> ords = getOrdesInRange(initialDate,finishDate);
 		String report = new String();
@@ -634,6 +639,14 @@ public class DeliveryManagerController {
 		pw.print(report);
 		pw.close();
 	}//End exportOrderData
+	public void exportProductsData(File productsData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException{
+		PrintWriter pw = new PrintWriter(productsData);
+		for(int i = 0; i < products.size(); i++){
+			pw.println( products.get(i).getProductBase().getName() + separator 
+					+ products.get(i).getNtr() + separator + (products.get(i).getNtr() * products.get(i).getPrice()));
+		}//End for
+		pw.close();
+	}//End exportProductsData
 	private List<Order> getOrdesInRange(Date initialDate,Date finishDate){
 		List<Order> or = new ArrayList<Order>();
 		for(int i = 0; i < orders.size();i++){
