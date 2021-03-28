@@ -639,7 +639,7 @@ public class DeliveryManagerController {
 		pw.print(report);
 		pw.close();
 	}//End exportOrderData
-	public void exportProductsData(File productsData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException{
+	public void exportProductsData(File productsData, String separator) throws FileNotFoundException{
 		PrintWriter pw = new PrintWriter(productsData);
 		for(int i = 0; i < products.size(); i++){
 			pw.println( products.get(i).getProductBase().getName() + separator 
