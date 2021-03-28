@@ -590,32 +590,22 @@ public class DeliveryManagerController {
 		return index;
 	}//End findOrder
 	
-	public void addOrder(final List<String> nProducts,List<Double> productsPrices,List<String> productsSizes,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
+	public void addOrder(List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
-		List<Product> ps = new ArrayList<Product>();
-		for(int i = 0; i < nProducts.size(); i++){
-			ps.add(this.products.get(findProductBase(nProducts.get(i))));
-		}//End for
-		orders.add(new Order(ps,productsPrices,productsSizes,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
+		orders.add(new Order(nProducts,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
 	}//End addOrder
 
-	public void changeOrder(Order order,List<Double> productsPrices,List<String> productsSizes,List<String> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
+	public void changeOrder(Order order,List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
-		List<Product> ps = new ArrayList<Product>();
-		for(int i = 0; i < nProducts.size(); i++){
-			ps.add(this.products.get(findProductBase(nProducts.get(i)))); 
-		}//End for
-		order.setProduct(ps);
+		order.setProduct(nProducts);
 		order.setAmount(amount);
 		order.setRemark(remark);
 		order.setStatus(status);
 		order.setCustomer(customers.get(customerIndex));
 		order.setEmployee(employees.get(employeeIndex));
 		order.setModifier(getLoggedUser());
-		order.setProductsPrices(productsPrices);
-		order.setProductsSizes(productsSizes);
 	}//End changeOrder
 
 	public void disableOrder(Order order){
