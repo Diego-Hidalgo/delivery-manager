@@ -292,6 +292,15 @@ public class DeliveryManagerController {
 		}//End if
 	}//End loadProductsData
 
+	public void exportProductsData(File productsData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException{
+		PrintWriter pw = new PrintWriter(productsData);
+		for(int i = 0; i < products.size(); i++){
+			pw.println( products.get(i).getProductBase().getName() + separator
+					+ products.get(i).getNtr() + separator + (products.get(i).getNtr() * products.get(i).getPrice()));
+		}//End for
+		pw.close();
+	}//End exportProductsData
+
 	private int findProductBase(final String name){
 		boolean found = false;
 		int index = -1;
@@ -587,6 +596,26 @@ public class DeliveryManagerController {
 		}//End if
 	}//End loadOrdersData
 
+	public void exportOrdersData(File ordersData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(ordersData);
+		List<Order> ords = getOrdesInRange(initialDate,finishDate);
+		String report = new String();
+		for(int i = 0; i < ords.size();i++){
+			List<Product> pds = ords.get(i).getProducts();
+			List<Integer> amo = ords.get(i).getAmount();
+			report += ords.get(i).getCustomer().getName() + " " + ords.get(i).getCustomer().getLastName() + separator
+					+ ords.get(i).getCustomer().getAddress() + separator + ords.get(i).getCustomer().getNPhone() + separator
+					+ ords.get(i).getEmployee().getName() + " " + ords.get(i).getEmployee().getLastName() + separator
+					+ ords.get(i).getDate() + separator + ords.get(i).getHour() + separator + ords.get(i).getRemark() + separator;
+			for(int j = 0; j < ords.size();i++){
+				report += pds.get(j).getProductBase().getName() + separator + amo.get(j)+ separator + pds.get(j).getPrice();
+			}//End for
+			report += "\n";
+		}//End for
+		pw.print(report);
+		pw.close();
+	}//End exportOrderData
+
 	public int findOrder(final String code){
 		int index = -1;
 		boolean found = false;
@@ -599,6 +628,17 @@ public class DeliveryManagerController {
 		return index;
 	}//End findOrder
 
+	private List<Order> getOrdesInRange(Date initialDate,Date finishDate){
+		List<Order> or = new ArrayList<Order>();
+		for(int i = 0; i < orders.size();i++){
+			if( orders.get(i).compareDate(initialDate) >= 0 && orders.get(i).compareDate(finishDate) <= 0){
+				or.add(orders.get(i));
+			}//End if
+		}//End for
+		Collections.sort(or);
+		return or;
+	}//End getOrdesInRange
+
 	public void addOrder(List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
@@ -608,6 +648,7 @@ public class DeliveryManagerController {
 	public void changeOrder(Order order,List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee){
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
+		updateProductsNtr(nProducts);
 		order.setProduct(nProducts);
 		order.setAmount(amount);
 		order.setRemark(remark);
@@ -617,6 +658,12 @@ public class DeliveryManagerController {
 		order.setModifier(getLoggedUser());
 	}//End changeOrder
 
+	private void updateProductsNtr(List<Product> p){
+		for(int i = 0; i < p.size(); i++){
+			p.get(i).updateNtr();
+		}//End for
+	}//End updateProductsNtr
+
 	public void disableOrder(Order order){
 		order.setEnable(false);
 	}//End disableOrder
@@ -624,10 +671,5 @@ public class DeliveryManagerController {
 	public void removeOrder(Order order){
 		orders.remove(order);
 	}//End removeOrder
-
-	public void exportOrderData(File ordersData, String separator) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(ordersData);
-		pw.close();
-	}//End exportOrderData
 
 }//End DeliveryManagerController
