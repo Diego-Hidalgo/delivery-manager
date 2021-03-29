@@ -55,7 +55,7 @@ public class MainGUIController {
 	@FXML
 	public void showFirstScene() throws IOException {
 		if(DMC.getAmountEmployees() == 0 && DMC.getAmountUsers() == 0) {
-			showRegisterFirstEmployeesScene();
+			showRegisterEmployeesScene();
 		} else {
 			showLoginScene();
 		}//End else
@@ -84,7 +84,7 @@ public class MainGUIController {
 	}//End idAlreadyInUseAlert
 
 	@FXML
-	public void showRegisterFirstEmployeesScene() throws IOException {
+	public void showRegisterEmployeesScene() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterEmployeeWindows.fxml"));
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
@@ -101,7 +101,7 @@ public class MainGUIController {
 			if(DMC.searchEmployeePosition(id) == -1) {
 				DMC.addEmployee(name, lastName, id);
 				if(DMC.getAmountEmployees() == 1) {
-					showRegisterFirstUserScene();
+					showRegisterUserScene();
 				}//End if
 			} else {
 				idAlreadyInUseAlert();
@@ -112,7 +112,7 @@ public class MainGUIController {
 	}//End addEmployee
 
 	@FXML
-	public void showRegisterFirstUserScene() throws IOException {
+	public void showRegisterUserScene() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindows.fxml"));
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
@@ -220,12 +220,15 @@ public class MainGUIController {
 	public void logInUser() {
 		String userName = logInName.getText();
 		String password = logInPassword.getText();
-		if(DMC.validateCredentials(userName, password)) {
-			DMC.setLoggedUser(userName);
-			System.out.println("Entro");
+		if(!userName.isEmpty() && !password.isEmpty()) {
+			if (DMC.validateCredentials(userName, password)) {
+				DMC.setLoggedUser(userName);
+			} else {
+				incorrectCredentials();
+			}//End else
 		} else {
-			incorrectCredentials();
-		}//End else
+			emptyFieldAlert();
+		}
 	}//End logInUser
 
 	@FXML

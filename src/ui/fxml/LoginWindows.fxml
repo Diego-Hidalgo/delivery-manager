@@ -4,33 +4,71 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="50.0" layoutY="163.0" text="Usuario">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="50.0" layoutY="213.0" text="Contraseña">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="logInName" layoutX="140.0" layoutY="160.0" />
-      <TextField fx:id="logInPassword" layoutX="140.0" layoutY="211.0" />
-      <Button layoutX="155.0" layoutY="262.0" mnemonicParsing="false" onAction="#logInUser" text="Entrar">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font></Button>
-      <Button layoutX="145.0" layoutY="331.0" mnemonicParsing="false" text="Registrarse">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font></Button>
-      <Label layoutX="116.0" layoutY="53.0" text="Inicio de sesión">
-         <font>
-            <Font name="System Bold Italic" size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="116.0" layoutY="306.0" text="¿Aún no tienes una cuenta?" />
-   </children>
-</Pane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="348.0" prefWidth="175.0">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="95.0" text="Nombre:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+                  <Pane prefHeight="35.0" prefWidth="164.0" />
+                  <Label prefHeight="20.0" prefWidth="95.0" text="Contraseña:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="348.0" prefWidth="182.0">
+               <children>
+                  <TextField fx:id="logInName" />
+                  <Pane prefHeight="35.0" prefWidth="171.0" />
+                  <PasswordField fx:id="logInPassword" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <left>
+      <Pane prefHeight="348.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane prefHeight="348.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+   </right>
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="INICIO DE SESIÓN">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="121.0" prefWidth="415.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#logInUser" text="Iniciar sesión">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Pane prefHeight="20.0" prefWidth="415.0" />
+            <Label text="¿Aún no cuentas con un usuario?">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="10.0" prefWidth="415.0" />
+            <Button mnemonicParsing="false" text="Registrarse">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>
