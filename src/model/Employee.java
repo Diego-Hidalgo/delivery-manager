@@ -23,7 +23,7 @@ public class Employee extends Entity  implements Comparable<Employee> {
 	 * @param lastName Employee's last name.
 	 * @param id Employee's identification.
 	 */
-	public Employee(User creator, String name, String lastName, String id){
+	public Employee(User creator, String name, String lastName, String id) {
 		super(creator, name, lastName, id);
 	}//End constructor2
 

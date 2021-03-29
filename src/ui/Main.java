@@ -8,17 +8,18 @@ import javafx.stage.Stage;
 import model.DeliveryManagerController;
 
 public class Main extends Application{
-	
+
 	private DeliveryManagerController DMC;
 	private MainGUIController MGC;
 	private EmergentGUIController EGC;
 	private final String FOLDER = "fxml/";
+
 	public Main(){
 		DMC = new DeliveryManagerController();
 		EGC = new EmergentGUIController(DMC);
 		MGC = new MainGUIController(DMC,EGC);
 	}//End Constructor
-	
+
 	public static void main(String[] args){
 		launch(args);
 	}//End main
@@ -32,6 +33,8 @@ public class Main extends Application{
 		window.setTitle("Bienvenido");
 		window.setScene(scene);
 		window.show();
+		//DMC.loadAllData();
+		//MGC.showFirstScene();
 		MGC.showSceneLogin();
 	}//End start
 

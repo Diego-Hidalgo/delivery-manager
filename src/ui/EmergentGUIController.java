@@ -147,7 +147,7 @@ public class EmergentGUIController {
 		return price;
 	}//End getPrice
 	@FXML
-	public void addIngredient(ActionEvent event){
+	public void addIngredient(ActionEvent event) throws IOException{
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
@@ -171,7 +171,7 @@ public class EmergentGUIController {
 			closeEmergentWindows(event);
 	}//End addIngredient
 	@FXML
-	public void addDishtype(ActionEvent event){
+	public void addDishtype(ActionEvent event)throws IOException {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
