@@ -35,6 +35,7 @@ public class Main extends Application{
 		window.show();
 		DMC.loadAllData();
 		MGC.showFirstScene();
+		//MGC.showSceneLogin();
 	}//End start
 
 }//End Main

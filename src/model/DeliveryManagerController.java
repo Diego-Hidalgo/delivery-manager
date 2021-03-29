@@ -308,6 +308,7 @@ public class DeliveryManagerController {
 			customers = (List<Customer>) ois.readObject();
 			ois.close();
 		}//End if
+		br.close();
 	}//End loadCustomersData
 
 	public int searchCustomerPosition(final String idToSearch) {
@@ -459,19 +460,19 @@ public class DeliveryManagerController {
 		}//End for
 		return index;
 	}//End findProduct
-
-	public void addProduct(final String name,List<String> ingredients,final List<Double> price,final List<String> size,final String type) throws IOException {
+	public boolean addProduct(final String name,List<String> ingredients,final List<Double> price,final List<String> size,final String type)throws IOException{
+		boolean added = false;
 		if(findProductBase(name) < 0){
 			DishType dishType = dishTypeToAdd(type);
 			List<Ingredient> ingd = ingredientsToAdd(ingredients);
 			ProductBase pd = new ProductBase(getLoggedUser(),name,dishType,ingd);
 			productBase.add(pd);
 			createSubproduct(pd,price,size);
+			added = true;
+			saveProductsData();
 		}//End if
-		saveProductsData();
-		saveProductsData();
+		return added;
 	}//End addProduct
-
 	private void createSubproduct(ProductBase pd,List<Double> price,final List<String> size) throws IOException {
 		for(int i = 0; i < price.size();i++){
 			int sizeIndex = findProductSize(size.get(i));
@@ -619,11 +620,8 @@ public class DeliveryManagerController {
 		return index;
 	}//End findIngredient
 
-	public String getIngredients(){
-		String ingreds = new String();
-		for(int i = 0; i < this.ingredients.size();i++)
-			ingreds += ingredients.get(i).getName() + ",";
-		return ingreds;
+	public List<Ingredient> getIngredients(){
+		return ingredients;
 	}//End getIngredients
 
 	public boolean addIngredient(final String ingredient) throws IOException {
@@ -643,10 +641,10 @@ public class DeliveryManagerController {
 		return added;
 	}//End addIngredient
 
-	private void addIngredient(Ingredient ingredient) throws IOException {
-		int j = 0;
-		while(ingredients.get(j).compareTo(ingredient) < 0){j++;}//End while
-		ingredients.add(j,ingredient);
+	private void addIngredient(Ingredient ingredient)throws IOException{
+		int j;
+		for(j = 0; j < ingredients.size() && ingredients.get(j).compareTo(ingredient) < 0;j++);
+			ingredients.add(j,ingredient);
 		saveIngredientsData();
 	}//End addIngredient
 
@@ -745,15 +743,13 @@ public class DeliveryManagerController {
 		for(int i = 0; i < types.size();i++)
 			a += types.get(i).getName() + ",";
 		return a;
-	}//End getDishType
-
-	private void addDishType(final DishType dishType) throws IOException {
-		int j = 0;
-		while(types.get(j).compareTo(dishType) < 0){j++;}//End while
-		types.add(dishType);
+	}
+	private void addDishType(final DishType dishType)throws IOException{
+		int j;
+		for(j = 0; j < types.size() && types.get(j).compareTo(dishType) < 0;j++);
+		types.add(j,dishType);
 		saveTypesData();
-	}//End addProduct
-
+	}//End getDishType
 	public void changeDishType(DishType dType,final String newName) throws IOException {
 		if(findDishType(newName) < 0){
 			dType.setName(newName);

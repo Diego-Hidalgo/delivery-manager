@@ -75,5 +75,8 @@ public class Product implements Serializable {
 	public User getModifier() {
 		return modifier;
 	}//End getModifier
-
+	@Override
+	public String toString(){
+		return product.getName() + " " + price+ " "  + size.getSize()+ " "  + product.getType();
+	}//End toString
 }//End Product
