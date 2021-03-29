@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
@@ -32,6 +29,8 @@ public class MainGUIController {
 	@FXML private TextField employeeIdTxt;
 
 	//User
+	@FXML private Button goBackBtn;
+	@FXML Label welcomeLabel;
 	@FXML private TextField userIdTxt;
 	@FXML private TextField userNameTxt;
 	@FXML private PasswordField userPasswordTxt;
@@ -75,6 +74,7 @@ public class MainGUIController {
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
 		window.show();
+		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() + ". Acceda al menú para usar las opciones del sistema");
 	}//End switchToSecondaryPane
 
 	@FXML
@@ -143,6 +143,9 @@ public class MainGUIController {
 		Parent registerScene = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(registerScene);
+		if(DMC.getLoggedUser() != null) {
+			goBackBtn.setDisable(true);
+		}//End if
 	}//End showRegisterFirstUserScene
 
 	@FXML
@@ -248,6 +251,7 @@ public class MainGUIController {
 		if(!userName.isEmpty() && !password.isEmpty()) {
 			if (DMC.validateCredentials(userName, password)) {
 				DMC.setLoggedUser(userName);
+				switchToSecondaryPane(e);
 			} else {
 				incorrectCredentials();
 			}//End else
@@ -257,7 +261,8 @@ public class MainGUIController {
 	}//End logInUser
 
 	@FXML
-	public void logOutUser() {
+	public void logOutUser(Event e) throws IOException {
+		switchToMainPane(e);
 		DMC.logOutUser();
 	}//End logOutUser
 

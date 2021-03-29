@@ -59,6 +59,12 @@
     <bottom>
         <HBox alignment="CENTER" prefHeight="65.0" prefWidth="400.0" BorderPane.alignment="CENTER">
             <children>
+            <Button fx:id="goBackBtn" mnemonicParsing="false" onAction="#showLoginScene" text="Volver">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Pane prefHeight="65.0" prefWidth="55.0" />
                 <Button fx:id="addUserBtn" mnemonicParsing="false" onAction="#addUser" text="Agregar usuario">
                     <font>
                         <Font name="System Bold" size="13.0" />
