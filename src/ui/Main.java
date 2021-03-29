@@ -33,7 +33,7 @@ public class Main extends Application{
 		window.setTitle("Bienvenido");
 		window.setScene(scene);
 		window.show();
-		MGC.showSceneLogin();
+		MGC.showFirstScene();
 	}//End start
 
 }//End Main

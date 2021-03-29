@@ -50,7 +50,7 @@ public class EmergentGUIController {
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
 	@FXML
-	public void addIngredient(){
+	public void addIngredient() throws IOException {
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
 		addInfo.setContentText("No se ha podido agregar el ingrediente, verifica el nombre.");
@@ -66,7 +66,7 @@ public class EmergentGUIController {
 		addInfo.showAndWait();
 	}//End addIngredient
 	@FXML
-	public void addDishtype(){
+	public void addDishtype() throws IOException {
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
 		addInfo.setContentText("No se ha podido agregar el tipo de plato, verifica el nombre.");

@@ -23,6 +23,43 @@ public class MainGUIController {
 	}//End constructor
 
 	@FXML
+	public void showFirstScene() throws IOException {
+		if(DMC.getAmountEmployees() == 0 && DMC.getAmountUsers() == 0) {
+			showRegisterFirstEmployeesScene();
+			showRegisterFirstUserScene();
+		} else {
+			showLoginScene();
+		}//End else
+	}//End showFirstScene
+
+	@FXML
+	public void showRegisterFirstEmployeesScene() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterEmployeeWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(registerScene);
+	}//End showRegisterEmployeesWindow
+
+	@FXML
+	public void showRegisterFirstUserScene() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(registerScene);
+	}//End showRegisterFirstUserScene
+
+	@FXML
+	public void showLoginScene() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"LoginWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent loginScene = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(loginScene);
+	}//End showLoginScene
+
+	@FXML
 	public void showSceneLogin() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"PantallaDePruebas.fxml"));
 		fxml.setController(this);
