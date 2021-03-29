@@ -244,6 +244,17 @@ public class MainGUIController {
 	}//End employeeAlreadyHasAnUserAlert
 
 	@FXML
+	public void passwordTooShortAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Contraseña inválida");
+		alert.setHeaderText("LA CONTRASEÑA ES DEMASIADO CORTA");
+		alert.setContentText("La contraseña debe tener por lo menos 7 caracteres, intente con otra");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End passwordTooShortAlert
+
+	@FXML
 	public void addUser() throws IOException {
 		String userId = userIdTxt.getText();
 		String userName = userNameTxt.getText();
@@ -253,19 +264,23 @@ public class MainGUIController {
 			if(DMC.searchEmployeePosition(userId) != -1) {
 				if(DMC.searchUserPosition(userId) == -1) {
 					if (password.equals(pwConfirmation)) {
-						if (!DMC.validateUserName(userName)) {
-							DMC.addUser(userId, userName, password);
-							userIdTxt.clear();
-							userNameTxt.clear();
-							userPasswordTxt.clear();
-							passwordConfirmationTxt.clear();
-							successfulActionAlert("Usuario registrado correctamente");
-							if (DMC.getAmountUsers() == 1) {
-								showLoginScene();
-							}//End if
+						if(password.length() >= 7) {
+							if (!DMC.validateUserName(userName)) {
+								DMC.addUser(userId, userName, password);
+								userIdTxt.clear();
+								userNameTxt.clear();
+								userPasswordTxt.clear();
+								passwordConfirmationTxt.clear();
+								successfulActionAlert("Usuario registrado correctamente");
+								if (DMC.getAmountUsers() == 1) {
+									showLoginScene();
+								}//End if
+							} else {
+								userNameAlreadyInUseAlert();
+							}//End else
 						} else {
-							userNameAlreadyInUseAlert();
-						}//End else
+							passwordTooShortAlert();
+						}
 					} else {
 						passwordMisMatchAlert();
 					} //End else
