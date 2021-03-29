@@ -16,7 +16,8 @@ import model.DeliveryManagerController;
 public class EmergentGUIController {
 	
 	private DeliveryManagerController DMC;
-	@FXML private TextField ingredientName;
+	@FXML private TextField tIngredientName;
+	@FXML private TextField tDishtypeName;
 	
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
@@ -30,22 +31,54 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
+		formulario.setTitle("Agregar ingrediente");
 		formulario.setScene(scene);
+		formulario.setResizable(false);
 		formulario.showAndWait();
 	}//End showRegisterIngredienteScene
-	
+	@FXML
+	public void showRegisterDihstypeScene() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource("RegisterDishTypeEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage formulario = new Stage();
+		formulario.initModality(Modality.APPLICATION_MODAL);
+		formulario.setTitle("Agregar tipo de plato");
+		formulario.setScene(scene);
+		formulario.setResizable(false);
+		formulario.showAndWait();
+	}//End showRegisterDihstypeScene
 	@FXML
 	public void addIngredient(){
-		String ingredientName = this.ingredientName.getText();
-		if(!ingredientName.equals("") && ingredientName != null){
-			Alert addInfo = new Alert(AlertType.INFORMATION);
-			addInfo.setHeaderText(null);
-			boolean added = DMC.addIngredient(ingredientName);
-			if(added){
-				addInfo.setContentText("Se ha agregado el ingrediente correctamente.");
-			}else
-				addInfo.setContentText("No se ha podido agregar el ingrediente, verifica el nombre.");
-			addInfo.showAndWait();
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		addInfo.setContentText("No se ha podido agregar el ingrediente, verifica el nombre.");
+		if(tIngredientName != null){
+			String ingredientName = this.tIngredientName.getText();
+			if(!ingredientName.equals("")){
+				tIngredientName.setText("");
+				boolean added = DMC.addIngredient(ingredientName);
+				if(added)
+					addInfo.setContentText("Se ha agregado el ingrediente correctamente.");
+			}//End if
 		}//End if
+		addInfo.showAndWait();
 	}//End addIngredient
+	@FXML
+	public void addDishtype(){
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		addInfo.setContentText("No se ha podido agregar el tipo de plato, verifica el nombre.");
+		if(tDishtypeName != null){
+			String dishtypeName = this.tDishtypeName.getText();
+			if(!dishtypeName.equals("")){
+				tDishtypeName.setText("");
+				boolean added = DMC.addDishType(dishtypeName);
+				if(added)
+					addInfo.setContentText("Se ha agregado el tipo de plato correctamente.");
+			}//End if
+		}//End if
+		addInfo.showAndWait();
+	}//End addDishtype
 }//End EmergentGUIController

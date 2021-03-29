@@ -68,7 +68,7 @@ public class Ingredient implements Comparable<Ingredient>, Serializable {
 
 	@Override
 	public int compareTo(Ingredient ingredient) {
-		return name.compareTo(ingredient.getName());
+		return name.toLowerCase().compareTo(ingredient.getName().toLowerCase());
 	}//End compareTo
 	
 }//End Ingredients

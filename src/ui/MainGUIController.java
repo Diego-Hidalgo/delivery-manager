@@ -21,7 +21,7 @@ public class MainGUIController {
 	
 	@FXML
 	public void showSceneLogin() throws IOException{
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource("LoginWindows.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource("PantallaDePruebas.fxml"));
 		fxml.setController(this);
 		Parent loginWindow = fxml.load();
 		mainPanel.getChildren().setAll(loginWindow);
@@ -33,5 +33,16 @@ public class MainGUIController {
 	@FXML
 	public void show() throws IOException{
 		EGC.showRegisterIngredienteScene();
+	}
+	@FXML
+	public void showdish() throws IOException{
+		EGC.showRegisterDihstypeScene();
+	}
+	@FXML 
+	public void showIngredients(){
+		System.out.println(DMC.getIngredients());
+	}@FXML 
+	public void showDishTypes(){
+		System.out.println(DMC.getDishtype());
 	}
 }//End MainGUIController
