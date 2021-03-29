@@ -367,14 +367,17 @@ public class DeliveryManagerController {
 		return index;
 	}//End findProduct
 
-	public void addProduct(final String name,List<String> ingredients,final List<Double> price,final List<String> size,final String type){
+	public boolean addProduct(final String name,List<String> ingredients,final List<Double> price,final List<String> size,final String type){
+		boolean added = false;
 		if(findProductBase(name) < 0){
 			DishType dishType = dishTypeToAdd(type);
 			List<Ingredient> ingd = ingredientsToAdd(ingredients);
 			ProductBase pd = new ProductBase(getLoggedUser(),name,dishType,ingd);
 			productBase.add(pd);
 			createSubproduct(pd,price,size);
+			added = true;
 		}//End if
+		return added;
 	}//End addProduct
 
 	private void createSubproduct(ProductBase pd,List<Double> price,final List<String> size){
@@ -506,11 +509,8 @@ public class DeliveryManagerController {
 		return index;
 	}//End findIngredient
 
-	public String getIngredients(){
-		String ingreds = new String();
-		for(int i = 0; i < this.ingredients.size();i++)
-			ingreds += ingredients.get(i).getName() + ",";
-		return ingreds;
+	public List<Ingredient> getIngredients(){
+		return ingredients;
 	}//End getIngredients
 
 	public boolean addIngredient(final String ingredient){
