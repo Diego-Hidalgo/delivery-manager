@@ -78,10 +78,12 @@ public class DeliveryManagerController {
 	@SuppressWarnings("unchecked")
 	public void loadEmployeesData() throws IOException, ClassNotFoundException {
 		File f = new File(EMPLOYEES_SAVEFILE_PATH);
-		if(f.exists()) {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			employees = (ArrayList<Employee>) ois.readObject();
+			employees = (List<Employee>) ois.readObject();
 			ois.close();
+			br.close();
 		}//End if
 	}//End loadEmployeesData
 
@@ -189,10 +191,12 @@ public class DeliveryManagerController {
 	@SuppressWarnings("unchecked")
 	public void loadUsersData() throws IOException, ClassNotFoundException {
 		File f = new File(USERS_SAVEFILE_PATH);
-		if(f.exists()) {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			users = (ArrayList<User>)ois.readObject();
+			users = (List<User>)ois.readObject();
 			ois.close();
+			br.close();
 		}//End if
 	}//End loadUsersData
 
@@ -274,9 +278,10 @@ public class DeliveryManagerController {
 	@SuppressWarnings("unchecked")
 	public void loadCustomersData() throws IOException, ClassNotFoundException {
 		File f = new File(CUSTOMERS_SAVEFILE_PATH);
-		if(f.exists()) {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			customers = (ArrayList<Customer>) ois.readObject();
+			customers = (List<Customer>) ois.readObject();
 			ois.close();
 		}//End if
 	}//End loadCustomersData
@@ -343,10 +348,12 @@ public class DeliveryManagerController {
 	@SuppressWarnings("unchecked")
 	public void loadBaseProductsData() throws IOException, ClassNotFoundException {
 		File f = new File(BASEPRODUCTS_SAVEFILE_PATH);
-		if(f.exists()) {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			productBase = (ArrayList<ProductBase>) ois.readObject();
+			productBase = (List<ProductBase>) ois.readObject();
 			ois.close();
+			br.close();
 		}//End if
 	}//End loadBaseProductsData
 
@@ -359,10 +366,12 @@ public class DeliveryManagerController {
 	@SuppressWarnings("unchecked")
 	public void loadProductsSizeData() throws IOException, ClassNotFoundException {
 		File f = new File(PRODUCTSSIZE_SAVEFILE_PATH);
-		if(f.exists()) {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			sizes = (ArrayList<ProductSize>) ois.readObject();
+			sizes = (List<ProductSize>) ois.readObject();
 			ois.close();
+			br.close();
 		}//End if
 	}//End loadProductsSizeData
 
@@ -375,10 +384,12 @@ public class DeliveryManagerController {
 	@SuppressWarnings("unchecked")
 	public void loadProductsData() throws IOException, ClassNotFoundException {
 		File f = new File(PRODUCTS_SAVEFILE_PATH);
-		if(f.exists()) {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			products = (ArrayList<Product>) ois.readObject();
+			products = (List<Product>) ois.readObject();
 			ois.close();
+			br.close();
 		}//End if
 	}//End loadProductsData
 
@@ -558,10 +569,12 @@ public class DeliveryManagerController {
 	@SuppressWarnings("unchecked")
 	public void loadIngredientsData() throws IOException, ClassNotFoundException {
 		File f = new File(INGREDIENTS_SAVEFILE_PATH);
-		if(f.exists()) {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			ingredients = (ArrayList<Ingredient>)ois.readObject();
+			ingredients = (List<Ingredient>)ois.readObject();
 			ois.close();
+			br.close();
 		}//End if
 	}//End loadIngredientsData
 
@@ -660,9 +673,11 @@ public class DeliveryManagerController {
 	@SuppressWarnings("unchecked")
 	public void loadTypesData() throws IOException, ClassNotFoundException {
 		File f = new File(TYPES_SAVEFILE_PATH);
-		if(f.exists()) {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			types = (ArrayList<DishType>) ois.readObject();
+			types = (List<DishType>) ois.readObject();
+			br.close();
 			ois.close();
 		}//End if
 	}//End loadTypesData
@@ -759,9 +774,11 @@ public class DeliveryManagerController {
 	@SuppressWarnings("unchecked")
 	public void loadOrdersData() throws IOException, ClassNotFoundException {
 		File f = new File(ORDERS_SAVEFILE_PATH);
-		if(f.exists()) {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			orders = (ArrayList<Order>)ois.readObject();
+			orders = (List<Order>)ois.readObject();
+			br.close();
 			ois.close();
 		}//End if
 	}//End loadOrdersData

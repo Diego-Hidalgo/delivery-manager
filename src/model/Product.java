@@ -1,8 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Product {
+public class Product implements Serializable {
+
+	public final static long serialVersionUID = 1;
 
 	private int ntr;//number of times it has been ordered
 	private double price;
