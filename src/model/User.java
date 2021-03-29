@@ -1,6 +1,6 @@
 package model;
 
-public class User extends Employee {
+public class User extends Employee implements Cloneable{
 
 	private static final long serialVersionUID = 1;
 
@@ -36,6 +36,16 @@ public class User extends Employee {
 		this.userName = userName;
 		this.password = password;
 	}//End constructor2
+
+	public Object clone() {
+		Object clone = null;
+		try {
+			clone = super.clone();
+		} catch(CloneNotSupportedException e) {
+			//Should not occur
+		}
+		return clone;
+	}//End clone;
 
 	/**
 	 * changes the username. <br>

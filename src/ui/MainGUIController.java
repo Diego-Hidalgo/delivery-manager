@@ -15,6 +15,10 @@ import model.*;
 
 public class MainGUIController {
 
+	//Login
+	@FXML private TextField logInName;
+	@FXML private PasswordField logInPassword;
+
 	//Pane
 	@FXML private BorderPane mainPane;
 	@FXML private BorderPane secondaryPane;
@@ -150,6 +154,17 @@ public class MainGUIController {
 	}//End userNameAlreadyInUseAlert
 
 	@FXML
+	public void employeeAlreadyHasAnUserAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("EL EMPLEADO YA TIENE UN USUARIO ASOCIADO");
+		alert.setContentText("Vuelva a intentarlo con un nuevo empleado");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End employeeAlreadyHasAnUserAlert
+
+	@FXML
 	public void addUser() throws IOException {
 		String userId = userIdTxt.getText();
 		String userName = userNameTxt.getText();
@@ -157,15 +172,22 @@ public class MainGUIController {
 		String pwConfirmation = passwordConfirmationTxt.getText();
 		if(!userId.isEmpty() && !userName.isEmpty() && !password.isEmpty() && !pwConfirmation.isEmpty()) {
 			if(DMC.searchEmployeePosition(userId) != -1) {
-				if(password.equals(pwConfirmation)) {
-					if(!DMC.validateUserName(userName)) {
-						DMC.addUser(userId, userName, password);
+				if(DMC.searchUserPosition(userId) == -1) {
+					if (password.equals(pwConfirmation)) {
+						if (!DMC.validateUserName(userName)) {
+							DMC.addUser(userId, userName, password);
+							if (DMC.getAmountUsers() == 1) {
+								showLoginScene();
+							}//End if
+						} else {
+							userNameAlreadyInUseAlert();
+						}//End else
 					} else {
-						userNameAlreadyInUseAlert();
-					}
+						passwordMisMatchAlert();
+					} //End else
 				} else {
-					passwordMisMatchAlert();
-				} //End else
+					employeeAlreadyHasAnUserAlert();
+				}//End else
 			} else {
 				idNotFoundAlert();
 			}//End else
@@ -182,6 +204,34 @@ public class MainGUIController {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(loginScene);
 	}//End showLoginScene
+
+	@FXML
+	public void incorrectCredentials() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("");
+		alert.setHeaderText(null);
+		alert.setContentText("Verifique las credenciales de inicio de sesión");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End incorrectCredentials
+
+	@FXML
+	public void logInUser() {
+		String userName = logInName.getText();
+		String password = logInPassword.getText();
+		if(DMC.validateCredentials(userName, password)) {
+			DMC.setLoggedUser(userName);
+			System.out.println("Entro");
+		} else {
+			incorrectCredentials();
+		}//End else
+	}//End logInUser
+
+	@FXML
+	public void logOutUser() {
+		DMC.logOutUser();
+	}//End logOutUser
 
 	@FXML
 	public void showSceneLogin() throws IOException{

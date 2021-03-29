@@ -45,8 +45,15 @@ public class DeliveryManagerController {
 		return employees.size();
 	}
 
-	public void setLoggedUser(final String idLoggedUser) {
-		this.loggedUser = users.get(searchUserPosition(idLoggedUser));
+	public void setLoggedUser(final String nameLoggedUser) {
+		Boolean stop = false;
+		for(int i = 0; i < users.size() && !stop; i ++) {
+			User user = (User) users.get(i).clone();
+			if(user.getUserName().equals(nameLoggedUser)) {
+				this.loggedUser = user;
+				stop = true;
+			}//End if
+		}//for
 	}//End setLoggedUser
 
 	public void logOutUser() {
@@ -146,7 +153,7 @@ public class DeliveryManagerController {
 			}//End while
 			employees.add(i, newEmployee);
 			loggedUser.setLinked(true);
-		}
+		}//End else
 		saveEmployeesData();
 	}//End addEmployee
 
@@ -166,6 +173,7 @@ public class DeliveryManagerController {
 			Collections.sort(users);
 			saveUsersData();
 		}//End if
+		loggedUser.setLinked(true);
 		saveEmployeesData();
 	}//End changeEmployee
 
@@ -173,12 +181,14 @@ public class DeliveryManagerController {
 		Employee employee = employees.get(searchEmployeePosition(employeeId));
 		employee.setEnabled(false);
 		employee.setModifier(loggedUser);
+		loggedUser.setLinked(true);
 		saveEmployeesData();
 	}//End disableEmployee
 
 	public void removeEmployee(String employeeId) throws IOException {
 		int index = searchEmployeePosition(employeeId);
 		employees.remove(index);
+		loggedUser.setLinked(true);
 		saveEmployeesData();
 	}//End removeEmployee
 
@@ -210,6 +220,17 @@ public class DeliveryManagerController {
 		}//End for
 		return found;
 	}//End validateUserName
+
+	public boolean validateCredentials(String userName, String password) {
+		boolean validate = false;
+		for(int i = 0; i < users.size() && !validate; i ++) {
+			User user = users.get(i);
+			if(user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+				validate = true;
+			}//End if
+		}//End for
+		return validate;
+	}//End validatePassword
 
 	public int searchUserPosition(final String idToSearch) {
 		int start = 0;
@@ -251,6 +272,7 @@ public class DeliveryManagerController {
 		user.setUserName(userName);
 		user.setPassword(password);
 		user.setModifier(loggedUser);
+		loggedUser.setLinked(true);
 		saveUsersData();
 		saveOrdersData();
 	}//End changeUser
@@ -259,6 +281,7 @@ public class DeliveryManagerController {
 		User user = users.get(searchUserPosition(userId));
 		user.setEnabled(false);
 		user.setModifier(loggedUser);
+		loggedUser.setLinked(true);
 		saveUsersData();
 		saveOrdersData();
 	}//End disableUser
@@ -266,6 +289,7 @@ public class DeliveryManagerController {
 	public void removeUser(String userId) throws IOException {
 		int index = searchUserPosition(userId);
 		users.remove(index);
+		loggedUser.setLinked(true);
 		saveUsersData();
 	}//End removeUser
 

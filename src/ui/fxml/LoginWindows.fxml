@@ -16,9 +16,9 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="140.0" layoutY="160.0" />
-      <TextField layoutX="140.0" layoutY="211.0" />
-      <Button layoutX="161.0" layoutY="266.0" mnemonicParsing="false" text="Entrar">
+      <TextField fx:id="logInName" layoutX="140.0" layoutY="160.0" />
+      <TextField fx:id="logInPassword" layoutX="140.0" layoutY="211.0" />
+      <Button layoutX="155.0" layoutY="262.0" mnemonicParsing="false" onAction="#logInUser" text="Entrar">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
@@ -31,6 +31,6 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="110.0" layoutY="306.0" text="¿Aún no tienes una cuenta?" />
+      <Label layoutX="116.0" layoutY="306.0" text="¿Aún no tienes una cuenta?" />
    </children>
 </Pane>
