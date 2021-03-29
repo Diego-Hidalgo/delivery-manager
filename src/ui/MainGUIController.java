@@ -21,7 +21,7 @@ public class MainGUIController {
 	
 	@FXML
 	public void showSceneLogin() throws IOException{
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource("PantallaDePruebas.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource("fxml/PantallaDePruebas.fxml"));
 		fxml.setController(this);
 		Parent loginWindow = fxml.load();
 		mainPanel.getChildren().setAll(loginWindow);

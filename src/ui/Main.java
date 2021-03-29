@@ -24,7 +24,7 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage window) throws Exception {
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource("MainWindows.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource("fxml/MainWindows.fxml"));
 		fxml.setController(MGC);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);

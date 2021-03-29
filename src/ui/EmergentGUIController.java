@@ -25,7 +25,7 @@ public class EmergentGUIController {
 	
 	@FXML
 	public void showRegisterIngredienteScene() throws IOException{
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource("RegisterIngredientEmergent.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource("fxml/RegisterIngredientEmergent.fxml"));
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
@@ -38,7 +38,7 @@ public class EmergentGUIController {
 	}//End showRegisterIngredienteScene
 	@FXML
 	public void showRegisterDihstypeScene() throws IOException{
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource("RegisterDishTypeEmergent.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource("fxml/RegisterDishTypeEmergent.fxml"));
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
