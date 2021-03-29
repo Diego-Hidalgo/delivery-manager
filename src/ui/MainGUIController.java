@@ -2,9 +2,12 @@ package ui;
 
 import java.io.IOException;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
@@ -51,6 +54,28 @@ public class MainGUIController {
 		this.DMC = DMC;
 		this.EGC = EGC;
 	}//End constructor
+
+	@FXML
+	public void switchToMainPane(Event e) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"MainWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root, null);
+		window.setScene(scene);
+		window.show();
+	}//End switchToMainPane
+
+	@FXML
+	public void switchToSecondaryPane(Event e) throws IOException{
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"SecondaryWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root, null);
+		window.setScene(scene);
+		window.show();
+	}//End switchToSecondaryPane
 
 	@FXML
 	public void showFirstScene() throws IOException {
@@ -217,7 +242,7 @@ public class MainGUIController {
 	}//End incorrectCredentials
 
 	@FXML
-	public void logInUser() {
+	public void logInUser(Event e) throws IOException {
 		String userName = logInName.getText();
 		String password = logInPassword.getText();
 		if(!userName.isEmpty() && !password.isEmpty()) {
