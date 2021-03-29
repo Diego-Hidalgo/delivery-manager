@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -22,21 +23,29 @@ public class MainGUIController {
 	//Pane
 	@FXML private BorderPane mainPane;
 	@FXML private BorderPane secondaryPane;
+	@FXML private MenuBar menuBar;
 
 	//Employee
+	@FXML private MenuItem addEmployeeBtn;
+	@FXML private MenuItem manageEmployeeBtn;
 	@FXML private TextField employeeNameTxt;
 	@FXML private TextField employeeLastNameTxt;
 	@FXML private TextField employeeIdTxt;
 
 	//User
 	@FXML private Button goBackBtn;
-	@FXML Label welcomeLabel;
+	@FXML private Label welcomeLabel;
+	@FXML private MenuItem addUserBtn;
+	@FXML private MenuItem manageUserBtn;
+	@FXML private MenuItem logOutBtn;
 	@FXML private TextField userIdTxt;
 	@FXML private TextField userNameTxt;
 	@FXML private PasswordField userPasswordTxt;
 	@FXML private PasswordField passwordConfirmationTxt;
 
 	//Customer
+	@FXML private MenuItem addCustomerBtn;
+	@FXML private MenuItem manageCustomerBtn;
 	@FXML private TextField customerNameTxt;
 	@FXML private TextField customerLastNameTxt;
 	@FXML private TextField customerIdTxt;
@@ -59,7 +68,7 @@ public class MainGUIController {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"MainWindows.fxml"));
 		fxmlLoader.setController(this);
 		Parent root = fxmlLoader.load();
-		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
+		Stage window = (Stage) menuBar.getScene().getWindow();
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
 		window.show();
@@ -262,9 +271,29 @@ public class MainGUIController {
 
 	@FXML
 	public void logOutUser(Event e) throws IOException {
-		switchToMainPane(e);
-		DMC.logOutUser();
+		if(confirmActionAlert("¿Está seguro de salir del sistema?")) {
+			DMC.logOutUser();
+			switchToMainPane(e);
+			showLoginScene();
+		}//End if
 	}//End logOutUser
+
+	@FXML
+	public boolean confirmActionAlert(String text) {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Confirmar Acción");
+		alert.setHeaderText(null);
+		alert.setContentText(text);
+		ButtonType acceptBtn = new ButtonType("Aceptar");
+		ButtonType cancelBtn = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+		alert.getButtonTypes().setAll(acceptBtn, cancelBtn);
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == acceptBtn) {
+			return true;
+		} else {
+			return false;
+		}//End confirmationAlert
+	}
 
 	@FXML
 	public void showSceneLogin() throws IOException{
