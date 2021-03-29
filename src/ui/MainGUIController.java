@@ -88,9 +88,20 @@ public class MainGUIController {
 	}//End showFirstScene
 
 	@FXML
+	public void successfulActionAlert(String msg) throws IOException {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Acción exitosa");
+		alert.setHeaderText(null);
+		alert.setContentText(msg);
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End successfulActionAlert
+
+	@FXML
 	public void emptyFieldAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("");
+		alert.setTitle("Campo Vacío");
 		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -101,7 +112,7 @@ public class MainGUIController {
 	@FXML
 	public void idAlreadyInUseAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("");
+		alert.setTitle("Id No Disponible");
 		alert.setHeaderText("LA ID YA SE ENCUENTRA EN USO");
 		alert.setContentText("Prueba con una distinta y vuelva a intentar");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -116,6 +127,9 @@ public class MainGUIController {
 		Parent registerScene = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(registerScene);
+		Stage stage = (Stage) mainPane.getScene().getWindow();
+		stage.setTitle("Registrar primer empleado");
+		stage.setHeight(450);
 	}//End showRegisterEmployeesWindow
 
 	@FXML
@@ -124,6 +138,9 @@ public class MainGUIController {
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
 		secondaryPane.setCenter(registerScene);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Registrar empleado");
+		stage.setHeight(450);
 	}//End showRegisterEmployeesSceneInSecondaryPane
 
 	@FXML
@@ -134,6 +151,10 @@ public class MainGUIController {
 		if(!name.isEmpty() && !lastName.isEmpty() && !id.isEmpty()) {
 			if(DMC.searchEmployeePosition(id) == -1) {
 				DMC.addEmployee(name, lastName, id);
+				successfulActionAlert("Empleado registrado correctamente");
+				employeeNameTxt.clear();
+				employeeLastNameTxt.clear();
+				employeeIdTxt.clear();
 				if(DMC.getAmountEmployees() == 1) {
 					showRegisterUserSceneInMainPane();
 				}//End if
@@ -152,9 +173,10 @@ public class MainGUIController {
 		Parent registerScene = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(registerScene);
-		if(DMC.getLoggedUser() != null) {
-			goBackBtn.setDisable(true);
-		}//End if
+		Stage stage = (Stage) mainPane.getScene().getWindow();
+		stage.setTitle("Registrar primer usuario");
+		stage.setHeight(500);
+		goBackBtn.setDisable(true);
 	}//End showRegisterFirstUserScene
 
 	@FXML
@@ -163,6 +185,9 @@ public class MainGUIController {
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
 		secondaryPane.setCenter(registerScene);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Registrar usuario");
+		stage.setHeight(500);
 		if(DMC.getLoggedUser() != null) {
 			goBackBtn.setDisable(true);
 		}//End if
@@ -171,7 +196,7 @@ public class MainGUIController {
 	@FXML
 	public void passwordMisMatchAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("");
+		alert.setTitle("Verificar Contraseñas");
 		alert.setHeaderText("LAS CONTRASEÑAS NO COINCIDEN");
 		alert.setContentText("Las contraseñas deben ser iguales, vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -182,7 +207,7 @@ public class MainGUIController {
 	@FXML
 	public void idNotFoundAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("");
+		alert.setTitle("La Id No Se Encuentra");
 		alert.setHeaderText("LA ID INGRESADA NO EXISTE");
 		alert.setContentText("La id ingresada no coincide con ningún empleado, intente con otra o cree un nuevo empleado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -193,7 +218,7 @@ public class MainGUIController {
 	@FXML
 	public void userNameAlreadyInUseAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("");
+		alert.setTitle("Nombre No Disponible");
 		alert.setHeaderText("EL NOMBRE DE USUARIO YA ESTÁ EN USO");
 		alert.setContentText("Vuelva a intentarlo con un nuevo nombre");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -204,7 +229,7 @@ public class MainGUIController {
 	@FXML
 	public void employeeAlreadyHasAnUserAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("");
+		alert.setTitle("Empleado Ya Vinculado");
 		alert.setHeaderText("EL EMPLEADO YA TIENE UN USUARIO ASOCIADO");
 		alert.setContentText("Vuelva a intentarlo con un nuevo empleado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -226,6 +251,10 @@ public class MainGUIController {
 							DMC.addUser(userId, userName, password);
 							if (DMC.getAmountUsers() == 1) {
 								showLoginScene();
+								successfulActionAlert("Usuario registrado correctamente");
+								userIdTxt.clear();
+								userNameTxt.clear();
+								userPasswordTxt.clear();
 							}//End if
 						} else {
 							userNameAlreadyInUseAlert();
@@ -251,6 +280,9 @@ public class MainGUIController {
 		Parent loginScene = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(loginScene);
+		Stage stage = (Stage) mainPane.getScene().getWindow();
+		stage.setTitle("Iniciar sesión");
+		stage.setHeight(440);
 	}//End showLoginScene
 
 	@FXML
@@ -312,6 +344,9 @@ public class MainGUIController {
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
 		secondaryPane.setCenter(registerScene);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Registrar empleado");
+		stage.setHeight(520);
 	}//End showAddEmployeeScene
 
 	@FXML
@@ -326,6 +361,13 @@ public class MainGUIController {
 				!nPhone.isEmpty() && !remark.isEmpty()) {
 			if(DMC.searchCustomerPosition(id) == -1) {
 				DMC.addCustomer(name, lastName, id, address, nPhone, remark);
+				successfulActionAlert("Empleado registrado correctamente");
+				customerNameTxt.clear();
+				customerLastNameTxt.clear();
+				customerIdTxt.clear();
+				customerAddressTxt.clear();
+				customerPhoneTxt.clear();
+				customerRemarkTxt.clear();
 			} else {
 				idAlreadyInUseAlert();
 			}//End else
