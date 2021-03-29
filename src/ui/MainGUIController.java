@@ -90,23 +90,11 @@ public class MainGUIController {
 	}//End showRegisterEmployeesWindow
 
 	@FXML
-	public void addFirstEmployee() throws IOException {
-		String name = employeeNameTxt.getText();
-		String lastName = employeeLastNameTxt.getText();
-		String id = employeeIdTxt.getText();
-		if(!name.equals("") || !lastName.equals("") || !id.equals("")) {
-			DMC.addFirstEmployee(name, lastName, id);
-		} else {
-			emptyFieldAlert();
-		}//End else
-	}//End addFirstEmployee
-
-	@FXML
 	public void addEmployee() throws IOException {
 		String name = employeeNameTxt.getText();
 		String lastName = employeeLastNameTxt.getText();
 		String id = employeeIdTxt.getText();
-		if(!name.equals("") || !lastName.equals("") || !id.equals("")) {
+		if(!name.isEmpty() || !lastName.isEmpty() || !id.isEmpty()) {
 			if(DMC.searchEmployeePosition(id) != -1) {
 				DMC.addEmployee(name, lastName, id);
 			} else {
@@ -125,6 +113,64 @@ public class MainGUIController {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(registerScene);
 	}//End showRegisterFirstUserScene
+
+	@FXML
+	public void passwordMisMatchAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("LAS CONTRASEÑAS NO COINCIDEN");
+		alert.setContentText("Las contraseñas deben ser iguales, vuelva a intentarlo");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End passwordMisMatchAlert
+
+	@FXML
+	public void idNotFoundAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("LA ID INGRESADA NO EXISTE");
+		alert.setContentText("La id ingresada no coincide con ningún empleado, intente con otra o cree un nuevo empleado");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End idNotFoundAlert
+
+	@FXML
+	public void userNameAlreadyInUseAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("EL NOMBRE DE USUARIO YA ESTÁ EN USO");
+		alert.setContentText("Vuelva a intentarlo con un nuevo nombre");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End userNameAlreadyInUseAlert
+
+	@FXML
+	public void addUser() throws IOException {
+		String userId = userIdTxt.getText();
+		String userName = userNameTxt.getText();
+		String password = userPasswordTxt.getText();
+		String pwConfirmation = passwordConfirmationTxt.getText();
+		if(!userId.isEmpty() || !userName.isEmpty() || !password.isEmpty() || !pwConfirmation.isEmpty()) {
+			if(DMC.searchEmployeePosition(userId) != -1) {
+				if(password.equals(pwConfirmation)) {
+					if(!DMC.validateUserName(userName)) {
+						DMC.addUser(userId, userName, password);
+					} else {
+						userNameAlreadyInUseAlert();
+					}
+				} else {
+					passwordMisMatchAlert();
+				} //End else
+			} else {
+				idNotFoundAlert();
+			}//End else
+		} else {
+			emptyFieldAlert();
+		}//End else
+	}//End addFirstUser
 
 	@FXML
 	public void showLoginScene() throws IOException {

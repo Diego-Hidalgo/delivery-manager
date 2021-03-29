@@ -133,15 +133,8 @@ public class DeliveryManagerController {
 		return -1;
 	}//End searchEmployeePosition
 
-	public void addFirstEmployee(String name, String lastName, String id) throws IOException {
-		Employee newEmployee = new Employee(null, name, lastName, id);
-		employees.add(newEmployee);
-		saveEmployeesData();
-	}//End addEmployee
-
 	public void addEmployee(String name, String lastName, String id) throws IOException {
 		Employee newEmployee = new Employee(loggedUser, name, lastName, id);
-		loggedUser.setLinked(true);
 		if(employees.isEmpty()) {
 			employees.add(newEmployee);
 		} else {
@@ -150,6 +143,7 @@ public class DeliveryManagerController {
 				i ++;
 			}//End while
 			employees.add(i, newEmployee);
+			loggedUser.setLinked(true);
 		}
 		saveEmployeesData();
 	}//End addEmployee
@@ -202,6 +196,17 @@ public class DeliveryManagerController {
 		}//End if
 	}//End loadUsersData
 
+	public boolean validateUserName(String userNameToValidate) {
+		boolean found = false;
+		for(int i = 0; i < users.size() && !found; i ++) {
+			User user = users.get(i);
+			if(user.getUserName().equals(userNameToValidate)) {
+				found = true;
+			}//End if
+		}//End for
+		return found;
+	}//End validateUserName
+
 	public int searchUserPosition(final String idToSearch) {
 		int start = 0;
 		int end = users.size() - 1;
@@ -216,22 +221,11 @@ public class DeliveryManagerController {
 			}//End else
 		}//End while
 		return -1;
-	}//End searchUserPositon
+	}//End searchUserPosition
 
-	public void addFirstUser(String idEmployee, String userName, String password) throws IOException {
-		Employee employee = employees.get(searchEmployeePosition(idEmployee));
-		employee.setLinked(true);
-		String name = employee.getName();
-		String lastName = employee.getLastName();
-		String id = employee.getId();
-		User newUser = new User(null, name, lastName, id, userName, password);
-		users.add(newUser);
-		saveUsersData();
-	}//End addUser
 
 	public void addUser(String idEmployee, String userName, String password) throws IOException {
 		Employee employee = employees.get(searchEmployeePosition(idEmployee));
-		loggedUser.setLinked(true);
 		String name = employee.getName();
 		String lastName = employee.getLastName();
 		String id = employee.getId();
@@ -244,6 +238,7 @@ public class DeliveryManagerController {
 				i ++;
 			}//End while
 			users.add(i, newUser);
+			loggedUser.setLinked(true);
 		}//End else
 		saveUsersData();
 	}//End addUser
