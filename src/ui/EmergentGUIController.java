@@ -18,14 +18,14 @@ public class EmergentGUIController {
 	private DeliveryManagerController DMC;
 	@FXML private TextField tIngredientName;
 	@FXML private TextField tDishtypeName;
-	
+	private final String FOLDER = "fxml/";
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
 	}//End constructors
 	
 	@FXML
 	public void showRegisterIngredienteScene() throws IOException{
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource("fxml/RegisterIngredientEmergent.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterIngredientEmergent.fxml"));
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
@@ -38,7 +38,7 @@ public class EmergentGUIController {
 	}//End showRegisterIngredienteScene
 	@FXML
 	public void showRegisterDihstypeScene() throws IOException{
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource("fxml/RegisterDishTypeEmergent.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterDishTypeEmergent.fxml"));
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);

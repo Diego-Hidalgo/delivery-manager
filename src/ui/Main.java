@@ -12,6 +12,7 @@ public class Main extends Application{
 	private DeliveryManagerController DMC;
 	private MainGUIController MGC;
 	private EmergentGUIController EGC;
+	private final String FOLDER = "fxml/";
 	public Main(){
 		DMC = new DeliveryManagerController();
 		EGC = new EmergentGUIController(DMC);
@@ -24,7 +25,7 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage window) throws Exception {
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource("fxml/MainWindows.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"MainWindows.fxml"));
 		fxml.setController(MGC);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);

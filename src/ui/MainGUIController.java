@@ -14,6 +14,7 @@ public class MainGUIController {
 	@FXML private Pane mainPanel;
 	private DeliveryManagerController DMC;
 	private EmergentGUIController EGC;
+	private final String FOLDER = "fxml/";
 	public MainGUIController(DeliveryManagerController DMC,EmergentGUIController EGC){
 		this.DMC = DMC;
 		this.EGC = EGC;
@@ -21,7 +22,7 @@ public class MainGUIController {
 	
 	@FXML
 	public void showSceneLogin() throws IOException{
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource("fxml/PantallaDePruebas.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"PantallaDePruebas.fxml"));
 		fxml.setController(this);
 		Parent loginWindow = fxml.load();
 		mainPanel.getChildren().setAll(loginWindow);
