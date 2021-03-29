@@ -151,7 +151,7 @@ public class MainGUIController {
 		String name = employeeNameTxt.getText();
 		String lastName = employeeLastNameTxt.getText();
 		String id = employeeIdTxt.getText();
-		if(!name.isEmpty() && !lastName.isEmpty() && !id.isEmpty()) {
+		if(DMC.validateBlankChars(name) && DMC.validateBlankChars(lastName) && DMC.validateBlankChars(id)) {
 			if(DMC.searchEmployeePosition(id) == -1) {
 				DMC.addEmployee(name, lastName, id);
 				employeeNameTxt.clear();
@@ -260,7 +260,7 @@ public class MainGUIController {
 		String userName = userNameTxt.getText();
 		String password = userPasswordTxt.getText();
 		String pwConfirmation = passwordConfirmationTxt.getText();
-		if(!userId.isEmpty() && !userName.isEmpty() && !password.isEmpty() && !pwConfirmation.isEmpty()) {
+		if(DMC.validateBlankChars(userId) && DMC.validateBlankChars(userName) && DMC.validateBlankChars(password)) {
 			if(DMC.searchEmployeePosition(userId) != -1) {
 				if(DMC.searchUserPosition(userId) == -1) {
 					if (password.equals(pwConfirmation)) {
@@ -379,8 +379,9 @@ public class MainGUIController {
 		String address = customerAddressTxt.getText();
 		String nPhone = customerPhoneTxt.getText();
 		String remark = customerRemarkTxt.getText();
-		if(!name.isEmpty() && !lastName.isEmpty() && !id.isEmpty() && !address.isEmpty() &&
-				!nPhone.isEmpty() && !remark.isEmpty()) {
+		if(DMC.validateBlankChars(name) && DMC.validateBlankChars(lastName) &&
+		DMC.validateBlankChars(id) && DMC.validateBlankChars(address) &&
+				DMC.validateBlankChars(nPhone) && DMC.validateBlankChars(remark)) {
 			if(DMC.searchCustomerPosition(id) == -1) {
 				DMC.addCustomer(name, lastName, id, address, nPhone, remark);
 				successfulActionAlert("Cliente registrado correctamente");
@@ -442,14 +443,14 @@ public class MainGUIController {
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tama�o y precio ingresado ya existen para este producto";
+		String msg = "El tamaño y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "Tama�o y  precio agregados con exito";
+			msg = "Tamañoo y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();

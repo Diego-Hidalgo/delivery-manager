@@ -64,6 +64,16 @@ public class DeliveryManagerController {
 		this.loggedUser = null;
 	}//End logOutUser
 
+	public boolean validateBlankChars(String fieldToValidate) {
+		boolean validate = false;
+		for(int i = 0; i < fieldToValidate.length() && !validate; i ++) {
+			if(fieldToValidate.charAt(i) != ' ') {
+				validate = true;
+			}//End if
+		}//End for
+		return validate;
+	}//End validateBlankChats
+
 	public void loadAllData() throws IOException, ClassNotFoundException {
 		loadEmployeesData();
 		loadUsersData();
