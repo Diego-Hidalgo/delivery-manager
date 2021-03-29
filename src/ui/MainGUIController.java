@@ -28,7 +28,7 @@ public class MainGUIController{
 	@FXML private TextField logInName;
 	@FXML private PasswordField logInPassword;
 	//Pane
-	@FXML private BorderPane mainPanel;
+	@FXML private BorderPane mainPane;
 	@FXML private BorderPane secondaryPane;
 	//Employee
 	@FXML private TextField employeeNameTxt;
@@ -92,8 +92,8 @@ public class MainGUIController{
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterEmployeeWindows.fxml"));
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
-		mainPanel.getChildren().clear();
-		mainPanel.setCenter(registerScene);
+		mainPane.getChildren().clear();
+		mainPane.setCenter(registerScene);
 	}//End showRegisterEmployeesWindow
 
 	@FXML
@@ -120,8 +120,8 @@ public class MainGUIController{
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindows.fxml"));
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
-		mainPanel.getChildren().clear();
-		mainPanel.setCenter(registerScene);
+		mainPane.getChildren().clear();
+		mainPane.setCenter(registerScene);
 	}//End showRegisterFirstUserScene
 
 	@FXML
@@ -205,8 +205,8 @@ public class MainGUIController{
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"LoginWindows.fxml"));
 		fxmlLoader.setController(this);
 		Parent loginScene = fxmlLoader.load();
-		mainPanel.getChildren().clear();
-		mainPanel.setCenter(loginScene);
+		mainPane.getChildren().clear();
+		mainPane.setCenter(loginScene);
 	}//End showLoginScene
 
 	@FXML
@@ -245,10 +245,11 @@ public class MainGUIController{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"PantallaDePruebas.fxml"));
 		fxml.setController(this);
 		Parent loginScene = fxml.load();
-		mainPanel.getChildren().setAll(loginScene);
+		mainPane.getChildren().clear();
+		mainPane.setCenter(loginScene);
 		Stage st = (Stage) loginScene.getScene().getWindow();
-		st.setHeight(343);
-		st.setWidth(338);
+		st.setHeight(400);
+		st.setWidth(366);
 		st.setResizable(false);
 	}//End showSceneLogin
 
@@ -257,7 +258,8 @@ public class MainGUIController{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterProductWindows.fxml"));
 		fxml.setController(this);
 		Parent registerProduct = fxml.load();
-		mainPanel.getChildren().setAll(registerProduct);
+		mainPane.getChildren().clear();
+		mainPane.setCenter(registerProduct);
 		Stage st = (Stage) registerProduct.getScene().getWindow();
 		st.setTitle("Registrar productos");
 		st.setHeight(570);
