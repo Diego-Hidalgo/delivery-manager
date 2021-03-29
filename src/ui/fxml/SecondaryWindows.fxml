@@ -24,7 +24,7 @@
             <Menu mnemonicParsing="false" text="Empleado">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#showRegisterEmployeesSceneInSecondaryPane" text="Agregar" />
-                  <MenuItem mnemonicParsing="false" text="Gestionar" />
+                  <MenuItem fx:id="addCustomer" mnemonicParsing="false" onAction="#showVisualizeEmployees" text="Gestionar" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Cliente">

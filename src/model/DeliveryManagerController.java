@@ -37,6 +37,18 @@ public class DeliveryManagerController {
 		sizes = new ArrayList<ProductSize>();
 	}//End DeliveryManagerController
 
+	public List<Employee> getEmployees() {
+		return employees;
+	}//End getEmployee
+
+	public List<User> getUsers() {
+		return users;
+	}//End getUsers
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}//End getCustomers
+
 	public int getAmountUsers() {
 		return users.size();
 	}//End getAmountUsers

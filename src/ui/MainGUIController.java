@@ -2,6 +2,9 @@ package ui;
 
 import java.io.IOException;
 import java.util.Optional;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
@@ -33,6 +37,12 @@ public class MainGUIController {
 	@FXML private TextField employeeNameTxt;
 	@FXML private TextField employeeLastNameTxt;
 	@FXML private TextField employeeIdTxt;
+	@FXML TableView<Employee> employeesTable;
+	@FXML TableColumn<Employee, String> employeeNameColumn;
+	@FXML TableColumn<Employee, String> employeeLastNameColumn;
+	@FXML TableColumn<Employee, String> employeeIdColumn;
+	@FXML TableColumn<Employee, String> employeeCreatorColumn;
+	@FXML TableColumn<Employee, String> employeeModifierColumn;
 	//User
 	@FXML private Button goBackBtn;
 	@FXML private Label welcomeLabel;
@@ -398,6 +408,26 @@ public class MainGUIController {
 			emptyFieldAlert();
 		}//End else
 	}//End addCustomer
+
+	@FXML
+	public void showVisualizeEmployees() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeEmployeesWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent visualizer = fxmlLoader.load();
+		secondaryPane.setCenter(visualizer);
+		setEmployeesTable();
+	}//End showVisualizeEmployees
+
+	@FXML
+	public void setEmployeesTable() {
+		ObservableList<Employee> content = FXCollections.observableArrayList(DMC.getEmployees());
+		employeesTable.setItems(content);
+		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
+		employeeLastNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
+		employeeIdColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("id"));
+		employeeCreatorColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("creatorName"));
+		employeeModifierColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("modifierName"));
+	}//End setEmployeesTable
 
 	@FXML
 	public void showSceneLogin() throws IOException{
