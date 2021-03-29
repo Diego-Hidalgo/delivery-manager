@@ -158,6 +158,7 @@ public class MainGUIController {
 		Stage stage = (Stage) mainPane.getScene().getWindow();
 		stage.setTitle("Registrar empleado");
 		stage.setHeight(450);
+		stage.setResizable(false);
 	}//End showRegisterEmployeesWindow
 
 	@FXML
@@ -169,6 +170,7 @@ public class MainGUIController {
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Registrar empleado");
 		stage.setHeight(450);
+		stage.setResizable(false);
 	}//End showRegisterEmployeesSceneInSecondaryPane
 
 	@FXML
@@ -207,6 +209,7 @@ public class MainGUIController {
 		if(DMC.getAmountEmployees() == 0 && DMC.getLoggedUser() == null) {
 			goBackBtn.setDisable(true);
 		}//End else
+		stage.setResizable(false);
 	}//End showRegisterFirstUserScene
 
 	@FXML
@@ -221,6 +224,7 @@ public class MainGUIController {
 		if(DMC.getLoggedUser() != null) {
 			goBackBtn.setDisable(true);
 		}//End if
+		stage.setResizable(false);
 	}//End showRegisterUserSceneInSecondaryPane
 
 	@FXML
@@ -330,6 +334,7 @@ public class MainGUIController {
 		Stage stage = (Stage) mainPane.getScene().getWindow();
 		stage.setTitle("Iniciar sesión");
 		stage.setHeight(440);
+		stage.setResizable(false);
 	}//End showLoginScene
 
 	@FXML
@@ -394,6 +399,7 @@ public class MainGUIController {
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Registrar empleado");
 		stage.setHeight(520);
+		stage.setResizable(false);
 	}//End showAddEmployeeScene
 
 	@FXML
@@ -430,7 +436,12 @@ public class MainGUIController {
 		fxmlLoader.setController(this);
 		Parent visualizer = fxmlLoader.load();
 		secondaryPane.setCenter(visualizer);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Lista De Empleados");
+		stage.setWidth(700);
+		stage.setHeight(510);
 		setEmployeesTable();
+		stage.setResizable(false);
 	}//End showVisualizeEmployees
 
 	@FXML
@@ -450,7 +461,12 @@ public class MainGUIController {
 		fxmlLoader.setController(this);
 		Parent visualizer = fxmlLoader.load();
 		secondaryPane.setCenter(visualizer);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Lista De Usuarios");
+		stage.setWidth(800);
+		stage.setHeight(510);
 		setUsersTable();
+		stage.setResizable(false);
 	}//End showVisualizeUsers
 
 	@FXML
@@ -471,7 +487,12 @@ public class MainGUIController {
 		fxmlLoader.setController(this);
 		Parent visualizer = fxmlLoader.load();
 		secondaryPane.setCenter(visualizer);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Lista De Clientes");
+		stage.setWidth(950);
+		stage.setHeight(510);
 		setCustomersTable();
+		stage.setResizable(false);
 	}//End showVisualizeCustomers
 
 	@FXML

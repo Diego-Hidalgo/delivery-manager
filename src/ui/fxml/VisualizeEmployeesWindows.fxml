@@ -4,17 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox prefHeight="330.0" prefWidth="570.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="employeesTable" prefHeight="307.0" prefWidth="570.0">
+            <TableView fx:id="employeesTable" prefHeight="366.0" prefWidth="590.0">
               <columns>
                 <TableColumn fx:id="employeeNameColumn" prefWidth="130.0" text="Nombre" />
                 <TableColumn fx:id="employeeLastNameColumn" prefWidth="130.0" text="Apellido" />
                   <TableColumn fx:id="employeeIdColumn" prefWidth="110.0" text="Identificación" />
                   <TableColumn fx:id="employeeCreatorColumn" prefWidth="109.5" text="Creado por" />
-                  <TableColumn fx:id="employeeModifierColumn" prefWidth="109.0" text="Modificado por" />
+                  <TableColumn fx:id="employeeModifierColumn" prefWidth="103.0" text="Modificado por" />
               </columns>
             </TableView>
          </children></VBox>
@@ -37,6 +37,6 @@
       <Pane prefHeight="331.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <Pane prefHeight="20.0" prefWidth="640.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="10.0" prefWidth="650.0" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
