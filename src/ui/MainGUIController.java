@@ -64,6 +64,14 @@ public class MainGUIController {
 	@FXML private TextField customerAddressTxt;
 	@FXML private TextField customerPhoneTxt;
 	@FXML private TextArea customerRemarkTxt;
+	@FXML private TableView<Customer> customersTable;
+	@FXML private TableColumn<Customer, String> customerNameColumn;
+	@FXML private TableColumn<Customer, String> customerLastNameColumn;
+	@FXML private TableColumn<Customer, String> customerIdColumn;
+	@FXML private TableColumn<Customer, String> customerAddressColumn;
+	@FXML private TableColumn<Customer, String> customerPhoneColumn;
+	@FXML private TableColumn<Customer, String> customerCreatorColumn;
+	@FXML private TableColumn<Customer, String> customerModifierColumn;
 
 	private DeliveryManagerController DMC;
 	private EmergentGUIController EGC;
@@ -456,6 +464,28 @@ public class MainGUIController {
 		userCreatorColumn.setCellValueFactory(new PropertyValueFactory<User, String>("creatorName"));
 		userModifierColumn.setCellValueFactory(new PropertyValueFactory<User, String>("modifierName"));
 	}//End setUsersTable
+
+	@FXML
+	public void showVisualizeCustomers() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeCustomersWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent visualizer = fxmlLoader.load();
+		secondaryPane.setCenter(visualizer);
+		setCustomersTable();
+	}//End showVisualizeCustomers
+
+	@FXML
+	public void setCustomersTable() throws IOException {
+		ObservableList<Customer> content = FXCollections.observableArrayList(DMC.getCustomers());
+		customersTable.setItems(content);
+		customerNameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
+		customerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
+		customerIdColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("id"));
+		customerAddressColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
+		customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NPhone"));
+		customerCreatorColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("creatorName"));
+		customerModifierColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("modifierName"));
+	}//End setCustomerTable
 
 	@FXML
 	public void showSceneLogin() throws IOException{

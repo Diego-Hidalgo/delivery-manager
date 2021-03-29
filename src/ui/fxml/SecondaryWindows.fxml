@@ -30,7 +30,7 @@
             <Menu mnemonicParsing="false" text="Cliente">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#showAddCustomerScene" text="Agregar" />
-                  <MenuItem mnemonicParsing="false" text="Gestionar" />
+                  <MenuItem mnemonicParsing="false" onAction="#showVisualizeCustomers" text="Gestionar" />
               </items>
             </Menu>
          </menus>
