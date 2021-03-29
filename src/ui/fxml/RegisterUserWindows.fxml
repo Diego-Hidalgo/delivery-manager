@@ -50,7 +50,7 @@
                         <Pane prefHeight="35.0" prefWidth="145.0" />
                   <PasswordField fx:id="userPasswordTxt" />
                         <Pane prefHeight="35.0" prefWidth="145.0" />
-                  <PasswordField fx:id="passwordConfimationTxt" />
+                  <PasswordField fx:id="passwordConfirmationTxt" />
                     </children>
                 </VBox>
             </children>

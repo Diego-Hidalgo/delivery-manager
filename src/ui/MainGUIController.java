@@ -5,16 +5,42 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
 
 public class MainGUIController {
 
+	//Pane
 	@FXML private BorderPane mainPane;
 	@FXML private BorderPane secondaryPane;
+
+	//Employee
+	@FXML private TextField employeeNameTxt;
+	@FXML private TextField employeeLastNameTxt;
+	@FXML private TextField employeeIdTxt;
+
+	//User
+	@FXML private TextField userIdTxt;
+	@FXML private TextField userNameTxt;
+	@FXML private PasswordField userPasswordTxt;
+	@FXML private PasswordField passwordConfirmationTxt;
+
+	//Customer
+	@FXML private TextField customerNameTxt;
+	@FXML private TextField customerLastNameTxt;
+	@FXML private TextField customerIdTxt;
+	@FXML private TextField customerAddressTxt;
+	@FXML private TextField customerPhoneTxt;
+	@FXML private TextField customerRemarkTxt;
+
 	private DeliveryManagerController DMC;
 	private EmergentGUIController EGC;
+
 	private final String FOLDER = "fxml/";
 
 	public MainGUIController(DeliveryManagerController DMC,EmergentGUIController EGC){
@@ -33,6 +59,28 @@ public class MainGUIController {
 	}//End showFirstScene
 
 	@FXML
+	public void emptyFieldAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
+		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End emptyFieldAlert
+
+	@FXML
+	public void idAlreadyInUseAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText("LA ID YA SE ENCUENTRA EN USA");
+		alert.setContentText("Prueba con una distinta y vuelva a intentar");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End idAlreadyInUseAlert
+
+	@FXML
 	public void showRegisterFirstEmployeesScene() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterEmployeeWindows.fxml"));
 		fxmlLoader.setController(this);
@@ -40,6 +88,34 @@ public class MainGUIController {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(registerScene);
 	}//End showRegisterEmployeesWindow
+
+	@FXML
+	public void addFirstEmployee() throws IOException {
+		String name = employeeNameTxt.getText();
+		String lastName = employeeLastNameTxt.getText();
+		String id = employeeIdTxt.getText();
+		if(!name.equals("") || !lastName.equals("") || !id.equals("")) {
+			DMC.addFirstEmployee(name, lastName, id);
+		} else {
+			emptyFieldAlert();
+		}//End else
+	}//End addFirstEmployee
+
+	@FXML
+	public void addEmployee() throws IOException {
+		String name = employeeNameTxt.getText();
+		String lastName = employeeLastNameTxt.getText();
+		String id = employeeIdTxt.getText();
+		if(!name.equals("") || !lastName.equals("") || !id.equals("")) {
+			if(DMC.searchEmployeePosition(id) != -1) {
+				DMC.addEmployee(name, lastName, id);
+			} else {
+				idAlreadyInUseAlert();
+			}//End else
+		} else {
+			emptyFieldAlert();
+		}//End else
+	}//End addEmployee
 
 	@FXML
 	public void showRegisterFirstUserScene() throws IOException {
