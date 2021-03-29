@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="225.0" text="REGISTRAR USUARIO" textAlignment="CENTER" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+    </top>
+    <center>
+        <HBox alignment="CENTER" prefHeight="297.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox prefHeight="213.0" prefWidth="203.0">
+                    <children>
+                        <Label prefHeight="25.0" prefWidth="195.0" text="Identificación del empleado:">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Pane prefHeight="35.0" prefWidth="203.0" />
+                        <Label prefHeight="27.0" prefWidth="195.0" text="Nombre de usuario:">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Pane prefHeight="35.0" prefWidth="203.0" />
+                        <Label prefHeight="25.0" prefWidth="195.0" text="Contraseña:">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                  <Pane prefHeight="35.0" prefWidth="203.0" />
+                  <Label prefHeight="17.0" prefWidth="195.0" text="Confirmar contraseña:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                    </children>
+                </VBox>
+                <VBox prefHeight="255.0" prefWidth="159.0">
+                    <children>
+                        <TextField fx:id="userIdtxt" prefHeight="20.0" prefWidth="120.0" />
+                        <HBox prefHeight="35.0" prefWidth="145.0" />
+                        <TextField fx:id="userNameTxt" prefHeight="20.0" prefWidth="120.0" />
+                        <Pane prefHeight="35.0" prefWidth="145.0" />
+                  <PasswordField fx:id="userPasswordTxt" />
+                        <Pane prefHeight="35.0" prefWidth="145.0" />
+                  <PasswordField fx:id="passwordConfimationTxt" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="addUserBtn" mnemonicParsing="false" text="Agregar usuario">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

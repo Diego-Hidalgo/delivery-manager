@@ -21,6 +21,7 @@ public class Main extends Application{
 	public static void main(String[] args){
 		launch(args);
 	}//End main
+
 	@Override
 	public void start(Stage window) throws Exception {
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource("MainWindows.fxml"));

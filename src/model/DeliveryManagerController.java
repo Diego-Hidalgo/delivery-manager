@@ -329,7 +329,9 @@ public class DeliveryManagerController {
 		PrintWriter pw = new PrintWriter(productsData);
 		List<Order> ords = getOrdersInRange(initialDate, finishDate);
 		String columns = "Nombre" + separator + "Tamaño" + separator + "Precio" +
-				         separator + "Cantidad de veces pedido" + separator + "Total";
+				         separator + "Cantidad de veces pedido" + separator + "Total" + "\n";
+		String info = "Reporte creado con los datos recolectados desde " + initialDate + " hasta " + finishDate + "\n";
+		pw.write(info);
 		pw.write(columns);
 		for(int i = 0; i < products.size(); i ++) {
 			int times = 0;
