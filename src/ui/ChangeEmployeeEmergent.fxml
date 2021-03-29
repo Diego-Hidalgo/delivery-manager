@@ -55,15 +55,15 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="acceptChangeEmployeeBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Aceptar">
+                  <Button fx:id="acceptChangeEmployeeBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Aceptar">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
                   <Pane prefHeight="100.0" prefWidth="60.0" />
-                  <Button fx:id="cancelChangeEmployeeBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancelar">
+                  <Button fx:id="cancelChangeEmployeeBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Cancelar">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
                </children>

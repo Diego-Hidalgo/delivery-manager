@@ -93,17 +93,17 @@
     <bottom>
         <HBox alignment="CENTER" prefHeight="72.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="72.0" prefWidth="210.0">
                <children>
-                  <Button fx:id="acceptChangeCustomerBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Aceptar">
+                  <Button fx:id="acceptChangeCustomerBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Aceptar">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
                   <Pane prefHeight="72.0" prefWidth="70.0" />
-                  <Button fx:id="cancelChangeCustomerBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancelar">
+                  <Button fx:id="cancelChangeCustomerBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Cancelar">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
                </children>
