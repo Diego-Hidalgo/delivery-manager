@@ -493,14 +493,14 @@ public class DeliveryManagerController {
 		int index = -1;
 		int start = 0;
 		int end = ingredients.size() - 1;
-		while( start <= end) {
-			int half = (start - end)/2;
-			if(ingredients.get(half).getName().compareTo(ingredient) == 0){
+		while( start <= end && index < 0) {
+			int half = (end + start)/2;
+			if(ingredients.get(half).getName().toLowerCase().compareTo(ingredient.toLowerCase()) == 0){
 				index = half;
-			}else if(ingredients.get(half).getName().compareTo(ingredient) > 0){
-				end = half;
+			}else if(ingredients.get(half).getName().toLowerCase().compareTo(ingredient.toLowerCase()) > 0){
+				end = half - 1;
 			}else{
-				start = half;
+				start = half + 1;
 			}//End else
 		}//End while
 		return index;
@@ -509,7 +509,7 @@ public class DeliveryManagerController {
 	public String getIngredients(){
 		String ingreds = new String();
 		for(int i = 0; i < this.ingredients.size();i++)
-			ingreds += ingredients.get(i).getName() + "\n";
+			ingreds += ingredients.get(i).getName() + ",";
 		return ingreds;
 	}//End getIngredients
 
@@ -520,9 +520,9 @@ public class DeliveryManagerController {
 				ingredients.add(new Ingredient(getLoggedUser(),ingredient));
 			}else {
 				Ingredient in = new Ingredient(getLoggedUser(),ingredient);
-				int j = 0;
-				while(ingredients.get(j).compareTo(in) < 0){j++;}//End while
-				ingredients.add(j,in);
+				int j;
+				for(j = 0; j < ingredients.size() && ingredients.get(j).compareTo(in) < 0;j++);
+					ingredients.add(j,in);
 			}//End else
 			added = true;
 		}//End if
@@ -582,14 +582,14 @@ public class DeliveryManagerController {
 		int index = -1;
 		int start = 0;
 		int end = types.size() - 1;
-		while( start <= end) {
-			int half = (start - end)/2;
-			if(types.get(half).getName().compareTo(dishType) == 0){
+		while( start <= end && index < 0) {
+			int half = (end+start)/2;
+			if(types.get(half).getName().toLowerCase().compareTo(dishType.toLowerCase()) == 0){
 				index = half;
-			}else if(types.get(half).getName().compareTo(dishType) > 0){
-				end = half;
+			}else if(types.get(half).getName().toLowerCase().compareTo(dishType.toLowerCase()) > 0){
+				end = half - 1;
 			}else{
-				start = half;
+				start = half + 1;
 			}//End else
 		}//End while
 		return index;
@@ -603,14 +603,19 @@ public class DeliveryManagerController {
 			}else {
 				DishType dt = new DishType(getLoggedUser(),dishType);
 				int j = 0;
-				while(types.get(j).compareTo(dt) < 0){j++;}//End while
-				types.add(dt);
+				for(j = 0; j < types.size() && types.get(j).compareTo(dt) < 0;j++);
+				types.add(j,dt);
 			}//End else
 			added = true;
 		}//end if
 		return added;
-	}//End addProduct
-
+	}//End addDishType
+	public String getDishtype(){
+		String a = new String();
+		for(int i = 0; i < types.size();i++)
+			a += types.get(i).getName() + ",";
+		return a;
+	}
 	private void addDishType(final DishType dishType){
 		int j = 0;
 		while(types.get(j).compareTo(dishType) < 0){j++;}//End while

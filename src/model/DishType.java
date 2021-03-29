@@ -65,6 +65,6 @@ public class DishType implements Comparable<DishType>, Serializable {
 
 	@Override
 	public int compareTo(DishType dt) {
-		return name.compareTo(dt.getName());
+		return name.toLowerCase().compareTo(dt.getName().toLowerCase());
 	}
 }//End PlateType
