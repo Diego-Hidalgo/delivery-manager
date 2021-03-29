@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="sPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="secondaryPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
          <menus>
@@ -16,21 +16,21 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Usuario">
               <items>
-                <MenuItem fx:id="addUserBtn" mnemonicParsing="false" text="Agregar" />
-                  <MenuItem fx:id="manageUserBtn" mnemonicParsing="false" text="Gestionar" />
-                  <MenuItem fx:id="logOutBtn" mnemonicParsing="false" onAction="#logOutUser" text="Salir del sistema" />
+                <MenuItem mnemonicParsing="false" onAction="#showRegisterUserSceneInSecondaryPane" text="Agregar" />
+                  <MenuItem mnemonicParsing="false" text="Gestionar" />
+                  <MenuItem mnemonicParsing="false" onAction="#logOutUser" text="Salir del sistema" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Empleado">
               <items>
-                <MenuItem fx:id="addEmployeeBtn" mnemonicParsing="false" text="Agregar" />
-                  <MenuItem fx:id="manageEmployeeBtn" mnemonicParsing="false" text="Gestionar" />
+                <MenuItem mnemonicParsing="false" onAction="#showRegisterEmployeesSceneInSecondaryPane" text="Agregar" />
+                  <MenuItem mnemonicParsing="false" text="Gestionar" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Cliente">
               <items>
-                <MenuItem fx:id="addCustomerBtn" mnemonicParsing="false" text="Agregar" />
-                  <MenuItem fx:id="manageCustomerBtn" mnemonicParsing="false" text="Gestionar" />
+                <MenuItem mnemonicParsing="false" text="Agregar" />
+                  <MenuItem mnemonicParsing="false" text="Gestionar" />
               </items>
             </Menu>
          </menus>

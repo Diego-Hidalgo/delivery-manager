@@ -26,8 +26,6 @@ public class MainGUIController {
 	@FXML private MenuBar menuBar;
 
 	//Employee
-	@FXML private MenuItem addEmployeeBtn;
-	@FXML private MenuItem manageEmployeeBtn;
 	@FXML private TextField employeeNameTxt;
 	@FXML private TextField employeeLastNameTxt;
 	@FXML private TextField employeeIdTxt;
@@ -35,17 +33,12 @@ public class MainGUIController {
 	//User
 	@FXML private Button goBackBtn;
 	@FXML private Label welcomeLabel;
-	@FXML private MenuItem addUserBtn;
-	@FXML private MenuItem manageUserBtn;
-	@FXML private MenuItem logOutBtn;
 	@FXML private TextField userIdTxt;
 	@FXML private TextField userNameTxt;
 	@FXML private PasswordField userPasswordTxt;
 	@FXML private PasswordField passwordConfirmationTxt;
 
 	//Customer
-	@FXML private MenuItem addCustomerBtn;
-	@FXML private MenuItem manageCustomerBtn;
 	@FXML private TextField customerNameTxt;
 	@FXML private TextField customerLastNameTxt;
 	@FXML private TextField customerIdTxt;
@@ -64,7 +57,7 @@ public class MainGUIController {
 	}//End constructor
 
 	@FXML
-	public void switchToMainPane(Event e) throws IOException {
+	public void switchToMainPane() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"MainWindows.fxml"));
 		fxmlLoader.setController(this);
 		Parent root = fxmlLoader.load();
@@ -89,7 +82,7 @@ public class MainGUIController {
 	@FXML
 	public void showFirstScene() throws IOException {
 		if(DMC.getAmountEmployees() == 0 && DMC.getAmountUsers() == 0) {
-			showRegisterEmployeesScene();
+			showRegisterEmployeesSceneInMainPane();
 		} else {
 			showLoginScene();
 		}//End else
@@ -118,13 +111,21 @@ public class MainGUIController {
 	}//End idAlreadyInUseAlert
 
 	@FXML
-	public void showRegisterEmployeesScene() throws IOException {
+	public void showRegisterEmployeesSceneInMainPane() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterEmployeeWindows.fxml"));
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(registerScene);
 	}//End showRegisterEmployeesWindow
+
+	@FXML
+	public void showRegisterEmployeesSceneInSecondaryPane() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterEmployeeWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		secondaryPane.setCenter(registerScene);
+	}//End showRegisterEmployeesSceneInSecondaryPane
 
 	@FXML
 	public void addEmployee() throws IOException {
@@ -135,7 +136,7 @@ public class MainGUIController {
 			if(DMC.searchEmployeePosition(id) == -1) {
 				DMC.addEmployee(name, lastName, id);
 				if(DMC.getAmountEmployees() == 1) {
-					showRegisterUserScene();
+					showRegisterUserSceneInMainPane();
 				}//End if
 			} else {
 				idAlreadyInUseAlert();
@@ -146,7 +147,7 @@ public class MainGUIController {
 	}//End addEmployee
 
 	@FXML
-	public void showRegisterUserScene() throws IOException {
+	public void showRegisterUserSceneInMainPane() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindows.fxml"));
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
@@ -156,6 +157,17 @@ public class MainGUIController {
 			goBackBtn.setDisable(true);
 		}//End if
 	}//End showRegisterFirstUserScene
+
+	@FXML
+	public void showRegisterUserSceneInSecondaryPane() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		secondaryPane.setCenter(registerScene);
+		if(DMC.getLoggedUser() != null) {
+			goBackBtn.setDisable(true);
+		}//End if
+	}//End showRegisterUserSceneInSecondaryPane
 
 	@FXML
 	public void passwordMisMatchAlert() {
@@ -270,11 +282,11 @@ public class MainGUIController {
 	}//End logInUser
 
 	@FXML
-	public void logOutUser(Event e) throws IOException {
+	public void logOutUser() throws IOException {
 		if(confirmActionAlert("¿Está seguro de salir del sistema?")) {
-			DMC.logOutUser();
-			switchToMainPane(e);
+			switchToMainPane();
 			showLoginScene();
+			DMC.logOutUser();
 		}//End if
 	}//End logOutUser
 
