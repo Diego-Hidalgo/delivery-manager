@@ -8,7 +8,7 @@
     <center>
         <VBox prefHeight="330.0" prefWidth="570.0" BorderPane.alignment="CENTER">
             <children>
-                <TableView fx:id="employeesTable" prefHeight="307.0" prefWidth="709.0">
+                <TableView fx:id="usersTable" prefHeight="307.0" prefWidth="709.0">
                     <columns>
                         <TableColumn fx:id="userNameColumn" prefWidth="130.0" text="Nombre" />
                         <TableColumn fx:id="userLastNameColumn" prefWidth="130.0" text="Apellido" />
