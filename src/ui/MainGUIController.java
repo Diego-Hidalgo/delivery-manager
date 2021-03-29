@@ -2,7 +2,6 @@ package ui;
 
 import java.io.IOException;
 import java.util.Optional;
-
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,7 +43,7 @@ public class MainGUIController {
 	@FXML private TextField customerIdTxt;
 	@FXML private TextField customerAddressTxt;
 	@FXML private TextField customerPhoneTxt;
-	@FXML private TextField customerRemarkTxt;
+	@FXML private TextArea customerRemarkTxt;
 
 	private DeliveryManagerController DMC;
 	private EmergentGUIController EGC;
@@ -278,7 +277,7 @@ public class MainGUIController {
 			}//End else
 		} else {
 			emptyFieldAlert();
-		}
+		}//End else
 	}//End logInUser
 
 	@FXML
@@ -304,8 +303,36 @@ public class MainGUIController {
 			return true;
 		} else {
 			return false;
-		}//End confirmationAlert
-	}
+		}//End else
+	}//End confirmationAlert
+
+	@FXML
+	public void showAddCustomerScene() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterCustomerWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		secondaryPane.setCenter(registerScene);
+	}//End showAddEmployeeScene
+
+	@FXML
+	public void addCustomer() throws IOException {
+		String name = customerNameTxt.getText();
+		String lastName = customerLastNameTxt.getText();
+		String id = customerIdTxt.getText();
+		String address = customerAddressTxt.getText();
+		String nPhone = customerPhoneTxt.getText();
+		String remark = customerRemarkTxt.getText();
+		if(!name.isEmpty() && !lastName.isEmpty() && !id.isEmpty() && !address.isEmpty() &&
+				!nPhone.isEmpty() && !remark.isEmpty()) {
+			if(DMC.searchCustomerPosition(id) == -1) {
+				DMC.addCustomer(name, lastName, id, address, nPhone, remark);
+			} else {
+				idAlreadyInUseAlert();
+			}//End else
+		} else {
+			emptyFieldAlert();
+		}//End else
+	}//End addCustomer
 
 	@FXML
 	public void showSceneLogin() throws IOException{

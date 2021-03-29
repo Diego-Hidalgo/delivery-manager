@@ -29,7 +29,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Cliente">
               <items>
-                <MenuItem mnemonicParsing="false" text="Agregar" />
+                <MenuItem mnemonicParsing="false" onAction="#showAddCustomerScene" text="Agregar" />
                   <MenuItem mnemonicParsing="false" text="Gestionar" />
               </items>
             </Menu>

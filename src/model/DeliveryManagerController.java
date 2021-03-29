@@ -56,13 +56,13 @@ public class DeliveryManagerController {
 		}//for
 	}//End setLoggedUser
 
-	public void logOutUser() {
-		this.loggedUser = null;
-	}//End logOutUser
-
 	public User getLoggedUser(){
 		return loggedUser;
 	}//End getLoggedUser
+
+	public void logOutUser() {
+		this.loggedUser = null;
+	}//End logOutUser
 
 	public void loadAllData() throws IOException, ClassNotFoundException {
 		loadEmployeesData();
