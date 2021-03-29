@@ -37,12 +37,12 @@ public class MainGUIController {
 	@FXML private TextField employeeNameTxt;
 	@FXML private TextField employeeLastNameTxt;
 	@FXML private TextField employeeIdTxt;
-	@FXML TableView<Employee> employeesTable;
-	@FXML TableColumn<Employee, String> employeeNameColumn;
-	@FXML TableColumn<Employee, String> employeeLastNameColumn;
-	@FXML TableColumn<Employee, String> employeeIdColumn;
-	@FXML TableColumn<Employee, String> employeeCreatorColumn;
-	@FXML TableColumn<Employee, String> employeeModifierColumn;
+	@FXML private TableView<Employee> employeesTable;
+	@FXML private TableColumn<Employee, String> employeeNameColumn;
+	@FXML private TableColumn<Employee, String> employeeLastNameColumn;
+	@FXML private TableColumn<Employee, String> employeeIdColumn;
+	@FXML private TableColumn<Employee, String> employeeCreatorColumn;
+	@FXML private TableColumn<Employee, String> employeeModifierColumn;
 	//User
 	@FXML private Button goBackBtn;
 	@FXML private Label welcomeLabel;
@@ -50,6 +50,13 @@ public class MainGUIController {
 	@FXML private TextField userNameTxt;
 	@FXML private PasswordField userPasswordTxt;
 	@FXML private PasswordField passwordConfirmationTxt;
+	@FXML private TableView<User> usersTable;
+	@FXML private TableColumn<User, String> userNameColumn;
+	@FXML private TableColumn<User, String> userLastNameColumn;
+	@FXML private TableColumn<User, String> userIdColumn;
+	@FXML private TableColumn<User, String> userUserNameColumn;
+	@FXML private TableColumn<User, String> userCreatorColumn;
+	@FXML private TableColumn<User, String> userModifierColumn;
 	//Customer
 	@FXML private TextField customerNameTxt;
 	@FXML private TextField customerLastNameTxt;
@@ -428,6 +435,27 @@ public class MainGUIController {
 		employeeCreatorColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("creatorName"));
 		employeeModifierColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("modifierName"));
 	}//End setEmployeesTable
+
+	@FXML
+	public void showVisualizeUsers() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeUsersWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent visualizer = fxmlLoader.load();
+		secondaryPane.setCenter(visualizer);
+		setUsersTable();
+	}//End showVisualizeUsers
+
+	@FXML
+	public void setUsersTable() throws IOException {
+		ObservableList<User> content = FXCollections.observableArrayList(DMC.getUsers());
+		usersTable.setItems(content);
+		userNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
+		userLastNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
+		userIdColumn.setCellValueFactory(new PropertyValueFactory<User, String>("id"));
+		userUserNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
+		userCreatorColumn.setCellValueFactory(new PropertyValueFactory<User, String>("creatorName"));
+		userModifierColumn.setCellValueFactory(new PropertyValueFactory<User, String>("modifierName"));
+	}//End setUsersTable
 
 	@FXML
 	public void showSceneLogin() throws IOException{

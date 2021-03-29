@@ -17,7 +17,7 @@
             <Menu mnemonicParsing="false" text="Usuario">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#showRegisterUserSceneInSecondaryPane" text="Agregar" />
-                  <MenuItem mnemonicParsing="false" text="Gestionar" />
+                  <MenuItem mnemonicParsing="false" onAction="#showVisualizeUsers" text="Gestionar" />
                   <MenuItem mnemonicParsing="false" onAction="#logOutUser" text="Salir del sistema" />
               </items>
             </Menu>
