@@ -379,7 +379,6 @@ public class DeliveryManagerController {
 		}//End if
 		return added;
 	}//End addProduct
-
 	private void createSubproduct(ProductBase pd,List<Double> price,final List<String> size){
 		for(int i = 0; i < price.size();i++){
 			int sizeIndex = findProductSize(size.get(i));
@@ -530,9 +529,9 @@ public class DeliveryManagerController {
 	}//End addIngredient
 
 	private void addIngredient(Ingredient ingredient){
-		int j = 0;
-		while(ingredients.get(j).compareTo(ingredient) < 0){j++;}//End while
-		ingredients.add(j,ingredient);
+		int j;
+		for(j = 0; j < ingredients.size() && ingredients.get(j).compareTo(ingredient) < 0;j++);
+			ingredients.add(j,ingredient);
 	}//End addIngredient
 
 	public String changeIngredient(Ingredient ingredient,final String newName){
@@ -617,9 +616,9 @@ public class DeliveryManagerController {
 		return a;
 	}
 	private void addDishType(final DishType dishType){
-		int j = 0;
-		while(types.get(j).compareTo(dishType) < 0){j++;}//End while
-		types.add(dishType);
+		int j;
+		for(j = 0; j < types.size() && types.get(j).compareTo(dishType) < 0;j++);
+		types.add(j,dishType);
 	}//End addProduct
 
 	public void changeDishType(DishType dType,final String newName){

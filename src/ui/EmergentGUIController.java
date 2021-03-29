@@ -14,7 +14,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -98,8 +97,21 @@ public class EmergentGUIController {
 			tSelectedIngredient.setText(ing.getName());
 	}//End showInfoFromComboBoxSelectedItem
 	@FXML
-	public void setIngredientToadd(){
-		
+	public void setIngredientToadd(ActionEvent event){
+		boolean worked = false;
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		ingredientToadd = "";
+		String msg = "Ingrediente erroneo";
+		if(!tSelectedIngredient.getText().isEmpty()){
+			ingredientToadd = tSelectedIngredient.getText();
+			worked = true;
+		}else {
+			addInfo.setContentText(msg);
+			addInfo.showAndWait();
+		}
+		if(worked)
+			closeEmergentWindows(event);
 	}//End setIngredientoToadd
 	@FXML
 	public String getIngredientToadd(){

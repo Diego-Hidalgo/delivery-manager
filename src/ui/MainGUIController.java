@@ -3,6 +3,7 @@ package ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -59,8 +60,9 @@ public class MainGUIController {
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
 		String msg = "No se ha podido agregar el producto, llena todos los campos.";
-		if( tProductName != null && tDishtype != null && tSizesAndPices != null && tIngredients != null){
-			boolean added = DMC.addProduct(msg, null, null, null, msg);
+		if( !tProductName.getText().isEmpty() && !tDishtype.getText().isEmpty() 
+				&& !tSizesAndPices.getText().isEmpty() && !tIngredients.getText().isEmpty()){
+			boolean added = DMC.addProduct(tProductName.getText(),getIngredientsToAdd(),getPrices(),getSizes(),tDishtype.getText());
 			msg = (added)?"Se ha agregado exitosamente.":"Ya existe un producto con ese nombre.";
 		}//End if
 		addInfo.setContentText(msg);
@@ -83,10 +85,32 @@ public class MainGUIController {
 	}//End showAddSizeEmergentScene
 	@FXML
 	public void getIngredientsFromAddIngredientsToProduct() throws IOException{
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		String msg = "El ingrediente elegido ya se encuentra en la lista de ingredientes";
 		EGC.showAddIngredientToProductScene();
-		
+		String ingredientSelected = EGC.getIngredientToadd();
+		String currentIngredients = new String();
+		if(!checkIngredientToAdd(ingredientSelected) && !ingredientSelected.isEmpty()){
+			currentIngredients += (tIngredients.getText().isEmpty())?ingredientSelected:tIngredients.getText()+"\n"+ingredientSelected;
+			tIngredients.setText(currentIngredients);
+			msg = "Se agrego el ingrediente";
+		}//End if
+		addInfo.setContentText(msg);
+		addInfo.showAndWait();
 	}//End getIngredientsFromAddIngredientsToProduct
-	
+	private boolean checkIngredientToAdd(String toCheck){
+		boolean exist = false;
+		String[] ingredients = tIngredients.getText().split("\n");
+		for(int i = 0; i < ingredients.length && !exist; i++){
+			if(toCheck.equalsIgnoreCase(ingredients[i]))
+				exist = true;
+		}//End for
+ 		return exist;
+	}//End checkSizeAndPrice
+	private List<String> getIngredientsToAdd(){
+		return Arrays.asList(tIngredients.getText().split("\n"));
+	}
 	private List<String> getSizes(){
 		List<String> sizes = new ArrayList<String>();
 		String[] pricesAndSizes = tSizesAndPices.getText().split("\n"); 

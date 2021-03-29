@@ -10,6 +10,6 @@
       <Button layoutX="47.0" layoutY="104.0" mnemonicParsing="false" onAction="#showdish" text="Button" />
       <Button layoutX="201.0" layoutY="104.0" mnemonicParsing="false" onAction="#showDishTypes" text="Button" />
       <Button layoutX="47.0" layoutY="161.0" mnemonicParsing="false" onAction="#showSceneRegisterProduct" text="Button" />
-      <Button layoutX="201.0" layoutY="161.0" mnemonicParsing="false" onAction="#getIngredientsFromAddIngredientsToProduct" text="Button" />
+      <Button layoutX="201.0" layoutY="161.0" mnemonicParsing="false" text="Button" />
    </children>
 </Pane>
