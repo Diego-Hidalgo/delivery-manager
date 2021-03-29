@@ -52,7 +52,6 @@ public class MainGUIController {
 	public void showFirstScene() throws IOException {
 		if(DMC.getAmountEmployees() == 0 && DMC.getAmountUsers() == 0) {
 			showRegisterFirstEmployeesScene();
-			showRegisterFirstUserScene();
 		} else {
 			showLoginScene();
 		}//End else
@@ -73,7 +72,7 @@ public class MainGUIController {
 	public void idAlreadyInUseAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("");
-		alert.setHeaderText("LA ID YA SE ENCUENTRA EN USA");
+		alert.setHeaderText("LA ID YA SE ENCUENTRA EN USO");
 		alert.setContentText("Prueba con una distinta y vuelva a intentar");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
@@ -94,9 +93,12 @@ public class MainGUIController {
 		String name = employeeNameTxt.getText();
 		String lastName = employeeLastNameTxt.getText();
 		String id = employeeIdTxt.getText();
-		if(!name.isEmpty() || !lastName.isEmpty() || !id.isEmpty()) {
-			if(DMC.searchEmployeePosition(id) != -1) {
+		if(!name.isEmpty() && !lastName.isEmpty() && !id.isEmpty()) {
+			if(DMC.searchEmployeePosition(id) == -1) {
 				DMC.addEmployee(name, lastName, id);
+				if(DMC.getAmountEmployees() == 1) {
+					showRegisterFirstUserScene();
+				}//End if
 			} else {
 				idAlreadyInUseAlert();
 			}//End else
@@ -153,7 +155,7 @@ public class MainGUIController {
 		String userName = userNameTxt.getText();
 		String password = userPasswordTxt.getText();
 		String pwConfirmation = passwordConfirmationTxt.getText();
-		if(!userId.isEmpty() || !userName.isEmpty() || !password.isEmpty() || !pwConfirmation.isEmpty()) {
+		if(!userId.isEmpty() && !userName.isEmpty() && !password.isEmpty() && !pwConfirmation.isEmpty()) {
 			if(DMC.searchEmployeePosition(userId) != -1) {
 				if(password.equals(pwConfirmation)) {
 					if(!DMC.validateUserName(userName)) {

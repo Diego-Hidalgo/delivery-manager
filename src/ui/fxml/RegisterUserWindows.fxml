@@ -44,7 +44,7 @@
                 </VBox>
                 <VBox prefHeight="255.0" prefWidth="159.0">
                     <children>
-                        <TextField fx:id="userIdtxt" prefHeight="20.0" prefWidth="120.0" />
+                        <TextField fx:id="userIdTxt" prefHeight="20.0" prefWidth="120.0" />
                         <HBox prefHeight="35.0" prefWidth="145.0" />
                         <TextField fx:id="userNameTxt" prefHeight="20.0" prefWidth="120.0" />
                         <Pane prefHeight="35.0" prefWidth="145.0" />
@@ -59,7 +59,7 @@
     <bottom>
         <HBox alignment="CENTER" prefHeight="65.0" prefWidth="400.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="addUserBtn" mnemonicParsing="false" text="Agregar usuario">
+                <Button fx:id="addUserBtn" mnemonicParsing="false" onAction="#addUser" text="Agregar usuario">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
