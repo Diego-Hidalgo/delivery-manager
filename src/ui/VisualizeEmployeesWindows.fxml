@@ -10,11 +10,11 @@
          <children>
             <TableView fx:id="employeesTable" prefHeight="307.0" prefWidth="570.0">
               <columns>
-                <TableColumn fx:id="employeeNameColumn" prefWidth="126.0" text="Nombre" />
-                <TableColumn fx:id="employeeLastNameColumn" prefWidth="133.0" text="Apellido" />
-                  <TableColumn fx:id="employeeIdColumn" prefWidth="109.0" text="Identificación" />
-                  <TableColumn fx:id="employeeCreatorColumn" prefWidth="100.0" text="Creado por" />
-                  <TableColumn fx:id="employeeModifierColumn" prefWidth="111.0" text="Modificado por" />
+                <TableColumn fx:id="employeeNameColumn" prefWidth="130.0" text="Nombre" />
+                <TableColumn fx:id="employeeLastNameColumn" prefWidth="130.0" text="Apellido" />
+                  <TableColumn fx:id="employeeIdColumn" prefWidth="110.0" text="Identificación" />
+                  <TableColumn fx:id="employeeCreatorColumn" prefWidth="109.5" text="Creado por" />
+                  <TableColumn fx:id="employeeModifierColumn" prefWidth="109.0" text="Modificado por" />
               </columns>
             </TableView>
          </children></VBox>
