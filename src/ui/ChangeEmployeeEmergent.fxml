@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="225.0" text="MODIFICAR EMPLEADO" textAlignment="CENTER" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+    </top>
+    <center>
+        <HBox alignment="CENTER" prefHeight="297.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox prefHeight="221.0" prefWidth="125.0">
+                    <children>
+                        <Label prefHeight="28.0" prefWidth="100.0" text="Nombre(s):">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Pane prefHeight="45.0" prefWidth="125.0" />
+                        <Label prefHeight="28.0" prefWidth="100.0" text="Apellido(s):">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Pane prefHeight="45.0" prefWidth="125.0" />
+                        <Label prefHeight="25.0" prefWidth="100.0" text="Identificación:">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Pane prefHeight="35.0" prefWidth="125.0" />
+                    </children>
+                </VBox>
+                <VBox prefHeight="260.0" prefWidth="145.0">
+                    <children>
+                        <TextField fx:id="employeeNameTxt" prefHeight="20.0" prefWidth="120.0" />
+                        <HBox prefHeight="50.0" prefWidth="145.0" />
+                        <TextField fx:id="employeeLastNameTxt" prefHeight="20.0" prefWidth="120.0" />
+                        <Pane prefHeight="50.0" prefWidth="145.0" />
+                        <TextField fx:id="employeeIdTxt" prefHeight="20.0" prefWidth="120.0" />
+                        <Pane prefHeight="35.0" prefWidth="145.0" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="acceptChangeEmployeeBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Aceptar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Pane prefHeight="100.0" prefWidth="60.0" />
+                  <Button fx:id="cancelChangeEmployeeBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancelar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+        </HBox>
+    </bottom>
+</BorderPane>
