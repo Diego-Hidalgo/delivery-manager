@@ -368,7 +368,7 @@ public class MainGUIController {
 				!nPhone.isEmpty() && !remark.isEmpty()) {
 			if(DMC.searchCustomerPosition(id) == -1) {
 				DMC.addCustomer(name, lastName, id, address, nPhone, remark);
-				successfulActionAlert("Empleado registrado correctamente");
+				successfulActionAlert("Cliente registrado correctamente");
 				customerNameTxt.clear();
 				customerLastNameTxt.clear();
 				customerIdTxt.clear();
