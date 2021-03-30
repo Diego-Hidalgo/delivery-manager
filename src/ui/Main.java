@@ -33,9 +33,9 @@ public class Main extends Application{
 		window.setTitle("Bienvenido");
 		window.setScene(scene);
 		window.show();
-		//DMC.loadAllData();
-		//MGC.showFirstScene();
-		MGC.showSceneLogin();
+		DMC.loadAllData();
+		MGC.showFirstScene();
+		//MGC.showSceneLogin();
 	}//End start
 
 }//End Main

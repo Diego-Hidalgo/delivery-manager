@@ -49,6 +49,34 @@ public abstract class Entity implements Serializable {
 	}//End constructor2
 
 	/**
+	 * returns the name of the user that created the instance. <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the name of the creator to be used in the TableView
+	 * @return name of the user creator
+	 */
+	public String getCreatorName() {
+		if(creator != null) {
+			return creator.getName();
+		} else {
+			return "";
+		}//End else
+	}//End getCreator
+
+	/**
+	 * returns the name of the last user that modified the instnace. <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the name of the modifier to be used in the TableView
+	 * @return name of the user that modified the instance
+	 */
+	public String getModifierName() {
+		if(modifier != null) {
+			return modifier.getName();
+		} else {
+			return "";
+		}//End else
+	}//End getModifierName
+
+	/**
 	 * changes the creator of the instance. <br>
 	 *     <b>pre:</b> creator is initialized. <br>
 	 *     <b>post:</b> The Entity creator has been changed. <br>

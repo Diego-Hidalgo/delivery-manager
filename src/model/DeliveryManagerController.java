@@ -37,6 +37,18 @@ public class DeliveryManagerController {
 		sizes = new ArrayList<ProductSize>();
 	}//End DeliveryManagerController
 
+	public List<Employee> getEmployees() {
+		return employees;
+	}//End getEmployee
+
+	public List<User> getUsers() {
+		return users;
+	}//End getUsers
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}//End getCustomers
+
 	public int getAmountUsers() {
 		return users.size();
 	}//End getAmountUsers
@@ -56,13 +68,23 @@ public class DeliveryManagerController {
 		}//for
 	}//End setLoggedUser
 
+	public User getLoggedUser(){
+		return loggedUser;
+	}//End getLoggedUser
+
 	public void logOutUser() {
 		this.loggedUser = null;
 	}//End logOutUser
 
-	public User getLoggedUser(){
-		return loggedUser;
-	}//End getLoggedUser
+	public boolean validateBlankChars(String fieldToValidate) {
+		boolean validate = false;
+		for(int i = 0; i < fieldToValidate.length() && !validate; i ++) {
+			if(fieldToValidate.charAt(i) != ' ') {
+				validate = true;
+			}//End if
+		}//End for
+		return validate;
+	}//End validateBlankChats
 
 	public void loadAllData() throws IOException, ClassNotFoundException {
 		loadEmployeesData();

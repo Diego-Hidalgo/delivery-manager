@@ -4,18 +4,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <VBox prefHeight="330.0" prefWidth="570.0" BorderPane.alignment="CENTER">
             <children>
-                <TableView fx:id="usersTable" prefHeight="307.0" prefWidth="709.0">
+                <TableView fx:id="usersTable" prefHeight="354.0" prefWidth="639.0">
                     <columns>
                         <TableColumn fx:id="userNameColumn" prefWidth="130.0" text="Nombre" />
                         <TableColumn fx:id="userLastNameColumn" prefWidth="130.0" text="Apellido" />
                         <TableColumn fx:id="userIdColumn" prefWidth="110.0" text="Identificación" />
                   <TableColumn fx:id="userUserNameColumn" prefWidth="107.0" text="Usuario" />
-                        <TableColumn fx:id="userCreatorColumn" prefWidth="107.0" text="Creado por" />
-                        <TableColumn fx:id="userModifierColumn" prefWidth="107.0" text="Modificado por" />
+                        <TableColumn fx:id="userCreatorColumn" prefWidth="121.0" text="Creado por" />
+                        <TableColumn fx:id="userModifierColumn" prefWidth="120.0" text="Modificado por" />
                     </columns>
                 </TableView>
             </children></VBox>
@@ -32,10 +32,10 @@
         </HBox>
     </top>
     <left>
-        <Pane prefHeight="331.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
+        <Pane prefHeight="355.0" prefWidth="21.0" BorderPane.alignment="CENTER" />
     </left>
     <right>
-        <Pane prefHeight="331.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
+        <Pane prefHeight="355.0" prefWidth="15.0" BorderPane.alignment="CENTER" />
     </right>
     <bottom>
         <Pane prefHeight="20.0" prefWidth="640.0" BorderPane.alignment="CENTER" />
