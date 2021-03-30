@@ -81,7 +81,7 @@ public class EmergentGUIController {
 
 	@FXML
 	public void generateReport(ActionEvent e) throws FileNotFoundException {
-		if(!reportType.getValue().isEmpty() && initialDate.getValue() != null && !initialHour.getText().isEmpty() &&
+		if(reportType.getValue() == null && initialDate.getValue() != null && !initialHour.getText().isEmpty() &&
 		finishDate != null && !finishHour.getText().isEmpty() && !pathTxt.getText().isEmpty() && !separatorTxt.getText().isEmpty()) {
 			String type = reportType.getValue();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
