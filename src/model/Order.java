@@ -50,7 +50,8 @@ public class Order implements Serializable, Comparable<Order>{
         String code = new String();
         int length = String.valueOf(hashCode).length();
         for(int i = 0; i < length - 1;i++){
-            code += b[(hashCode % 10)];
+        	int index = (hashCode> 0)?(hashCode % 10):(hashCode % 10)*-1;
+            code += b[index];
             hashCode /= 10;
         }//End for
 		return code;
