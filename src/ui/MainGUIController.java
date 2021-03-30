@@ -544,6 +544,11 @@ public class MainGUIController{
 	}//End showSceneLogin
 
 	@FXML
+	public void showGenerateReportScene() throws IOException {
+		EGC.showExportScene();
+	}//End
+
+	@FXML
 	public void showSceneRegisterProduct() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterProductWindows.fxml"));
 		fxml.setController(this);

@@ -49,7 +49,7 @@ public class Order implements Serializable, Comparable<Order>{
         int hashCode = date.hashCode();
         String code = new String();
         int length = String.valueOf(hashCode).length();
-        for(int i = 0; i < length;i++){
+        for(int i = 0; i < length - 1;i++){
             code += b[(hashCode % 10)];
             hashCode /= 10;
         }//End for
