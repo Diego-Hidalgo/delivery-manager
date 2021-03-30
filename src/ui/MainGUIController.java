@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ButtonType;
@@ -37,7 +38,10 @@ public class MainGUIController{
 	@FXML private TableColumn<Product,Double> productPrice;
 	@FXML private TableColumn<Product,String> productIngredients;
 	@FXML private ComboBox<String> cbStatus;
-
+	@FXML private TextField tIdEmployee;
+	@FXML private TextField tIdCustomer;
+	@FXML private TextArea taProducsAmount;
+	@FXML private TextArea taRemark;
 	@FXML private TextField tProductName;
 	@FXML private TextField tDishtype;
 	@FXML private TextArea tSizesAndPices;
@@ -93,10 +97,13 @@ public class MainGUIController{
 	private EmergentGUIController EGC;
 	private ObservableList<String> status;
 	private final String FOLDER = "fxml/";
-
+	List<Product> product;
+	List<Integer> amo;
 	public MainGUIController(DeliveryManagerController DMC,EmergentGUIController EGC){
 		this.DMC = DMC;
 		this.EGC = EGC;
+		product = new ArrayList<Product>();
+		amo = new ArrayList<Integer>();
 	}//End constructor
 
 	@FXML
@@ -604,7 +611,7 @@ public class MainGUIController{
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "TamaÃ±oo y  precio agregados con exito";
+			msg = "Tamaño y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -670,7 +677,34 @@ public class MainGUIController{
 		}//End for
  		return exist;
 	}//End checkSizeAndPrice
-
+	@FXML
+	public void registerOrder() throws IOException{
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		String msg = "Datos erroneos.";
+		if( !tIdEmployee.getText().isEmpty() && !tIdCustomer.getText().isEmpty() &&
+				cbStatus.getValue() != null && !taProducsAmount.getText().isEmpty() && !taRemark.getText().isEmpty()){
+			if(DMC.addOrder(product, amo, taRemark.getText(), cbStatus.getValue(), tIdCustomer.getText(), tIdEmployee.getText()) ){
+				msg = "Pedido registrado con exito";
+				tIdEmployee.setText("");
+				tIdCustomer.setText("");
+				taProducsAmount.setText("");
+				taRemark.setText("");
+			}else
+				msg = "Id del cliente o empleado erroneo";
+		}//End if
+		addInfo.setContentText(msg);	
+		addInfo.showAndWait();
+	}//End registerOrder
+	@FXML
+	public void addProductToOrder()throws IOException{
+		EGC.showAddProductsToOrderEmergent();
+		product.add(EGC.getProduct());
+		amo.add(EGC.getAmount());//taProducsAmount
+		String amountAndProducts = taProducsAmount.getText();
+		amountAndProducts += (amountAndProducts.isEmpty())?EGC.getProduct()+" x "+EGC.getAmount():EGC.getProduct()+" x "+EGC.getAmount() + "\n";
+		taProducsAmount.setText(amountAndProducts);
+	}//End addProductToOrder
 	@FXML
 	public void showSceneRegisterIngredient() throws IOException{
 		EGC.showRegisterIngredienteScene();

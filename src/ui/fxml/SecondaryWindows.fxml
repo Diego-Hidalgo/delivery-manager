@@ -17,6 +17,12 @@
                   <MenuItem mnemonicParsing="false" text="Exportar" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Pedidos">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showSceneRegisterOrder" text="Agregar" />
+                  <MenuItem mnemonicParsing="false" text="Gestionar" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Productos">
                <items>
                   <Menu mnemonicParsing="false" text="Ingredientes">

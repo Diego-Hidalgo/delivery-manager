@@ -28,8 +28,12 @@ public class EmergentGUIController {
 	private String productName;
 	private String productType;
 	private String ingredientToadd;
+	private int amount;
 	private ObservableList<Ingredient> ingredients;
+	private ObservableList<Product> products;
 	private Product productToChanges;
+	private Product productToAdd;
+	@FXML private TextField tAmount;
 	@FXML private TextField tIngredientName;
 	@FXML private TextField tDishtypeName;
 	@FXML private TextField tSize;
@@ -37,6 +41,7 @@ public class EmergentGUIController {
 	@FXML private TextField tNewIngredientToProduct;
 	@FXML private TextField tSelectedIngredient;
 	@FXML private ComboBox<Ingredient> cbIngredients;
+	@FXML private ComboBox<Product> cbProducts;
 	@FXML private TextField tNameToChanges;
 	@FXML private TextField tTypeToChanges;
 	@FXML private TextArea taIngredientsToChanges;
@@ -126,6 +131,46 @@ public class EmergentGUIController {
 		initializeForm();
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+	@FXML
+	public void showAddProductsToOrderEmergent() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"GetProductEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage formulario = new Stage();
+		initializeProductsComboBox();
+		formulario.initModality(Modality.APPLICATION_MODAL);
+		formulario.setTitle("Agregar producto");
+		formulario.setScene(scene);
+		formulario.setResizable(false);
+		formulario.showAndWait();
+	}//End showRegisterDihstypeScene
+	@FXML
+	public void AddProduct(ActionEvent event){
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		String msg = "Datos erroneos";
+		int am = 0;
+		boolean worked = false;
+		if( cbProducts.getValue() != null && !tAmount.getText().isEmpty()){
+			try{
+				am = Integer.parseInt(tAmount.getText());
+				if(am > 0){
+					productToAdd = cbProducts.getValue();
+					amount = am;
+					msg = "Producto agregado correctamente a la orden";
+					worked = true;
+				}else
+					msg = "La cantidad debe ser un entero positivo";
+			}catch(NumberFormatException e){
+				msg = "La cantidad debe ser un entero positivo";
+			}//End catch
+		}//End if
+		addInfo.setContentText(msg);
+		addInfo.showAndWait();
+		if(worked)
+			closeEmergentWindows(event);
+	}//End AddProduct
 	public void initializeForm(){
 		tNameToChanges.setText(productToChanges.getName());
 		tTypeToChanges.setText(productToChanges.getType());
@@ -241,6 +286,12 @@ public class EmergentGUIController {
 	public double getPrice(){
 		return price;
 	}//End getPrice
+	public Product getProduct(){
+		return productToAdd;
+	}//End getProduct
+	public int getAmount(){
+		return amount;
+	}//End getAmount
 	@FXML
 	public void addIngredient(ActionEvent event) throws IOException{
 		boolean worked = false;
@@ -292,6 +343,10 @@ public class EmergentGUIController {
 	    Stage stage = (Stage) source.getScene().getWindow();
 	    stage.close();
 	}//End closeEmergentWindowss
+	private void initializeProductsComboBox(){
+		products = FXCollections.observableArrayList(DMC.getProducts());
+		cbProducts.setItems(products);
+	}//End initializeIngredientsComboBox
 	private void initializeIngredientsComboBox(){
 		ingredients = FXCollections.observableArrayList(DMC.getIngredients());
 		cbIngredients.setItems(ingredients);

@@ -20,6 +20,9 @@
          </font>
       </Label>
       <TextField fx:id="tProductName" layoutX="191.0" layoutY="115.0" prefHeight="25.0" prefWidth="165.0" />
+      <TextField fx:id="tDishtype" layoutX="191.0" layoutY="164.0" prefHeight="25.0" prefWidth="165.0" />
+      <TextArea fx:id="tSizesAndPices" editable="false" layoutX="191.0" layoutY="209.0" prefHeight="58.0" prefWidth="165.0" wrapText="true" />
+      <TextArea fx:id="tIngredients" editable="false" layoutX="191.0" layoutY="301.0" prefHeight="155.0" prefWidth="165.0" wrapText="true" />
       <Label layoutX="39.0" layoutY="166.0" text="Tipo de producto:">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -35,24 +38,16 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tDishtype" layoutX="191.0" layoutY="164.0" prefHeight="25.0" prefWidth="165.0" />
       <Label layoutX="40.0" layoutY="303.0" text="Ingredientes:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="tIngredients" editable="false" layoutX="191.0" layoutY="301.0" prefHeight="155.0" prefWidth="165.0" wrapText="true" />
       <Button layoutX="364.0" layoutY="300.0" mnemonicParsing="false" onAction="#getIngredientsFromAddIngredientsToProduct" text="+">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
       <Button layoutX="305.0" layoutY="477.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="25.0" prefWidth="71.0" text="Agregar" />
-      <TextArea fx:id="tSizesAndPices" editable="false" layoutX="191.0" layoutY="209.0" prefHeight="58.0" prefWidth="165.0" wrapText="true" />
-      <Button layoutX="191.0" layoutY="475.0" mnemonicParsing="false" onAction="#showSceneLogin" text="devolverse">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Button>
    </children>
 </Pane>

@@ -879,11 +879,16 @@ public class DeliveryManagerController {
 		return or;
 	}//End getOrdersInRange
 
-	public void addOrder(List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
+	public boolean addOrder(List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
-		orders.add(new Order(nProducts,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
-		saveOrdersData();
+		boolean added = false;
+		if(customerIndex >= 0 && employeeIndex >= 0){
+			orders.add(new Order(nProducts,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
+			added = true;
+			saveOrdersData();	
+		}//End if
+		return added;
 	}//End addOrder
 
 	public void changeOrder(Order order,List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {

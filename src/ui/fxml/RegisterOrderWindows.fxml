@@ -30,23 +30,22 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="173.0" layoutY="106.0" prefHeight="25.0" prefWidth="219.0" />
-      <TextField layoutX="173.0" layoutY="150.0" prefHeight="25.0" prefWidth="219.0" />
+      <TextField fx:id="tIdCustomer" layoutX="173.0" layoutY="106.0" prefHeight="25.0" prefWidth="219.0" />
+      <TextField fx:id="tIdEmployee" layoutX="173.0" layoutY="150.0" prefHeight="25.0" prefWidth="219.0" />
       <Label layoutX="31.0" layoutY="201.0" text="Estado:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="cbStatus" layoutX="173.0" layoutY="199.0" prefWidth="150.0" />
-      <TextArea editable="false" layoutX="169.0" layoutY="254.0" prefHeight="116.0" prefWidth="237.0" wrapText="true" />
-      <Button layoutX="413.0" layoutY="260.0" mnemonicParsing="false" text="+" />
+      <TextArea fx:id="taProducsAmount" editable="false" layoutX="169.0" layoutY="254.0" prefHeight="116.0" prefWidth="237.0" wrapText="true" />
+      <Button layoutX="413.0" layoutY="260.0" mnemonicParsing="false" onAction="#addProductToOrder" text="+" />
       <Label layoutX="27.0" layoutY="398.0" text="Comentarios:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextArea layoutX="173.0" layoutY="389.0" prefHeight="58.0" prefWidth="228.0" />
-      <Button layoutX="375.0" layoutY="487.0" mnemonicParsing="false" text="Registrar" />
-      <Button layoutX="297.0" layoutY="487.0" mnemonicParsing="false" onAction="#showSceneLogin" text="Button" />
+      <TextArea fx:id="taRemark" layoutX="173.0" layoutY="389.0" prefHeight="58.0" prefWidth="228.0" />
+      <Button layoutX="375.0" layoutY="487.0" mnemonicParsing="false" onAction="#registerOrder" text="Registrar" />
    </children>
 </Pane>
