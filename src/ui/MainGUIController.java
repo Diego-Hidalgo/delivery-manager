@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,6 +33,7 @@ public class MainGUIController{
 	@FXML private TableColumn<Product,String> productSize;
 	@FXML private TableColumn<Product,Double> productPrice;
 	@FXML private TableColumn<Product,String> productIngredients;
+	@FXML private ComboBox<String> cbStatus;
 	@FXML private TextField tProductName;
 	@FXML private TextField tDishtype;
 	@FXML private TextArea tSizesAndPices;
@@ -60,7 +62,7 @@ public class MainGUIController{
 	@FXML private TextField customerRemarkTxt;
 	private DeliveryManagerController DMC;
 	private EmergentGUIController EGC;
-
+	private ObservableList<String> status;
 	private final String FOLDER = "fxml/";
 
 	public MainGUIController(DeliveryManagerController DMC,EmergentGUIController EGC){
@@ -287,8 +289,23 @@ public class MainGUIController{
 		mainPane.setCenter(productsListScene);
 		initializeProductsList();
 		Stage st = (Stage) productsListScene.getScene().getWindow();
+		st.setTitle("Lista de pedidos");
 		st.setHeight(450);
 		st.setWidth(700);
+		st.setResizable(false);
+	}//End showSceneLogin
+	@FXML
+	public void showSceneRegisterOrder() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterOrderWindows.fxml"));
+		fxml.setController(this);
+		Parent registerOrder = fxml.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(registerOrder);
+		initializeStatusComboBox();
+		Stage st = (Stage) registerOrder.getScene().getWindow();
+		st.setTitle("Registrar pedido");
+		st.setHeight(560);
+		st.setWidth(560);
 		st.setResizable(false);
 	}//End showSceneLogin
 	@FXML
@@ -405,4 +422,12 @@ public class MainGUIController{
 		productPrice.setCellValueFactory(new PropertyValueFactory<Product,Double>("price"));
 		productIngredients.setCellValueFactory(new PropertyValueFactory<Product,String>("ingredients"));
 	}//End initializeProductsList
+	private void initializeStatusComboBox(){
+		status = FXCollections.observableArrayList();
+		status.add("SOLICITADO");
+		status.add("EN_PROCESO");
+		status.add("ENVIADO");
+		status.add("ENTREGADO");
+		cbStatus.setItems(status);
+	}//End initializeIngredientsComboBox
 }//End MainGUIController

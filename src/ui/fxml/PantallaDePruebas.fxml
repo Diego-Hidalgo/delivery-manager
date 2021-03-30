@@ -8,7 +8,7 @@
       <Button layoutX="47.0" layoutY="51.0" mnemonicParsing="false" onAction="#showSceneRegisterIngredient" text="Button" />
       <Button layoutX="201.0" layoutY="51.0" mnemonicParsing="false" onAction="#showProductsList" text="Button" />
       <Button layoutX="47.0" layoutY="104.0" mnemonicParsing="false" onAction="#showSceneRegisterDishtype" text="Button" />
-      <Button layoutX="201.0" layoutY="104.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="201.0" layoutY="104.0" mnemonicParsing="false" onAction="#showSceneRegisterOrder" text="Button" />
       <Button layoutX="47.0" layoutY="161.0" mnemonicParsing="false" onAction="#showSceneRegisterProduct" text="Button" />
       <Button layoutX="201.0" layoutY="161.0" mnemonicParsing="false" text="Button" />
    </children>
