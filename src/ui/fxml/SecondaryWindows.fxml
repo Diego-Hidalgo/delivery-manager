@@ -11,7 +11,7 @@
             <Menu mnemonicParsing="false" text="Archivo">
               <items>
                 <MenuItem mnemonicParsing="false" text="Importar" />
-                  <MenuItem mnemonicParsing="false" text="Exportar" />
+                  <MenuItem mnemonicParsing="false" onAction="#showGenerateReportScene" text="Exportar" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Usuario">

@@ -1,6 +1,16 @@
 package ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,10 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -32,10 +39,51 @@ public class EmergentGUIController {
 	@FXML private TextField tPrice;
 	@FXML private TextField tSelectedIngredient;
 	@FXML private ComboBox<Ingredient> cbIngredients;
+	@FXML private ChoiceBox<String> reportType;
+	@FXML private TextField pathTxt;
+	@FXML private DatePicker initialDate;
+	@FXML private DatePicker finishDate;
+	@FXML private TextField initialHour;
+	@FXML private TextField finishHour;
+	@FXML private TextField separatorTxt;
+
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
 		size = new String();
 	}//End constructors
+
+	@FXML
+	public void showExportScene() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ExportReportsEmergent.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root, null);
+		Stage form = new Stage();
+		setReportElements();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Generar Reportes");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
+	}//End showExportScene
+
+	@FXML
+	public void setReportElements() {
+		reportType.getItems().add("Pedidos");
+		reportType.getItems().add("Empleados");
+		reportType.getItems().add("Productos");
+	}//End setReportElements
+
+	@FXML
+	public void chooseSavePath() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Seleccionar ruta de guardado");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+		File file = fileChooser.showSaveDialog(null);
+		if(file != null) {
+			pathTxt.setText(file.getAbsolutePath());
+		}//End if
+	}//End chooseSavePath
 	
 	@FXML
 	public void showRegisterIngredienteScene() throws IOException{
@@ -71,7 +119,7 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaño del producto");
+		formulario.setTitle("Agregar tamaï¿½o del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		formulario.showAndWait();
@@ -84,7 +132,7 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaño del producto");
+		formulario.setTitle("Agregar tamaï¿½o del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		initializeIngredientsComboBox();
@@ -122,7 +170,7 @@ public class EmergentGUIController {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "Tamaño o precio incorrecto.";
+		String msg = "Tamaï¿½o o precio incorrecto.";
 		if(!tSize.getText().isEmpty() && !tPrice.getText().isEmpty()){
 			try{
 				price = Double.parseDouble(tPrice.getText());

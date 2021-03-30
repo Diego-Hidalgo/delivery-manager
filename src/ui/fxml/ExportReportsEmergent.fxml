@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="347.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="508.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="EMITIR REPORTES">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="225.0" prefWidth="140.0">
+               <children>
+                  <Label prefHeight="19.0" prefWidth="126.0" text="Tipo de reporte:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="30.0" prefWidth="159.0" />
+                  <Label prefHeight="19.0" prefWidth="120.0" text="Ruta de guardado:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="30.0" prefWidth="159.0" />
+                  <Label prefHeight="19.0" prefWidth="128.0" text="Fecha y hora inicial:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="34.0" prefWidth="140.0" />
+                  <Label prefHeight="19.0" prefWidth="125.0" text="Fecha y hora final:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="15.0" prefWidth="140.0" />
+                  <Label prefHeight="19.0" prefWidth="113.0" text="Separador:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="225.0" prefWidth="213.0">
+               <children>
+                  <ChoiceBox fx:id="reportType" prefHeight="25.0" prefWidth="180.0" />
+                  <Pane prefHeight="23.0" prefWidth="213.0" />
+                  <HBox prefHeight="25.0" prefWidth="213.0">
+                     <children>
+                        <TextField fx:id="pathTxt" editable="false" prefHeight="25.0" prefWidth="194.0" />
+                        <Button fx:id="pathBtn" mnemonicParsing="false" onAction="#chooseSavePath" text="..." />
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="22.0" prefWidth="213.0" />
+                  <HBox prefHeight="27.0" prefWidth="213.0">
+                     <children>
+                        <DatePicker fx:id="initialDate" prefHeight="25.0" prefWidth="122.0" />
+                        <TextField fx:id="initialHour" prefHeight="25.0" prefWidth="80.0" promptText="HH:MM" text="00:00" />
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="24.0" prefWidth="213.0" />
+                  <HBox prefHeight="24.0" prefWidth="213.0">
+                     <children>
+                        <DatePicker fx:id="finishDate" prefHeight="25.0" prefWidth="122.0" />
+                        <TextField fx:id="finishHour" prefHeight="25.0" prefWidth="80.0" promptText="HH:MM" text="23:59" />
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="9.0" prefWidth="213.0" />
+                  <HBox prefHeight="26.0" prefWidth="213.0">
+                     <children>
+                        <TextField fx:id="separatorTxt" prefHeight="14.0" prefWidth="52.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <right>
+      <Pane prefHeight="288.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="55.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#closeEmergentWindows" text="Cancelar">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Pane prefHeight="55.0" prefWidth="73.0" />
+            <Button mnemonicParsing="false" text="Aceptar">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
