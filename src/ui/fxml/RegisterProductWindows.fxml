@@ -49,5 +49,10 @@
       </Button>
       <Button layoutX="305.0" layoutY="477.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="25.0" prefWidth="71.0" text="Agregar" />
       <TextArea fx:id="tSizesAndPices" editable="false" layoutX="191.0" layoutY="209.0" prefHeight="58.0" prefWidth="165.0" wrapText="true" />
+      <Button layoutX="191.0" layoutY="475.0" mnemonicParsing="false" onAction="#showSceneLogin" text="devolverse">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

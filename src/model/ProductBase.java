@@ -33,7 +33,15 @@ public class ProductBase implements Serializable {//Comparable<ProductBase>
 	public void addIngredient(Ingredient ingredient){
 		ingredients.add(ingredient);
 	}//End addIngredients
-
+	public String getIngredients(){
+		String ing = new String();
+		for(int i = 0; i < ingredients.size();i++){
+			ing += ( (i+1) < ingredients.size() )?ingredients.get(i) + ",":ingredients.get(i);
+			if((i+1)%3 == 0)
+				ing += "\n";
+		}//End for
+		return ing;
+	}//End getIngredients
 	public void setIngredient(List<Ingredient> ingredient){
 		ingredients = ingredient;
 	}//End addIngredients
