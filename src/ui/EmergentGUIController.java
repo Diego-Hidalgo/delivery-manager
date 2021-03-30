@@ -1,7 +1,11 @@
 package ui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import model.*;
@@ -70,6 +74,52 @@ public class EmergentGUIController {
 		form.setResizable(false);
 		form.showAndWait();
 	}//End showExportScene
+
+	@FXML
+	public void generateReport(ActionEvent e) throws FileNotFoundException {
+		if(!reportType.getValue().isEmpty() && initialDate.getValue() != null && !initialHour.getText().isEmpty() &&
+		finishDate != null && !finishHour.getText().isEmpty() && !pathTxt.getText().isEmpty() && !separatorTxt.getText().isEmpty()) {
+			String type = reportType.getValue();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+			LocalDateTime dateTimeInitial = LocalDateTime.parse((initialDate.getValue().toString() + " " + initialHour.getText()), formatter);
+			Date di = toDate(dateTimeInitial);
+			LocalDateTime dateTimeFinal = LocalDateTime.parse((finishDate.getValue().toString() + " " + finishHour.getText()), formatter);
+			Date df = toDate(dateTimeFinal);
+			String separator = separatorTxt.getText();
+			switch(type) {
+				case "Pedidos":
+					DMC.exportOrdersData(new File(pathTxt.getText()), separator, di, df);
+					closeEmergentWindows(e);
+					break;
+				case "Empleados":
+					DMC.exportEmployeesData(new File(pathTxt.getText()), separator, di, df);
+					closeEmergentWindows(e);
+					break;
+				case "Productos":
+					DMC.exportProductsData(new File(pathTxt.getText()), separator, di, df);
+					closeEmergentWindows(e);
+					break;
+			}//End
+		} else {
+			emptyFieldAlert();
+		}
+	}//End generateReport
+
+	@FXML
+	public void emptyFieldAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Campo Vacío");
+		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
+		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End emptyFieldAlert
+
+	@FXML
+	public Date toDate(LocalDateTime ldt) {
+		return java.sql.Timestamp.valueOf(ldt);
+	}//End
 
 	@FXML
 	public void setReportElements() {
