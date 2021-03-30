@@ -532,11 +532,11 @@ public class DeliveryManagerController {
 
 	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName) throws IOException {
 		int productIndex = findProductBase(newName);
-		String n = (productIndex >= 0)?newName: (product.getProductBase()).getName();
+		String n = (productIndex < 0)?newName: (product.getProductBase()).getName();
 		product.changesProductBase(n, ingredientsToAdd(Newingredients), dishTypeToAdd(typeName));
-		products.get(productIndex).setPrice(prices);
-		products.get(productIndex).setSize(sizes);
-		products.get(productIndex).setModifier(loggedUser);
+		product.setPrice(prices);
+		product.setSize(sizes);
+		product.setModifier(loggedUser);
 		saveOrdersData();
 		saveBaseProductsData();
 		saveProductsData();
@@ -896,5 +896,7 @@ public class DeliveryManagerController {
 		orders.remove(order);
 		saveOrdersData();
 	}//End removeOrder
-
+	public List<Product> getProducts(){
+		return products;
+	}//End getProducts
 }//End DeliveryManagerController

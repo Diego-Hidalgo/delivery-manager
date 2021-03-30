@@ -6,20 +6,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
 
 public class MainGUIController{
+	@FXML private TableView<Product> productTable;
+	@FXML private TableColumn<Product,String> productName;
+	@FXML private TableColumn<Product,String> productType;
+	@FXML private TableColumn<Product,String> productSize;
+	@FXML private TableColumn<Product,Double> productPrice;
+	@FXML private TableColumn<Product,String> productIngredients;
 	@FXML private TextField tProductName;
 	@FXML private TextField tDishtype;
 	@FXML private TextArea tSizesAndPices;
@@ -249,7 +261,7 @@ public class MainGUIController{
 		mainPane.setCenter(loginScene);
 		Stage st = (Stage) loginScene.getScene().getWindow();
 		st.setHeight(400);
-		st.setWidth(366);
+		st.setWidth(500);
 		st.setResizable(false);
 	}//End showSceneLogin
 
@@ -263,9 +275,22 @@ public class MainGUIController{
 		Stage st = (Stage) registerProduct.getScene().getWindow();
 		st.setTitle("Registrar productos");
 		st.setHeight(570);
-		st.setWidth(440);
+		st.setWidth(700);
 		st.setResizable(false);
 	}//End showSceneRegisterProduct
+	@FXML
+	public void showProductsList() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeProductsWindows.fxml"));
+		fxml.setController(this);
+		Parent productsListScene = fxml.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(productsListScene);
+		initializeProductsList();
+		Stage st = (Stage) productsListScene.getScene().getWindow();
+		st.setHeight(450);
+		st.setWidth(700);
+		st.setResizable(false);
+	}//End showSceneLogin
 	@FXML
 	public void addProduct() throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -275,8 +300,13 @@ public class MainGUIController{
 				&& !tSizesAndPices.getText().isEmpty() && !tIngredients.getText().isEmpty()){
 			boolean added = DMC.addProduct(tProductName.getText(),getIngredientsToAdd(),getPrices(),getSizes(),tDishtype.getText());
 			msg = (added)?"Se ha agregado exitosamente.":"Ya existe un producto con ese nombre.";
+			tProductName.setText("");
+			tDishtype.setText("");
+			tSizesAndPices.setText("");
+			tIngredients.setText("");
 		}//End if
 		addInfo.setContentText(msg);
+		addInfo.showAndWait();
 	}//End addProduct
 	@FXML
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
@@ -350,23 +380,29 @@ public class MainGUIController{
  		return exist;
 	}//End checkSizeAndPrice
 	@FXML
-	public void show() throws IOException{
+	public void showSceneRegisterIngredient() throws IOException{
 		EGC.showRegisterIngredienteScene();
-	}
+	}//End showSceneRegisterIngredient
 
 	@FXML
-	public void showdish() throws IOException{
+	public void showSceneRegisterDishtype() throws IOException{
 		EGC.showRegisterDihstypeScene();
-	}
-
+	}//End showSceneRegisterDishtype
 	@FXML
-	public void showIngredients(){
-		System.out.println(DMC.getIngredients());
-	}
-
-	@FXML
-	public void showDishTypes(){
-		System.out.println(DMC.getDishtype());
-	}
-
+	public void ListenChangeProductEvent(MouseEvent mouseEvent) throws IOException{
+		if(mouseEvent.getClickCount() == 2){
+			Product p = productTable.getSelectionModel().getSelectedItem();
+			EGC.showChangeProducts(p);
+			DMC.changeProduct(p,EGC.getProductName(),Arrays.asList(EGC.getIngredientToadd().split("\n")),EGC.getPrice(),EGC.getSize(),EGC.getProductType());
+		}//End if
+	}//End ListenChangeProductEvent
+	public void initializeProductsList(){
+		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts());
+		productTable.setItems(productsList);
+		productName.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
+		productType.setCellValueFactory(new PropertyValueFactory<Product,String>("type"));
+		productSize.setCellValueFactory(new PropertyValueFactory<Product,String>("size"));
+		productPrice.setCellValueFactory(new PropertyValueFactory<Product,Double>("price"));
+		productIngredients.setCellValueFactory(new PropertyValueFactory<Product,String>("ingredients"));
+	}//End initializeProductsList
 }//End MainGUIController

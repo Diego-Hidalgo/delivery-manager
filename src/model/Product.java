@@ -54,7 +54,9 @@ public class Product implements Serializable {
 	public int getNtr(){
 		return ntr;
 	}//End getNtr
-
+	public String getIngredients(){
+		return product.getIngredients();
+	}//End getIngredients
 	public void setModifier(User modifier) {
 		this.modifier = modifier;
 		product.setModifier(modifier);
@@ -71,7 +73,12 @@ public class Product implements Serializable {
 	public boolean getLinked() {
 		return linked;
 	}//End getLinked
-
+	public String getName(){
+		return product.getName();
+	}//End getName
+	public String getType(){
+		return product.getType();
+	}//End getName
 	public User getModifier() {
 		return modifier;
 	}//End getModifier

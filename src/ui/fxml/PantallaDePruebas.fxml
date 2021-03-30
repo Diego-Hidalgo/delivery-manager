@@ -5,10 +5,10 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="47.0" layoutY="51.0" mnemonicParsing="false" onAction="#show" text="Button" />
-      <Button layoutX="201.0" layoutY="51.0" mnemonicParsing="false" onAction="#showIngredients" text="Button" />
-      <Button layoutX="47.0" layoutY="104.0" mnemonicParsing="false" onAction="#showdish" text="Button" />
-      <Button layoutX="201.0" layoutY="104.0" mnemonicParsing="false" onAction="#showDishTypes" text="Button" />
+      <Button layoutX="47.0" layoutY="51.0" mnemonicParsing="false" onAction="#showSceneRegisterIngredient" text="Button" />
+      <Button layoutX="201.0" layoutY="51.0" mnemonicParsing="false" onAction="#showProductsList" text="Button" />
+      <Button layoutX="47.0" layoutY="104.0" mnemonicParsing="false" onAction="#showSceneRegisterDishtype" text="Button" />
+      <Button layoutX="201.0" layoutY="104.0" mnemonicParsing="false" text="Button" />
       <Button layoutX="47.0" layoutY="161.0" mnemonicParsing="false" onAction="#showSceneRegisterProduct" text="Button" />
       <Button layoutX="201.0" layoutY="161.0" mnemonicParsing="false" text="Button" />
    </children>

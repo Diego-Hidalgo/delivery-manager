@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,14 +25,21 @@ public class EmergentGUIController {
 	private DeliveryManagerController DMC;
 	private String  size;
 	private double price;
+	private String productName;
+	private String productType;
 	private String ingredientToadd;
 	private ObservableList<Ingredient> ingredients;
+	private Product productToChanges;
 	@FXML private TextField tIngredientName;
 	@FXML private TextField tDishtypeName;
 	@FXML private TextField tSize;
 	@FXML private TextField tPrice;
+	@FXML private TextField tNewIngredientToProduct;
 	@FXML private TextField tSelectedIngredient;
 	@FXML private ComboBox<Ingredient> cbIngredients;
+	@FXML private TextField tNameToChanges;
+	@FXML private TextField tTypeToChanges;
+	@FXML private TextArea taIngredientsToChanges;
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
 		size = new String();
@@ -77,6 +85,19 @@ public class EmergentGUIController {
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
 	@FXML
+	public void showChangeIngredientToProduct() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"changeIngredientsFromProductsEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage formulario = new Stage();
+		formulario.initModality(Modality.APPLICATION_MODAL);
+		formulario.setTitle("Cambiar ingrediente");
+		formulario.setScene(scene);
+		formulario.setResizable(false);
+		formulario.showAndWait();
+	}//End showRegisterDihstypeScene
+	@FXML
 	public void showAddIngredientToProductScene() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"AddIngredienteToProductEmergent.fxml"));
 		fxml.setController(this);
@@ -90,6 +111,73 @@ public class EmergentGUIController {
 		initializeIngredientsComboBox();
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+	@FXML
+	public void showChangeProducts(Product p) throws IOException{
+		productToChanges = p;
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"ChangeProductEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage formulario = new Stage();
+		formulario.initModality(Modality.APPLICATION_MODAL);
+		formulario.setTitle("Cambiar producto");
+		formulario.setScene(scene);
+		formulario.setResizable(false);
+		initializeForm();
+		formulario.showAndWait();
+	}//End showRegisterDihstypeScene
+	public void initializeForm(){
+		tNameToChanges.setText(productToChanges.getName());
+		tTypeToChanges.setText(productToChanges.getType());
+		tSize.setText(productToChanges.getSize());
+		tPrice.setText(String.valueOf(productToChanges.getPrice()));
+	}//End initializeForm
+	@FXML
+	public void changeProductData(ActionEvent event){
+		boolean worked = false;
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		addInfo.setContentText("Datos erroneos");
+		if(!tNameToChanges.getText().isEmpty() && !tTypeToChanges.getText().isEmpty() && 
+			!tSize.getText().isEmpty() && !tPrice.getText().isEmpty() 
+			&& !taIngredientsToChanges.getText().isEmpty()){
+			try{
+				productName = tNameToChanges.getText();
+				productType = tTypeToChanges.getText();
+				size = tSize.getText();
+				ingredientToadd = taIngredientsToChanges.getText();
+				price = Double.parseDouble(tPrice.getText());
+				tNameToChanges.setText("");
+				tTypeToChanges.setText("");
+				tSize.setText("");
+				taIngredientsToChanges.setText("");
+				tPrice.setText("");
+				worked = true;
+			}catch(NumberFormatException e){
+				addInfo.showAndWait();
+			}//End catch
+		}else 
+			addInfo.showAndWait();
+		if(worked)
+			closeEmergentWindows(event);
+	}//End changeProductData
+	@FXML
+	public void changesIngredients(ActionEvent event){
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		boolean worked = false;
+		String currentIngredients = taIngredientsToChanges.getText();
+		if(!tNewIngredientToProduct.getText().isEmpty()){
+			currentIngredients += (!currentIngredients.isEmpty())?"\n" + tNewIngredientToProduct.getText(): tNewIngredientToProduct.getText();
+			taIngredientsToChanges.setText(currentIngredients);
+			worked = true;
+		}else {
+			addInfo.setContentText("Datos erroneos");
+			addInfo.showAndWait();
+		}
+		if(worked)
+		 closeEmergentWindows(event);
+	}//End changesIngredients
 	@FXML
 	public void showInfoFromComboBoxSelectedItem(){
 		Ingredient ing = cbIngredients.getValue();
@@ -140,9 +228,16 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End setSize
+	
 	public String getSize(){
 		return size;
 	}//end getSize
+	public String getProductName(){
+		return productName;
+	}//End getProductName
+	public String getProductType(){
+		return productType;
+	}//End getProductName
 	public double getPrice(){
 		return price;
 	}//End getPrice
