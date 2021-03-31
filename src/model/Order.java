@@ -40,7 +40,7 @@ public class Order implements Serializable, Comparable<Order>{
 		generateCode();
 	}//End constructor2
 
-	public void generateCode(){
+	private void generateCode(){
 		code = getPrefix()+getSuffix();
 	}//End generateCode
 
@@ -61,7 +61,7 @@ public class Order implements Serializable, Comparable<Order>{
 		String symbols[] = {"-","/","?","#","&",".",","};
 		Random s = new Random();
 		String prefix = String.valueOf(creator.getName().charAt(0) + creator.getLastName().charAt(0));
-		prefix += (s.nextInt(100)+1) + symbols[s.nextInt(symbols.length)];
+		prefix += (s.nextInt(50)+1) + symbols[s.nextInt(symbols.length)];
 		return prefix;
 	}//End getPrefix
 
@@ -163,7 +163,18 @@ public class Order implements Serializable, Comparable<Order>{
 	public List<Product> getProducts(){
 		return products;
 	}//End getProducts
-
+	
+	public String getProductsList(){
+		String products = new String();
+		int size = this.products.size();
+		int limit = (size > 3)?3:size;
+		for(int i = 0; i < limit; i++){
+			products += this.products.get(i).getName() + " x " + amount.get(i) + "\n";
+		}//End for
+		products += (limit == 3)?"...\n":"";
+		return products;
+	}//End getProductsList
+	
 	public double calculateTotalPrice() {
 		double totalPrice = 0;
 		for(int i = 0; i < products.size(); i ++) {

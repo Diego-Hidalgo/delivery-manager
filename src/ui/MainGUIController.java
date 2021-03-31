@@ -31,21 +31,40 @@ import javafx.stage.Stage;
 import model.*;
 
 public class MainGUIController{
+	//Product
 	@FXML private TableView<Product> productTable;
 	@FXML private TableColumn<Product,String> productName;
 	@FXML private TableColumn<Product,String> productType;
 	@FXML private TableColumn<Product,String> productSize;
 	@FXML private TableColumn<Product,Double> productPrice;
 	@FXML private TableColumn<Product,String> productIngredients;
-	@FXML private ComboBox<String> cbStatus;
-	@FXML private TextField tIdEmployee;
-	@FXML private TextField tIdCustomer;
-	@FXML private TextArea taProducsAmount;
-	@FXML private TextArea taRemark;
 	@FXML private TextField tProductName;
 	@FXML private TextField tDishtype;
 	@FXML private TextArea tSizesAndPices;
 	@FXML private TextArea tIngredients;
+	
+	//Ingredient
+	@FXML private TableView<Ingredient> ingredientTable;
+	@FXML private TableColumn<Ingredient,String> ingredientName;
+	
+	//DishType
+	@FXML private TableView<DishType> dishTypeTable;
+	@FXML private TableColumn<DishType,String> dishTypeName;
+	
+	//Order
+	@FXML private ComboBox<String> cbStatus;
+	@FXML private TextField tIdEmployee;
+	@FXML private TextField tIdCustomer;
+	@FXML private TextArea taRemark;
+	@FXML private TextArea taProducsAmount;
+	@FXML private TableView<Order> orderTable;
+	@FXML private TableColumn<Order,String> orderCode;
+	@FXML private TableColumn<Order,String> orderDate;
+	@FXML private TableColumn<Order,String> orderStatus;
+	@FXML private TableColumn<Order,String> orderProducts;
+	@FXML private TableColumn<Order,String> orderRemark;
+	private ObservableList<String> status;
+	
 	//Login
 	@FXML private TextField logInName;
 	@FXML private PasswordField logInPassword;
@@ -95,10 +114,10 @@ public class MainGUIController{
 
 	private DeliveryManagerController DMC;
 	private EmergentGUIController EGC;
-	private ObservableList<String> status;
+	
 	private final String FOLDER = "fxml/";
-	List<Product> product;
-	List<Integer> amo;
+	private List<Product> product;
+	private List<Integer> amo;
 	public MainGUIController(DeliveryManagerController DMC,EmergentGUIController EGC){
 		this.DMC = DMC;
 		this.EGC = EGC;
@@ -126,7 +145,7 @@ public class MainGUIController{
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
 		window.show();
-		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() + ". Acceda al menÃº para usar las opciones del sistema");
+		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() + ". Acceda al menú para usar las opciones del sistema");
 	}//End switchToSecondaryPane
 
 	@FXML
@@ -141,7 +160,7 @@ public class MainGUIController{
 	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("AcciÃ³n exitosa");
+		alert.setTitle("Acción exitosa");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -152,7 +171,7 @@ public class MainGUIController{
 	@FXML
 	public void emptyFieldAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Campo VacÃ­o");
+		alert.setTitle("Campo Vacío");
 		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -253,9 +272,9 @@ public class MainGUIController{
 	@FXML
 	public void passwordMisMatchAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Verificar ContraseÃ±as");
-		alert.setHeaderText("LAS CONTRASEÃ‘AS NO COINCIDEN");
-		alert.setContentText("Las contraseÃ±as deben ser iguales, vuelva a intentarlo");
+		alert.setTitle("Verificar Contraseñas");
+		alert.setHeaderText("LAS CONTRASEÑAS NO COINCIDEN");
+		alert.setContentText("Las contrase{as deben ser iguales, vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -266,7 +285,7 @@ public class MainGUIController{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("La Id No Se Encuentra");
 		alert.setHeaderText("LA ID INGRESADA NO EXISTE");
-		alert.setContentText("La id ingresada no coincide con ningÃºn empleado, intente con otra o cree un nuevo empleado");
+		alert.setContentText("La id ingresada no coincide con ningún empleado, intente con otra o cree un nuevo empleado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -298,9 +317,9 @@ public class MainGUIController{
 	@FXML
 	public void passwordTooShortAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("ContraseÃ±a invÃ¡lida");
-		alert.setHeaderText("LA CONTRASEÃ‘A ES DEMASIADO CORTA");
-		alert.setContentText("La contraseÃ±a debe tener por lo menos 7 caracteres, intente con otra");
+		alert.setTitle("Contraseña inválida");
+		alert.setHeaderText("LA CONTRASEÑA ES DEMASIADO CORTA");
+		alert.setContentText("La contraseña debe tener por lo menos 7 caracteres, intente con otra");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -365,7 +384,7 @@ public class MainGUIController{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("Verifique las credenciales de inicio de sesiÃ³n");
+		alert.setContentText("Verifique las credenciales de inicio de sesión");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -557,7 +576,7 @@ public class MainGUIController{
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		st.setTitle("Registrar productos");
 		st.setHeight(570);
-		st.setWidth(700);
+		st.setWidth(550);
 		st.setResizable(false);
 	}//End showSceneRegisterProduct
 
@@ -570,21 +589,60 @@ public class MainGUIController{
 		initializeProductsList();
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		st.setTitle("Lista de pedidos");
-		st.setHeight(450);
-		st.setWidth(700);
+		st.setHeight(510);
+		st.setWidth(800);
 		st.setResizable(false);
 	}//End showSceneLogin
+	@FXML
+	public void showIngredientsList() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeIngredientsWindows.fxml"));
+		fxml.setController(this);
+		Parent ingredientsListScene = fxml.load();
+		secondaryPane.setCenter(ingredientsListScene);
+		Stage st = (Stage) secondaryPane.getScene().getWindow();
+		initializeIngredientsList();
+		st.setTitle("Lista de ingredientes");
+		st.setHeight(450);
+		st.setWidth(550);
+		st.setResizable(false);
+	}//End showIngredientsList
+	@FXML
+	public void showDishTypeList() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeDishTypeWindows.fxml"));
+		fxml.setController(this);
+		Parent dishTypeListScene = fxml.load();
+		secondaryPane.setCenter(dishTypeListScene);
+		Stage st = (Stage) secondaryPane.getScene().getWindow();
+		initializeDishtypeList();
+		st.setTitle("Lista de tipos de platos");
+		st.setHeight(450);
+		st.setWidth(550);
+		st.setResizable(false);
+	}//End showDishTypeList
 	@FXML
 	public void showSceneRegisterOrder() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterOrderWindows.fxml"));
 		fxml.setController(this);
 		Parent registerOrder = fxml.load();
 		secondaryPane.setCenter(registerOrder);
-		initializeStatusComboBox();
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
+		initializeStatusComboBox();
 		st.setTitle("Registrar pedido");
-		st.setHeight(560);
-		st.setWidth(560);
+		st.setHeight(610);
+		st.setWidth(550);
+		st.setResizable(false);
+	}//End showSceneLogin
+	@FXML
+	public void showSceneOrdersList() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeOrdersWindows.fxml"));
+		fxml.setController(this);
+		Parent visualizeOrders = fxml.load();
+		secondaryPane.setCenter(visualizeOrders);
+		Stage st = (Stage) secondaryPane.getScene().getWindow();
+		initializeOrdersList();
+		st.setTitle("Registros de pedido");
+		st.setHeight(470);
+		st.setWidth(900);
 		st.setResizable(false);
 	}//End showSceneLogin
 	@FXML
@@ -609,7 +667,7 @@ public class MainGUIController{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tamaÃ±o y precio ingresado ya existen para este producto";
+		String msg = "El tamaño y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
@@ -630,11 +688,14 @@ public class MainGUIController{
 		EGC.showAddIngredientToProductScene();
 		String ingredientSelected = EGC.getIngredientToadd();
 		String currentIngredients = new String();
-		if(!checkIngredientToAdd(ingredientSelected) && !ingredientSelected.isEmpty()){
-			currentIngredients += (tIngredients.getText().isEmpty())?ingredientSelected:tIngredients.getText()+"\n"+ingredientSelected;
-			tIngredients.setText(currentIngredients);
-			msg = "Se agrego el ingrediente";
-		}//End if
+		if(ingredientSelected != null){
+			if(!checkIngredientToAdd(ingredientSelected) && !ingredientSelected.isEmpty()){
+				currentIngredients += (tIngredients.getText().isEmpty())?ingredientSelected:tIngredients.getText()+"\n"+ingredientSelected;
+				tIngredients.setText(currentIngredients);
+				msg = "Se agrego el ingrediente";
+			}//End if	
+		}else
+			msg = "No se selecciono ningun ingrediente";
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 	}//End getIngredientsFromAddIngredientsToProduct
@@ -642,10 +703,12 @@ public class MainGUIController{
 	private boolean checkIngredientToAdd(String toCheck){
 		boolean exist = false;
 		String[] ingredients = tIngredients.getText().split("\n");
-		for(int i = 0; i < ingredients.length && !exist; i++){
-			if(toCheck.equalsIgnoreCase(ingredients[i]))
-				exist = true;
-		}//End for
+		try {
+			for(int i = 0; i < ingredients.length && !exist; i++){
+				if(toCheck.equalsIgnoreCase(ingredients[i]))
+					exist = true;
+			}//End for
+		}catch(NullPointerException e){}
  		return exist;
 	}//End checkSizeAndPrice
 
@@ -703,13 +766,35 @@ public class MainGUIController{
 	}//End registerOrder
 	@FXML
 	public void addProductToOrder()throws IOException{
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		String msg = "No se ha podido añadir el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
 		product.add(EGC.getProduct());
 		amo.add(EGC.getAmount());//taProducsAmount
 		String amountAndProducts = taProducsAmount.getText();
-		amountAndProducts += (amountAndProducts.isEmpty())?EGC.getProduct()+" x "+EGC.getAmount():EGC.getProduct()+" x "+EGC.getAmount() + "\n";
+		if(EGC.getProduct() != null){
+			if(!checkProductToAdd(EGC.getProduct()+" ")) {//(amountAndProducts.isEmpty())?
+				amountAndProducts += EGC.getProduct()+" x "+EGC.getAmount() + "\n";
+				msg = "Producto ha sido añadido correctamente al pedido";
+			}//End if
+		}//End if
+		addInfo.setContentText(msg);
+		addInfo.showAndWait();
 		taProducsAmount.setText(amountAndProducts);
 	}//End addProductToOrder
+	private boolean checkProductToAdd(String np){
+		boolean exist = false;
+		String[] p =  taProducsAmount.getText().split("\n");
+		if(p != null){
+			for(int i = 0; i < p.length; i++){
+				if(np.equalsIgnoreCase((p[i].split("x"))[0])){
+					exist = true;
+				}//End if
+			}//End for
+		}//End if
+		return exist;
+	}//End checkProductToAdd
 	@FXML
 	public void showSceneRegisterIngredient() throws IOException{
 		EGC.showRegisterIngredienteScene();
@@ -723,8 +808,14 @@ public class MainGUIController{
 	public void ListenChangeProductEvent(MouseEvent mouseEvent) throws IOException{
 		if(mouseEvent.getClickCount() == 2){
 			Product p = productTable.getSelectionModel().getSelectedItem();
-			EGC.showChangeProducts(p);
-			DMC.changeProduct(p,EGC.getProductName(),Arrays.asList(EGC.getIngredientToadd().split("\n")),EGC.getPrice(),EGC.getSize(),EGC.getProductType());
+			if(p != null){
+				EGC.showChangeProducts(p);
+				if(EGC.getProductName() != null){
+					DMC.changeProduct(p,EGC.getProductName(),Arrays.asList(EGC.getIngredientToadd().split("\n")),EGC.getPrice(),EGC.getSize(),EGC.getProductType());
+					EGC.clearChangeProductData();
+					showProductsList();	
+				}//End if
+			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
 	public void initializeProductsList(){
@@ -736,6 +827,28 @@ public class MainGUIController{
 		productPrice.setCellValueFactory(new PropertyValueFactory<Product,Double>("price"));
 		productIngredients.setCellValueFactory(new PropertyValueFactory<Product,String>("ingredients"));
 	}//End initializeProductsList
+	
+	public void initializeOrdersList(){
+		ObservableList<Order> orderList = FXCollections.observableArrayList(DMC.getOrders());
+		orderTable.setItems(orderList);
+		orderCode.setCellValueFactory(new PropertyValueFactory<Order,String>("code"));
+		orderDate.setCellValueFactory(new PropertyValueFactory<Order,String>("date"));
+		orderStatus.setCellValueFactory(new PropertyValueFactory<Order,String>("status"));
+		orderProducts.setCellValueFactory(new PropertyValueFactory<Order,String>("productsList"));
+		orderRemark.setCellValueFactory(new PropertyValueFactory<Order,String>("remark"));
+	}//End initializeProductsList
+	
+	public void initializeIngredientsList(){
+		ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList(DMC.getIngredients());
+		ingredientTable.setItems(ingredientList);
+		ingredientName.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
+	}//End initializeIngredientsList
+	
+	public void initializeDishtypeList(){
+		ObservableList<DishType> dishTypeList = FXCollections.observableArrayList(DMC.getDishtype());
+		dishTypeTable.setItems(dishTypeList);
+		dishTypeName.setCellValueFactory(new PropertyValueFactory<DishType,String>("name"));
+	}//End initializeDishtypeList
 	private void initializeStatusComboBox(){
 		status = FXCollections.observableArrayList();
 		status.add("SOLICITADO");

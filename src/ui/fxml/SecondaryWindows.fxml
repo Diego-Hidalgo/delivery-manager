@@ -5,6 +5,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="secondaryPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
@@ -20,7 +21,7 @@
             <Menu mnemonicParsing="false" text="Pedidos">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#showSceneRegisterOrder" text="Agregar" />
-                  <MenuItem mnemonicParsing="false" text="Gestionar" />
+                  <MenuItem mnemonicParsing="false" onAction="#showSceneOrdersList" text="Gestionar" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Productos">
@@ -28,13 +29,13 @@
                   <Menu mnemonicParsing="false" text="Ingredientes">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#showSceneRegisterIngredient" text="Agregar" />
-                        <MenuItem mnemonicParsing="false" text="Gestionar" />
+                        <MenuItem mnemonicParsing="false" onAction="#showIngredientsList" text="Gestionar" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Tipo de plato">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#showSceneRegisterDishtype" text="Agregar" />
-                        <MenuItem mnemonicParsing="false" text="Gestionar" />
+                        <MenuItem mnemonicParsing="false" onAction="#showDishTypeList" text="Gestionar" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Producto">
@@ -74,4 +75,10 @@
          </font>
       </Label>
    </center>
+   <left>
+      <VBox fillWidth="false" prefHeight="375.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox fillWidth="false" prefHeight="375.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>

@@ -760,18 +760,15 @@ public class DeliveryManagerController {
 		return added;
 	}//End addDishType
 
-	public String getDishtype(){
-		String a = new String();
-		for(int i = 0; i < types.size();i++)
-			a += types.get(i).getName() + ",";
-		return a;
-	}
+	public List<DishType> getDishtype(){
+		return types;
+	}//End getDishType
 	private void addDishType(final DishType dishType)throws IOException{
 		int j;
 		for(j = 0; j < types.size() && types.get(j).compareTo(dishType) < 0;j++);
 		types.add(j,dishType);
 		saveTypesData();
-	}//End getDishType
+	}//End addDishType
 	public void changeDishType(DishType dType,final String newName) throws IOException {
 		if(findDishType(newName) < 0){
 			dType.setName(newName);
@@ -918,7 +915,9 @@ public class DeliveryManagerController {
 		order.setEnable(false);
 		saveOrdersData();
 	}//End disableOrder
-
+	public List<Order> getOrders(){
+		return orders;
+	}//End getOrders
 	public void removeOrder(Order order) throws IOException {
 		orders.remove(order);
 		saveOrdersData();

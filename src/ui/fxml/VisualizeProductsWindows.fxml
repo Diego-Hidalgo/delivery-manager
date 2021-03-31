@@ -3,24 +3,49 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <TableView fx:id="productTable" layoutX="36.0" layoutY="123.0" onMouseClicked="#ListenChangeProductEvent" prefHeight="245.0" prefWidth="612.0">
-        <columns>
-          <TableColumn fx:id="productName" editable="false" prefWidth="111.0" resizable="false" sortable="false" text="Nombre" />
-          <TableColumn fx:id="productType" editable="false" prefWidth="112.0" resizable="false" sortable="false" text="Tipo" />
-            <TableColumn fx:id="productSize" editable="false" prefWidth="103.0" resizable="false" sortable="false" text="Tamaño" />
-            <TableColumn fx:id="productPrice" editable="false" prefWidth="106.0" resizable="false" sortable="false" text="Precio" />
-            <TableColumn fx:id="productIngredients" editable="false" prefWidth="179.0" resizable="false" sortable="false" text="Ingredientes" />
-        </columns>
-      </TableView>
-      <Label layoutX="248.0" layoutY="44.0" text="Lista de productos">
-         <font>
-            <Font name="System Bold Italic" size="22.0" />
-         </font>
-      </Label>
-   </children>
-</Pane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="171.0" text="Lista de productos" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="737.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
+      <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="680.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="737.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="productTable" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#ListenChangeProductEvent" prefHeight="304.0" prefWidth="732.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="productName" editable="false" maxWidth="155.0" minWidth="-1.0" prefWidth="155.0" resizable="false" sortable="false" text="Nombre" />
+                      <TableColumn fx:id="productType" editable="false" prefWidth="141.0" resizable="false" sortable="false" text="Tipo" />
+                        <TableColumn fx:id="productSize" editable="false" prefWidth="161.0" resizable="false" sortable="false" text="Tamaño" />
+                        <TableColumn fx:id="productPrice" editable="false" prefWidth="106.0" resizable="false" sortable="false" text="Precio" />
+                        <TableColumn fx:id="productIngredients" editable="false" prefWidth="168.0" resizable="false" sortable="false" text="Ingredientes" />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <right>
+      <VBox prefHeight="305.0" prefWidth="32.0" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <VBox prefHeight="305.0" prefWidth="28.0" BorderPane.alignment="CENTER" />
+   </left>
+</BorderPane>

@@ -251,7 +251,6 @@ public class EmergentGUIController {
 				if(am > 0){
 					productToAdd = cbProducts.getValue();
 					amount = am;
-					msg = "Producto agregado correctamente a la orden";
 					worked = true;
 				}else
 					msg = "La cantidad debe ser un entero positivo";
@@ -259,10 +258,12 @@ public class EmergentGUIController {
 				msg = "La cantidad debe ser un entero positivo";
 			}//End catch
 		}//End if
-		addInfo.setContentText(msg);
-		addInfo.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
+		else {
+			addInfo.setContentText(msg);
+			addInfo.showAndWait();
+		}//End else
 	}//End AddProduct
 	public void initializeForm(){
 		tNameToChanges.setText(productToChanges.getName());
@@ -436,6 +437,13 @@ public class EmergentGUIController {
 	    Stage stage = (Stage) source.getScene().getWindow();
 	    stage.close();
 	}//End closeEmergentWindowss
+	public void clearChangeProductData(){
+		productName = null;
+		ingredientToadd = null;
+		size = null;
+		productType = null;
+		price = 0;
+	}//End clearChangeProductData
 	private void initializeProductsComboBox(){
 		products = FXCollections.observableArrayList(DMC.getProducts());
 		cbProducts.setItems(products);
