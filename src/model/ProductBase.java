@@ -85,7 +85,12 @@ public class ProductBase implements Serializable {//Comparable<ProductBase>
 	public User getModifier() {
 		return modifier;
 	}//End getModifier
-
+	public String toString(){
+		String info = "Nombre: " + name + "\nIngredientes:";
+		for(int i = 0; i < ingredients.size();i++)
+			info += ingredients.get(i).getName()+"\n";
+		return info;
+	}
 	/**@Override
 	public int compareTo(ProductBase tPrice) {
 		return (getTotalPrice()).compareTo(tPrice.getTotalPrice());

@@ -486,10 +486,9 @@ public class DeliveryManagerController {
 		boolean added = false;
 		if(findProductBase(name) < 0){
 			DishType dishType = dishTypeToAdd(type);
-			List<Ingredient> ingd = ingredientsToAdd(ingredients);
-			ProductBase pd = new ProductBase(getLoggedUser(),name,dishType,ingd);
+			ProductBase pd = new ProductBase(getLoggedUser(),name,dishType,ingredientsToAdd(ingredients));
 			productBase.add(pd);
-			createSubproduct(pd,price,size);
+			createSubproduct(productBase.get(productBase.size() - 1),price,size);
 			added = true;
 			saveProductsData();
 		}//End if
@@ -504,12 +503,13 @@ public class DeliveryManagerController {
 				this.sizes.add(s);
 			}else
 				s = sizes.get(sizeIndex);
-			products.add(new Product(pd,s,price.get(i)));
+			Product p = new Product(pd,s,price.get(i));
+			products.add(p);
 		}//End for
 		saveProductsSizeData();
 		saveProductsData();
 	}//End createSubproduct
-
+	
 	private int findProductSize(final String s){
 		boolean found = false;
 		int index = -1;
@@ -551,17 +551,27 @@ public class DeliveryManagerController {
 		saveTypesData();
 		return t;
 	}//End dishTypeToAdd
-
-	public void changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName) throws IOException {
-		int productIndex = findProductBase(newName);
-		String n = (productIndex < 0)?newName: (product.getProductBase()).getName();
-		product.changesProductBase(n, ingredientsToAdd(Newingredients), dishTypeToAdd(typeName));
-		product.setPrice(prices);
-		product.setSize(sizes);
-		product.setModifier(loggedUser);
-		saveOrdersData();
-		saveBaseProductsData();
-		saveProductsData();
+	public boolean changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName) throws IOException {
+		boolean changed = false;
+		String n = product.getName();
+		if(!product.getName().equalsIgnoreCase(newName)){
+			int productIndex = findProductBase(newName);
+			if(productIndex < 0){
+				n = newName;
+				changed = true;
+			}//End if
+		}else
+			changed = true;
+		if(changed){
+			product.changesProductBase(n, ingredientsToAdd(Newingredients), dishTypeToAdd(typeName));
+			product.setPrice(prices);
+			product.setSize(sizes);
+			product.setModifier(loggedUser);
+			saveOrdersData();
+			saveBaseProductsData();
+			saveProductsData();
+		}//End if
+		return changed;
 	}//End changeProduct
 
 	public void disableProduct(String productName) throws IOException {
@@ -670,19 +680,19 @@ public class DeliveryManagerController {
 		saveIngredientsData();
 	}//End addIngredient
 
-	public String changeIngredient(Ingredient ingredient,final String newName) throws IOException {
-		String msg = "Tal parece que ya existe un ingrediente con ese nombre.";
+	public boolean changeIngredient(Ingredient ingredient,final String newName) throws IOException {
+		boolean changed = false;
 		if(findIngredient(newName) < 0){
 			ingredient.setName(newName);
 			ingredient.setModifier(loggedUser);
 			Collections.sort(ingredients);
-			msg = "Ingrediente modificado";
+			changed = true;
+			saveIngredientsData();
+			saveProductsData();
+			saveOrdersData();
+			saveBaseProductsData();
 		}//End if
-		saveIngredientsData();
-		saveProductsData();
-		saveOrdersData();
-		saveBaseProductsData();
-		return msg;
+		return changed;
 	}//End changeIngredient
 
 	public void disableIngredient(Ingredient ingredient) throws IOException {
@@ -769,15 +779,18 @@ public class DeliveryManagerController {
 		types.add(j,dishType);
 		saveTypesData();
 	}//End addDishType
-	public void changeDishType(DishType dType,final String newName) throws IOException {
+	public boolean changeDishType(DishType dType,final String newName) throws IOException {
+		boolean changed = false;
 		if(findDishType(newName) < 0){
 			dType.setName(newName);
 			dType.setModifier(loggedUser);
 			Collections.sort(types);
+			changed = true;
+			saveTypesData();
+			saveBaseProductsData();
+			saveProductsData();
 		}//End if
-		saveTypesData();
-		saveBaseProductsData();
-		saveProductsData();
+		return changed;
 	}//End changeDishType
 
 	public void disableDishType(DishType dType) throws IOException {
@@ -922,7 +935,12 @@ public class DeliveryManagerController {
 		orders.remove(order);
 		saveOrdersData();
 	}//End removeOrder
-	public List<Product> getProducts(){
-		return products;
+	public List<Product> getEnableProducts(){
+		List<Product> enableProducts = new ArrayList<Product>();
+		for(int i = 0; i < products.size();i++){
+			if(products.get(i).getEnable())
+				enableProducts.add(products.get(i));
+		}//End for
+		return enableProducts;
 	}//End getProducts
 }//End DeliveryManagerController

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -31,13 +32,13 @@ public class EmergentGUIController {
 	private DeliveryManagerController DMC;
 	private String  size;
 	private double price;
-	private String productName;
-	private String productType;
 	private String ingredientToadd;
 	private int amount;
 	private ObservableList<Ingredient> ingredients;
 	private ObservableList<Product> products;
+	private DishType dishtype;
 	private Product productToChanges;
+	private Ingredient ingredientToChange;
 	private Product productToAdd;
 	@FXML private TextField tAmount;
 	@FXML private TextField tIngredientName;
@@ -112,7 +113,7 @@ public class EmergentGUIController {
 	@FXML
 	public void emptyFieldAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Campo VacÃ­o");
+		alert.setTitle("Campo Vacío");
 		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -149,12 +150,12 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
-		Stage formulario = new Stage();
-		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar ingrediente");
-		formulario.setScene(scene);
-		formulario.setResizable(false);
-		formulario.showAndWait();
+		Stage form = new Stage();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Agregar ingrediente");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
 	}//End showRegisterIngredienteScene
 	@FXML
 	public void showRegisterDihstypeScene() throws IOException{
@@ -162,12 +163,26 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
-		Stage formulario = new Stage();
-		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tipo de plato");
-		formulario.setScene(scene);
-		formulario.setResizable(false);
-		formulario.showAndWait();
+		Stage form = new Stage();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Agregar tipo de plato");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
+	}//End showRegisterDihstypeScene
+	@FXML
+	public void showChangeDihstypeScene(DishType d) throws IOException{
+		dishtype = d;
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"ChangeDishTypeEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage form = new Stage();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Cambiar tipo de plato");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
 	}//End showRegisterDihstypeScene
 	@FXML
 	public void showAddSizeAndPriceScene() throws IOException{
@@ -177,11 +192,25 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaï¿½o del producto");
+		formulario.setTitle("Agregar tamaño del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+	@FXML 
+	public void changeIngredientEmergentScene(Ingredient i) throws IOException{
+		ingredientToChange = i;
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"changeIngredientEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage changeIngredient = new Stage();
+		changeIngredient.initModality(Modality.APPLICATION_MODAL);
+		changeIngredient.setTitle("Cambiar ingrediente.");
+		changeIngredient.setScene(scene);
+		changeIngredient.setResizable(false);
+		changeIngredient.showAndWait();
+	}//End changeIngredientEmergentScene
 	@FXML
 	public void showChangeIngredientToProduct() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"changeIngredientsFromProductsEmergent.fxml"));
@@ -272,31 +301,32 @@ public class EmergentGUIController {
 		tPrice.setText(String.valueOf(productToChanges.getPrice()));
 	}//End initializeForm
 	@FXML
-	public void changeProductData(ActionEvent event){
+	public void changeProductData(ActionEvent event) throws IOException{
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		addInfo.setContentText("Datos erroneos");
+		String msg = "Datos erroneos";
 		if(!tNameToChanges.getText().isEmpty() && !tTypeToChanges.getText().isEmpty() && 
 			!tSize.getText().isEmpty() && !tPrice.getText().isEmpty() 
 			&& !taIngredientsToChanges.getText().isEmpty()){
 			try{
-				productName = tNameToChanges.getText();
-				productType = tTypeToChanges.getText();
-				size = tSize.getText();
-				ingredientToadd = taIngredientsToChanges.getText();
 				price = Double.parseDouble(tPrice.getText());
-				tNameToChanges.setText("");
-				tTypeToChanges.setText("");
-				tSize.setText("");
-				taIngredientsToChanges.setText("");
-				tPrice.setText("");
-				worked = true;
+				if(price >= 0){
+					if(DMC.changeProduct(productToChanges,tNameToChanges.getText(),
+							Arrays.asList(taIngredientsToChanges.getText().split("\n")),
+							price,tSize.getText(),tTypeToChanges.getText())){
+						msg = "Se ha cambiado el producto con exito";
+						worked = true;
+					}else
+						msg = "No se pudó cambiar el producto, ya existe otro con ese nombre";
+				}else
+					msg = "El precio no puede ser negativo";
 			}catch(NumberFormatException e){
-				addInfo.showAndWait();
+				msg = "Precio erroneo";
 			}//End catch
-		}else 
-			addInfo.showAndWait();
+		}//End if
+		addInfo.setContentText(msg);
+		addInfo.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
 	}//End changeProductData
@@ -317,6 +347,24 @@ public class EmergentGUIController {
 		if(worked)
 		 closeEmergentWindows(event);
 	}//End changesIngredients
+	@FXML
+	public void changesDishType(ActionEvent event) throws IOException{
+		Alert addInfo = new Alert(AlertType.INFORMATION);
+		addInfo.setHeaderText(null);
+		String msg = "Datos erroneos";
+		boolean worked = false;
+		if(!tDishtypeName.getText().isEmpty()){
+			if(DMC.changeDishType(dishtype, tDishtypeName.getText())){
+				msg = "Se ha cambiado el tipo de plato con exito";
+				worked = true;
+			}else
+				msg = "Ya existe ese tipo de plato";
+		}//End if
+		addInfo.setContentText(msg);
+		addInfo.showAndWait();
+		if(worked)
+			 closeEmergentWindows(event);
+	}//End changesDishType
 	@FXML
 	public void showInfoFromComboBoxSelectedItem(){
 		Ingredient ing = cbIngredients.getValue();
@@ -340,6 +388,30 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End setIngredientoToadd
+	
+	@FXML
+	public void changeIngredient(ActionEvent event){
+		Alert changeInfo = new Alert(AlertType.INFORMATION);
+		changeInfo.setHeaderText(null);
+		boolean worked = false;
+		String msg = "Datos erroneos";
+		if(!tIngredientName.getText().isEmpty()){
+			try {
+				if(DMC.changeIngredient(ingredientToChange,tIngredientName.getText())){
+					msg = "Nombre del ingrediente cambiado con exito";
+					worked = true;
+				}else
+					msg = "Ya existe un ingrediente con ese nombre";
+			} catch (IOException e) {
+				msg = "Ha ocurrido un error inesperado";
+			}//End if
+		}//End if
+		changeInfo.setContentText(msg);
+		changeInfo.showAndWait();
+		if(worked)
+			closeEmergentWindows(event);
+	}//End changeIngredient
+	
 	@FXML
 	public String getIngredientToadd(){
 		return ingredientToadd;	
@@ -349,7 +421,7 @@ public class EmergentGUIController {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "Tamaï¿½o o precio incorrecto.";
+		String msg = "Tamaño o precio incorrecto.";
 		if(!tSize.getText().isEmpty() && !tPrice.getText().isEmpty()){
 			try{
 				price = Double.parseDouble(tPrice.getText());
@@ -371,12 +443,6 @@ public class EmergentGUIController {
 	public String getSize(){
 		return size;
 	}//end getSize
-	public String getProductName(){
-		return productName;
-	}//End getProductName
-	public String getProductType(){
-		return productType;
-	}//End getProductName
 	public double getPrice(){
 		return price;
 	}//End getPrice
@@ -437,15 +503,14 @@ public class EmergentGUIController {
 	    Stage stage = (Stage) source.getScene().getWindow();
 	    stage.close();
 	}//End closeEmergentWindowss
-	public void clearChangeProductData(){
-		productName = null;
-		ingredientToadd = null;
-		size = null;
-		productType = null;
-		price = 0;
-	}//End clearChangeProductData
+	public void clearChangeIngredientData(){
+		ingredientToChange = null;
+	}//End clearChangeIngredientData
+	public void clearChangeDishTypeData(){
+		dishtype = null;
+	}//End clearChangeDishTypeData
 	private void initializeProductsComboBox(){
-		products = FXCollections.observableArrayList(DMC.getProducts());
+		products = FXCollections.observableArrayList(DMC.getEnableProducts());
 		cbProducts.setItems(products);
 	}//End initializeIngredientsComboBox
 	private void initializeIngredientsComboBox(){

@@ -810,16 +810,34 @@ public class MainGUIController{
 			Product p = productTable.getSelectionModel().getSelectedItem();
 			if(p != null){
 				EGC.showChangeProducts(p);
-				if(EGC.getProductName() != null){
-					DMC.changeProduct(p,EGC.getProductName(),Arrays.asList(EGC.getIngredientToadd().split("\n")),EGC.getPrice(),EGC.getSize(),EGC.getProductType());
-					EGC.clearChangeProductData();
-					showProductsList();	
-				}//End if
+				showProductsList();	
+			}//End if
+		}//End if
+	}//End ListenChangeProductEvent
+	@FXML
+	public void ListenChangeIngredientEvent(MouseEvent mouseEvent) throws IOException{
+		if(mouseEvent.getClickCount() == 2){
+			Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
+			if(i != null){
+				EGC.changeIngredientEmergentScene(i);
+				EGC.clearChangeIngredientData();
+				showIngredientsList();
+			}//End if
+		}//End if
+	}//End ListenChangeProductEvent
+	@FXML
+	public void ListenChangeDishTypeEvent(MouseEvent mouseEvent) throws IOException{
+		if(mouseEvent.getClickCount() == 2){
+			DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
+			if(d != null){
+				EGC.showChangeDihstypeScene(d);
+				EGC.clearChangeDishTypeData();
+				showDishTypeList();
 			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
 	public void initializeProductsList(){
-		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts());
+		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getEnableProducts());
 		productTable.setItems(productsList);
 		productName.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
 		productType.setCellValueFactory(new PropertyValueFactory<Product,String>("type"));

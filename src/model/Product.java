@@ -84,6 +84,8 @@ public class Product implements Serializable {
 	}//End getModifier
 	@Override
 	public String toString(){
-		return product.getName() + " " + price;
+		String info = product.toString() + "\n" + price + "\n" + getSize();
+		
+		return info;
 	}//End toString
 }//End Product
