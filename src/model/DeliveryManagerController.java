@@ -90,13 +90,25 @@ public class DeliveryManagerController {
 		loadEmployeesData();
 		loadUsersData();
 		loadCustomersData();
-		loadProductsData();
 		loadIngredientsData();
 		loadProductsSizeData();
-		loadBaseProductsData();
 		loadTypesData();
+		loadProductsData();
+		loadBaseProductsData();
 		loadOrdersData();
 	}//End loadAllData
+
+	public void saveAllData() throws IOException {
+		saveEmployeesData();
+		saveUsersData();
+		saveCustomersData();
+		saveIngredientsData();
+		saveProductsSizeData();
+		saveTypesData();
+		saveProductsData();
+		saveBaseProductsData();
+		saveOrdersData();
+	}//End saveAllData
 
 	public void saveEmployeesData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(EMPLOYEES_SAVEFILE_PATH));
@@ -176,7 +188,7 @@ public class DeliveryManagerController {
 			employees.add(i, newEmployee);
 			loggedUser.setLinked(true);
 		}//End else
-		saveEmployeesData();
+		saveAllData();
 	}//End addEmployee
 
 	public void changeEmployee(Employee employee, final String name, final String lastName, final String id) throws IOException {
@@ -196,7 +208,7 @@ public class DeliveryManagerController {
 			saveUsersData();
 		}//End if
 		loggedUser.setLinked(true);
-		saveEmployeesData();
+		saveAllData();
 	}//End changeEmployee
 
 	public void disableEmployee(String employeeId) throws IOException {
@@ -204,14 +216,14 @@ public class DeliveryManagerController {
 		employee.setEnabled(false);
 		employee.setModifier(loggedUser);
 		loggedUser.setLinked(true);
-		saveEmployeesData();
+		saveAllData();
 	}//End disableEmployee
 
 	public void removeEmployee(String employeeId) throws IOException {
 		int index = searchEmployeePosition(employeeId);
 		employees.remove(index);
 		loggedUser.setLinked(true);
-		saveEmployeesData();
+		saveAllData();
 	}//End removeEmployee
 
 	public void saveUsersData() throws IOException {
@@ -287,7 +299,7 @@ public class DeliveryManagerController {
 			users.add(i, newUser);
 			loggedUser.setLinked(true);
 		}//End else
-		saveUsersData();
+		saveAllData();
 	}//End addUser
 
 	public void changeUser(User user, final String userName, final String password) throws IOException {
@@ -295,8 +307,7 @@ public class DeliveryManagerController {
 		user.setPassword(password);
 		user.setModifier(loggedUser);
 		loggedUser.setLinked(true);
-		saveUsersData();
-		saveOrdersData();
+		saveAllData();
 	}//End changeUser
 
 	public void disableUser(String userId) throws IOException {
@@ -304,15 +315,14 @@ public class DeliveryManagerController {
 		user.setEnabled(false);
 		user.setModifier(loggedUser);
 		loggedUser.setLinked(true);
-		saveUsersData();
-		saveOrdersData();
+		saveAllData();
 	}//End disableUser
 
 	public void removeUser(String userId) throws IOException {
 		int index = searchUserPosition(userId);
 		users.remove(index);
 		loggedUser.setLinked(true);
-		saveUsersData();
+		saveAllData();
 	}//End removeUser
 
 	public void saveCustomersData() throws IOException {
@@ -356,7 +366,7 @@ public class DeliveryManagerController {
 			}//End while
 			customers.add(i, newCustomer);
 		}//End else
-		saveCustomersData();
+		saveAllData();
 	}//End addCustomer
 
 	public void changeCustomer(Customer customer, String name, String lastName, String id, String address, String nPhone, String remark) throws IOException {
@@ -369,21 +379,19 @@ public class DeliveryManagerController {
 		customer.setModifier(getLoggedUser());
 		Comparator<Customer> lastNameAndNameComparator = new LastNameAndNameComparator();
 		Collections.sort(customers, lastNameAndNameComparator);
-		saveCustomersData();
-		saveOrdersData();
+		saveAllData();
 	}//End changeCustomer
 
 	public void disableCustomer(String customerId) throws IOException {
 		Customer customer = customers.get(searchCustomerPosition(customerId));
 		customer.setEnabled(false);
 		customer.setModifier(loggedUser);
-		saveCustomersData();
-		saveOrdersData();
+		saveAllData();
 	}//End disableCustomerById
 
 	public void removeCustomer(String customerId) throws IOException {
 		customers.remove(searchCustomerPosition(customerId));
-		saveCustomersData();
+		saveAllData();
 	}//End removeCustomerById
 
 	public void saveBaseProductsData() throws IOException {
@@ -482,6 +490,7 @@ public class DeliveryManagerController {
 		}//End for
 		return index;
 	}//End findProduct
+
 	public boolean addProduct(final String name,List<String> ingredients,final List<Double> price,final List<String> size,final String type)throws IOException{
 		boolean added = false;
 		if(findProductBase(name) < 0){
@@ -490,7 +499,7 @@ public class DeliveryManagerController {
 			productBase.add(pd);
 			createSubproduct(productBase.get(productBase.size() - 1),price,size);
 			added = true;
-			saveProductsData();
+			saveAllData();
 		}//End if
 		return added;
 	}//End addProduct
@@ -506,8 +515,7 @@ public class DeliveryManagerController {
 			Product p = new Product(pd,s,price.get(i));
 			products.add(p);
 		}//End for
-		saveProductsSizeData();
-		saveProductsData();
+		saveAllData();
 	}//End createSubproduct
 	
 	private int findProductSize(final String s){
@@ -533,10 +541,7 @@ public class DeliveryManagerController {
 			}else
 				ingd.add(this.ingredients.get(ingdIndex));
 		}//End for
-		saveIngredientsData();
-		saveProductsData();
-		saveProductsSizeData();
-		saveOrdersData();
+		saveAllData();
 		return ingd;
 	}//End ingredientsToAdd
 
@@ -548,7 +553,7 @@ public class DeliveryManagerController {
 			addDishType(t);
 		}else
 			t = types.get(dtIndex);
-		saveTypesData();
+		saveAllData();
 		return t;
 	}//End dishTypeToAdd
 	public boolean changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName) throws IOException {
@@ -567,9 +572,7 @@ public class DeliveryManagerController {
 			product.setPrice(prices);
 			product.setSize(sizes);
 			product.setModifier(loggedUser);
-			saveOrdersData();
-			saveBaseProductsData();
-			saveProductsData();
+			saveAllData();
 		}//End if
 		return changed;
 	}//End changeProduct
@@ -580,9 +583,7 @@ public class DeliveryManagerController {
 			productBase.get(productIndex).setEnable(false);
 			productBase.get(productIndex).setModifier(loggedUser);
 		}//End if
-		saveOrdersData();
-		saveBaseProductsData();
-		saveProductsData();
+		saveAllData();
 	}//End disableProduct
 
 	public boolean removeProduct(final String productName) throws IOException {
@@ -601,9 +602,7 @@ public class DeliveryManagerController {
 				removed = true;
 			}//End if
 		}//End if
-		saveOrdersData();
-		saveBaseProductsData();
-		saveProductsData();
+		saveAllData();
 		return removed;
 	}//removeProduct
 
@@ -669,7 +668,7 @@ public class DeliveryManagerController {
 			}//End else
 			added = true;
 		}//End if
-		saveIngredientsData();
+		saveAllData();
 		return added;
 	}//End addIngredient
 
@@ -677,7 +676,7 @@ public class DeliveryManagerController {
 		int j;
 		for(j = 0; j < ingredients.size() && ingredients.get(j).compareTo(ingredient) < 0;j++);
 			ingredients.add(j,ingredient);
-		saveIngredientsData();
+		saveAllData();
 	}//End addIngredient
 
 	public boolean changeIngredient(Ingredient ingredient,final String newName) throws IOException {
@@ -687,10 +686,7 @@ public class DeliveryManagerController {
 			ingredient.setModifier(loggedUser);
 			Collections.sort(ingredients);
 			changed = true;
-			saveIngredientsData();
-			saveProductsData();
-			saveOrdersData();
-			saveBaseProductsData();
+			saveAllData();
 		}//End if
 		return changed;
 	}//End changeIngredient
@@ -698,10 +694,7 @@ public class DeliveryManagerController {
 	public void disableIngredient(Ingredient ingredient) throws IOException {
 		ingredient.setEnable(false);
 		ingredient.setModifier(loggedUser);
-		saveIngredientsData();
-		saveProductsData();
-		saveOrdersData();
-		saveBaseProductsData();
+		saveAllData();
 	}//End disableIngredient
 
 	public boolean removeIngredient(final String name) throws IOException {
@@ -712,9 +705,7 @@ public class DeliveryManagerController {
 				ingredients.remove(index);
 				removed = true;
 			}//End if
-		saveIngredientsData();
-		saveProductsData();
-		saveBaseProductsData();
+		saveAllData();
 		return removed;
 	}//End removeIngredient
 
@@ -766,19 +757,21 @@ public class DeliveryManagerController {
 			}//End else
 			added = true;
 		}//end if
-		saveTypesData();
+		saveAllData();
 		return added;
 	}//End addDishType
 
 	public List<DishType> getDishtype(){
 		return types;
 	}//End getDishType
+
 	private void addDishType(final DishType dishType)throws IOException{
 		int j;
 		for(j = 0; j < types.size() && types.get(j).compareTo(dishType) < 0;j++);
 		types.add(j,dishType);
 		saveTypesData();
 	}//End addDishType
+
 	public boolean changeDishType(DishType dType,final String newName) throws IOException {
 		boolean changed = false;
 		if(findDishType(newName) < 0){
@@ -786,9 +779,7 @@ public class DeliveryManagerController {
 			dType.setModifier(loggedUser);
 			Collections.sort(types);
 			changed = true;
-			saveTypesData();
-			saveBaseProductsData();
-			saveProductsData();
+			saveAllData();
 		}//End if
 		return changed;
 	}//End changeDishType
@@ -796,10 +787,7 @@ public class DeliveryManagerController {
 	public void disableDishType(DishType dType) throws IOException {
 		dType.setEnable(false);
 		dType.setModifier(loggedUser);
-		saveTypesData();
-		saveProductsData();
-		saveProductsSizeData();
-		saveBaseProductsData();
+		saveAllData();
 	}//End disableIngredient
 
 	public boolean removeDishType(final String name) throws IOException {
@@ -810,10 +798,7 @@ public class DeliveryManagerController {
 				types.remove(index);
 				removed = true;
 			}//End if
-		saveProductsSizeData();
-		saveTypesData();
-		saveProductsData();
-		saveBaseProductsData();
+		saveAllData();
 		return removed;
 	}//End removeDishType
 
@@ -896,7 +881,7 @@ public class DeliveryManagerController {
 		if(customerIndex >= 0 && employeeIndex >= 0){
 			orders.add(new Order(nProducts,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
 			added = true;
-			saveOrdersData();	
+			saveAllData();
 		}//End if
 		return added;
 	}//End addOrder
@@ -912,29 +897,30 @@ public class DeliveryManagerController {
 		order.setCustomer(customers.get(customerIndex));
 		order.setEmployee(employees.get(employeeIndex));
 		order.setModifier(getLoggedUser());
-		saveOrdersData();
+		saveAllData();
 	}//End changeOrder
 
 	private void updateProductsNtr(List<Product> p) throws IOException {
 		for(int i = 0; i < p.size(); i++){
 			p.get(i).updateNtr();
 		}//End for
-		saveOrdersData();
-		saveProductsData();
-		saveBaseProductsData();
+		saveAllData();
 	}//End updateProductsNtr
 
 	public void disableOrder(Order order) throws IOException {
 		order.setEnable(false);
-		saveOrdersData();
+		saveAllData();
 	}//End disableOrder
+
 	public List<Order> getOrders(){
 		return orders;
 	}//End getOrders
+
 	public void removeOrder(Order order) throws IOException {
 		orders.remove(order);
-		saveOrdersData();
+		saveAllData();
 	}//End removeOrder
+
 	public List<Product> getEnableProducts(){
 		List<Product> enableProducts = new ArrayList<Product>();
 		for(int i = 0; i < products.size();i++){
@@ -943,4 +929,5 @@ public class DeliveryManagerController {
 		}//End for
 		return enableProducts;
 	}//End getProducts
+
 }//End DeliveryManagerController
