@@ -688,8 +688,13 @@ public class DeliveryManagerController {
 		return index;
 	}//End findIngredient
 
-	public List<Ingredient> getIngredients(){
-		return ingredients;
+	public List<Ingredient> getEnableIngredients(){
+		List<Ingredient> enableIngredients = new ArrayList<Ingredient>();
+		for(int i = 0; i < ingredients.size();i++){
+			if(ingredients.get(i).getEnable())
+				enableIngredients.add(ingredients.get(i));
+		}//End for
+		return enableIngredients;
 	}//End getIngredients
 
 	public boolean addIngredient(final String ingredient) throws IOException {
@@ -728,21 +733,19 @@ public class DeliveryManagerController {
 		return changed;
 	}//End changeIngredient
 
-	public void disableIngredient(Ingredient ingredient) throws IOException {
-		ingredient.setEnable(false);
+	public void changeEnableIngredient(Ingredient ingredient) throws IOException {
+		ingredient.setEnable(!ingredient.getEnable());
 		ingredient.setModifier(loggedUser);
 		saveAllData();
-	}//End disableIngredient
+	}//End changeEnableIngredient
 
-	public boolean removeIngredient(final String name) throws IOException {
-		int index = findIngredient(name);
+	public boolean removeIngredient(Ingredient ingredient) throws IOException {
 		boolean removed = false;
-		if(index >= 0)
-			if(!ingredients.get(index).getLinked()){
-				ingredients.remove(index);
-				removed = true;
-			}//End if
-		saveAllData();
+		if(!ingredient.getLinked()){
+			ingredients.remove(ingredient);
+			removed = true;
+			saveAllData();
+		}//End if
 		return removed;
 	}//End removeIngredient
 
@@ -797,9 +800,15 @@ public class DeliveryManagerController {
 		saveAllData();
 		return added;
 	}//End addDishType
-
-	public List<DishType> getDishtype(){
-		return types;
+	
+	public List<DishType> getEnableDishtype(){
+		List<DishType> enableDishType = new ArrayList<DishType>();
+		for(int i = 0; i < types.size();i++ ){
+			if(types.get(i).getEnable()){
+				enableDishType.add(types.get(i));
+			}//End if
+		}//End for
+		return enableDishType;
 	}//End getDishType
 
 	private void addDishType(final DishType dishType)throws IOException{
@@ -821,21 +830,19 @@ public class DeliveryManagerController {
 		return changed;
 	}//End changeDishType
 
-	public void disableDishType(DishType dType) throws IOException {
-		dType.setEnable(false);
+	public void changeEnableDishType(DishType dType) throws IOException {
+		dType.setEnable(!dType.getEnable());
 		dType.setModifier(loggedUser);
 		saveAllData();
-	}//End disableIngredient
+	}//End changeEnableDishType
 
-	public boolean removeDishType(final String name) throws IOException {
-		int index = findDishType(name);
+	public boolean removeDishType(DishType dType) throws IOException {
 		boolean removed = false;
-		if(index >= 0)
-			if(!types.get(index).getLinked()){
-				types.remove(index);
-				removed = true;
-			}//End if
-		saveAllData();
+		if(!dType.getLinked()){
+			types.remove(dType);
+			removed = true;
+			saveAllData();
+		}//End if
 		return removed;
 	}//End removeDishType
 
@@ -966,5 +973,12 @@ public class DeliveryManagerController {
 		}//End for
 		return enableProducts;
 	}//End getProducts
-
+	public List<Product> getDisableProducts(){
+		List<Product> disableProducts = new ArrayList<Product>();
+		for(int i = 0; i < products.size();i++){
+			if(!products.get(i).getEnable())
+				disableProducts.add(products.get(i));
+		}//End for
+		return disableProducts;
+	}//End getProducts
 }//End DeliveryManagerController

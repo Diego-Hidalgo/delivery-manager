@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -35,6 +37,14 @@
                     <columns>
                       <TableColumn fx:id="dishTypeName" editable="false" prefWidth="383.0" resizable="false" sortable="false" text="Nombre" />
                     </columns>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#ListenChangesEnableDishType" text="Cambiar disponibilidad" />
+                              <MenuItem mnemonicParsing="false" onAction="#ListenRemoveDishType" text="Eliminar elemento" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
                   </TableView>
                </children>
             </VBox>

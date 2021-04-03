@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Date;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import javafx.stage.PopupWindow;
 import model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,6 +40,7 @@ public class EmergentGUIController {
 	private Product productToChanges;
 	private Ingredient ingredientToChange;
 	private Product productToAdd;
+	private Order registerOrder;
 	@FXML private TextField tAmount;
 	@FXML private TextField tIngredientName;
 	@FXML private TextField tDishtypeName;
@@ -75,7 +75,15 @@ public class EmergentGUIController {
 	@FXML private TextField userNameTxt;
 	@FXML private TextField userPasswordTxt;
 	@FXML private TextField passwordConfirmationTxt;
-
+	//Order
+	@FXML private Label code;
+	@FXML private Label date;
+	@FXML private Label status;
+	@FXML private TextArea remark;
+	@FXML private ListView<Product> Lproducts;
+	@FXML private ListView<Integer> LAmount;
+	@FXML private Slider statusProgress;
+	
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
 		size = new String();
@@ -374,7 +382,21 @@ public class EmergentGUIController {
 			addInfo.showAndWait();
 		}//End else
 	}//End AddProduct
-
+	@FXML
+	public void showCompleteOrderScene(Order o) throws IOException{
+		registerOrder = o;
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeCompleteOrderEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage registerOrder = new Stage();
+		registerOrder.initModality(Modality.APPLICATION_MODAL);
+		registerOrder.setTitle("Ver registro");
+		registerOrder.setScene(scene);
+		registerOrder.setResizable(false);
+		initializeRegisterOrder();
+		registerOrder.showAndWait();
+	}//End showRegisterIngredienteScene
 	public void initializeForm(){
 		tNameToChanges.setText(productToChanges.getName());
 		tTypeToChanges.setText(productToChanges.getType());
@@ -708,9 +730,29 @@ public class EmergentGUIController {
 		products = FXCollections.observableArrayList(DMC.getEnableProducts());
 		cbProducts.setItems(products);
 	}//End initializeIngredientsComboBox
-
+	private void initializeRegisterOrder(){
+		ObservableList<Product> pd = FXCollections.observableArrayList(registerOrder.getProducts());
+		ObservableList<Integer> amo = FXCollections.observableArrayList(registerOrder.getAmount());
+		Lproducts.setItems(pd);
+		LAmount.setItems(amo);
+		code.setText(registerOrder.getCode());
+		date.setText(registerOrder.getDate());
+		status.setText(registerOrder.getStatus());
+		statusProgress.adjustValue(initializeSliderProgress(status.getText()));
+		remark.setText(registerOrder.getRemark());
+	}//End initializeRegisterOrder
+	private int initializeSliderProgress(String status){
+		int progress = 0;
+		switch(status){
+		case "SOLICITADO": progress = 25;break;
+		case "EN_PROCESO": progress = 50; break;
+		case "ENVIADO": progress = 75; break;
+		case "ENTREGADO": progress = 100; break;
+		}//End switch
+		return progress;
+	}//End initializeSliderProgress
 	private void initializeIngredientsComboBox(){
-		ingredients = FXCollections.observableArrayList(DMC.getIngredients());
+		ingredients = FXCollections.observableArrayList(DMC.getEnableIngredients());
 		cbIngredients.setItems(ingredients);
 	}//End initializeIngredientsComboBox
 

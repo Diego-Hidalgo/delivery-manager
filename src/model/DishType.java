@@ -22,6 +22,7 @@ public class DishType implements Comparable<DishType>, Serializable {
 		name = new String();
 		this.creator= creator;
 		linked = false;
+		enabled = true;
 	}//End Constructor
 
 	/**
@@ -34,6 +35,7 @@ public class DishType implements Comparable<DishType>, Serializable {
 	public DishType(User creator,String name){
 		this.creator= creator;
 		this.name = name;
+		enabled = true;
 	}//End Constructor
 
 	/**

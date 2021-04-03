@@ -43,8 +43,6 @@ public class MainGUIController{
 	@FXML private TextField tDishtype;
 	@FXML private TextArea tSizesAndPices;
 	@FXML private TextArea tIngredients;
-	@FXML private ContextMenu changeProduct;
-	@FXML private MenuItem changesEnable;
 	
 	//Ingredient
 	@FXML private TableView<Ingredient> ingredientTable;
@@ -752,7 +750,7 @@ public class MainGUIController{
 		initializeProductsList();
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		st.setTitle("Lista de pedidos");
-		st.setHeight(510);
+		st.setHeight(540);
 		st.setWidth(800);
 		st.setResizable(false);
 	}//End showSceneLogin
@@ -1038,7 +1036,45 @@ public class MainGUIController{
 			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
-
+	@FXML
+	public void ListenChangesEnableIngredient(){
+		Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
+		Alert changeEnableInfo = new Alert(AlertType.INFORMATION);
+		changeEnableInfo.setHeaderText(null);
+		String msg = "No hay elementos seleccionados";
+		if(i!= null){
+		try {
+			DMC.changeEnableIngredient(i);
+			String enable = (i.getEnable())?"habilitado":"deshabilitado";
+			showIngredientsList();
+			msg = "Se ha cambiado la disponibilidad del elemento a " + enable;
+		} catch (IOException e) {
+			msg = "Ha ocurrido un error inesperado";
+		}
+		}//End if
+		changeEnableInfo.setContentText(msg);
+		changeEnableInfo.showAndWait();
+	}//End ListenChangesEnableProduct
+	@FXML
+	public void ListenRemoveIngredient(){
+		Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
+		Alert removeInfo = new Alert(AlertType.INFORMATION);
+		removeInfo.setHeaderText(null);
+		String msg = "No hay elementos seleccionados";
+		if(i!= null){
+			try {
+				if(DMC.removeIngredient(i)) {
+					msg = "Se ha eliminado el producto";
+					showIngredientsList();
+				}else
+					msg = "No se ha podido eliminar el producto";
+			} catch (IOException e){
+				msg = "Ha ocurrido un error inesperado";
+			} //End catch
+		}//End if
+		removeInfo.setContentText(msg);
+		removeInfo.showAndWait();
+	}//End ListenChangesEnableProduct
 	@FXML
 	public void ListenChangeDishTypeEvent(MouseEvent mouseEvent) throws IOException{
 		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
@@ -1050,7 +1086,56 @@ public class MainGUIController{
 			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
-
+	@FXML
+	public void ListenChangesEnableDishType(){
+		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
+		Alert changeEnableInfo = new Alert(AlertType.INFORMATION);
+		changeEnableInfo.setHeaderText(null);
+		String msg = "No hay elementos seleccionados";
+		if(d!= null){
+		try {
+			DMC.changeEnableDishType(d);
+			String enable = (d.getEnable())?"habilitado":"deshabilitado";
+			showDishTypeList();
+			msg = "Se ha cambiado la disponibilidad del elemento a " + enable;
+		} catch (IOException e) {
+			msg = "Ha ocurrido un error inesperado";
+		}
+		}//End if
+		changeEnableInfo.setContentText(msg);
+		changeEnableInfo.showAndWait();
+	}//End ListenChangesEnableProduct
+	@FXML
+	public void ListenRemoveDishType(){
+		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
+		Alert removeInfo = new Alert(AlertType.INFORMATION);
+		removeInfo.setHeaderText(null);
+		String msg = "No hay elementos seleccionados";
+		if(d!= null){
+			try {
+				if(DMC.removeDishType(d)) {
+					msg = "Se ha eliminado el producto";
+					showDishTypeList();
+				}else
+					msg = "No se ha podido eliminar el producto";
+			} catch (IOException e){
+				msg = "Ha ocurrido un error inesperado";
+			} //End catch
+		}//End if
+		removeInfo.setContentText(msg);
+		removeInfo.showAndWait();
+	}//End ListenChangesEnableProduct
+	@FXML
+	public void ListenShowOrderRegister() throws IOException{
+		Order o = orderTable.getSelectionModel().getSelectedItem();
+		Alert showOrderInfo = new Alert(AlertType.INFORMATION);
+		showOrderInfo.setHeaderText(null);
+		showOrderInfo.setContentText("No hay elementos seleccionados");
+		if(o != null){
+			EGC.showCompleteOrderScene(o);
+		}else
+			showOrderInfo.showAndWait();
+	}//End ListenShowOrderRegister
 	public void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getEnableProducts());
 		productTable.setItems(productsList);
@@ -1072,13 +1157,13 @@ public class MainGUIController{
 	}//End initializeProductsList
 	
 	public void initializeIngredientsList(){
-		ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList(DMC.getIngredients());
+		ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList(DMC.getEnableIngredients());
 		ingredientTable.setItems(ingredientList);
 		ingredientName.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
 	}//End initializeIngredientsList
 	
 	public void initializeDishtypeList(){
-		ObservableList<DishType> dishTypeList = FXCollections.observableArrayList(DMC.getDishtype());
+		ObservableList<DishType> dishTypeList = FXCollections.observableArrayList(DMC.getEnableDishtype());
 		dishTypeTable.setItems(dishTypeList);
 		dishTypeName.setCellValueFactory(new PropertyValueFactory<DishType,String>("name"));
 	}//End initializeDishtypeList
