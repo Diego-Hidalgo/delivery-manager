@@ -56,7 +56,7 @@ public abstract class Entity implements Serializable {
 	 */
 	public String getCreatorName() {
 		if(creator != null) {
-			return creator.getName();
+			return creator.getUserName();
 		} else {
 			return "";
 		}//End else
@@ -70,7 +70,7 @@ public abstract class Entity implements Serializable {
 	 */
 	public String getModifierName() {
 		if(modifier != null) {
-			return modifier.getName();
+			return modifier.getUserName();
 		} else {
 			return "";
 		}//End else

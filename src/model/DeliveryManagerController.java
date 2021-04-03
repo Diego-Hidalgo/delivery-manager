@@ -60,7 +60,7 @@ public class DeliveryManagerController {
 	public void setLoggedUser(final String nameLoggedUser) {
 		Boolean stop = false;
 		for(int i = 0; i < users.size() && !stop; i ++) {
-			User user = (User) users.get(i).clone();
+			User user = (User) users.get(i);
 			if(user.getUserName().equals(nameLoggedUser)) {
 				this.loggedUser = user;
 				stop = true;
