@@ -95,13 +95,13 @@
          <children>
             <HBox alignment="CENTER" prefHeight="72.0" prefWidth="210.0">
                <children>
-                  <Button fx:id="acceptChangeCustomerBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Aceptar">
+                  <Button fx:id="acceptChangeCustomerBtn" mnemonicParsing="false" onAction="#changeCustomer" prefHeight="29.0" prefWidth="80.0" text="Aceptar">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
                   <Pane prefHeight="72.0" prefWidth="70.0" />
-                  <Button fx:id="cancelChangeCustomerBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Cancelar">
+                  <Button fx:id="cancelChangeCustomerBtn" mnemonicParsing="false" onAction="#closeEmergentWindows" prefHeight="29.0" prefWidth="80.0" text="Cancelar">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>

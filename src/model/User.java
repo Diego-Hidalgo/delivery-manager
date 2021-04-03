@@ -37,16 +37,6 @@ public class User extends Employee implements Cloneable{
 		this.password = password;
 	}//End constructor2
 
-	public Object clone() {
-		Object clone = null;
-		try {
-			clone = super.clone();
-		} catch(CloneNotSupportedException e) {
-			//Should not occur
-		}
-		return clone;
-	}//End clone;
-
 	/**
 	 * changes the username. <br>
 	 *     <b>pre:</b> <br>

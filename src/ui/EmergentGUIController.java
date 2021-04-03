@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Date;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.PopupWindow;
 import model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,6 +60,21 @@ public class EmergentGUIController {
 	@FXML private TextField tNameToChanges;
 	@FXML private TextField tTypeToChanges;
 	@FXML private TextArea taIngredientsToChanges;
+	@FXML private TextField employeeNameTxt;
+	@FXML private TextField employeeLastNameTxt;
+	@FXML private TextField employeeIdTxt;
+	@FXML private Employee employeeToChange;
+	@FXML private Customer customerToChange;
+	@FXML private TextField customerNameTxt;
+	@FXML private TextField customerLastNameTxt;
+	@FXML private TextField customerIdTxt;
+	@FXML private TextField customerAddressTxt;
+	@FXML private TextField customerPhoneTxt;
+	@FXML private TextArea customerRemarkTxt;
+	@FXML private User userToChange;
+	@FXML private TextField userNameTxt;
+	@FXML private TextField userPasswordTxt;
+	@FXML private TextField passwordConfirmationTxt;
 
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
@@ -113,7 +129,7 @@ public class EmergentGUIController {
 	@FXML
 	public void emptyFieldAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Campo Vac�o");
+		alert.setTitle("Campo Vac�o");
 		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -157,6 +173,7 @@ public class EmergentGUIController {
 		form.setResizable(false);
 		form.showAndWait();
 	}//End showRegisterIngredienteScene
+
 	@FXML
 	public void showRegisterDihstypeScene() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterDishTypeEmergent.fxml"));
@@ -170,6 +187,7 @@ public class EmergentGUIController {
 		form.setResizable(false);
 		form.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	@FXML
 	public void showChangeDihstypeScene(DishType d) throws IOException{
 		dishtype = d;
@@ -184,6 +202,7 @@ public class EmergentGUIController {
 		form.setResizable(false);
 		form.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	@FXML
 	public void showAddSizeAndPriceScene() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"AddSizeAndPriceEmergent.fxml"));
@@ -192,12 +211,13 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tama�o del producto");
+		formulario.setTitle("Agregar tama�o del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
-	@FXML 
+
+	@FXML
 	public void changeIngredientEmergentScene(Ingredient i) throws IOException{
 		ingredientToChange = i;
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"changeIngredientEmergent.fxml"));
@@ -211,6 +231,62 @@ public class EmergentGUIController {
 		changeIngredient.setResizable(false);
 		changeIngredient.showAndWait();
 	}//End changeIngredientEmergentScene
+
+	@FXML
+	public void changeEmployeeEmergentScene(Employee employee) throws IOException {
+		employeeToChange = employee;
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ChangeEmployeeEmergent.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root, null);
+		Stage changeEmployee = new Stage();
+		changeEmployee.initModality(Modality.APPLICATION_MODAL);
+		employeeNameTxt.setText(employeeToChange.getName());
+		employeeLastNameTxt.setText(employeeToChange.getLastName());
+		employeeIdTxt.setText(employeeToChange.getId());
+		changeEmployee.setTitle("Modificar empleado");
+		changeEmployee.setScene(scene);
+		changeEmployee.setResizable(false);
+		changeEmployee.showAndWait();
+	}//End changeEmployeeEmergentScene
+
+	@FXML
+	public void changeUserEmergentScene(User user) throws IOException {
+		userToChange = user;
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ChangeUserEmergent.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root, null);
+		Stage changeUser = new Stage();
+		changeUser.initModality(Modality.APPLICATION_MODAL);
+		userNameTxt.setText(userToChange.getUserName());
+		changeUser.setTitle("Modificar usuario");
+		changeUser.setScene(scene);
+		changeUser.setResizable(false);
+		changeUser.showAndWait();
+	}//End changeUserEmergentScene
+
+	@FXML
+	public void changeCustomerEmergentScene(Customer customer) throws IOException {
+		customerToChange = customer;
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ChangeCustomerEmergent.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root, null);
+		Stage changeCustomer = new Stage();
+		changeCustomer.initModality(Modality.APPLICATION_MODAL);
+		customerNameTxt.setText(customerToChange.getName());
+		customerLastNameTxt.setText(customerToChange.getLastName());
+		customerIdTxt.setText(customerToChange.getId());
+		customerPhoneTxt.setText(customerToChange.getNPhone());
+		customerAddressTxt.setText(customerToChange.getAddress());
+		customerRemarkTxt.setText(customerToChange.getRemark());
+		changeCustomer.setTitle("Modificar cliente");
+		changeCustomer.setScene(scene);
+		changeCustomer.setResizable(false);
+		changeCustomer.showAndWait();
+	}//End changeCustomerEmergentScene
+
 	@FXML
 	public void showChangeIngredientToProduct() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"changeIngredientsFromProductsEmergent.fxml"));
@@ -224,6 +300,7 @@ public class EmergentGUIController {
 		formulario.setResizable(false);
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	@FXML
 	public void showAddIngredientToProductScene() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"AddIngredienteToProductEmergent.fxml"));
@@ -238,6 +315,7 @@ public class EmergentGUIController {
 		initializeIngredientsComboBox();
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	@FXML
 	public void showChangeProducts(Product p) throws IOException{
 		productToChanges = p;
@@ -253,6 +331,7 @@ public class EmergentGUIController {
 		initializeForm();
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	@FXML
 	public void showAddProductsToOrderEmergent() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"GetProductEmergent.fxml"));
@@ -267,6 +346,7 @@ public class EmergentGUIController {
 		formulario.setResizable(false);
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	@FXML
 	public void AddProduct(ActionEvent event){
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -294,12 +374,14 @@ public class EmergentGUIController {
 			addInfo.showAndWait();
 		}//End else
 	}//End AddProduct
+
 	public void initializeForm(){
 		tNameToChanges.setText(productToChanges.getName());
 		tTypeToChanges.setText(productToChanges.getType());
 		tSize.setText(productToChanges.getSize());
 		tPrice.setText(String.valueOf(productToChanges.getPrice()));
 	}//End initializeForm
+
 	@FXML
 	public void changeProductData(ActionEvent event) throws IOException{
 		boolean worked = false;
@@ -318,7 +400,7 @@ public class EmergentGUIController {
 						msg = "Se ha cambiado el producto con exito";
 						worked = true;
 					}else
-						msg = "No se pud� cambiar el producto, ya existe otro con ese nombre";
+						msg = "No se pud� cambiar el producto, ya existe otro con ese nombre";
 				}else
 					msg = "El precio no puede ser negativo";
 			}catch(NumberFormatException e){
@@ -330,6 +412,7 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End changeProductData
+
 	@FXML
 	public void changesIngredients(ActionEvent event){
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -347,6 +430,7 @@ public class EmergentGUIController {
 		if(worked)
 		 closeEmergentWindows(event);
 	}//End changesIngredients
+
 	@FXML
 	public void changesDishType(ActionEvent event) throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -365,12 +449,14 @@ public class EmergentGUIController {
 		if(worked)
 			 closeEmergentWindows(event);
 	}//End changesDishType
+
 	@FXML
 	public void showInfoFromComboBoxSelectedItem(){
 		Ingredient ing = cbIngredients.getValue();
 		if(ing != null)
 			tSelectedIngredient.setText(ing.getName());
 	}//End showInfoFromComboBoxSelectedItem
+
 	@FXML
 	public void setIngredientToadd(ActionEvent event){
 		boolean worked = false;
@@ -388,6 +474,106 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End setIngredientoToadd
+
+	@FXML
+	public void changeUser(ActionEvent event) {
+		Alert changeInfo = new Alert(AlertType.INFORMATION);
+		changeInfo.setHeaderText(null);
+		String msg = "No pueden haber campos vacíos";
+		String newUserName = userNameTxt.getText();
+		String newPassword = userPasswordTxt.getText();
+		String confirmation = passwordConfirmationTxt.getText();
+		boolean worked = false;
+		if(DMC.validateBlankChars(newUserName) && DMC.validateBlankChars(newPassword) && DMC.validateBlankChars(confirmation)) {
+			if(newPassword.equals(confirmation)) {
+				if(!DMC.validateUserName(newUserName) || newUserName.equals(userToChange.getUserName())) {
+					if (newPassword.length() >= 7) {
+						try {
+							DMC.changeUser(userToChange, newUserName, newPassword);
+							msg = "Datos del usuario modificados con éxito";
+							worked = true;
+						} catch (IOException exception) {
+							msg = "Ha ocurrido un error inesperado";
+						}
+
+					} else {
+						msg = "La contraseña debe contener al menos 7 caracteres";
+					}
+				} else {
+					msg = "El nombre de usuario ya está en usp";
+				}
+			} else {
+				msg = "Las contraseñas no coinciden";
+			}//End else
+		}//End if
+		changeInfo.setContentText(msg);
+		changeInfo.showAndWait();
+		if(worked) {
+			closeEmergentWindows(event);
+		}//End if
+	}//End changeUser
+
+	@FXML
+	public void changeCustomer(ActionEvent event) {
+		Alert changeInfo = new Alert(AlertType.INFORMATION);
+		changeInfo.setHeaderText(null);
+		String msg = "Debe llenar todos los campos obligatorios";
+		String newName = customerNameTxt.getText();
+		String newLastName = customerLastNameTxt.getText();
+		String newId = customerIdTxt.getText();
+		String newNPhone = customerPhoneTxt.getText();
+		String newAddress = customerAddressTxt.getText();
+		String newRemark = customerRemarkTxt.getText();
+		boolean worked = false;
+		if(DMC.validateBlankChars(newName) && DMC.validateBlankChars(newLastName) && DMC.validateBlankChars(newId) &&
+			DMC.validateBlankChars(newNPhone) && DMC.validateBlankChars(newAddress)) {
+			if(DMC.searchCustomerPosition(newId) == -1 || newId.equals(customerToChange.getId())) {
+				try {
+					DMC.changeCustomer(customerToChange, newName, newLastName, newId, newAddress, newNPhone, newRemark);
+					msg = "Datos del cliente modificados con éxito";
+					worked = true;
+				} catch (IOException exception) {
+					msg = "Ha ocurrido un error inesperado";
+				}
+			} else {
+				msg = "Ya existe un cliente con ese id";
+			}//End else
+		}//End if
+		changeInfo.setContentText(msg);
+		changeInfo.showAndWait();
+		if(worked) {
+			closeEmergentWindows(event);
+		}//End if
+	}//End changeCustomer
+
+	@FXML
+	public void changeEmployee(ActionEvent event) {
+		Alert changeInfo = new Alert(AlertType.INFORMATION);
+		changeInfo.setHeaderText(null);
+		String msg = "No pueden haber campos vacíos";
+		String newName = employeeNameTxt.getText();
+		String newLastName = employeeLastNameTxt.getText();
+		String newId = employeeIdTxt.getText();
+		boolean worked = false;
+		if(DMC.validateBlankChars(newName) && DMC.validateBlankChars(newLastName) && DMC.validateBlankChars(newId)) {
+			if(DMC.searchEmployeePosition(newId) == -1 || newId.equals(employeeToChange.getId())) {
+				try {
+					DMC.changeEmployee(employeeToChange, newName, newLastName, newId);
+					msg = "Datos del empleado modificados con éxito";
+					worked = true;
+				} catch (IOException exception) {
+					msg = "Ha ocurrido un error inesperado";
+				}
+			} else {
+				msg = "Ya existe un empleado con ese id";
+			}//End else
+		}//End if
+		changeInfo.setContentText(msg);
+		changeInfo.showAndWait();
+		if(worked) {
+			closeEmergentWindows(event);
+		}//End if
+	}//End changeEmployee
 	
 	@FXML
 	public void changeIngredient(ActionEvent event){
@@ -415,13 +601,14 @@ public class EmergentGUIController {
 	@FXML
 	public String getIngredientToadd(){
 		return ingredientToadd;	
-	}//End 
+	}//End getIngredientToadd
+
 	@FXML
 	public void setSizeAndPrice(ActionEvent event){
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "Tama�o o precio incorrecto.";
+		String msg = "Tama�o o precio incorrecto.";
 		if(!tSize.getText().isEmpty() && !tPrice.getText().isEmpty()){
 			try{
 				price = Double.parseDouble(tPrice.getText());
@@ -443,15 +630,19 @@ public class EmergentGUIController {
 	public String getSize(){
 		return size;
 	}//end getSize
+
 	public double getPrice(){
 		return price;
 	}//End getPrice
+
 	public Product getProduct(){
 		return productToAdd;
 	}//End getProduct
+
 	public int getAmount(){
 		return amount;
 	}//End getAmount
+
 	@FXML
 	public void addIngredient(ActionEvent event) throws IOException{
 		boolean worked = false;
@@ -476,6 +667,7 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End addIngredient
+
 	@FXML
 	public void addDishtype(ActionEvent event)throws IOException {
 		boolean worked = false;
@@ -497,24 +689,30 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End addDishtype
+
 	@FXML
 	private void closeEmergentWindows(ActionEvent event) {
 	    Node source = (Node) event.getSource();
 	    Stage stage = (Stage) source.getScene().getWindow();
 	    stage.close();
 	}//End closeEmergentWindowss
+
 	public void clearChangeIngredientData(){
 		ingredientToChange = null;
 	}//End clearChangeIngredientData
+
 	public void clearChangeDishTypeData(){
 		dishtype = null;
 	}//End clearChangeDishTypeData
+
 	private void initializeProductsComboBox(){
 		products = FXCollections.observableArrayList(DMC.getEnableProducts());
 		cbProducts.setItems(products);
 	}//End initializeIngredientsComboBox
+
 	private void initializeIngredientsComboBox(){
 		ingredients = FXCollections.observableArrayList(DMC.getIngredients());
 		cbIngredients.setItems(ingredients);
 	}//End initializeIngredientsComboBox
+
 }//End EmergentGUIController

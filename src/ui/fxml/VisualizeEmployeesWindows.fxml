@@ -8,7 +8,7 @@
    <center>
       <VBox prefHeight="330.0" prefWidth="570.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="employeesTable" prefHeight="366.0" prefWidth="590.0">
+            <TableView fx:id="employeesTable" onMouseClicked="#setEmployeeContextMenuItems" prefHeight="366.0" prefWidth="590.0">
               <columns>
                 <TableColumn fx:id="employeeNameColumn" prefWidth="130.0" text="Nombre" />
                 <TableColumn fx:id="employeeLastNameColumn" prefWidth="130.0" text="Apellido" />
@@ -16,6 +16,15 @@
                   <TableColumn fx:id="employeeCreatorColumn" prefWidth="109.5" text="Creado por" />
                   <TableColumn fx:id="employeeModifierColumn" prefWidth="103.0" text="Modificado por" />
               </columns>
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem fx:id="change" mnemonicParsing="false" text="Modificar" onAction="#listenChangeEmployeeEvent"/>
+                        <MenuItem fx:id="disable" mnemonicParsing="false" text="Habilitar/Deshabilitar" />
+                        <MenuItem fx:id="delete" mnemonicParsing="false" text="Eliminar" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
             </TableView>
          </children></VBox>
    </center>
