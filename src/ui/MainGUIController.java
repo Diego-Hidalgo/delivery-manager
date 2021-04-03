@@ -112,7 +112,7 @@ public class MainGUIController{
 	@FXML private TableColumn<Customer, String> customerPhoneColumn;
 	@FXML private TableColumn<Customer, String> customerCreatorColumn;
 	@FXML private TableColumn<Customer, String> customerModifierColumn;
-	@FXML private MenuItem unable;
+	@FXML private MenuItem disable;
 	@FXML private MenuItem change;
 	@FXML private MenuItem delete;
 
@@ -132,23 +132,44 @@ public class MainGUIController{
 	@FXML
 	public void setCustomerContextMenuItems(MouseEvent me) {
 		change.setDisable(false);
-		unable.setDisable(false);
+		disable.setDisable(false);
 		delete.setDisable(false);
 		if(me.getButton() == MouseButton.SECONDARY) {
 			Customer selection = customersTable.getSelectionModel().getSelectedItem();
 			if(selection != null) {
 				if(selection.getEnabled()) {
-					unable.setText("Deshabilitar");
+					disable.setText("Deshabilitar");
 				} else {
-					unable.setText("Habilitar");
+					disable.setText("Habilitar");
 				}//End else
 			} else {
 				change.setDisable(true);
-				unable.setDisable(true);
+				disable.setDisable(true);
 				delete.setDisable(true);
 			}//End else
 		}//End if
 	}//End setCustomersTableMenuItemText
+
+	@FXML
+	public void setEmployeeContextMenuItems(MouseEvent me) {
+		change.setDisable(false);
+		disable.setDisable(false);
+		delete.setDisable(false);
+		if(me.getButton() == MouseButton.SECONDARY) {
+			Employee selection = employeesTable.getSelectionModel().getSelectedItem();
+			if(selection != null) {
+				if(selection.getEnabled()) {
+					disable.setText("Deshabilitar");
+				} else {
+					disable.setText("Habilitar");
+				}//End else
+			} else {
+				change.setDisable(true);
+				disable.setDisable(true);
+				delete.setDisable(true);
+			}//End else
+		}//End if
+	}//End setEmployeeContextMenuItems
 
 	@FXML
 	public void switchToMainPane() throws IOException {
