@@ -87,8 +87,8 @@ public class DeliveryManagerController {
 	}//End validateBlankChats
 
 	public void loadAllData() throws IOException, ClassNotFoundException {
-		loadEmployeesData();
 		loadUsersData();
+		loadEmployeesData();
 		loadCustomersData();
 		loadIngredientsData();
 		loadProductsSizeData();
@@ -376,7 +376,7 @@ public class DeliveryManagerController {
 		customer.setAddress(address);
 		customer.setNPhone(nPhone);
 		customer.setRemark(remark);
-		customer.setModifier(getLoggedUser());
+		customer.setModifier(loggedUser);
 		Comparator<Customer> lastNameAndNameComparator = new LastNameAndNameComparator();
 		Collections.sort(customers, lastNameAndNameComparator);
 		saveAllData();
@@ -556,6 +556,7 @@ public class DeliveryManagerController {
 		saveAllData();
 		return t;
 	}//End dishTypeToAdd
+
 	public boolean changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName) throws IOException {
 		boolean changed = false;
 		String n = product.getName();

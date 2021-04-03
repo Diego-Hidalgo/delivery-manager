@@ -71,6 +71,10 @@ public class EmergentGUIController {
 	@FXML private TextField customerAddressTxt;
 	@FXML private TextField customerPhoneTxt;
 	@FXML private TextArea customerRemarkTxt;
+	@FXML private User userToChange;
+	@FXML private TextField userNameTxt;
+	@FXML private TextField userPasswordTxt;
+	@FXML private TextField passwordConfirmationTxt;
 
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
@@ -245,6 +249,22 @@ public class EmergentGUIController {
 		changeEmployee.setResizable(false);
 		changeEmployee.showAndWait();
 	}//End changeEmployeeEmergentScene
+
+	@FXML
+	public void changeUserEmergentScene(User user) throws IOException {
+		userToChange = user;
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ChangeUserEmergent.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root, null);
+		Stage changeUser = new Stage();
+		changeUser.initModality(Modality.APPLICATION_MODAL);
+		userNameTxt.setText(userToChange.getUserName());
+		changeUser.setTitle("Modificar usuario");
+		changeUser.setScene(scene);
+		changeUser.setResizable(false);
+		changeUser.showAndWait();
+	}//End changeUserEmergentScene
 
 	@FXML
 	public void changeCustomerEmergentScene(Customer customer) throws IOException {
@@ -456,10 +476,43 @@ public class EmergentGUIController {
 	}//End setIngredientoToadd
 
 	@FXML
-	public void changeCustomer(ActionEvent event) {
+	public void changeUser(ActionEvent event) {
 		Alert changeInfo = new Alert(AlertType.INFORMATION);
 		changeInfo.setHeaderText(null);
 		String msg = "No pueden haber campos vacíos";
+		String newUserName = userNameTxt.getText();
+		String newPassword = userPasswordTxt.getText();
+		String confirmation = passwordConfirmationTxt.getText();
+		boolean worked = false;
+		if(DMC.validateBlankChars(newUserName) && DMC.validateBlankChars(newPassword) && DMC.validateBlankChars(confirmation)) {
+			if(newPassword.equals(confirmation)) {
+				if(newPassword.length() >= 7) {
+					try {
+						DMC.changeUser(userToChange, newUserName, newPassword);
+						msg = "Datos del usuario modificados con éxito";
+						worked = true;
+					} catch (IOException exception) {
+						msg = "Ha ocurrido un error inesperado";
+					}
+				} else {
+					msg = "La contraseña debe contener al menos 7 caracteres";
+				}
+			} else {
+				msg = "Las contraseñas no coinciden";
+			}//End else
+		}//End if
+		changeInfo.setContentText(msg);
+		changeInfo.showAndWait();
+		if(worked) {
+			closeEmergentWindows(event);
+		}//End if
+	}//End changeUser
+
+	@FXML
+	public void changeCustomer(ActionEvent event) {
+		Alert changeInfo = new Alert(AlertType.INFORMATION);
+		changeInfo.setHeaderText(null);
+		String msg = "Debe llenar todos los campos obligatorios";
 		String newName = customerNameTxt.getText();
 		String newLastName = customerLastNameTxt.getText();
 		String newId = customerIdTxt.getText();
@@ -472,7 +525,7 @@ public class EmergentGUIController {
 			if(DMC.searchCustomerPosition(newId) == -1 || newId.equals(customerToChange.getId())) {
 				try {
 					DMC.changeCustomer(customerToChange, newName, newLastName, newId, newAddress, newNPhone, newRemark);
-					msg = "Datos modificados con éxito";
+					msg = "Datos del cliente modificados con éxito";
 					worked = true;
 				} catch (IOException exception) {
 					msg = "Ha ocurrido un error inesperado";

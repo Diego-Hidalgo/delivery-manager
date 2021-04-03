@@ -307,6 +307,23 @@ public class MainGUIController{
 	}//End addEmployee
 
 	@FXML
+	public void listenChangeUserEvent() throws IOException {
+		if(usersTable.getSelectionModel().getSelectedItem() != null) {
+			User user = usersTable.getSelectionModel().getSelectedItem();
+			if(DMC.getLoggedUser() == user) {
+				EGC.changeUserEmergentScene(user);
+				showVisualizeUsers();
+			} else {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setHeaderText(null);
+				alert.setTitle("Acción denegada");
+				alert.setContentText("Solo el usuario original puede realizar esta acción");
+				alert.showAndWait();
+			}//Emd else
+		}//End if
+	}//End listenChangeUserEvent
+
+	@FXML
 	public void listenChangeEmployeeEvent() throws IOException {
 		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
 			Employee employee = employeesTable.getSelectionModel().getSelectedItem();

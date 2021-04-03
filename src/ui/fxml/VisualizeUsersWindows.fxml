@@ -20,7 +20,7 @@
                     <contextMenu>
                         <ContextMenu>
                             <items>
-                                <MenuItem fx:id="change" mnemonicParsing="false" text="Modificar" />
+                                <MenuItem fx:id="change" onAction="#listenChangeUserEvent" mnemonicParsing="false" text="Modificar" />
                                 <MenuItem fx:id="disable" mnemonicParsing="false" text="Habilitar/Deshabilitar" />
                                 <MenuItem fx:id="delete" mnemonicParsing="false" text="Eliminar" />
                             </items>
