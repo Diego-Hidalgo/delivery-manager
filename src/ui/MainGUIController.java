@@ -215,7 +215,7 @@ public class MainGUIController{
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
 		window.show();
-		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() + ". Acceda al men� para usar las opciones del sistema");
+		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() + ". Acceda al menú para usar las opciones del sistema");
 	}//End switchToSecondaryPane
 
 	@FXML
@@ -230,7 +230,7 @@ public class MainGUIController{
 	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Acci�n exitosa");
+		alert.setTitle("Acción exitosa");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -333,6 +333,24 @@ public class MainGUIController{
 			showVisualizeEmployees();
 		}//End if
 	}//End listenChangeEmployeeEvent
+
+	@FXML
+	public void listenChangeEmployeeStatusEvent() throws IOException {
+		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
+			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
+			if(employee.getEnabled()) {
+				String msg = "¿Está seguro que desea deshabilitar el empleado?";
+				if(confirmActionAlert(msg)) {
+					DMC.disableEmployee(employee);
+				}
+			} else {
+				String msg = "¿Está seguro que desea habilitar el empleado?";
+				if(confirmActionAlert(msg)) {
+					DMC.enableEmployee(employee);
+				}//End if
+			}//End else
+		}//End if
+	}//End listenChangeEmployeeStatusEvent
 
 	@FXML
 	public void listenChangeCustomerEvent() throws IOException {

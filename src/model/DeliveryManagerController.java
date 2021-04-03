@@ -215,11 +215,23 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End changeEmployee
 
-	public void disableEmployee(String employeeId) throws IOException {
-		Employee employee = employees.get(searchEmployeePosition(employeeId));
+	public void enableEmployee(Employee employee) throws IOException {
+		employee.setEnabled(true);
+		employee.setModifier(loggedUser);
+		loggedUser.setLinked(true);
+		saveAllData();
+	}//End enableEmployee
+
+	public void disableEmployee(Employee employee) throws IOException {
 		employee.setEnabled(false);
 		employee.setModifier(loggedUser);
 		loggedUser.setLinked(true);
+		if(searchUserPosition(employee.getId()) != -1) {
+			User user = users.get(searchUserPosition(employee.getId()));
+			user.setEnabled(false);
+			user.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+		}//End if
 		saveAllData();
 	}//End disableEmployee
 
@@ -330,8 +342,14 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End changeUser
 
-	public void disableUser(String userId) throws IOException {
-		User user = users.get(searchUserPosition(userId));
+	public void enableUser(User user) throws IOException {
+		user.setEnabled(true);
+		user.setModifier(loggedUser);
+		loggedUser.setLinked(true);
+		saveAllData();
+	}//End enableUser
+
+	public void disableUser(User user) throws IOException {
 		user.setEnabled(false);
 		user.setModifier(loggedUser);
 		loggedUser.setLinked(true);
@@ -406,10 +424,17 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End changeCustomer
 
-	public void disableCustomer(String customerId) throws IOException {
-		Customer customer = customers.get(searchCustomerPosition(customerId));
+	public void enableCustomer(Customer customer) throws IOException {
+		customer.setEnabled(true);
+		customer.setModifier(loggedUser);
+		loggedUser.setLinked(true);
+		saveAllData();
+	}//End enableCustomer
+
+	public void disableCustomer(Customer customer) throws IOException {
 		customer.setEnabled(false);
 		customer.setModifier(loggedUser);
+		loggedUser.setLinked(true);
 		saveAllData();
 	}//End disableCustomerById
 
