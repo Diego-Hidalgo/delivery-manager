@@ -517,13 +517,12 @@ public class EmergentGUIController {
 						} catch (IOException exception) {
 							msg = "Ha ocurrido un error inesperado";
 						}
-
 					} else {
 						msg = "La contraseña debe contener al menos 7 caracteres";
-					}
+					}//End else
 				} else {
 					msg = "El nombre de usuario ya está en usp";
-				}
+				}//End else
 			} else {
 				msg = "Las contraseñas no coinciden";
 			}//End else

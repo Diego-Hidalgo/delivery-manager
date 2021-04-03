@@ -437,30 +437,34 @@ public class MainGUIController{
 		String pwConfirmation = passwordConfirmationTxt.getText();
 		if(DMC.validateBlankChars(userId) && DMC.validateBlankChars(userName) && DMC.validateBlankChars(password)) {
 			if(DMC.searchEmployeePosition(userId) != -1) {
-				if(DMC.searchUserPosition(userId) == -1) {
-					if (password.equals(pwConfirmation)) {
-						if(password.length() >= 7) {
-							if (!DMC.validateUserName(userName)) {
-								DMC.addUser(userId, userName, password);
-								userIdTxt.clear();
-								userNameTxt.clear();
-								userPasswordTxt.clear();
-								passwordConfirmationTxt.clear();
-								successfulActionAlert("Usuario registrado correctamente");
-								if (DMC.getAmountUsers() == 1) {
-									showLoginScene();
-								}//End if
+				if(DMC.getEmployeeEnabledStatus(userId)) {
+					if(DMC.searchUserPosition(userId) == -1) {
+						if (password.equals(pwConfirmation)) {
+							if(password.length() >= 7) {
+								if (!DMC.validateUserName(userName)) {
+									DMC.addUser(userId, userName, password);
+									userIdTxt.clear();
+									userNameTxt.clear();
+									userPasswordTxt.clear();
+									passwordConfirmationTxt.clear();
+									successfulActionAlert("Usuario registrado correctamente");
+									if (DMC.getAmountUsers() == 1) {
+										showLoginScene();
+									}//End if
+								} else {
+									userNameAlreadyInUseAlert();
+								}//End else
 							} else {
-								userNameAlreadyInUseAlert();
-							}//End else
+								passwordTooShortAlert();
+							}
 						} else {
-							passwordTooShortAlert();
-						}
+							passwordMisMatchAlert();
+						} //End else
 					} else {
-						passwordMisMatchAlert();
-					} //End else
+						employeeAlreadyHasAnUserAlert();
+					}//End else
 				} else {
-					employeeAlreadyHasAnUserAlert();
+					entityDisabledAlert("empleado");
 				}//End else
 			} else {
 				idNotFoundAlert();
@@ -495,13 +499,28 @@ public class MainGUIController{
 	}//End incorrectCredentials
 
 	@FXML
+	public void entityDisabledAlert(String entity) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("");
+		alert.setHeaderText(null);
+		alert.setContentText("No se puede realizar la acción porque el " + entity + " se encuentra deshabilitado");
+		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.getButtonTypes().setAll(confirmation);
+		alert.showAndWait();
+	}//End entityDisabledAlert
+
+	@FXML
 	public void logInUser(Event e) throws IOException {
 		String userName = logInName.getText();
 		String password = logInPassword.getText();
 		if(!userName.isEmpty() && !password.isEmpty()) {
 			if (DMC.validateCredentials(userName, password)) {
-				DMC.setLoggedUser(userName);
-				switchToSecondaryPane(e);
+				if(DMC.getUserEnabledStatus(userName)) {
+					DMC.setLoggedUser(userName);
+					switchToSecondaryPane(e);
+				} else {
+					entityDisabledAlert("usuario");
+				}
 			} else {
 				incorrectCredentials();
 			}//End else
