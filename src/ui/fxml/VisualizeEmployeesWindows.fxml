@@ -16,6 +16,15 @@
                   <TableColumn fx:id="employeeCreatorColumn" prefWidth="109.5" text="Creado por" />
                   <TableColumn fx:id="employeeModifierColumn" prefWidth="103.0" text="Modificado por" />
               </columns>
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Modificar" onAction="#listenChangeEmployeeEvent"/>
+                        <MenuItem mnemonicParsing="false" text="Deshabilitar" />
+                        <MenuItem mnemonicParsing="false" text="Eliminar" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
             </TableView>
          </children></VBox>
    </center>

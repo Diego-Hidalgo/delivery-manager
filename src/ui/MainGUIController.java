@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -145,7 +146,7 @@ public class MainGUIController{
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
 		window.show();
-		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() + ". Acceda al menú para usar las opciones del sistema");
+		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() + ". Acceda al menï¿½ para usar las opciones del sistema");
 	}//End switchToSecondaryPane
 
 	@FXML
@@ -160,7 +161,7 @@ public class MainGUIController{
 	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Acción exitosa");
+		alert.setTitle("Acciï¿½n exitosa");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -171,7 +172,7 @@ public class MainGUIController{
 	@FXML
 	public void emptyFieldAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Campo Vacío");
+		alert.setTitle("Campo Vacï¿½o");
 		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -239,6 +240,15 @@ public class MainGUIController{
 	}//End addEmployee
 
 	@FXML
+	public void listenChangeEmployeeEvent() throws IOException {
+		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
+			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
+			EGC.changeEmployeeEmergentScene(employee);
+			showVisualizeEmployees();
+		}//End if
+	}//End listenChangeEmployeeEvent
+
+	@FXML
 	public void showRegisterUserSceneInMainPane() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindows.fxml"));
 		fxmlLoader.setController(this);
@@ -272,8 +282,8 @@ public class MainGUIController{
 	@FXML
 	public void passwordMisMatchAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Verificar Contraseñas");
-		alert.setHeaderText("LAS CONTRASEÑAS NO COINCIDEN");
+		alert.setTitle("Verificar Contraseï¿½as");
+		alert.setHeaderText("LAS CONTRASEï¿½AS NO COINCIDEN");
 		alert.setContentText("Las contrase{as deben ser iguales, vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
@@ -285,7 +295,7 @@ public class MainGUIController{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("La Id No Se Encuentra");
 		alert.setHeaderText("LA ID INGRESADA NO EXISTE");
-		alert.setContentText("La id ingresada no coincide con ningún empleado, intente con otra o cree un nuevo empleado");
+		alert.setContentText("La id ingresada no coincide con ningï¿½n empleado, intente con otra o cree un nuevo empleado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -317,9 +327,9 @@ public class MainGUIController{
 	@FXML
 	public void passwordTooShortAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Contraseña inválida");
-		alert.setHeaderText("LA CONTRASEÑA ES DEMASIADO CORTA");
-		alert.setContentText("La contraseña debe tener por lo menos 7 caracteres, intente con otra");
+		alert.setTitle("Contraseï¿½a invï¿½lida");
+		alert.setHeaderText("LA CONTRASEï¿½A ES DEMASIADO CORTA");
+		alert.setContentText("La contraseï¿½a debe tener por lo menos 7 caracteres, intente con otra");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -384,7 +394,7 @@ public class MainGUIController{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("Verifique las credenciales de inicio de sesión");
+		alert.setContentText("Verifique las credenciales de inicio de sesiï¿½n");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -593,6 +603,7 @@ public class MainGUIController{
 		st.setWidth(800);
 		st.setResizable(false);
 	}//End showSceneLogin
+
 	@FXML
 	public void showIngredientsList() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeIngredientsWindows.fxml"));
@@ -606,6 +617,7 @@ public class MainGUIController{
 		st.setWidth(550);
 		st.setResizable(false);
 	}//End showIngredientsList
+
 	@FXML
 	public void showDishTypeList() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeDishTypeWindows.fxml"));
@@ -619,6 +631,7 @@ public class MainGUIController{
 		st.setWidth(550);
 		st.setResizable(false);
 	}//End showDishTypeList
+
 	@FXML
 	public void showSceneRegisterOrder() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterOrderWindows.fxml"));
@@ -632,6 +645,7 @@ public class MainGUIController{
 		st.setWidth(550);
 		st.setResizable(false);
 	}//End showSceneLogin
+
 	@FXML
 	public void showSceneOrdersList() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeOrdersWindows.fxml"));
@@ -645,6 +659,7 @@ public class MainGUIController{
 		st.setWidth(900);
 		st.setResizable(false);
 	}//End showSceneLogin
+
 	@FXML
 	public void addProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
@@ -667,14 +682,14 @@ public class MainGUIController{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tamaño y precio ingresado ya existen para este producto";
+		String msg = "El tamaï¿½o y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "Tamaño y  precio agregados con exito";
+			msg = "Tamaï¿½o y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -745,6 +760,7 @@ public class MainGUIController{
 		}//End for
  		return exist;
 	}//End checkSizeAndPrice
+
 	@FXML
 	public void registerOrder() throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -764,11 +780,12 @@ public class MainGUIController{
 		addInfo.setContentText(msg);	
 		addInfo.showAndWait();
 	}//End registerOrder
+
 	@FXML
 	public void addProductToOrder()throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "No se ha podido añadir el producto al pedido";
+		String msg = "No se ha podido aï¿½adir el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
 		product.add(EGC.getProduct());
 		amo.add(EGC.getAmount());//taProducsAmount
@@ -776,13 +793,14 @@ public class MainGUIController{
 		if(EGC.getProduct() != null){
 			if(!checkProductToAdd(EGC.getProduct()+" ")) {//(amountAndProducts.isEmpty())?
 				amountAndProducts += EGC.getProduct()+" x "+EGC.getAmount() + "\n";
-				msg = "Producto ha sido añadido correctamente al pedido";
+				msg = "Producto ha sido aï¿½adido correctamente al pedido";
 			}//End if
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 		taProducsAmount.setText(amountAndProducts);
 	}//End addProductToOrder
+
 	private boolean checkProductToAdd(String np){
 		boolean exist = false;
 		String[] p =  taProducsAmount.getText().split("\n");
@@ -795,6 +813,7 @@ public class MainGUIController{
 		}//End if
 		return exist;
 	}//End checkProductToAdd
+
 	@FXML
 	public void showSceneRegisterIngredient() throws IOException{
 		EGC.showRegisterIngredienteScene();
@@ -804,6 +823,7 @@ public class MainGUIController{
 	public void showSceneRegisterDishtype() throws IOException{
 		EGC.showRegisterDihstypeScene();
 	}//End showSceneRegisterDishtype
+
 	@FXML
 	public void ListenChangeProductEvent(MouseEvent mouseEvent) throws IOException{
 		if(mouseEvent.getClickCount() == 2){
@@ -814,6 +834,7 @@ public class MainGUIController{
 			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
+
 	@FXML
 	public void ListenChangeIngredientEvent(MouseEvent mouseEvent) throws IOException{
 		if(mouseEvent.getClickCount() == 2){
@@ -825,6 +846,7 @@ public class MainGUIController{
 			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
+
 	@FXML
 	public void ListenChangeDishTypeEvent(MouseEvent mouseEvent) throws IOException{
 		if(mouseEvent.getClickCount() == 2){
@@ -836,6 +858,7 @@ public class MainGUIController{
 			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
+
 	public void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getEnableProducts());
 		productTable.setItems(productsList);
@@ -867,6 +890,7 @@ public class MainGUIController{
 		dishTypeTable.setItems(dishTypeList);
 		dishTypeName.setCellValueFactory(new PropertyValueFactory<DishType,String>("name"));
 	}//End initializeDishtypeList
+
 	private void initializeStatusComboBox(){
 		status = FXCollections.observableArrayList();
 		status.add("SOLICITADO");
@@ -875,4 +899,5 @@ public class MainGUIController{
 		status.add("ENTREGADO");
 		cbStatus.setItems(status);
 	}//End initializeIngredientsComboBox
+
 }//End MainGUIController
