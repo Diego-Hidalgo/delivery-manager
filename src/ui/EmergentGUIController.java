@@ -64,6 +64,13 @@ public class EmergentGUIController {
 	@FXML private TextField employeeLastNameTxt;
 	@FXML private TextField employeeIdTxt;
 	@FXML private Employee employeeToChange;
+	@FXML private Customer customerToChange;
+	@FXML private TextField customerNameTxt;
+	@FXML private TextField customerLastNameTxt;
+	@FXML private TextField customerIdTxt;
+	@FXML private TextField customerAddressTxt;
+	@FXML private TextField customerPhoneTxt;
+	@FXML private TextArea customerRemarkTxt;
 
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
@@ -238,6 +245,27 @@ public class EmergentGUIController {
 		changeEmployee.setResizable(false);
 		changeEmployee.showAndWait();
 	}//End changeEmployeeEmergentScene
+
+	@FXML
+	public void changeCustomerEmergentScene(Customer customer) throws IOException {
+		customerToChange = customer;
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ChangeCustomerEmergent.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root, null);
+		Stage changeCustomer = new Stage();
+		changeCustomer.initModality(Modality.APPLICATION_MODAL);
+		customerNameTxt.setText(customerToChange.getName());
+		customerLastNameTxt.setText(customerToChange.getLastName());
+		customerIdTxt.setText(customerToChange.getId());
+		customerPhoneTxt.setText(customerToChange.getNPhone());
+		customerAddressTxt.setText(customerToChange.getAddress());
+		customerRemarkTxt.setText(customerToChange.getRemark());
+		changeCustomer.setTitle("Modificar cliente");
+		changeCustomer.setScene(scene);
+		changeCustomer.setResizable(false);
+		changeCustomer.showAndWait();
+	}//End changeCustomerEmergentScene
 
 	@FXML
 	public void showChangeIngredientToProduct() throws IOException{
@@ -428,17 +456,49 @@ public class EmergentGUIController {
 	}//End setIngredientoToadd
 
 	@FXML
+	public void changeCustomer(ActionEvent event) {
+		Alert changeInfo = new Alert(AlertType.INFORMATION);
+		changeInfo.setHeaderText(null);
+		String msg = "No pueden haber campos vacíos";
+		String newName = customerNameTxt.getText();
+		String newLastName = customerLastNameTxt.getText();
+		String newId = customerIdTxt.getText();
+		String newNPhone = customerPhoneTxt.getText();
+		String newAddress = customerPhoneTxt.getText();
+		String newRemark = customerRemarkTxt.getText();
+		boolean worked = false;
+		if(DMC.validateBlankChars(newName) && DMC.validateBlankChars(newLastName) && DMC.validateBlankChars(newId) &&
+			DMC.validateBlankChars(newNPhone) && DMC.validateBlankChars(newAddress)) {
+			if(DMC.searchCustomerPosition(newId) == -1 || newId.equals(customerToChange.getId())) {
+				try {
+					DMC.changeCustomer(customerToChange, newName, newLastName, newId, newAddress, newNPhone, newRemark);
+					msg = "Datos modificados con éxito";
+					worked = true;
+				} catch (IOException exception) {
+					msg = "Ha ocurrido un error inesperado";
+				}
+			} else {
+				msg = "Ya existe un cliente con ese id";
+			}//End else
+		}//End if
+		changeInfo.setContentText(msg);
+		changeInfo.showAndWait();
+		if(worked) {
+			closeEmergentWindows(event);
+		}//End if
+	}//End changeCustomer
+
+	@FXML
 	public void changeEmployee(ActionEvent event) {
 		Alert changeInfo = new Alert(AlertType.INFORMATION);
 		changeInfo.setHeaderText(null);
 		String msg = "No pueden haber campos vacíos";
+		String newName = employeeNameTxt.getText();
+		String newLastName = employeeLastNameTxt.getText();
+		String newId = employeeIdTxt.getText();
 		boolean worked = false;
-		if(DMC.validateBlankChars(employeeNameTxt.getText()) && DMC.validateBlankChars(employeeLastNameTxt.getText())
-		 	&& DMC.validateBlankChars(employeeIdTxt.getText())) {
-			if(DMC.searchEmployeePosition(employeeIdTxt.getText()) == -1 || employeeIdTxt.getText().equals(employeeToChange.getId())) {
-				String newName = employeeNameTxt.getText();
-				String newLastName = employeeLastNameTxt.getText();
-				String newId = employeeIdTxt.getText();
+		if(DMC.validateBlankChars(newName) && DMC.validateBlankChars(newLastName) && DMC.validateBlankChars(newId)) {
+			if(DMC.searchEmployeePosition(newId) == -1 || newId.equals(employeeToChange.getId())) {
 				try {
 					DMC.changeEmployee(employeeToChange, newName, newLastName, newId);
 					msg = "Datos del empleado modificados con éxito";

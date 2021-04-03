@@ -18,6 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -111,6 +112,9 @@ public class MainGUIController{
 	@FXML private TableColumn<Customer, String> customerPhoneColumn;
 	@FXML private TableColumn<Customer, String> customerCreatorColumn;
 	@FXML private TableColumn<Customer, String> customerModifierColumn;
+	@FXML private MenuItem unable;
+	@FXML private MenuItem change;
+	@FXML private MenuItem delete;
 
 	private DeliveryManagerController DMC;
 	private EmergentGUIController EGC;
@@ -124,6 +128,27 @@ public class MainGUIController{
 		product = new ArrayList<Product>();
 		amo = new ArrayList<Integer>();
 	}//End constructor
+
+	@FXML
+	public void setCustomerContextMenuItems(MouseEvent me) {
+		change.setDisable(false);
+		unable.setDisable(false);
+		delete.setDisable(false);
+		if(me.getButton() == MouseButton.SECONDARY) {
+			Customer selection = customersTable.getSelectionModel().getSelectedItem();
+			if(selection != null) {
+				if(selection.getEnabled()) {
+					unable.setText("Deshabilitar");
+				} else {
+					unable.setText("Habilitar");
+				}//End else
+			} else {
+				change.setDisable(true);
+				unable.setDisable(true);
+				delete.setDisable(true);
+			}//End else
+		}//End if
+	}//End setCustomersTableMenuItemText
 
 	@FXML
 	public void switchToMainPane() throws IOException {
@@ -171,7 +196,7 @@ public class MainGUIController{
 	@FXML
 	public void emptyFieldAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Campo Vac�o");
+		alert.setTitle("Campo Vacío");
 		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -246,6 +271,15 @@ public class MainGUIController{
 			showVisualizeEmployees();
 		}//End if
 	}//End listenChangeEmployeeEvent
+
+	@FXML
+	public void listenChangeCustomerEvent() throws IOException {
+		if(customersTable.getSelectionModel().getSelectedItem() != null) {
+			Customer customer = customersTable.getSelectionModel().getSelectedItem();
+			EGC.changeCustomerEmergentScene(customer);
+			showVisualizeCustomers();
+		}//End if
+	}//End listenChangeCustomerEvent
 
 	@FXML
 	public void showRegisterUserSceneInMainPane() throws IOException {
@@ -463,7 +497,7 @@ public class MainGUIController{
 		String remark = customerRemarkTxt.getText();
 		if(DMC.validateBlankChars(name) && DMC.validateBlankChars(lastName) &&
 		DMC.validateBlankChars(id) && DMC.validateBlankChars(address) &&
-				DMC.validateBlankChars(nPhone) && DMC.validateBlankChars(remark)) {
+				DMC.validateBlankChars(nPhone)) {
 			if(DMC.searchCustomerPosition(id) == -1) {
 				DMC.addCustomer(name, lastName, id, address, nPhone, remark);
 				successfulActionAlert("Cliente registrado correctamente");
