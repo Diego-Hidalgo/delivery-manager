@@ -342,7 +342,10 @@ public class MainGUIController{
 				String msg = "¿Está seguro que desea deshabilitar el empleado?";
 				if(confirmActionAlert(msg)) {
 					DMC.disableEmployee(employee);
-				}
+					if(employee.getId().equals(DMC.getLoggedUser().getId())) {
+						logOutUser();
+					}//End if
+				}//End if
 			} else {
 				String msg = "¿Está seguro que desea habilitar el empleado?";
 				if(confirmActionAlert(msg)) {
