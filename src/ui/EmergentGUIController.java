@@ -464,7 +464,7 @@ public class EmergentGUIController {
 		String newLastName = customerLastNameTxt.getText();
 		String newId = customerIdTxt.getText();
 		String newNPhone = customerPhoneTxt.getText();
-		String newAddress = customerPhoneTxt.getText();
+		String newAddress = customerAddressTxt.getText();
 		String newRemark = customerRemarkTxt.getText();
 		boolean worked = false;
 		if(DMC.validateBlankChars(newName) && DMC.validateBlankChars(newLastName) && DMC.validateBlankChars(newId) &&

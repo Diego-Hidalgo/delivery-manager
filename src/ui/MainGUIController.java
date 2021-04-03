@@ -122,6 +122,7 @@ public class MainGUIController{
 	private final String FOLDER = "fxml/";
 	private List<Product> product;
 	private List<Integer> amo;
+
 	public MainGUIController(DeliveryManagerController DMC,EmergentGUIController EGC){
 		this.DMC = DMC;
 		this.EGC = EGC;
@@ -170,6 +171,27 @@ public class MainGUIController{
 			}//End else
 		}//End if
 	}//End setEmployeeContextMenuItems
+
+	@FXML
+	public void setUserContextMenuItems(MouseEvent me) {
+		change.setDisable(false);
+		disable.setDisable(false);
+		delete.setDisable(false);
+		if(me.getButton() == MouseButton.SECONDARY) {
+			User selection = usersTable.getSelectionModel().getSelectedItem();
+			if(selection != null) {
+				if(selection.getEnabled()) {
+					disable.setText("Deshabilitar");
+				} else {
+					disable.setText("Habilitar");
+				}//End else
+			} else {
+				change.setDisable(true);
+				disable.setDisable(true);
+				delete.setDisable(true);
+			}//End else
+		}//End if
+	}//End setUserContextMenuItems
 
 	@FXML
 	public void switchToMainPane() throws IOException {
