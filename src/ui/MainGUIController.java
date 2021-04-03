@@ -353,6 +353,24 @@ public class MainGUIController{
 	}//End listenChangeEmployeeStatusEvent
 
 	@FXML
+	public void listenChangeCustomerStatusEvent() throws IOException {
+		if(customersTable.getSelectionModel().getSelectedItem() != null) {
+			Customer customer = customersTable.getSelectionModel().getSelectedItem();
+			if(customer.getEnabled()) {
+				String msg = "¿Está seguro que desea deshabilitar el cliente?";
+				if(confirmActionAlert(msg)) {
+					DMC.disableCustomer(customer);
+				}//End if
+			} else {
+				String msg = "Está seguro que desea habilitar el empleado";
+				if(confirmActionAlert(msg)) {
+					DMC.enableCustomer(customer);
+				}//End if
+			}//End else
+		}//End if
+	}//End listenChangeCustomerStatusEvent
+
+	@FXML
 	public void listenChangeCustomerEvent() throws IOException {
 		if(customersTable.getSelectionModel().getSelectedItem() != null) {
 			Customer customer = customersTable.getSelectionModel().getSelectedItem();
