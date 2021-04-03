@@ -176,6 +176,10 @@ public class DeliveryManagerController {
 		return -1;
 	}//End searchEmployeePosition
 
+	public boolean getEmployeeEnabledStatus(final String idToSearch) {
+		return employees.get(searchEmployeePosition(idToSearch)).getEnabled();
+	}//End getEmployeeEnabledStatus
+
 	public void addEmployee(String name, String lastName, String id) throws IOException {
 		Employee newEmployee = new Employee(loggedUser, name, lastName, id);
 		if(employees.isEmpty()) {
@@ -266,6 +270,18 @@ public class DeliveryManagerController {
 		return validate;
 	}//End validatePassword
 
+	public int searchUserPositionByName(final String nameToSearch) {
+		boolean validate = false;
+		for(int i = 0; i < users.size() && !validate; i ++) {
+			User user = users.get(i);
+			if(user.getUserName().equals(nameToSearch)) {
+				validate = true;
+				return i;
+			}//End if
+		}//End for
+		return -1;
+	}//End searchUserPositionByName
+
 	public int searchUserPosition(final String idToSearch) {
 		int start = 0;
 		int end = users.size() - 1;
@@ -281,6 +297,10 @@ public class DeliveryManagerController {
 		}//End while
 		return -1;
 	}//End searchUserPosition
+
+	public boolean getUserEnabledStatus(final String nameToSearch) {
+		return users.get(searchUserPositionByName(nameToSearch)).getEnabled();
+	}//End getUserEnabledStatus
 
 
 	public void addUser(String idEmployee, String userName, String password) throws IOException {
@@ -352,6 +372,10 @@ public class DeliveryManagerController {
 		}//End for
 		return -1;
 	}//End searchCustomerPositionById
+
+	public boolean getCustomerEnabledStatus(final String idToSearch) {
+		return customers.get(searchCustomerPosition(idToSearch)).getEnabled();
+	}//End getCustomerEnabledStatus
 
 	public void addCustomer(String name, String lastName, String id, String address, String nPhone, String remark) throws IOException {
 		Customer newCustomer = new Customer(loggedUser, name, lastName, id, address, nPhone, remark);
