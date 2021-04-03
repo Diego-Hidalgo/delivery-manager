@@ -486,16 +486,21 @@ public class EmergentGUIController {
 		boolean worked = false;
 		if(DMC.validateBlankChars(newUserName) && DMC.validateBlankChars(newPassword) && DMC.validateBlankChars(confirmation)) {
 			if(newPassword.equals(confirmation)) {
-				if(newPassword.length() >= 7) {
-					try {
-						DMC.changeUser(userToChange, newUserName, newPassword);
-						msg = "Datos del usuario modificados con éxito";
-						worked = true;
-					} catch (IOException exception) {
-						msg = "Ha ocurrido un error inesperado";
+				if(!DMC.validateUserName(newUserName) || newUserName.equals(userToChange.getUserName())) {
+					if (newPassword.length() >= 7) {
+						try {
+							DMC.changeUser(userToChange, newUserName, newPassword);
+							msg = "Datos del usuario modificados con éxito";
+							worked = true;
+						} catch (IOException exception) {
+							msg = "Ha ocurrido un error inesperado";
+						}
+
+					} else {
+						msg = "La contraseña debe contener al menos 7 caracteres";
 					}
 				} else {
-					msg = "La contraseña debe contener al menos 7 caracteres";
+					msg = "El nombre de usuario ya está en usp";
 				}
 			} else {
 				msg = "Las contraseñas no coinciden";
