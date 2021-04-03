@@ -13,11 +13,13 @@ public class Product implements Serializable {
 	private ProductBase product;
 	private User modifier;
 	private boolean linked;
+	private boolean enable;
 	
 	public Product(ProductBase product,ProductSize size,double price){
 		this.product = product;
 		this.size = size;
 		this.price = price;
+		enable = true;
 		ntr = 0;
 	}//End Product
 
@@ -65,9 +67,11 @@ public class Product implements Serializable {
 	public void setLinked(boolean linked) {
 		this.linked = linked;
 	}//End setLinked
-
+	public void setEnable(boolean enable){
+		 this.enable = enable;
+	}
 	public boolean getEnable(){
-		return product.getEnable();
+		return enable;
 	}//End getEnable
 
 	public boolean getLinked() {

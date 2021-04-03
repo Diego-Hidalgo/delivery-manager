@@ -602,32 +602,19 @@ public class DeliveryManagerController {
 		return changed;
 	}//End changeProduct
 
-	public void disableProduct(String productName) throws IOException {
-		int productIndex = findProductBase(productName);
-		if(productIndex >= 0){
-			productBase.get(productIndex).setEnable(false);
-			productBase.get(productIndex).setModifier(loggedUser);
-		}//End if
+
+	public void changeEnableProduct(Product product) throws IOException {
+		product.setEnable(!product.getEnable());
 		saveAllData();
 	}//End disableProduct
 
-	public boolean removeProduct(final String productName) throws IOException {
+	public boolean removeProduct(Product product) throws IOException {
 		boolean removed = false;
-		int productIndex = findProductBase(productName);
-		boolean linked = false;
-		if(productIndex >= 0){
-			List<Integer> index = findSubProducts(productName);
-			for(int i = 0; i < index.size() && !linked;i++){
-				linked = linked || products.get(index.get(i)).getEnable();
-			}//End for
-			if(!linked){
-				for(int i = 0; i < index.size() && !linked;i++)
-					products.remove( (int) index.get(i));
-				productBase.remove(productIndex);
-				removed = true;
-			}//End if
+		if(!product.getLinked()){
+			products.remove(product);
+			removed = true;
+			saveAllData();
 		}//End if
-		saveAllData();
 		return removed;
 	}//removeProduct
 

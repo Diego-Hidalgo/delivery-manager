@@ -43,6 +43,8 @@ public class MainGUIController{
 	@FXML private TextField tDishtype;
 	@FXML private TextArea tSizesAndPices;
 	@FXML private TextArea tIngredients;
+	@FXML private ContextMenu changeProduct;
+	@FXML private MenuItem changesEnable;
 	
 	//Ingredient
 	@FXML private TableView<Ingredient> ingredientTable;
@@ -938,15 +940,54 @@ public class MainGUIController{
 
 	@FXML
 	public void ListenChangeProductEvent(MouseEvent mouseEvent) throws IOException{
-		if(mouseEvent.getClickCount() == 2){
-			Product p = productTable.getSelectionModel().getSelectedItem();
-			if(p != null){
+		Product p = productTable.getSelectionModel().getSelectedItem();
+		if(p != null){
+			if(mouseEvent.getClickCount() == 2){
 				EGC.showChangeProducts(p);
 				showProductsList();	
 			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
 
+	@FXML
+	public void ListenChangesEnableProduct(){
+		Product p = productTable.getSelectionModel().getSelectedItem();
+		Alert changeEnableInfo = new Alert(AlertType.INFORMATION);
+		changeEnableInfo.setHeaderText(null);
+		String msg = "No hay elementos seleccionados";
+		if(p!= null){
+		try {
+			DMC.changeEnableProduct(p);
+			String enable = (p.getEnable())?"habilitado":"deshabilitado";
+			showProductsList();
+			msg = "Se ha cambiado la disponibilidad del elemento a " + enable;
+		} catch (IOException e) {
+			msg = "Ha ocurrido un error inesperado";
+		}
+		}//End if
+		changeEnableInfo.setContentText(msg);
+		changeEnableInfo.showAndWait();
+	}//End ListenChangesEnableProduct
+	@FXML
+	public void ListenRemoveProduct(){
+		Product p = productTable.getSelectionModel().getSelectedItem();
+		Alert removeInfo = new Alert(AlertType.INFORMATION);
+		removeInfo.setHeaderText(null);
+		String msg = "No hay elementos seleccionados";
+		if(p!= null){
+			try {
+				if(DMC.removeProduct(p)) {
+					msg = "Se ha eliminado el producto";
+					showProductsList();
+				}else
+					msg = "No se ha podido eliminar el producto";
+			} catch (IOException e){
+				msg = "Ha ocurrido un error inesperado";
+			} //End catch
+		}//End if
+		removeInfo.setContentText(msg);
+		removeInfo.showAndWait();
+	}//End ListenChangesEnableProduct
 	@FXML
 	public void ListenChangeIngredientEvent(MouseEvent mouseEvent) throws IOException{
 		if(mouseEvent.getClickCount() == 2){
@@ -961,9 +1002,9 @@ public class MainGUIController{
 
 	@FXML
 	public void ListenChangeDishTypeEvent(MouseEvent mouseEvent) throws IOException{
-		if(mouseEvent.getClickCount() == 2){
-			DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
-			if(d != null){
+		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
+		if(d != null){
+			if(mouseEvent.getClickCount() == 2){
 				EGC.showChangeDihstypeScene(d);
 				EGC.clearChangeDishTypeData();
 				showDishTypeList();
