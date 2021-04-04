@@ -343,35 +343,24 @@ public class MainGUIController{
 
 	@FXML
 	public void listenChangeEmployeeStatusEvent() throws IOException {
+		String msg = "";
 		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
 			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
-			if(employee.getEnabled()) {
-				String msg = "¿Está seguro que desea deshabilitar el empleado? También se " +
-						"deshabilitará a su usuario asociado, en caso de tener uno.";
-				if(confirmActionAlert(msg)) {
-					if(employee.getId().equals(DMC.getLoggedUser().getId()) && DMC.countEnabledUsers() <= 1) {
-						msg = "No se pudó realizar la acción debido a que a la cuenta asociada al empleado es la única habilitada";
-						couldNotCompleteActionAlert(msg);
+			msg = "¿Está seguro que desea deshabilitar al empleado seleccionado?" +
+					"Se deshabilitará también al usuario asociado en caso de haber uno";
+			if(confirmActionAlert(msg)) {
+				if(DMC.getUsers().size() == 1 && employee.getId().equals(DMC.getLoggedUser().getId())) {
+					msg = "No se pudó deshabilitar al empleado porque su usuario asociado es el único existente";
+					couldNotCompleteActionAlert(msg);
+				} else {
+					if(DMC.changeEmployeeEnabledStatus(employee)) {
+						msg = "Se ha habilitado al empleado correctamente";
 					} else {
 						msg = "Se ha deshabilitado al empleado correctamente";
-						DMC.disableEmployee(employee);
-						showVisualizeEmployees();
-						successfulActionAlert(msg);
-						if(employee.getId().equals(DMC.getLoggedUser().getId())) {
-							switchToMainPane();
-							showLoginScene();
-							DMC.logOutUser();
-						}//End if
-					}//End
-				}//End if
-			} else {
-				String msg = "¿Está seguro que desea habilitar el empleado?";
-				if(confirmActionAlert(msg)) {
-					msg = "Se ha habilitado al empleado correctamente";
+					}//End else
 					successfulActionAlert(msg);
-					DMC.enableEmployee(employee);
-				}//End if
-			}//End else
+				}//End else
+			}//End if
 		}//End if
 	}//End listenChangeEmployeeStatusEvent
 

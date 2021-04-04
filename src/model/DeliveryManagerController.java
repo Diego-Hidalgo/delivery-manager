@@ -225,25 +225,27 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End changeEmployee
 
-	public void enableEmployee(Employee employee) throws IOException {
-		employee.setEnabled(true);
-		employee.setModifier(loggedUser);
-		loggedUser.setLinked(true);
-		saveAllData();
-	}//End enableEmployee
-
-	public void disableEmployee(Employee employee) throws IOException {
-		employee.setEnabled(false);
-		employee.setModifier(loggedUser);
-		loggedUser.setLinked(true);
-		if(searchUserPosition(employee.getId()) != -1) {
-			User user = users.get(searchUserPosition(employee.getId()));
-			user.setEnabled(false);
-			user.setModifier(loggedUser);
+	public boolean changeEmployeeEnabledStatus(Employee employee) throws IOException {
+		if(employee.getEnabled()) {
+			employee.setEnabled(false);
+			employee.setModifier(loggedUser);
 			loggedUser.setLinked(true);
-		}//End if
-		saveAllData();
-	}//End disableEmployee
+			if(searchUserPosition(employee.getId()) != -1) {
+				User user = users.get(searchEmployeePosition(employee.getId()));
+				user.setEnabled(false);
+				user.setModifier(loggedUser);
+				loggedUser.setLinked(true);
+			}//End if
+			saveAllData();
+			return false;
+		} else {
+			employee.setEnabled(true);
+			employee.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+			saveAllData();
+			return true;
+		}//End enableEmployee
+	}//End enableEmployeeEnabledStatus
 
 	public void removeEmployee(String employeeId) throws IOException {
 		int index = searchEmployeePosition(employeeId);
@@ -443,10 +445,14 @@ public class DeliveryManagerController {
 	public boolean changeCustomerEnabledStatus(Customer customer) throws IOException {
 		if(customer.getEnabled()) {
 			customer.setEnabled(false);
+			customer.setModifier(loggedUser);
+			loggedUser.setLinked(true);
 			saveAllData();
 			return false;
 		} else {
 			customer.setEnabled(true);
+			customer.setModifier(loggedUser);
+			loggedUser.setLinked(true);
 			saveAllData();
 			return true;
 		}//End else
