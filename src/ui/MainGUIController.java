@@ -212,6 +212,7 @@ public class MainGUIController{
 		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
+		window.setTitle("Bienvenido");
 		window.show();
 		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() + ". Acceda al menú para usar las opciones del sistema");
 	}//End switchToSecondaryPane
@@ -465,6 +466,29 @@ public class MainGUIController{
 			}//End if
 		}//End if
 	}//End listenRemoveEmployeeEvent
+
+	@FXML
+	public void listenRemoveUserEvent() throws IOException {
+		if(usersTable.getSelectionModel().getSelectedItem() != null) {
+			User user = usersTable.getSelectionModel().getSelectedItem();
+			String msg = "Está seguro que desea remover al empleado?";
+			if(confirmActionAlert(msg)) {
+				if(DMC.removeUser(user)) {
+					showVisualizeUsers();
+					if(user.getId().equals(DMC.getLoggedUser().getId())) {
+						switchToMainPane();
+						showLoginScene();
+						DMC.logOutUser();
+					}//End if
+					msg = "Usuario removido correctamente.";
+					successfulActionAlert(msg);
+				} else {
+					msg = "No se pudo remover al usuario.";
+					couldNotCompleteActionAlert(msg);
+				}//End else
+			}//End if
+		}//End if
+	}//End listenRemoveUserEvent
 
 	@FXML
 	public void showRegisterUserSceneInMainPane() throws IOException {
