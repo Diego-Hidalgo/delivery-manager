@@ -421,6 +421,29 @@ public class DeliveryManagerController {
 		return customers.get(searchCustomerPosition(idToSearch)).getEnabled();
 	}//End getCustomerEnabledStatus
 
+	public boolean importCustomerData(final File file, final String separator) throws IOException {
+		boolean all = true;
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String line = br.readLine();
+		while(line != null) {
+			String[] parts = line.split(separator);
+			String id = parts[2];
+			if(searchCustomerPosition(id) == -1) {
+				String name = parts[0];
+				String lastName = parts[1];
+				String address = parts[3];
+				String nPhone = parts[4];
+				String remark = parts[5];
+				addCustomer(name, lastName, id, address, nPhone, remark);
+			} else {
+				all = false;
+			}//End else
+			line = br.readLine();
+		}//End while
+		br.close();
+		return all;
+	}//End importCustomerData
+
 	public void addCustomer(String name, String lastName, String id, String address, String nPhone, String remark) throws IOException {
 		Customer newCustomer = new Customer(loggedUser, name, lastName, id, address, nPhone, remark);
 		loggedUser.setLinked(true);
