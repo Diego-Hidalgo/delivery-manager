@@ -21,7 +21,7 @@
                     <items>
                       <MenuItem fx:id="change" onAction="#listenChangeEmployeeEvent" mnemonicParsing="false" text="Modificar" />
                         <MenuItem fx:id="disable" onAction="#listenChangeEmployeeStatusEvent" mnemonicParsing="false" text="Habilitar/Deshabilitar" />
-                        <MenuItem fx:id="delete" mnemonicParsing="false" text="Eliminar" />
+                        <MenuItem fx:id="delete" onAction="#listenRemoveEmployeeEvent" mnemonicParsing="false" text="Eliminar" />
                     </items>
                   </ContextMenu>
                </contextMenu>

@@ -439,13 +439,32 @@ public class MainGUIController{
 				if(DMC.removeCustomer(customer)) {
 					msg = "Cliente removido correctamente.";
 					successfulActionAlert(msg);
+					showVisualizeCustomers();
 				} else {
-					msg = "No se pudó remover al cliente.";
+					msg = "No se pudo remover al cliente.";
 					couldNotCompleteActionAlert(msg);
 				}//End else
 			}//End if
 		}//End listenRemoveCustomerEvent
 	}//End listenRemoveCustomerEvent
+
+	@FXML
+	public void listenRemoveEmployeeEvent() throws IOException {
+		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
+			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
+			String msg = "¿Está seguro que desea remover al empleado?";
+			if(confirmActionAlert(msg)) {
+				if(DMC.removeEmployee(employee)) {
+					msg = "Empleado removido correctamente.";
+					successfulActionAlert(msg);
+					showVisualizeEmployees();
+				} else {
+					msg = "No se pudo remover al empleado.";
+					couldNotCompleteActionAlert(msg);
+				}//End else
+			}//End if
+		}//End if
+	}//End listenRemoveEmployeeEvent
 
 	@FXML
 	public void showRegisterUserSceneInMainPane() throws IOException {
@@ -526,9 +545,9 @@ public class MainGUIController{
 	@FXML
 	public void passwordTooShortAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Contrase�a inv�lida");
-		alert.setHeaderText("LA CONTRASE�A ES DEMASIADO CORTA");
-		alert.setContentText("La contrase�a debe tener por lo menos 7 caracteres, intente con otra");
+		alert.setTitle("Contraseña inválida");
+		alert.setHeaderText("LA CONTRASEÑA ES DEMASIADO CORTA");
+		alert.setContentText("La contraseña debe tener por lo menos 7 caracteres, intente con otra");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -597,7 +616,7 @@ public class MainGUIController{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("Verifique las credenciales de inicio de sesi�n");
+		alert.setContentText("Verifique las credenciales de inicio de sesión");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();

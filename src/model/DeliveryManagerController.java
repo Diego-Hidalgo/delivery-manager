@@ -247,11 +247,14 @@ public class DeliveryManagerController {
 		}//End enableEmployee
 	}//End enableEmployeeEnabledStatus
 
-	public void removeEmployee(String employeeId) throws IOException {
-		int index = searchEmployeePosition(employeeId);
-		employees.remove(index);
-		loggedUser.setLinked(true);
-		saveAllData();
+	public boolean removeEmployee(Employee employee) throws IOException {
+		if(!employee.getLinked()) {
+			employees.remove(employee);
+			saveAllData();
+			return true;
+		} else {
+			return false;
+		}//End else
 	}//End removeEmployee
 
 	public void saveUsersData() throws IOException {
@@ -333,6 +336,7 @@ public class DeliveryManagerController {
 		String lastName = employee.getLastName();
 		String id = employee.getId();
 		User newUser = new User(loggedUser, name, lastName, id, userName, password);
+		employee.setLinked(true);
 		if(users.isEmpty()) {
 			users.add(newUser);
 		} else {
@@ -343,7 +347,7 @@ public class DeliveryManagerController {
 			users.add(i, newUser);
 			if(loggedUser != null) {
 				loggedUser.setLinked(true);
-			}
+			}//End if
 		}//End else
 		saveAllData();
 	}//End addUser
@@ -375,11 +379,14 @@ public class DeliveryManagerController {
 		}//End else
 	}//End changeUserEnabledStatus
 
-	public void removeUser(String userId) throws IOException {
-		int index = searchUserPosition(userId);
-		users.remove(index);
-		loggedUser.setLinked(true);
-		saveAllData();
+	public boolean removeUser(User user) throws IOException {
+		if(!user.getLinked()) {
+			users.remove(user);
+			saveAllData();
+			return true;
+		} else {
+			return false;
+		}//End else
 	}//End removeUser
 
 	public void saveCustomersData() throws IOException {
