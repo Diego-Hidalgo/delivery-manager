@@ -333,20 +333,42 @@ public class MainGUIController{
 	}//End listenChangeEmployeeEvent
 
 	@FXML
+	public void couldNotCompleteActionAlert(String msg) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("No se pudó completar la acción");
+		alert.setContentText(msg);
+		alert.showAndWait();
+	}//End couldNotDisableAlert
+
+	@FXML
 	public void listenChangeEmployeeStatusEvent() throws IOException {
 		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
 			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
 			if(employee.getEnabled()) {
-				String msg = "¿Está seguro que desea deshabilitar el empleado?";
+				String msg = "¿Está seguro que desea deshabilitar el empleado? También se " +
+						"deshabilitará a su usuario asociado, en caso de tener uno.";
 				if(confirmActionAlert(msg)) {
-					DMC.disableEmployee(employee);
-					if(employee.getId().equals(DMC.getLoggedUser().getId())) {
-						logOutUser();
-					}//End if
+					if(employee.getId().equals(DMC.getLoggedUser().getId()) && DMC.countEnabledUsers() <= 1) {
+						msg = "No se pudó realizar la acción debido a que a la cuenta asociada al empleado es la única habilitada";
+						couldNotCompleteActionAlert(msg);
+					} else {
+						msg = "Se ha deshabilitado al empleado correctamente";
+						DMC.disableEmployee(employee);
+						showVisualizeEmployees();
+						successfulActionAlert(msg);
+						if(employee.getId().equals(DMC.getLoggedUser().getId())) {
+							switchToMainPane();
+							showLoginScene();
+							DMC.logOutUser();
+						}//End if
+					}//End
 				}//End if
 			} else {
 				String msg = "¿Está seguro que desea habilitar el empleado?";
 				if(confirmActionAlert(msg)) {
+					msg = "Se ha habilitado al empleado correctamente";
+					successfulActionAlert(msg);
 					DMC.enableEmployee(employee);
 				}//End if
 			}//End else
@@ -586,11 +608,7 @@ public class MainGUIController{
 		ButtonType cancelBtn = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 		alert.getButtonTypes().setAll(acceptBtn, cancelBtn);
 		Optional<ButtonType> result = alert.showAndWait();
-		if(result.get() == acceptBtn) {
-			return true;
-		} else {
-			return false;
-		}//End else
+		return result.get() == acceptBtn;
 	}//End confirmationAlert
 
 	@FXML
@@ -1005,6 +1023,7 @@ public class MainGUIController{
 		changeEnableInfo.setContentText(msg);
 		changeEnableInfo.showAndWait();
 	}//End ListenChangesEnableProduct
+
 	@FXML
 	public void ListenRemoveProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1025,6 +1044,7 @@ public class MainGUIController{
 		removeInfo.setContentText(msg);
 		removeInfo.showAndWait();
 	}//End ListenChangesEnableProduct
+
 	@FXML
 	public void ListenChangeIngredientEvent(MouseEvent mouseEvent) throws IOException{
 		if(mouseEvent.getClickCount() == 2){
@@ -1036,6 +1056,7 @@ public class MainGUIController{
 			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
+
 	@FXML
 	public void ListenChangesEnableIngredient(){
 		Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
@@ -1055,6 +1076,7 @@ public class MainGUIController{
 		changeEnableInfo.setContentText(msg);
 		changeEnableInfo.showAndWait();
 	}//End ListenChangesEnableProduct
+
 	@FXML
 	public void ListenRemoveIngredient(){
 		Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
@@ -1075,6 +1097,7 @@ public class MainGUIController{
 		removeInfo.setContentText(msg);
 		removeInfo.showAndWait();
 	}//End ListenChangesEnableProduct
+
 	@FXML
 	public void ListenChangeDishTypeEvent(MouseEvent mouseEvent) throws IOException{
 		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
@@ -1086,6 +1109,7 @@ public class MainGUIController{
 			}//End if
 		}//End if
 	}//End ListenChangeProductEvent
+
 	@FXML
 	public void ListenChangesEnableDishType(){
 		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
@@ -1105,6 +1129,7 @@ public class MainGUIController{
 		changeEnableInfo.setContentText(msg);
 		changeEnableInfo.showAndWait();
 	}//End ListenChangesEnableProduct
+
 	@FXML
 	public void ListenRemoveDishType(){
 		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
@@ -1125,6 +1150,7 @@ public class MainGUIController{
 		removeInfo.setContentText(msg);
 		removeInfo.showAndWait();
 	}//End ListenChangesEnableProduct
+
 	@FXML
 	public void ListenShowOrderRegister() throws IOException{
 		Order o = orderTable.getSelectionModel().getSelectedItem();
@@ -1136,6 +1162,7 @@ public class MainGUIController{
 		}else
 			showOrderInfo.showAndWait();
 	}//End ListenShowOrderRegister
+
 	public void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getEnableProducts());
 		productTable.setItems(productsList);

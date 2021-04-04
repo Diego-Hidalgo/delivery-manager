@@ -76,6 +76,16 @@ public class DeliveryManagerController {
 		this.loggedUser = null;
 	}//End logOutUser
 
+	public int countEnabledUsers() {
+		int enabled = 0;
+		for (User user : users) {
+			if (user.getEnabled()) {
+				enabled++;
+			}//End if
+		}//End countEnabledUsers
+		return enabled;
+	}//End countEnabledUsers
+
 	public boolean validateBlankChars(String fieldToValidate) {
 		boolean validate = false;
 		for(int i = 0; i < fieldToValidate.length() && !validate; i ++) {
