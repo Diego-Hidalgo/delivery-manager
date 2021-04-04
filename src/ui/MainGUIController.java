@@ -407,6 +407,39 @@ public class MainGUIController{
 	}//End listenChangeCustomerEvent
 
 	@FXML
+	public void listenChangeUserStatusEvent() throws IOException {
+		if(usersTable.getSelectionModel().getSelectedItem() != null) {
+			User user = usersTable.getSelectionModel().getSelectedItem();
+			if(user.getEnabled()) {
+				String msg = "¿Está seguro que desea deshabilitar al usuario seleccinado?";
+				if(confirmActionAlert(msg)) {
+					if(DMC.countEnabledUsers() <= 1) {
+						msg = "No se pudó realizar la acción porque solo hay un usuario habilitado.";
+						couldNotCompleteActionAlert(msg);
+					} else {
+						DMC.disableUser(user);
+						msg = "Se ha deshabilitado al usuario correctamente.";
+						successfulActionAlert(msg);
+						if(user.getId().equals(DMC.getLoggedUser().getId())) {
+							switchToMainPane();
+							showLoginScene();
+							DMC.logOutUser();
+						}//End if
+					}
+				}//End if
+			} else {
+				String msg = "¿Está seguro que desea habilitar al usuario seleccionado? También se" +
+						"habilitará al empleado asociado a la cuenta.";
+				if(confirmActionAlert(msg)) {
+					DMC.enableUser(user);
+					msg = "Se ha habilitado al usuario correctamente";
+					successfulActionAlert(msg);
+				}//End if
+			}//End else
+		}//End if
+	}//End listenChangeUserStatusEvent
+
+	@FXML
 	public void showRegisterUserSceneInMainPane() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindows.fxml"));
 		fxmlLoader.setController(this);

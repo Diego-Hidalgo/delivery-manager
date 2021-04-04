@@ -356,6 +356,12 @@ public class DeliveryManagerController {
 		user.setEnabled(true);
 		user.setModifier(loggedUser);
 		loggedUser.setLinked(true);
+		if(searchEmployeePosition(user.getId()) != -1) {
+			Employee employee = employees.get(searchEmployeePosition(user.getId()));
+			employee.setEnabled(true);
+			employee.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+		}//End if
 		saveAllData();
 	}//End enableUser
 
