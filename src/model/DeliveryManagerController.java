@@ -354,25 +354,24 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End changeUser
 
-	public void enableUser(User user) throws IOException {
-		user.setEnabled(true);
-		user.setModifier(loggedUser);
-		loggedUser.setLinked(true);
-		if(searchEmployeePosition(user.getId()) != -1) {
+	public boolean changeUserEnabledStatus(User user) throws IOException {
+		if(user.getEnabled()) {
+			user.setEnabled(false);
+			user.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+			saveAllData();
+			return false;
+		} else {
+			user.setEnabled(true);
+			user.setModifier(loggedUser);
 			Employee employee = employees.get(searchEmployeePosition(user.getId()));
 			employee.setEnabled(true);
 			employee.setModifier(loggedUser);
 			loggedUser.setLinked(true);
-		}//End if
-		saveAllData();
-	}//End enableUser
-
-	public void disableUser(User user) throws IOException {
-		user.setEnabled(false);
-		user.setModifier(loggedUser);
-		loggedUser.setLinked(true);
-		saveAllData();
-	}//End disableUser
+			saveAllData();
+			return true;
+		}//End else
+	}//End changeUserEnabledStatus
 
 	public void removeUser(String userId) throws IOException {
 		int index = searchUserPosition(userId);

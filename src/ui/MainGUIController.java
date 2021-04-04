@@ -346,8 +346,12 @@ public class MainGUIController{
 		String msg = "";
 		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
 			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
-			msg = "¿Está seguro que desea deshabilitar al empleado seleccionado?" +
-					"Se deshabilitará también al usuario asociado en caso de haber uno";
+			if(employee.getEnabled()) {
+				msg = "¿Está seguro que desea deshabilitar al empleado seleccionado?" +
+						"Se deshabilitará también al usuario asociado en caso de haber uno";
+			} else {
+				msg = "¿Está seguro que desea habilitar al empleado seleccionado?";
+			}//End else
 			if(confirmActionAlert(msg)) {
 				if(DMC.getUsers().size() == 1 && employee.getId().equals(DMC.getLoggedUser().getId())) {
 					msg = "No se pudó deshabilitar al empleado porque su usuario asociado es el único existente";
@@ -357,6 +361,11 @@ public class MainGUIController{
 						msg = "Se ha habilitado al empleado correctamente";
 					} else {
 						msg = "Se ha deshabilitado al empleado correctamente";
+						if(employee.getId().equals(DMC.getLoggedUser().getId())) {
+							switchToMainPane();
+							showLoginScene();
+							DMC.logOutUser();
+						}//End if
 					}//End else
 					successfulActionAlert(msg);
 				}//End else
@@ -366,15 +375,17 @@ public class MainGUIController{
 
 	@FXML
 	public void listenChangeCustomerStatusEvent() throws IOException {
+		String msg = "¿Está seguro que desea cambiar el estado del cliente?";
 		if(customersTable.getSelectionModel().getSelectedItem() != null) {
-			String msg = "";
 			Customer customer = customersTable.getSelectionModel().getSelectedItem();
-			if(DMC.changeCustomerEnabledStatus(customer)) {
-				msg = "Se ha habilitado al cliente correctamente";
-			} else {
-				msg = "Se ha deshabilitado al cliente correctamente";
-			}//End else
-			successfulActionAlert(msg);
+			if (confirmActionAlert(msg)) {
+				if (DMC.changeCustomerEnabledStatus(customer)) {
+					msg = "Se ha habilitado al cliente correctamente";
+				} else {
+					msg = "Se ha deshabilitado al cliente correctamente";
+				}//End else
+				successfulActionAlert(msg);
+			}//End if
 		}//End if
 	}//End listenChangeCustomerStatusEvent
 
@@ -389,34 +400,33 @@ public class MainGUIController{
 
 	@FXML
 	public void listenChangeUserStatusEvent() throws IOException {
+		String msg = "";
 		if(usersTable.getSelectionModel().getSelectedItem() != null) {
 			User user = usersTable.getSelectionModel().getSelectedItem();
 			if(user.getEnabled()) {
-				String msg = "¿Está seguro que desea deshabilitar al usuario seleccinado?";
-				if(confirmActionAlert(msg)) {
-					if(DMC.countEnabledUsers() <= 1) {
-						msg = "No se pudó realizar la acción porque solo hay un usuario habilitado.";
-						couldNotCompleteActionAlert(msg);
+				msg = "¿Está seguro que desea deshabilitar el usuario?";
+			} else {
+				msg = "¿Está seguro que desea habilitar el usuario? " +
+						"También se habilitará al empleado asociado a la cuenta";
+			}//End else
+			if(confirmActionAlert(msg)) {
+				if(DMC.countEnabledUsers() == 1) {
+					String info = "No se puede deshabilitar al usuario porque es el único existente";
+					couldNotCompleteActionAlert(info);
+				} else {
+					if(DMC.changeUserEnabledStatus(user)) {
+						msg = "Se ha habilitado al usuario correctamente";
 					} else {
-						DMC.disableUser(user);
-						msg = "Se ha deshabilitado al usuario correctamente.";
-						successfulActionAlert(msg);
+						msg = "Se ha deshabilitado al usuario correctamente";
 						if(user.getId().equals(DMC.getLoggedUser().getId())) {
 							switchToMainPane();
 							showLoginScene();
 							DMC.logOutUser();
 						}//End if
-					}
-				}//End if
-			} else {
-				String msg = "¿Está seguro que desea habilitar al usuario seleccionado? También se" +
-						"habilitará al empleado asociado a la cuenta.";
-				if(confirmActionAlert(msg)) {
-					DMC.enableUser(user);
-					msg = "Se ha habilitado al usuario correctamente";
+					}//End else
 					successfulActionAlert(msg);
-				}//End if
-			}//End else
+				}//End else
+			}//End if
 		}//End if
 	}//End listenChangeUserStatusEvent
 
