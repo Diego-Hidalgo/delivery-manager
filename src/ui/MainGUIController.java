@@ -336,7 +336,7 @@ public class MainGUIController{
 	public void couldNotCompleteActionAlert(String msg) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
-		alert.setTitle("No se pudó completar la acción");
+		alert.setTitle("No se pudo completar la acción");
 		alert.setContentText(msg);
 		alert.showAndWait();
 	}//End couldNotDisableAlert
@@ -347,14 +347,14 @@ public class MainGUIController{
 		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
 			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
 			if(employee.getEnabled()) {
-				msg = "¿Está seguro que desea deshabilitar al empleado seleccionado?" +
+				msg = "¿Está seguro que desea deshabilitar al empleado seleccionado? " +
 						"Se deshabilitará también al usuario asociado en caso de haber uno";
 			} else {
 				msg = "¿Está seguro que desea habilitar al empleado seleccionado?";
 			}//End else
 			if(confirmActionAlert(msg)) {
-				if(DMC.getUsers().size() == 1 && employee.getId().equals(DMC.getLoggedUser().getId())) {
-					msg = "No se pudó deshabilitar al empleado porque su usuario asociado es el único existente";
+				if(DMC.countEnabledUsers() == 1 && employee.getId().equals(DMC.getLoggedUser().getId())) {
+					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el único existente";
 					couldNotCompleteActionAlert(msg);
 				} else {
 					if(DMC.changeEmployeeEnabledStatus(employee)) {
@@ -410,7 +410,7 @@ public class MainGUIController{
 						"También se habilitará al empleado asociado a la cuenta";
 			}//End else
 			if(confirmActionAlert(msg)) {
-				if(DMC.countEnabledUsers() == 1) {
+				if(DMC.countEnabledUsers() == 1 && user.getId().equals(DMC.getLoggedUser().getId())) {
 					String info = "No se puede deshabilitar al usuario porque es el único existente";
 					couldNotCompleteActionAlert(info);
 				} else {

@@ -341,7 +341,9 @@ public class DeliveryManagerController {
 				i ++;
 			}//End while
 			users.add(i, newUser);
-			loggedUser.setLinked(true);
+			if(loggedUser != null) {
+				loggedUser.setLinked(true);
+			}
 		}//End else
 		saveAllData();
 	}//End addUser
