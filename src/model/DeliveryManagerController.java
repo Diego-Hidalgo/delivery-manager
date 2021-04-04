@@ -454,9 +454,14 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End disableCustomerById
 
-	public void removeCustomer(String customerId) throws IOException {
-		customers.remove(searchCustomerPosition(customerId));
-		saveAllData();
+	public boolean removeCustomer(Customer customer) throws IOException {
+		if(!customer.getLinked()) {
+			customers.remove(customer);
+			saveAllData();
+			return true;
+		} else {
+			return false;
+		}//End else
 	}//End removeCustomerById
 
 	public void saveBaseProductsData() throws IOException {

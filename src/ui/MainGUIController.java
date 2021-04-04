@@ -440,6 +440,23 @@ public class MainGUIController{
 	}//End listenChangeUserStatusEvent
 
 	@FXML
+	public void listenRemoveCustomerEvent() throws IOException {
+		if(customersTable.getSelectionModel().getSelectedItem() != null) {
+			Customer customer = customersTable.getSelectionModel().getSelectedItem();
+			String msg = "¿Está seguro que desea remover al cliente?";
+			if(confirmActionAlert(msg)) {
+				if(DMC.removeCustomer(customer)) {
+					msg = "Cliente removido correctamente.";
+					successfulActionAlert(msg);
+				} else {
+					msg = "No se pudó remover al cliente.";
+					couldNotCompleteActionAlert(msg);
+				}//End else
+			}//End if
+		}//End listenRemoveCustomerEvent
+	}//End listenRemoveCustomerEvent
+
+	@FXML
 	public void showRegisterUserSceneInMainPane() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindows.fxml"));
 		fxmlLoader.setController(this);
