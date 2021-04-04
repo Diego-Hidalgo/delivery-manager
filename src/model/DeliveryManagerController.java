@@ -440,19 +440,17 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End changeCustomer
 
-	public void enableCustomer(Customer customer) throws IOException {
-		customer.setEnabled(true);
-		customer.setModifier(loggedUser);
-		loggedUser.setLinked(true);
-		saveAllData();
-	}//End enableCustomer
-
-	public void disableCustomer(Customer customer) throws IOException {
-		customer.setEnabled(false);
-		customer.setModifier(loggedUser);
-		loggedUser.setLinked(true);
-		saveAllData();
-	}//End disableCustomerById
+	public boolean changeCustomerEnabledStatus(Customer customer) throws IOException {
+		if(customer.getEnabled()) {
+			customer.setEnabled(false);
+			saveAllData();
+			return false;
+		} else {
+			customer.setEnabled(true);
+			saveAllData();
+			return true;
+		}//End else
+	}//End changeCustomerEnabledStatus
 
 	public boolean removeCustomer(Customer customer) throws IOException {
 		if(!customer.getLinked()) {

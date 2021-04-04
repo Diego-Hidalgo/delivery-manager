@@ -378,22 +378,14 @@ public class MainGUIController{
 	@FXML
 	public void listenChangeCustomerStatusEvent() throws IOException {
 		if(customersTable.getSelectionModel().getSelectedItem() != null) {
+			String msg = "";
 			Customer customer = customersTable.getSelectionModel().getSelectedItem();
-			if(customer.getEnabled()) {
-				String msg = "¿Está seguro que desea deshabilitar el cliente?";
-				if(confirmActionAlert(msg)) {
-					DMC.disableCustomer(customer);
-					msg = "Se ha deshabilitado al cliente correctamente";
-					successfulActionAlert(msg);
-				}//End if
+			if(DMC.changeCustomerEnabledStatus(customer)) {
+				msg = "Se ha habilitado al cliente correctamente";
 			} else {
-				String msg = "Está seguro que desea habilitar el empleado";
-				if(confirmActionAlert(msg)) {
-					DMC.enableCustomer(customer);
-					msg = "Se ha deshabilitado al cliente correctamente";
-					successfulActionAlert(msg);
-				}//End if
+				msg = "Se ha deshabilitado al cliente correctamente";
 			}//End else
+			successfulActionAlert(msg);
 		}//End if
 	}//End listenChangeCustomerStatusEvent
 
