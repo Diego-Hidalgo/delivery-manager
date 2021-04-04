@@ -76,6 +76,16 @@ public class DeliveryManagerController {
 		this.loggedUser = null;
 	}//End logOutUser
 
+	public int countEnabledUsers() {
+		int enabled = 0;
+		for (User user : users) {
+			if (user.getEnabled()) {
+				enabled++;
+			}//End if
+		}//End countEnabledUsers
+		return enabled;
+	}//End countEnabledUsers
+
 	public boolean validateBlankChars(String fieldToValidate) {
 		boolean validate = false;
 		for(int i = 0; i < fieldToValidate.length() && !validate; i ++) {
@@ -215,19 +225,36 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End changeEmployee
 
-	public void disableEmployee(String employeeId) throws IOException {
-		Employee employee = employees.get(searchEmployeePosition(employeeId));
-		employee.setEnabled(false);
-		employee.setModifier(loggedUser);
-		loggedUser.setLinked(true);
-		saveAllData();
-	}//End disableEmployee
+	public boolean changeEmployeeEnabledStatus(Employee employee) throws IOException {
+		if(employee.getEnabled()) {
+			employee.setEnabled(false);
+			employee.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+			if(searchUserPosition(employee.getId()) != -1) {
+				User user = users.get(searchEmployeePosition(employee.getId()));
+				user.setEnabled(false);
+				user.setModifier(loggedUser);
+				loggedUser.setLinked(true);
+			}//End if
+			saveAllData();
+			return false;
+		} else {
+			employee.setEnabled(true);
+			employee.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+			saveAllData();
+			return true;
+		}//End enableEmployee
+	}//End enableEmployeeEnabledStatus
 
-	public void removeEmployee(String employeeId) throws IOException {
-		int index = searchEmployeePosition(employeeId);
-		employees.remove(index);
-		loggedUser.setLinked(true);
-		saveAllData();
+	public boolean removeEmployee(Employee employee) throws IOException {
+		if(!employee.getLinked()) {
+			employees.remove(employee);
+			saveAllData();
+			return true;
+		} else {
+			return false;
+		}//End else
 	}//End removeEmployee
 
 	public void saveUsersData() throws IOException {
@@ -309,6 +336,7 @@ public class DeliveryManagerController {
 		String lastName = employee.getLastName();
 		String id = employee.getId();
 		User newUser = new User(loggedUser, name, lastName, id, userName, password);
+		employee.setLinked(true);
 		if(users.isEmpty()) {
 			users.add(newUser);
 		} else {
@@ -317,7 +345,9 @@ public class DeliveryManagerController {
 				i ++;
 			}//End while
 			users.add(i, newUser);
-			loggedUser.setLinked(true);
+			if(loggedUser != null) {
+				loggedUser.setLinked(true);
+			}//End if
 		}//End else
 		saveAllData();
 	}//End addUser
@@ -330,19 +360,33 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End changeUser
 
-	public void disableUser(String userId) throws IOException {
-		User user = users.get(searchUserPosition(userId));
-		user.setEnabled(false);
-		user.setModifier(loggedUser);
-		loggedUser.setLinked(true);
-		saveAllData();
-	}//End disableUser
+	public boolean changeUserEnabledStatus(User user) throws IOException {
+		if(user.getEnabled()) {
+			user.setEnabled(false);
+			user.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+			saveAllData();
+			return false;
+		} else {
+			user.setEnabled(true);
+			user.setModifier(loggedUser);
+			Employee employee = employees.get(searchEmployeePosition(user.getId()));
+			employee.setEnabled(true);
+			employee.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+			saveAllData();
+			return true;
+		}//End else
+	}//End changeUserEnabledStatus
 
-	public void removeUser(String userId) throws IOException {
-		int index = searchUserPosition(userId);
-		users.remove(index);
-		loggedUser.setLinked(true);
-		saveAllData();
+	public boolean removeUser(User user) throws IOException {
+		if(!user.getLinked()) {
+			users.remove(user);
+			saveAllData();
+			return true;
+		} else {
+			return false;
+		}//End else
 	}//End removeUser
 
 	public void saveCustomersData() throws IOException {
@@ -406,16 +450,30 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End changeCustomer
 
-	public void disableCustomer(String customerId) throws IOException {
-		Customer customer = customers.get(searchCustomerPosition(customerId));
-		customer.setEnabled(false);
-		customer.setModifier(loggedUser);
-		saveAllData();
-	}//End disableCustomerById
+	public boolean changeCustomerEnabledStatus(Customer customer) throws IOException {
+		if(customer.getEnabled()) {
+			customer.setEnabled(false);
+			customer.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+			saveAllData();
+			return false;
+		} else {
+			customer.setEnabled(true);
+			customer.setModifier(loggedUser);
+			loggedUser.setLinked(true);
+			saveAllData();
+			return true;
+		}//End else
+	}//End changeCustomerEnabledStatus
 
-	public void removeCustomer(String customerId) throws IOException {
-		customers.remove(searchCustomerPosition(customerId));
-		saveAllData();
+	public boolean removeCustomer(Customer customer) throws IOException {
+		if(!customer.getLinked()) {
+			customers.remove(customer);
+			saveAllData();
+			return true;
+		} else {
+			return false;
+		}//End else
 	}//End removeCustomerById
 
 	public void saveBaseProductsData() throws IOException {

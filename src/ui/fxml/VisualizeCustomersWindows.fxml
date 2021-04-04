@@ -21,9 +21,9 @@
                     <contextMenu>
                     <ContextMenu>
                         <items>
-                            <MenuItem fx:id="change" mnemonicParsing="false" onAction="#listenChangeCustomerEvent" text="Modificar" />
-                            <MenuItem fx:id="disable" mnemonicParsing="false" text="Habilitar/Deshabilitar" />
-                            <MenuItem fx:id="delete" mnemonicParsing="false" text="Eliminar" />
+                            <MenuItem fx:id="change" onAction="#listenChangeCustomerEvent" mnemonicParsing="false" text="Modificar" />
+                            <MenuItem fx:id="disable" onAction="#listenChangeCustomerStatusEvent" mnemonicParsing="false" text="Habilitar/Deshabilitar" />
+                            <MenuItem fx:id="delete" onAction="#listenRemoveCustomerEvent" mnemonicParsing="false" text="Eliminar" />
                         </items>
                     </ContextMenu>
                     </contextMenu>
