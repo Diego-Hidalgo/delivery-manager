@@ -383,11 +383,15 @@ public class MainGUIController{
 				String msg = "¿Está seguro que desea deshabilitar el cliente?";
 				if(confirmActionAlert(msg)) {
 					DMC.disableCustomer(customer);
+					msg = "Se ha deshabilitado al cliente correctamente";
+					successfulActionAlert(msg);
 				}//End if
 			} else {
 				String msg = "Está seguro que desea habilitar el empleado";
 				if(confirmActionAlert(msg)) {
 					DMC.enableCustomer(customer);
+					msg = "Se ha deshabilitado al cliente correctamente";
+					successfulActionAlert(msg);
 				}//End if
 			}//End else
 		}//End if
