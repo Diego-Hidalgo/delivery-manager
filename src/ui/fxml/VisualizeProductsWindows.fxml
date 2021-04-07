@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
@@ -16,7 +15,7 @@
    <top>
       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="171.0" text="Lista de productos" HBox.hgrow="ALWAYS">
+            <Label fx:id="listTitle" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="797.0" text="Lista de productos" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
@@ -27,11 +26,6 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="57.0" prefWidth="792.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Cambiar vista">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
             <Pane prefHeight="42.0" prefWidth="43.0" />
          </children></HBox>
    </bottom>
@@ -51,8 +45,9 @@
                      <contextMenu>
                         <ContextMenu>
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#ListenChangesEnableProduct" text="Deshabilitar elemento" />
-                              <MenuItem mnemonicParsing="false" onAction="#ListenRemoveProduct" text="Eliminar elemento" />
+                            <MenuItem fx:id="DisableElement" mnemonicParsing="false" onAction="#ListenChangesEnableProduct" text="Cambiar disponibilidad" />
+                              <MenuItem fx:id="removeElement" mnemonicParsing="false" onAction="#ListenRemoveProduct" text="Eliminar elemento" />
+                              <MenuItem fx:id="showList" mnemonicParsing="false" onAction="#ListenChangeProductList" text="Ver productos disponibles" />
                           </items>
                         </ContextMenu>
                      </contextMenu>

@@ -14,7 +14,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="108.0" prefWidth="544.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Tipos de platos">
+            <Label fx:id="listTitle" alignment="CENTER" prefHeight="30.0" prefWidth="464.0" text="Tipos de platos">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
@@ -40,8 +40,9 @@
                      <contextMenu>
                         <ContextMenu>
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#ListenChangesEnableDishType" text="Cambiar disponibilidad" />
-                              <MenuItem mnemonicParsing="false" onAction="#ListenRemoveDishType" text="Eliminar elemento" />
+                            <MenuItem fx:id="DisableElement" mnemonicParsing="false" onAction="#ListenChangesEnableDishType" text="Cambiar disponibilidad" />
+                              <MenuItem fx:id="removeElement" mnemonicParsing="false" onAction="#ListenRemoveDishType" text="Eliminar elemento" />
+                              <MenuItem fx:id="showList" mnemonicParsing="false" onAction="#ListenChangeDishTypeList" text="Ver elementos no disponibles" />
                           </items>
                         </ContextMenu>
                      </contextMenu>

@@ -43,11 +43,16 @@ public class MainGUIController{
 	@FXML private TextField tDishtype;
 	@FXML private TextArea tSizesAndPices;
 	@FXML private TextArea tIngredients;
-	
+	@FXML private MenuItem DisableElement;
+	@FXML private MenuItem removeElement;
+	@FXML private MenuItem showList;
 	//Ingredient
 	@FXML private TableView<Ingredient> ingredientTable;
 	@FXML private TableColumn<Ingredient,String> ingredientName;
-	
+	@FXML private Label listTitle;
+	private String title;
+	private String menuText;
+	private boolean enableList;
 	//DishType
 	@FXML private TableView<DishType> dishTypeTable;
 	@FXML private TableColumn<DishType,String> dishTypeName;
@@ -128,6 +133,9 @@ public class MainGUIController{
 		this.EGC = EGC;
 		product = new ArrayList<Product>();
 		amo = new ArrayList<Integer>();
+		title = new String();
+		enableList = true;
+		menuText = "Ver elementos no disponibles";
 	}//End constructor
 
 	@FXML
@@ -229,7 +237,7 @@ public class MainGUIController{
 	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Acción exitosa");
+		alert.setTitle("Acci�n exitosa");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -240,7 +248,7 @@ public class MainGUIController{
 	@FXML
 	public void emptyFieldAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Campo Vacío");
+		alert.setTitle("Campo Vacio");
 		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -854,6 +862,10 @@ public class MainGUIController{
 		Parent productsListScene = fxml.load();
 		secondaryPane.setCenter(productsListScene);
 		initializeProductsList();
+		title = (enableList)?"Productos disponibles":"Productos no disponibles";
+		menuText = (enableList)?"Ver elementos no disponibles":"Ver elementos disponibles";
+		listTitle.setText(title);
+		showList.setText(menuText);
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		st.setTitle("Lista de pedidos");
 		st.setHeight(540);
@@ -869,6 +881,10 @@ public class MainGUIController{
 		secondaryPane.setCenter(ingredientsListScene);
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		initializeIngredientsList();
+		title = (enableList)?"Ingredientes disponibles":"Ingredientes no disponibles";
+		menuText = (enableList)?"Ver elementos no disponibles":"Ver elementos disponibles";
+		listTitle.setText(title);
+		showList.setText(menuText);
 		st.setTitle("Lista de ingredientes");
 		st.setHeight(450);
 		st.setWidth(550);
@@ -883,6 +899,10 @@ public class MainGUIController{
 		secondaryPane.setCenter(dishTypeListScene);
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		initializeDishtypeList();
+		title = (enableList)?"Tipos de platos disponibles":"Tipos de platos no disponibles";
+		menuText = (enableList)?"Ver elementos no disponibles":"Ver elementos disponibles";
+		listTitle.setText(title);
+		showList.setText(menuText);
 		st.setTitle("Lista de tipos de platos");
 		st.setHeight(450);
 		st.setWidth(550);
@@ -1098,9 +1118,15 @@ public class MainGUIController{
 				EGC.showChangeProducts(p);
 				showProductsList();	
 			}//End if
-		}//End if
+			changeMainItemsContextMenuState(false);
+		}else
+			changeMainItemsContextMenuState(true);
+		
 	}//End ListenChangeProductEvent
-
+	private void changeMainItemsContextMenuState(boolean state){
+		DisableElement.setDisable(state);
+		removeElement.setDisable(state);
+	}//End changeContextMenuState
 	@FXML
 	public void ListenChangesEnableProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1120,7 +1146,11 @@ public class MainGUIController{
 		changeEnableInfo.setContentText(msg);
 		changeEnableInfo.showAndWait();
 	}//End ListenChangesEnableProduct
-
+	@FXML
+	public void ListenChangeProductList() throws IOException{
+		enableList = !enableList;
+		showProductsList();
+	}//End ListenChangeProductList
 	@FXML
 	public void ListenRemoveProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1144,16 +1174,22 @@ public class MainGUIController{
 
 	@FXML
 	public void ListenChangeIngredientEvent(MouseEvent mouseEvent) throws IOException{
-		if(mouseEvent.getClickCount() == 2){
-			Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
-			if(i != null){
+		Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
+		if(i != null){
+			if(mouseEvent.getClickCount() == 2){
 				EGC.changeIngredientEmergentScene(i);
 				EGC.clearChangeIngredientData();
 				showIngredientsList();
 			}//End if
-		}//End if
+			changeMainItemsContextMenuState(false);
+		}else
+			changeMainItemsContextMenuState(true);
 	}//End ListenChangeProductEvent
-
+	@FXML
+	public void ListenChangeIngredientList() throws IOException{
+		enableList = !enableList;
+		showIngredientsList();
+	}//End ListenChangeProductList
 	@FXML
 	public void ListenChangesEnableIngredient(){
 		Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
@@ -1204,9 +1240,15 @@ public class MainGUIController{
 				EGC.clearChangeDishTypeData();
 				showDishTypeList();
 			}//End if
-		}//End if
+			changeMainItemsContextMenuState(false);
+		}else
+			changeMainItemsContextMenuState(true);
 	}//End ListenChangeProductEvent
-
+	@FXML
+	public void ListenChangeDishTypeList() throws IOException{
+		enableList = !enableList;
+		showDishTypeList();
+	}//End ListenChangeProductList
 	@FXML
 	public void ListenChangesEnableDishType(){
 		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
@@ -1259,9 +1301,9 @@ public class MainGUIController{
 		}else
 			showOrderInfo.showAndWait();
 	}//End ListenShowOrderRegister
-
+	
 	public void initializeProductsList(){
-		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getEnableProducts());
+		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts(enableList));
 		productTable.setItems(productsList);
 		productName.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
 		productType.setCellValueFactory(new PropertyValueFactory<Product,String>("type"));
@@ -1278,16 +1320,16 @@ public class MainGUIController{
 		orderStatus.setCellValueFactory(new PropertyValueFactory<Order,String>("status"));
 		orderProducts.setCellValueFactory(new PropertyValueFactory<Order,String>("productsList"));
 		orderRemark.setCellValueFactory(new PropertyValueFactory<Order,String>("remark"));
-	}//End initializeProductsList
+	}//End initializeOrdersList
 	
 	public void initializeIngredientsList(){
-		ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList(DMC.getEnableIngredients());
+		ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList(DMC.getIngredients(enableList));
 		ingredientTable.setItems(ingredientList);
 		ingredientName.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
 	}//End initializeIngredientsList
 	
 	public void initializeDishtypeList(){
-		ObservableList<DishType> dishTypeList = FXCollections.observableArrayList(DMC.getEnableDishtype());
+		ObservableList<DishType> dishTypeList = FXCollections.observableArrayList(DMC.getDishtype(enableList));
 		dishTypeTable.setItems(dishTypeList);
 		dishTypeName.setCellValueFactory(new PropertyValueFactory<DishType,String>("name"));
 	}//End initializeDishtypeList
@@ -1300,5 +1342,8 @@ public class MainGUIController{
 		status.add("ENTREGADO");
 		cbStatus.setItems(status);
 	}//End initializeIngredientsComboBox
-
+/*
+ * Arreglar el cambio de estado de la variable que controla la lista que se desplegara,
+ * asi como el texto que se muestra en las etiquetas y en las opciones
+ * */
 }//End MainGUIController

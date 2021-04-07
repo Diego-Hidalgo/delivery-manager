@@ -720,10 +720,10 @@ public class DeliveryManagerController {
 		return index;
 	}//End findIngredient
 
-	public List<Ingredient> getEnableIngredients(){
+	public List<Ingredient> getIngredients(boolean enable){
 		List<Ingredient> enableIngredients = new ArrayList<Ingredient>();
 		for(int i = 0; i < ingredients.size();i++){
-			if(ingredients.get(i).getEnable())
+			if(ingredients.get(i).getEnable() == enable)
 				enableIngredients.add(ingredients.get(i));
 		}//End for
 		return enableIngredients;
@@ -833,10 +833,10 @@ public class DeliveryManagerController {
 		return added;
 	}//End addDishType
 	
-	public List<DishType> getEnableDishtype(){
+	public List<DishType> getDishtype(boolean enable){
 		List<DishType> enableDishType = new ArrayList<DishType>();
 		for(int i = 0; i < types.size();i++ ){
-			if(types.get(i).getEnable()){
+			if(types.get(i).getEnable() == enable){
 				enableDishType.add(types.get(i));
 			}//End if
 		}//End for
@@ -997,10 +997,10 @@ public class DeliveryManagerController {
 		saveAllData();
 	}//End removeOrder
 
-	public List<Product> getEnableProducts(){
+	public List<Product> getProducts(boolean enable){
 		List<Product> enableProducts = new ArrayList<Product>();
 		for(int i = 0; i < products.size();i++){
-			if(products.get(i).getEnable())
+			if(products.get(i).getEnable() == enable)
 				enableProducts.add(products.get(i));
 		}//End for
 		return enableProducts;

@@ -730,7 +730,7 @@ public class EmergentGUIController {
 	}//End clearChangeDishTypeData
 
 	private void initializeProductsComboBox(){
-		products = FXCollections.observableArrayList(DMC.getEnableProducts());
+		products = FXCollections.observableArrayList(DMC.getProducts(true));
 		cbProducts.setItems(products);
 	}//End initializeIngredientsComboBox
 	private void initializeRegisterOrder(){
@@ -755,7 +755,7 @@ public class EmergentGUIController {
 		return progress;
 	}//End initializeSliderProgress
 	private void initializeIngredientsComboBox(){
-		ingredients = FXCollections.observableArrayList(DMC.getEnableIngredients());
+		ingredients = FXCollections.observableArrayList(DMC.getIngredients(true));
 		cbIngredients.setItems(ingredients);
 	}//End initializeIngredientsComboBox
 
