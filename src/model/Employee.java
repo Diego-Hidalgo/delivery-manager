@@ -1,14 +1,14 @@
 package model;
 
 public class Employee extends Entity  implements Comparable<Employee> {
-	
-	private static final long serialVersionUID = 1;
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor of the Employee class. <br>
 	 *     <b>pre:</b> parameters are initialized. <br>
 	 *     <b>post:</b> a new Employee object has been created. <br>
-	 * @param creator
+	 * @param creator User creator of the object
 	 */
 	public Employee(User creator){
 		super(creator);

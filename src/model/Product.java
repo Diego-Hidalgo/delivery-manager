@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Product implements Serializable {
 
-	public final static long serialVersionUID = 1;
+	public final static long serialVersionUID = 1L;
 
 	private int ntr;//number of times it has been ordered
 	private double price;

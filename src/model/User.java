@@ -1,8 +1,10 @@
 package model;
 
-public class User extends Employee implements Cloneable{
+import java.io.Serializable;
 
-	private static final long serialVersionUID = 1;
+public class User extends Employee {
+
+	private static final long serialVersionUID = 1L;
 
 	//attributes
 	private String userName; //User's user name

@@ -1,8 +1,8 @@
 package model;
 
-public class Customer extends Entity{
+public class Customer extends Entity {
 
-	private static final long serialVersionUID = 1;
+	private static final long serialVersionUID = 1L;
 
 	//attributes
 	private String address; //Customer's address

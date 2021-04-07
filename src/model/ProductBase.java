@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ProductBase implements Serializable {//Comparable<ProductBase>
 
-	public final static long serialVersionUID = 1;
+	public final static long serialVersionUID = 1L;
 
 	private User creator;
 	private User modifier;

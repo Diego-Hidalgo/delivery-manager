@@ -109,8 +109,8 @@ public class DeliveryManagerController {
 	}//End loadAllData
 
 	public void saveAllData() throws IOException {
-		saveEmployeesData();
 		saveUsersData();
+		saveEmployeesData();
 		saveCustomersData();
 		saveIngredientsData();
 		saveProductsSizeData();
@@ -608,6 +608,37 @@ public class DeliveryManagerController {
 		}//End if
 		return added;
 	}//End addProduct
+
+	public boolean importProducts(File file, String mSeparator, String sSeparator) throws IOException {
+		boolean all = true;
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String line = br.readLine();
+		while(line != null) {
+			String[] parts = line.split(mSeparator);
+			String name = parts[0];
+			List<String> ingredients = Arrays.asList(parts[1].split(sSeparator));
+			List<Double> prices = stringListToDouble(Arrays.asList(parts[2].split(sSeparator)));
+			List<String> sizes = Arrays.asList(parts[3].split(sSeparator));
+			String type = parts[4];
+			boolean aux = addProduct(name, ingredients, prices, sizes, type);
+			if(!aux) {
+				all = false;
+			}
+			line = br.readLine();
+		}
+		return all;
+	}
+
+	public List<Double> stringListToDouble(List<String> stringList) {
+		List<Double> doubleList = new ArrayList<Double>();
+		for(int i = 0; i < stringList.size(); i ++) {
+			doubleList.add(Double.parseDouble(stringList.get(i)));
+		}//End for
+		return doubleList;
+	}//End stringListToDouble
+
+
+
 	private void createSubproduct(ProductBase pd,List<Double> price,final List<String> size) throws IOException {
 		for(int i = 0; i < price.size();i++){
 			int sizeIndex = findProductSize(size.get(i));

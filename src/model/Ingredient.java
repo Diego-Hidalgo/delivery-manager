@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Ingredient implements Comparable<Ingredient>, Serializable {
 
-	public final static long serialVersionUID = 1;
+	public final static long serialVersionUID = 1L;
 
 	private User creator;
 	private User modifier;

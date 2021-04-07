@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class DishType implements Comparable<DishType>, Serializable {
 
-	public final static long serialVersionUID = 1;
+	public final static long serialVersionUID = 1L;
 
 	private User creator;
 	private User modifier;
