@@ -623,11 +623,11 @@ public class DeliveryManagerController {
 			boolean aux = addProduct(name, ingredients, prices, sizes, type);
 			if(!aux) {
 				all = false;
-			}
+			}//End if
 			line = br.readLine();
-		}
+		}//End while
 		return all;
-	}
+	}//End importProducts
 
 	public List<Double> stringListToDouble(List<String> stringList) {
 		List<Double> doubleList = new ArrayList<Double>();
@@ -636,8 +636,6 @@ public class DeliveryManagerController {
 		}//End for
 		return doubleList;
 	}//End stringListToDouble
-
-
 
 	private void createSubproduct(ProductBase pd,List<Double> price,final List<String> size) throws IOException {
 		for(int i = 0; i < price.size();i++){
@@ -1016,6 +1014,58 @@ public class DeliveryManagerController {
 		}//End if
 		return added;
 	}//End addOrder
+
+	public boolean importOrders(File file, String mSeparator, String sSeparator, String tSeparator) throws IOException {
+		boolean all = true;
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String line = br.readLine();
+		while(line != null) {
+			String[] parts = line.split(mSeparator);
+			List<String> productsParts = Arrays.asList(parts[0].split(sSeparator));
+			List<Product> products = stringArrayToProduct(productsParts, tSeparator);
+			List<Integer> amount = stringListToInteger(Arrays.asList(parts[1].split(sSeparator)));
+			String remark = parts[2];
+			String status = parts[3];
+			String idCustomer = parts[4];
+			String idEmployee = parts[5];
+			boolean aux = addOrder(products, amount, remark, status, idCustomer, idEmployee);
+			if(!aux) {
+				all = false;
+			}//End if
+			line = br.readLine();
+		}//End while
+		return all;
+	}//End importOrders
+
+	public List<Integer> stringListToInteger(List<String> stringList) {
+		List<Integer> integerList = new ArrayList<>();
+		for(int i = 0; i < stringList.size(); i ++) {
+			integerList.add(Integer.parseInt(stringList.get(i)));
+		}
+		return integerList;
+	}//End stringListTointeger
+
+	public List<Product> stringArrayToProduct(List<String> stringList, String separator) {
+		List<Product> productList = new ArrayList<>();
+		for(int i = 0; i < stringList.size(); i ++) {
+			String[] parts = stringList.get(i).split(separator);
+			Product product = findProductByNameAndSize(parts[0], parts[1]);
+			if(product != null) {
+				productList.add(product);
+			}//End if
+		}//End for
+		return productList;
+	}//End stringArrayToProduct
+
+	public Product findProductByNameAndSize(String name, String size) {
+		for(int i = 0; i < products.size(); i ++) {
+			Product product = products.get(i);
+			if(product.getName().equals(name) && product.getSize().equals(size)) {
+				return product;
+			}
+		}
+		return null;
+	}//End findProductByNameAndSize
 
 	public void changeOrder(Order order,List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
 		int customerIndex = searchCustomerPosition(idCustomer);
