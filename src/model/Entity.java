@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class Entity implements Serializable {
 
-	private static final long serialVersionUID = 1;
+	private static final long serialVersionUID = 1L;
 
 	//attributes
 	private User creator; //User creator of the instance.
