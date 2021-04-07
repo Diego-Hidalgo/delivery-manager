@@ -652,7 +652,7 @@ public class MainGUIController{
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("No se puede realizar la acciÃ³n porque el " + entity + " se encuentra deshabilitado");
+		alert.setContentText("No se puede realizar la acción porque el " + entity + " se encuentra deshabilitado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -690,7 +690,7 @@ public class MainGUIController{
 	@FXML
 	public boolean confirmActionAlert(String text) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Confirmar AcciÃ³n");
+		alert.setTitle("Confirmar Acción");
 		alert.setHeaderText(null);
 		alert.setContentText(text);
 		ButtonType acceptBtn = new ButtonType("Aceptar");
@@ -940,14 +940,14 @@ public class MainGUIController{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tamaï¿½o y precio ingresado ya existen para este producto";
+		String msg = "El tamaño y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "Tamaï¿½o y  precio agregados con exito";
+			msg = "Tamaño y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -1023,6 +1023,7 @@ public class MainGUIController{
 	public void registerOrder() throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
+		boolean worked = false;
 		String msg = "Datos erroneos.";
 		if( !tIdEmployee.getText().isEmpty() && !tIdCustomer.getText().isEmpty() &&
 				cbStatus.getValue() != null && !taProducsAmount.getText().isEmpty() && !taRemark.getText().isEmpty()){
@@ -1032,28 +1033,36 @@ public class MainGUIController{
 				tIdCustomer.setText("");
 				taProducsAmount.setText("");
 				taRemark.setText("");
+				product = null;
+				amo = null;
+				worked = true;
 			}else
 				msg = "Id del cliente o empleado erroneo";
 		}//End if
-		addInfo.setContentText(msg);	
+		addInfo.setContentText(msg);
 		addInfo.showAndWait();
+		if(worked){
+			product = new ArrayList<Product>();
+			amo = new ArrayList<Integer>();
+		}	
 	}//End registerOrder
 
 	@FXML
 	public void addProductToOrder()throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "No se ha podido aï¿½adir el producto al pedido";
+		String msg = "No se ha podido añadir el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
-		product.add(EGC.getProduct());
-		amo.add(EGC.getAmount());//taProducsAmount
 		String amountAndProducts = taProducsAmount.getText();
 		if(EGC.getProduct() != null){
-			if(!checkProductToAdd(EGC.getProduct()+" ")) {//(amountAndProducts.isEmpty())?
+			if(!checkProductToAdd(EGC.getProduct()+" ")) {
 				amountAndProducts += EGC.getProduct()+" x "+EGC.getAmount() + "\n";
-				msg = "Producto ha sido aï¿½adido correctamente al pedido";
+				product.add(EGC.getProduct());
+				amo.add(EGC.getAmount());
+				msg = "Producto ha sido añadido correctamente al pedido";
 			}//End if
 		}//End if
+		EGC.clearAddProductData();
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 		taProducsAmount.setText(amountAndProducts);

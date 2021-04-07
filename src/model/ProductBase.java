@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public class ProductBase implements Serializable {//Comparable<ProductBase>
+public class ProductBase implements Serializable {
 
 	public final static long serialVersionUID = 1L;
 

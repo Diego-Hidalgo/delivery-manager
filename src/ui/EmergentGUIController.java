@@ -137,7 +137,7 @@ public class EmergentGUIController {
 	@FXML
 	public void emptyFieldAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Campo Vacï¿½o");
+		alert.setTitle("Campo Vacio");
 		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -219,7 +219,7 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaï¿½o del producto");
+		formulario.setTitle("Agregar tamaño del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		formulario.showAndWait();
@@ -317,7 +317,7 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaï¿½o del producto");
+		formulario.setTitle("Agregar tamaño del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		initializeIngredientsComboBox();
@@ -422,7 +422,7 @@ public class EmergentGUIController {
 						msg = "Se ha cambiado el producto con exito";
 						worked = true;
 					}else
-						msg = "No se pudï¿½ cambiar el producto, ya existe otro con ese nombre";
+						msg = "No se pudó cambiar el producto, ya existe otro con ese nombre";
 				}else
 					msg = "El precio no puede ser negativo";
 			}catch(NumberFormatException e){
@@ -501,7 +501,7 @@ public class EmergentGUIController {
 	public void changeUser(ActionEvent event) {
 		Alert changeInfo = new Alert(AlertType.INFORMATION);
 		changeInfo.setHeaderText(null);
-		String msg = "No pueden haber campos vacÃ­os";
+		String msg = "No pueden haber campos vacios";
 		String newUserName = userNameTxt.getText();
 		String newPassword = userPasswordTxt.getText();
 		String confirmation = passwordConfirmationTxt.getText();
@@ -512,7 +512,7 @@ public class EmergentGUIController {
 					if (newPassword.length() >= 7) {
 						try {
 							DMC.changeUser(userToChange, newUserName, newPassword);
-							msg = "Datos del usuario modificados con Ã©xito";
+							msg = "Datos del usuario modificados con exito";
 							worked = true;
 						} catch (IOException exception) {
 							msg = "Ha ocurrido un error inesperado";
@@ -521,10 +521,10 @@ public class EmergentGUIController {
 						msg = "La contraseÃ±a debe contener al menos 7 caracteres";
 					}//End else
 				} else {
-					msg = "El nombre de usuario ya estÃ¡ en usp";
+					msg = "El nombre de usuario ya está en uso";
 				}//End else
 			} else {
-				msg = "Las contraseÃ±as no coinciden";
+				msg = "Las contraseñas no coinciden";
 			}//End else
 		}//End if
 		changeInfo.setContentText(msg);
@@ -551,7 +551,7 @@ public class EmergentGUIController {
 			if(DMC.searchCustomerPosition(newId) == -1 || newId.equals(customerToChange.getId())) {
 				try {
 					DMC.changeCustomer(customerToChange, newName, newLastName, newId, newAddress, newNPhone, newRemark);
-					msg = "Datos del cliente modificados con Ã©xito";
+					msg = "Datos del cliente modificados con éxito";
 					worked = true;
 				} catch (IOException exception) {
 					msg = "Ha ocurrido un error inesperado";
@@ -571,7 +571,7 @@ public class EmergentGUIController {
 	public void changeEmployee(ActionEvent event) {
 		Alert changeInfo = new Alert(AlertType.INFORMATION);
 		changeInfo.setHeaderText(null);
-		String msg = "No pueden haber campos vacÃ­os";
+		String msg = "No pueden haber campos vacíos";
 		String newName = employeeNameTxt.getText();
 		String newLastName = employeeLastNameTxt.getText();
 		String newId = employeeIdTxt.getText();
@@ -580,7 +580,7 @@ public class EmergentGUIController {
 			if(DMC.searchEmployeePosition(newId) == -1 || newId.equals(employeeToChange.getId())) {
 				try {
 					DMC.changeEmployee(employeeToChange, newName, newLastName, newId);
-					msg = "Datos del empleado modificados con Ã©xito";
+					msg = "Datos del empleado modificados con éxito";
 					worked = true;
 				} catch (IOException exception) {
 					msg = "Ha ocurrido un error inesperado";
@@ -629,7 +629,7 @@ public class EmergentGUIController {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "Tamaï¿½o o precio incorrecto.";
+		String msg = "Tamaño o precio incorrecto.";
 		if(!tSize.getText().isEmpty() && !tPrice.getText().isEmpty()){
 			try{
 				price = Double.parseDouble(tPrice.getText());
@@ -721,7 +721,10 @@ public class EmergentGUIController {
 	public void clearChangeIngredientData(){
 		ingredientToChange = null;
 	}//End clearChangeIngredientData
-
+	public void clearAddProductData(){
+		productToAdd = null;
+		amount = 0;
+	}//End
 	public void clearChangeDishTypeData(){
 		dishtype = null;
 	}//End clearChangeDishTypeData

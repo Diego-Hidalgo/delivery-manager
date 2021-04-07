@@ -23,7 +23,7 @@ public class DeliveryManagerController {
 	private List<DishType> types;
 	private List<Ingredient> ingredients;
 	private List<Order> orders;
-
+	
 	public DeliveryManagerController(){
 		loggedUser = null;
 		employees = new ArrayList<Employee>();
@@ -36,7 +36,7 @@ public class DeliveryManagerController {
 		orders = new ArrayList<Order>();
 		sizes = new ArrayList<ProductSize>();
 	}//End DeliveryManagerController
-
+	
 	public List<Employee> getEmployees() {
 		return employees;
 	}//End getEmployee
@@ -101,10 +101,10 @@ public class DeliveryManagerController {
 		loadEmployeesData();
 		loadCustomersData();
 		loadIngredientsData();
-		loadProductsSizeData();
 		loadTypesData();
-		loadProductsData();
 		loadBaseProductsData();
+		loadProductsSizeData();
+		loadProductsData();
 		loadOrdersData();
 	}//End loadAllData
 
@@ -113,10 +113,10 @@ public class DeliveryManagerController {
 		saveEmployeesData();
 		saveCustomersData();
 		saveIngredientsData();
-		saveProductsSizeData();
 		saveTypesData();
-		saveProductsData();
 		saveBaseProductsData();
+		saveProductsSizeData();
+		saveProductsData();
 		saveOrdersData();
 	}//End saveAllData
 
@@ -511,7 +511,7 @@ public class DeliveryManagerController {
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			productBase = (List<ProductBase>) ois.readObject();
+			productBase = (ArrayList<ProductBase>) ois.readObject();
 			ois.close();
 			br.close();
 		}//End if
@@ -547,7 +547,7 @@ public class DeliveryManagerController {
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			products = (List<Product>) ois.readObject();
+			products = (ArrayList<Product>) ois.readObject();
 			ois.close();
 			br.close();
 		}//End if
@@ -600,8 +600,7 @@ public class DeliveryManagerController {
 		boolean added = false;
 		if(findProductBase(name) < 0){
 			DishType dishType = dishTypeToAdd(type);
-			ProductBase pd = new ProductBase(getLoggedUser(),name,dishType,ingredientsToAdd(ingredients));
-			productBase.add(pd);
+			productBase.add(new ProductBase(getLoggedUser(),name,dishType,ingredientsToAdd(ingredients)));
 			createSubproduct(productBase.get(productBase.size() - 1),price,size);
 			added = true;
 			saveAllData();
@@ -750,7 +749,7 @@ public class DeliveryManagerController {
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			ingredients = (List<Ingredient>)ois.readObject();
+			ingredients = (ArrayList<Ingredient>)ois.readObject();
 			ois.close();
 			br.close();
 		}//End if
@@ -846,7 +845,7 @@ public class DeliveryManagerController {
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			types = (List<DishType>) ois.readObject();
+			types = (ArrayList<DishType>) ois.readObject();
 			br.close();
 			ois.close();
 		}//End if
@@ -943,7 +942,7 @@ public class DeliveryManagerController {
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if(f.exists() && br.readLine() != null) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			orders = (List<Order>)ois.readObject();
+			orders = (ArrayList<Order>)ois.readObject();
 			br.close();
 			ois.close();
 		}//End if
