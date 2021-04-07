@@ -1022,7 +1022,7 @@ public class DeliveryManagerController {
 		while(line != null) {
 			String[] parts = line.split(mSeparator);
 			List<String> productsParts = Arrays.asList(parts[0].split(sSeparator));
-			List<Product> products = stringArrayToProduct(productsParts, tSeparator);
+			List<Product> products = stringListToProduct(productsParts, tSeparator);
 			List<Integer> amount = stringListToInteger(Arrays.asList(parts[1].split(sSeparator)));
 			String remark = parts[2];
 			String status = parts[3];
@@ -1045,7 +1045,7 @@ public class DeliveryManagerController {
 		return integerList;
 	}//End stringListTointeger
 
-	public List<Product> stringArrayToProduct(List<String> stringList, String separator) {
+	public List<Product> stringListToProduct(List<String> stringList, String separator) {
 		List<Product> productList = new ArrayList<>();
 		for(int i = 0; i < stringList.size(); i ++) {
 			String[] parts = stringList.get(i).split(separator);

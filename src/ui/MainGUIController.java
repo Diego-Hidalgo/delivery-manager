@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -802,7 +803,6 @@ public class MainGUIController{
 		stage.setHeight(510);
 		setCustomersTable();
 		stage.setResizable(false);
-		System.out.println(DMC.getLoggedUser() == customersTable.getItems().get(0).getCreator());
 	}//End showVisualizeCustomers
 
 	@FXML
