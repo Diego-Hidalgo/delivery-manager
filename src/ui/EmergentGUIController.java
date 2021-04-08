@@ -84,11 +84,110 @@ public class EmergentGUIController {
 	@FXML private ListView<Product> Lproducts;
 	@FXML private ListView<Integer> LAmount;
 	@FXML private Slider statusProgress;
+	//Import data
+	@FXML private ChoiceBox<String> importType;
+	@FXML private TextField mSeparator;
+	@FXML private TextField sSeparator;
+	@FXML private TextField tSeparator;
 	
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
 		size = new String();
 	}//End constructors
+
+	@FXML
+	public void showImportScene() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ImportDataEmergent.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root, null);
+		Stage form = new Stage();
+		setImportElements();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Importar datos");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
+	}//End showImportScene
+
+	@FXML
+	public void setImportElements() throws IOException {
+		importType.getItems().add("Clientes");
+		importType.getItems().add("Productos");
+		importType.getItems().add("Pedidos");
+	}//End setImportElements
+
+	public void chooseImportFilePath() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Selecciona ruta del archivo a importar");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+		File f = fileChooser.showOpenDialog(null);
+		if(f != null) {
+			pathTxt.setText(f.getAbsolutePath());
+		}//End if
+	}//End chooseImportFilePath
+
+	public void importDataStatusAlert(String msg) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Mensaje");
+		alert.setHeaderText(null);
+		alert.setContentText(msg);
+		alert.showAndWait();
+	}//End allDataImportedAlert
+
+	public void importData(ActionEvent event) throws IOException {
+		if(importType.getValue() != null) {
+			if(importType.getValue().equals("Clientes")) {
+				importCustomersData(event);
+			} else if (importType.getValue().equals("Productos")){
+				importProductsData(event);
+			} else {
+				importOrdersData(event);
+			}//End else
+		} else {
+			emptyFieldAlert();
+		}//End else
+	}//End importData
+
+	public void importCustomersData(ActionEvent event) throws IOException {
+		if(!pathTxt.getText().isEmpty() && DMC.validateBlankChars(mSeparator.getText())) {
+			if(DMC.importCustomerData(new File(pathTxt.getText()), mSeparator.getText())) {
+				importDataStatusAlert("Se ha importado toda la informaciÃ³n del archivo correctamente,");
+			} else {
+				importDataStatusAlert("No se ha podido importar todos los datos del archivo.");
+			}//End else
+			closeEmergentWindows(event);
+		} else {
+			emptyFieldAlert();
+		}//End else
+	}//End importCustomersData
+
+	public void importProductsData(ActionEvent event) throws IOException {
+		if(!pathTxt.getText().isEmpty() && DMC.validateBlankChars(mSeparator.getText()) && DMC.validateBlankChars(sSeparator.getText())) {
+			if(DMC.importProducts(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText())) {
+				importDataStatusAlert("Se ha importado toda la informaciÃ³n del archivo correctamente,");
+			} else {
+				importDataStatusAlert("No se ha podido importar todos los datos del archivo.");
+			}//End else
+			closeEmergentWindows(event);
+		} else {
+			emptyFieldAlert();
+		}//End else
+	}//End importProductsData
+
+	public void importOrdersData(ActionEvent event) throws IOException {
+		if(!pathTxt.getText().isEmpty() && DMC.validateBlankChars(mSeparator.getText()) && DMC.validateBlankChars(sSeparator.getText()) &&
+			DMC.validateBlankChars(tSeparator.getText())) {
+			if(DMC.importOrders(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText(), tSeparator.getText())) {
+				importDataStatusAlert("Se ha importado toda la informaciÃ³n del archivo correctamente,");
+			} else {
+				importDataStatusAlert("No se ha podido importar todos los datos del archivo.");
+			}//End else
+			closeEmergentWindows(event);
+		} else {
+			emptyFieldAlert();
+		}//End else
+	}//End importOrdersData
 
 	@FXML
 	public void showExportScene() throws IOException {
@@ -99,7 +198,7 @@ public class EmergentGUIController {
 		Stage form = new Stage();
 		setReportElements();
 		form.initModality(Modality.APPLICATION_MODAL);
-		form.setTitle("Generar Reportes");
+		form.setTitle("Emitir Reportes");
 		form.setScene(scene);
 		form.setResizable(false);
 		form.showAndWait();
@@ -107,7 +206,7 @@ public class EmergentGUIController {
 
 	@FXML
 	public void generateReport(ActionEvent e) throws FileNotFoundException {
-		if(reportType.getValue() == null && initialDate.getValue() != null && !initialHour.getText().isEmpty() &&
+		if(reportType.getValue() != null && initialDate.getValue() != null && !initialHour.getText().isEmpty() &&
 		finishDate != null && !finishHour.getText().isEmpty() && !pathTxt.getText().isEmpty() && !separatorTxt.getText().isEmpty()) {
 			String type = reportType.getValue();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -221,7 +320,7 @@ public class EmergentGUIController {
 		initializeSizesComboBox();
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaño del producto");
+		formulario.setTitle("Agregar tamaï¿½o del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		formulario.showAndWait();
@@ -319,7 +418,7 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaño del producto");
+		formulario.setTitle("Agregar tamaï¿½o del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		initializeIngredientsComboBox();
@@ -429,7 +528,7 @@ public class EmergentGUIController {
 						msg = "Se ha cambiado el producto con exito";
 						worked = true;
 					}else
-						msg = "No se pudó cambiar el producto, ya existe otro con ese nombre";
+						msg = "No se pudï¿½ cambiar el producto, ya existe otro con ese nombre";
 				}else
 					msg = "El precio no puede ser negativo";
 			}catch(NumberFormatException e){
@@ -528,10 +627,10 @@ public class EmergentGUIController {
 						msg = "La contraseÃ±a debe contener al menos 7 caracteres";
 					}//End else
 				} else {
-					msg = "El nombre de usuario ya está en uso";
+					msg = "El nombre de usuario ya estï¿½ en uso";
 				}//End else
 			} else {
-				msg = "Las contraseñas no coinciden";
+				msg = "Las contraseï¿½as no coinciden";
 			}//End else
 		}//End if
 		changeInfo.setContentText(msg);
@@ -558,7 +657,7 @@ public class EmergentGUIController {
 			if(DMC.searchCustomerPosition(newId) == -1 || newId.equals(customerToChange.getId())) {
 				try {
 					DMC.changeCustomer(customerToChange, newName, newLastName, newId, newAddress, newNPhone, newRemark);
-					msg = "Datos del cliente modificados con éxito";
+					msg = "Datos del cliente modificados con ï¿½xito";
 					worked = true;
 				} catch (IOException exception) {
 					msg = "Ha ocurrido un error inesperado";
@@ -578,7 +677,7 @@ public class EmergentGUIController {
 	public void changeEmployee(ActionEvent event) {
 		Alert changeInfo = new Alert(AlertType.INFORMATION);
 		changeInfo.setHeaderText(null);
-		String msg = "No pueden haber campos vacíos";
+		String msg = "No pueden haber campos vacï¿½os";
 		String newName = employeeNameTxt.getText();
 		String newLastName = employeeLastNameTxt.getText();
 		String newId = employeeIdTxt.getText();
@@ -587,7 +686,7 @@ public class EmergentGUIController {
 			if(DMC.searchEmployeePosition(newId) == -1 || newId.equals(employeeToChange.getId())) {
 				try {
 					DMC.changeEmployee(employeeToChange, newName, newLastName, newId);
-					msg = "Datos del empleado modificados con éxito";
+					msg = "Datos del empleado modificados con ï¿½xito";
 					worked = true;
 				} catch (IOException exception) {
 					msg = "Ha ocurrido un error inesperado";
@@ -636,7 +735,7 @@ public class EmergentGUIController {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "Tamaño o precio incorrecto.";
+		String msg = "Tamaï¿½o o precio incorrecto.";
 		if(!tSize.getText().isEmpty() && !tPrice.getText().isEmpty()){
 			try{
 				price = Double.parseDouble(tPrice.getText());

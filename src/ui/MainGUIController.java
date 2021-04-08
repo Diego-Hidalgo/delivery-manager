@@ -237,7 +237,7 @@ public class MainGUIController{
 	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Acción exitosa");
+		alert.setTitle("Acciï¿½n exitosa");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -659,7 +659,7 @@ public class MainGUIController{
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("No se puede realizar la acción porque el " + entity + " se encuentra deshabilitado");
+		alert.setContentText("No se puede realizar la acciï¿½n porque el " + entity + " se encuentra deshabilitado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -697,7 +697,7 @@ public class MainGUIController{
 	@FXML
 	public boolean confirmActionAlert(String text) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Confirmar Acción");
+		alert.setTitle("Confirmar Acciï¿½n");
 		alert.setHeaderText(null);
 		alert.setContentText(text);
 		ButtonType acceptBtn = new ButtonType("Aceptar");
@@ -838,9 +838,14 @@ public class MainGUIController{
 	}//End showSceneLogin
 
 	@FXML
+	public void showImportDataScene() throws IOException {
+		EGC.showImportScene();
+	}//End showImportDataScene
+
+	@FXML
 	public void showGenerateReportScene() throws IOException {
 		EGC.showExportScene();
-	}//End
+	}//End showGenerateReportScene
 
 	@FXML
 	public void showSceneRegisterProduct() throws IOException{
@@ -959,14 +964,14 @@ public class MainGUIController{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tamaño y precio ingresado ya existen para este producto";
+		String msg = "El tamaï¿½o y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "Tamaño y  precio agregados con exito";
+			msg = "Tamaï¿½o y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -1070,7 +1075,7 @@ public class MainGUIController{
 	public void addProductToOrder()throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "No se ha podido añadir el producto al pedido";
+		String msg = "No se ha podido aï¿½adir el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
 		String amountAndProducts = taProducsAmount.getText();
 		if(EGC.getProduct() != null){
@@ -1078,7 +1083,7 @@ public class MainGUIController{
 				amountAndProducts += EGC.getProduct()+" x "+EGC.getAmount() + "\n";
 				product.add(EGC.getProduct());
 				amo.add(EGC.getAmount());
-				msg = "Producto ha sido añadido correctamente al pedido";
+				msg = "Producto ha sido aï¿½adido correctamente al pedido";
 			}//End if
 		}//End if
 		EGC.clearAddProductData();

@@ -1025,7 +1025,7 @@ public class DeliveryManagerController {
 			List<Product> products = stringListToProduct(productsParts, tSeparator);
 			List<Integer> amount = stringListToInteger(Arrays.asList(parts[1].split(sSeparator)));
 			String remark = parts[2];
-			String status = parts[3];
+			String status = parts[3].toUpperCase();
 			String idCustomer = parts[4];
 			String idEmployee = parts[5];
 			boolean aux = addOrder(products, amount, remark, status, idCustomer, idEmployee);
