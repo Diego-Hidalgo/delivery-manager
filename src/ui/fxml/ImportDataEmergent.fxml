@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="347.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox alignment="CENTER" prefHeight="75.0" prefWidth="508.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="IMPORTAR DATOS">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font></Label>
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox prefHeight="225.0" prefWidth="140.0">
+                    <children>
+                        <Label prefHeight="19.0" prefWidth="126.0" text="Tipo de datos:">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                        <Pane prefHeight="30.0" prefWidth="159.0" />
+                        <Label prefHeight="19.0" prefWidth="120.0" text="Ruta del archivo:">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                        <Pane prefHeight="30.0" prefWidth="159.0" />
+                        <Label prefHeight="19.0" prefWidth="128.0" text="Separador 1:">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                        <Pane prefHeight="23.0" prefWidth="140.0" />
+                        <Label prefHeight="19.0" prefWidth="125.0" text="Separador 2:">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                        <Pane prefHeight="23.0" prefWidth="140.0" />
+                        <Label prefHeight="19.0" prefWidth="113.0" text="Separador 3:">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox prefHeight="225.0" prefWidth="213.0">
+                    <children>
+                        <ChoiceBox fx:id="importType" prefHeight="25.0" prefWidth="180.0" />
+                        <Pane prefHeight="23.0" prefWidth="213.0" />
+                        <HBox prefHeight="25.0" prefWidth="213.0">
+                            <children>
+                                <TextField fx:id="pathTxt" editable="false" prefHeight="25.0" prefWidth="194.0" />
+                                <Button fx:id="pathBtn" mnemonicParsing="false" onAction="#chooseImportFilePath" text="..." />
+                            </children>
+                        </HBox>
+                        <Pane prefHeight="22.0" prefWidth="213.0" />
+                        <HBox prefHeight="27.0" prefWidth="213.0">
+                            <children>
+                        <TextField fx:id="mSeparator" prefHeight="25.0" prefWidth="60.0" />
+                            </children>
+                        </HBox>
+                        <Pane prefHeight="16.0" prefWidth="213.0" />
+                        <HBox prefHeight="24.0" prefWidth="213.0">
+                            <children>
+                        <TextField fx:id="sSeparator" prefHeight="25.0" prefWidth="60.0" />
+                            </children>
+                        </HBox>
+                        <Pane prefHeight="16.0" prefWidth="213.0" />
+                        <HBox prefHeight="26.0" prefWidth="213.0">
+                            <children>
+                                <TextField fx:id="tSeparator" prefHeight="25.0" prefWidth="60.0" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </center>
+    <right>
+        <Pane prefHeight="288.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
+    </right>
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="55.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" onAction="#closeEmergentWindows" text="Cancelar">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Button>
+                <Pane prefHeight="55.0" prefWidth="73.0" />
+                <Button mnemonicParsing="false" onAction="#importData" text="Aceptar">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>
