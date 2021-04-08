@@ -1,17 +1,10 @@
 package model;
 import java.io.*;
 import java.util.*;
-public class DeliveryManagerController {
+public class DeliveryManagerController implements Serializable {
 
-	private final static String EMPLOYEES_SAVEFILE_PATH = "src/save-files/employees-saveFile.csv";
-	private final static String USERS_SAVEFILE_PATH = "src/save-files/users-saveFile.csv";
-	private final static String CUSTOMERS_SAVEFILE_PATH = "src/save-files/customers-saveFile.csv";
-	private final static String PRODUCTS_SAVEFILE_PATH = "src/save-files/products-saveFile.csv";
-	private final static String BASEPRODUCTS_SAVEFILE_PATH = "src/save-files/baseProducts-saveFile.csv";
-	private final static String PRODUCTSSIZE_SAVEFILE_PATH = "src/save-files/productsSize-saveFile.csv";
-	private final static String TYPES_SAVEFILE_PATH = "src/save-files/types-saveFile.csv";
-	private final static String INGREDIENTS_SAVEFILE_PATH = "src/save-files/ingredients-saveFile.csv";
-	private final static String ORDERS_SAVEFILE_PATH = "src/save-files/orders-saveFile.csv";
+	private static final long serialVersionUID = 1L;
+	private static final String SAVE_PATH = "src/save-files/save-file.dm";
 
 	private User loggedUser;
 	private List<Employee> employees;
@@ -23,7 +16,7 @@ public class DeliveryManagerController {
 	private List<DishType> types;
 	private List<Ingredient> ingredients;
 	private List<Order> orders;
-	
+
 	public DeliveryManagerController(){
 		loggedUser = null;
 		employees = new ArrayList<Employee>();
@@ -96,47 +89,11 @@ public class DeliveryManagerController {
 		return validate;
 	}//End validateBlankChats
 
-	public void loadAllData() throws IOException, ClassNotFoundException {
-		loadUsersData();
-		loadEmployeesData();
-		loadCustomersData();
-		loadIngredientsData();
-		loadTypesData();
-		loadBaseProductsData();
-		loadProductsSizeData();
-		loadProductsData();
-		loadOrdersData();
-	}//End loadAllData
-
 	public void saveAllData() throws IOException {
-		saveUsersData();
-		saveEmployeesData();
-		saveCustomersData();
-		saveIngredientsData();
-		saveTypesData();
-		saveBaseProductsData();
-		saveProductsSizeData();
-		saveProductsData();
-		saveOrdersData();
-	}//End saveAllData
-
-	public void saveEmployeesData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(EMPLOYEES_SAVEFILE_PATH));
-		oos.writeObject(employees);
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_PATH));
+		oos.writeObject(this);
 		oos.close();
-	}//End saveEmployeesData
-
-	@SuppressWarnings("unchecked")
-	public void loadEmployeesData() throws IOException, ClassNotFoundException {
-		File f = new File(EMPLOYEES_SAVEFILE_PATH);
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		if(f.exists() && br.readLine() != null) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			employees = (List<Employee>) ois.readObject();
-			ois.close();
-			br.close();
-		}//End if
-	}//End loadEmployeesData
+	}//End saveAllData
 
 	public void exportEmployeesData(File employeesData, String separator, Date initialDate, Date finalDate) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(employeesData);
@@ -219,7 +176,7 @@ public class DeliveryManagerController {
 			user.setId(id);
 			user.setModifier(getLoggedUser());
 			Collections.sort(users);
-			saveUsersData();
+			saveAllData();
 		}//End if
 		loggedUser.setLinked(true);
 		saveAllData();
@@ -256,24 +213,6 @@ public class DeliveryManagerController {
 			return false;
 		}//End else
 	}//End removeEmployee
-
-	public void saveUsersData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USERS_SAVEFILE_PATH));
-		oos.writeObject(users);
-		oos.close();
-	}//End saveUsersData
-
-	@SuppressWarnings("unchecked")
-	public void loadUsersData() throws IOException, ClassNotFoundException {
-		File f = new File(USERS_SAVEFILE_PATH);
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		if(f.exists() && br.readLine() != null) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			users = (List<User>)ois.readObject();
-			ois.close();
-			br.close();
-		}//End if
-	}//End loadUsersData
 
 	public boolean validateUserName(String userNameToValidate) {
 		boolean found = false;
@@ -389,24 +328,6 @@ public class DeliveryManagerController {
 		}//End else
 	}//End removeUser
 
-	public void saveCustomersData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CUSTOMERS_SAVEFILE_PATH));
-		oos.writeObject(customers);
-		oos.close();
-	}//End saveCustomersData
-
-	@SuppressWarnings("unchecked")
-	public void loadCustomersData() throws IOException, ClassNotFoundException {
-		File f = new File(CUSTOMERS_SAVEFILE_PATH);
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		if(f.exists() && br.readLine() != null) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			customers = (List<Customer>) ois.readObject();
-			ois.close();
-		}//End if
-		br.close();
-	}//End loadCustomersData
-
 	public int searchCustomerPosition(final String idToSearch) {
 		for(int i = 0; i < customers.size(); i ++) {
 			Customer customer = customers.get(i);
@@ -498,60 +419,6 @@ public class DeliveryManagerController {
 			return false;
 		}//End else
 	}//End removeCustomerById
-
-	public void saveBaseProductsData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(BASEPRODUCTS_SAVEFILE_PATH));
-		oos.writeObject(productBase);
-		oos.close();
-	}//End saveBaseProductsData
-
-	@SuppressWarnings("unchecked")
-	public void loadBaseProductsData() throws IOException, ClassNotFoundException {
-		File f = new File(BASEPRODUCTS_SAVEFILE_PATH);
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		if(f.exists() && br.readLine() != null) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			productBase = (ArrayList<ProductBase>) ois.readObject();
-			ois.close();
-			br.close();
-		}//End if
-	}//End loadBaseProductsData
-
-	public void saveProductsSizeData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PRODUCTSSIZE_SAVEFILE_PATH));
-		oos.writeObject(sizes);
-		oos.close();
-	}//End saveProductsSizeData
-
-	@SuppressWarnings("unchecked")
-	public void loadProductsSizeData() throws IOException, ClassNotFoundException {
-		File f = new File(PRODUCTSSIZE_SAVEFILE_PATH);
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		if(f.exists() && br.readLine() != null) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			sizes = (List<ProductSize>) ois.readObject();
-			ois.close();
-			br.close();
-		}//End if
-	}//End loadProductsSizeData
-
-	public void saveProductsData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PRODUCTS_SAVEFILE_PATH));
-		oos.writeObject(products);
-		oos.close();
-	}//End saveProductsData
-
-	@SuppressWarnings("unchecked")
-	public void loadProductsData() throws IOException, ClassNotFoundException {
-		File f = new File(PRODUCTS_SAVEFILE_PATH);
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		if(f.exists() && br.readLine() != null) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			products = (ArrayList<Product>) ois.readObject();
-			ois.close();
-			br.close();
-		}//End if
-	}//End loadProductsData
 
 	public void exportProductsData(File productsData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException{
 		int totalLines = 0;
@@ -737,24 +604,6 @@ public class DeliveryManagerController {
 		return index;
 	}//End findSubProducts
 
-	public void saveIngredientsData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(INGREDIENTS_SAVEFILE_PATH));
-		oos.writeObject(ingredients);
-		oos.close();
-	}//End saveIngredientsData
-
-	@SuppressWarnings("unchecked")
-	public void loadIngredientsData() throws IOException, ClassNotFoundException {
-		File f = new File(INGREDIENTS_SAVEFILE_PATH);
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		if(f.exists() && br.readLine() != null) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			ingredients = (ArrayList<Ingredient>)ois.readObject();
-			ois.close();
-			br.close();
-		}//End if
-	}//End loadIngredientsData
-
 	public int findIngredient(final String ingredient){
 		int index = -1;
 		int start = 0;
@@ -833,24 +682,6 @@ public class DeliveryManagerController {
 		return removed;
 	}//End removeIngredient
 
-	public void saveTypesData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(TYPES_SAVEFILE_PATH));
-		oos.writeObject(types);
-		oos.close();
-	}//End saveTypesData
-
-	@SuppressWarnings("unchecked")
-	public void loadTypesData() throws IOException, ClassNotFoundException {
-		File f = new File(TYPES_SAVEFILE_PATH);
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		if(f.exists() && br.readLine() != null) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			types = (ArrayList<DishType>) ois.readObject();
-			br.close();
-			ois.close();
-		}//End if
-	}//End loadTypesData
-
 	public int findDishType(final String dishType){
 		int index = -1;
 		int start = 0;
@@ -899,7 +730,7 @@ public class DeliveryManagerController {
 		int j;
 		for(j = 0; j < types.size() && types.get(j).compareTo(dishType) < 0;j++);
 		types.add(j,dishType);
-		saveTypesData();
+		saveAllData();
 	}//End addDishType
 
 	public boolean changeDishType(DishType dType,final String newName) throws IOException {
@@ -929,24 +760,6 @@ public class DeliveryManagerController {
 		}//End if
 		return removed;
 	}//End removeDishType
-
-	public void saveOrdersData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ORDERS_SAVEFILE_PATH));
-		oos.writeObject(orders);
-		oos.close();
-	}//End saveOrdersData
-
-	@SuppressWarnings("unchecked")
-	public void loadOrdersData() throws IOException, ClassNotFoundException {
-		File f = new File(ORDERS_SAVEFILE_PATH);
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		if(f.exists() && br.readLine() != null) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			orders = (ArrayList<Order>)ois.readObject();
-			br.close();
-			ois.close();
-		}//End if
-	}//End loadOrdersData
 
 	public void exportOrdersData(File ordersData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException {
 		int totalLines = 0;
@@ -1117,4 +930,5 @@ public class DeliveryManagerController {
 		}//End for
 		return disableProducts;
 	}//End getProducts
+
 }//End DeliveryManagerController
