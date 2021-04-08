@@ -7,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.DeliveryManagerController;
 
-import java.io.File;
-
 public class Main extends Application{
 
 	private DeliveryManagerController DMC;
