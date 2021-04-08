@@ -49,6 +49,7 @@ public class EmergentGUIController {
 	@FXML private TextField tNewIngredientToProduct;
 	@FXML private TextField tSelectedIngredient;
 	@FXML private ComboBox<Ingredient> cbIngredients;
+	@FXML private ComboBox<ProductSize> cbSizes;
 	@FXML private ComboBox<Product> cbProducts;
 	@FXML private ChoiceBox<String> reportType;
 	@FXML private TextField pathTxt;
@@ -217,6 +218,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		initializeSizesComboBox();
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
 		formulario.setTitle("Agregar tamaño del producto");
@@ -403,7 +405,12 @@ public class EmergentGUIController {
 		tSize.setText(productToChanges.getSize());
 		tPrice.setText(String.valueOf(productToChanges.getPrice()));
 	}//End initializeForm
-
+	@FXML
+	public void setSizeText(){
+		ProductSize ps = cbSizes.getValue();
+		if(ps != null)
+			tSize.setText(ps.toString());
+	}//End setSizeText
 	@FXML
 	public void changeProductData(ActionEvent event) throws IOException{
 		boolean worked = false;
@@ -758,5 +765,8 @@ public class EmergentGUIController {
 		ingredients = FXCollections.observableArrayList(DMC.getIngredients(true));
 		cbIngredients.setItems(ingredients);
 	}//End initializeIngredientsComboBox
-
+	private void initializeSizesComboBox(){
+		ObservableList<ProductSize> sizes = FXCollections.observableArrayList(DMC.getSizes());
+		cbSizes.setItems(sizes);
+	}//End initializeSizesComboBox
 }//End EmergentGUIController

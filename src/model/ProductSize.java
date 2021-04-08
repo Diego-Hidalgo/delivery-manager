@@ -19,5 +19,8 @@ public class ProductSize implements Serializable {
 	public String getSize(){
 		return size;
 	}//End getSize
-
+	
+	public String toString(){
+		return size;
+	}//End toString
 }//End ProductSize

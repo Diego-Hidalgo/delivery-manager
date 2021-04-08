@@ -625,6 +625,7 @@ public class DeliveryManagerController {
 			}//End if
 			line = br.readLine();
 		}//End while
+		br.close();
 		return all;
 	}//End importProducts
 
@@ -1033,6 +1034,7 @@ public class DeliveryManagerController {
 			}//End if
 			line = br.readLine();
 		}//End while
+		br.close();
 		return all;
 	}//End importOrders
 
@@ -1117,4 +1119,7 @@ public class DeliveryManagerController {
 		}//End for
 		return disableProducts;
 	}//End getProducts
+	public List<ProductSize> getSizes(){
+		return sizes;
+	}//End getSizes
 }//End DeliveryManagerController
