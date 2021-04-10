@@ -20,9 +20,10 @@
                     <contextMenu>
                         <ContextMenu>
                             <items>
-                                <MenuItem fx:id="change" onAction="#listenChangeUserEvent" mnemonicParsing="false" text="Modificar" />
-                                <MenuItem fx:id="disable" onAction="#listenChangeUserStatusEvent" mnemonicParsing="false" text="Habilitar/Deshabilitar" />
-                                <MenuItem fx:id="delete" onAction="#listenRemoveUserEvent" mnemonicParsing="false" text="Eliminar" />
+                                <MenuItem fx:id="change" mnemonicParsing="false" onAction="#listenChangeUserEvent" text="Modificar" />
+                                <MenuItem fx:id="disable" mnemonicParsing="false" onAction="#listenChangeUserStatusEvent" text="Habilitar/Deshabilitar" />
+                                <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#listenRemoveUserEvent" text="Eliminar" />
+                                <MenuItem fx:id="showList" mnemonicParsing="false" onAction="#listenChangeUsersTable" text="" />
                             </items>
                         </ContextMenu>
                     </contextMenu>
@@ -32,7 +33,7 @@
     <top>
         <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Label text="LISTA DE USUARIOS">
+                <Label fx:id="listTitle" text="LISTA DE USUARIOS">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>

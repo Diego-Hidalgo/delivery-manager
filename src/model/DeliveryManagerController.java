@@ -34,8 +34,15 @@ public class DeliveryManagerController implements Serializable {
 		return employees;
 	}//End getEmployee
 
-	public List<User> getUsers() {
-		return users;
+	public List<User> getUsers(boolean enabled) {
+		List<User> userList = new ArrayList<>();
+		for(int i = 0; i < users.size(); i ++) {
+			User user = users.get(i);
+			if(user.getEnabled() == enabled) {
+				userList.add(user);
+			}//End if
+		}//End for
+		return userList;
 	}//End getUsers
 
 	public List<Customer> getCustomers(boolean enabled) {

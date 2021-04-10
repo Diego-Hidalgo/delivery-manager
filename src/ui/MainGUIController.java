@@ -444,6 +444,7 @@ public class MainGUIController{
 						}//End if
 					}//End else
 					successfulActionAlert(msg);
+					showVisualizeUsers();
 				}//End else
 			}//End if
 		}//End if
@@ -792,13 +793,22 @@ public class MainGUIController{
 		stage.setTitle("Lista De Usuarios");
 		stage.setWidth(800);
 		stage.setHeight(510);
+		title = (enableList)?"Usuarios habilitados":"Usuarios deshabilitados";
+		menuText = (enableList)?"Ver usuarios deshabilitados":"Ver usuarios habilitados";
+		listTitle.setText(title);
+		showList.setText(menuText);
 		setUsersTable();
 		stage.setResizable(false);
 	}//End showVisualizeUsers
 
+	public void listenChangeUsersTable() throws IOException {
+		enableList = !enableList;
+		showVisualizeUsers();
+	}//End listenChangeUsersTable
+
 	@FXML
 	public void setUsersTable() throws IOException {
-		ObservableList<User> content = FXCollections.observableArrayList(DMC.getUsers());
+		ObservableList<User> content = FXCollections.observableArrayList(DMC.getUsers(enableList));
 		usersTable.setItems(content);
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
 		userLastNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
