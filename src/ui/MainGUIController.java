@@ -139,10 +139,13 @@ public class MainGUIController{
 	}//End constructor
 
 	@FXML
-	public void setCustomerContextMenuItems(MouseEvent me) {
+	public void listenCustomerMouseEvent(MouseEvent me) throws IOException {
 		change.setDisable(false);
 		disable.setDisable(false);
 		delete.setDisable(false);
+		if(me.getClickCount() == 2) {
+				listenChangeCustomerEvent();
+		}//End if
 		if(me.getButton() == MouseButton.SECONDARY) {
 			Customer selection = customersTable.getSelectionModel().getSelectedItem();
 			if(selection != null) {
@@ -160,10 +163,13 @@ public class MainGUIController{
 	}//End setCustomersTableMenuItemText
 
 	@FXML
-	public void setEmployeeContextMenuItems(MouseEvent me) {
+	public void listenEmployeeMouseEvent(MouseEvent me) throws IOException {
 		change.setDisable(false);
 		disable.setDisable(false);
 		delete.setDisable(false);
+		if(me.getClickCount() == 2) {
+			listenChangeEmployeeEvent();
+		}//End if
 		if(me.getButton() == MouseButton.SECONDARY) {
 			Employee selection = employeesTable.getSelectionModel().getSelectedItem();
 			if(selection != null) {
@@ -181,10 +187,13 @@ public class MainGUIController{
 	}//End setEmployeeContextMenuItems
 
 	@FXML
-	public void setUserContextMenuItems(MouseEvent me) {
+	public void listenUserMouseEvent(MouseEvent me) throws IOException {
 		change.setDisable(false);
 		disable.setDisable(false);
 		delete.setDisable(false);
+		if(me.getClickCount() == 2) {
+			listenChangeUserEvent();
+		}//End if
 		if(me.getButton() == MouseButton.SECONDARY) {
 			User selection = usersTable.getSelectionModel().getSelectedItem();
 			if(selection != null) {
@@ -237,7 +246,7 @@ public class MainGUIController{
 	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Acci�n exitosa");
+		alert.setTitle("Acción exitosa");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -363,7 +372,7 @@ public class MainGUIController{
 			}//End else
 			if(confirmActionAlert(msg)) {
 				if(DMC.countEnabledUsers() == 1 && employee.getId().equals(DMC.getLoggedUser().getId())) {
-					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el único existente";
+					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el único habilitado";
 					couldNotCompleteActionAlert(msg);
 				} else {
 					if(DMC.changeEmployeeEnabledStatus(employee)) {
@@ -377,6 +386,7 @@ public class MainGUIController{
 						}//End if
 					}//End else
 					successfulActionAlert(msg);
+					showVisualizeEmployees();
 				}//End else
 			}//End if
 		}//End if
@@ -394,6 +404,7 @@ public class MainGUIController{
 					msg = "Se ha deshabilitado al cliente correctamente";
 				}//End else
 				successfulActionAlert(msg);
+				showVisualizeCustomers();
 			}//End if
 		}//End if
 	}//End listenChangeCustomerStatusEvent
@@ -434,6 +445,7 @@ public class MainGUIController{
 						}//End if
 					}//End else
 					successfulActionAlert(msg);
+					showVisualizeUsers();
 				}//End else
 			}//End if
 		}//End if
@@ -532,8 +544,8 @@ public class MainGUIController{
 	@FXML
 	public void passwordMisMatchAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Verificar Contrase�as");
-		alert.setHeaderText("LAS CONTRASE�AS NO COINCIDEN");
+		alert.setTitle("Verificar Contraseñas");
+		alert.setHeaderText("LAS CONTRASEÑAS NO COINCIDEN");
 		alert.setContentText("Las contrase{as deben ser iguales, vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
@@ -545,7 +557,7 @@ public class MainGUIController{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("La Id No Se Encuentra");
 		alert.setHeaderText("LA ID INGRESADA NO EXISTE");
-		alert.setContentText("La id ingresada no coincide con ning�n empleado, intente con otra o cree un nuevo empleado");
+		alert.setContentText("La id ingresada no coincide con ningún empleado, intente con otra o cree un nuevo empleado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -659,7 +671,7 @@ public class MainGUIController{
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("No se puede realizar la acci�n porque el " + entity + " se encuentra deshabilitado");
+		alert.setContentText("No se puede realizar la acción porque el " + entity + " se encuentra deshabilitado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -697,7 +709,7 @@ public class MainGUIController{
 	@FXML
 	public boolean confirmActionAlert(String text) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Confirmar Acci�n");
+		alert.setTitle("Confirmar Acción");
 		alert.setHeaderText(null);
 		alert.setContentText(text);
 		ButtonType acceptBtn = new ButtonType("Aceptar");
@@ -757,13 +769,17 @@ public class MainGUIController{
 		stage.setTitle("Lista De Empleados");
 		stage.setWidth(700);
 		stage.setHeight(510);
+		title = (enableList)?"Empleados habilitados":"Empleados deshabilitados";
+		menuText = (enableList)?"Ver empleados deshabilitados":"Ver empleados habilitados";
+		listTitle.setText(title);
+		showList.setText(menuText);
 		setEmployeesTable();
 		stage.setResizable(false);
 	}//End showVisualizeEmployees
 
 	@FXML
 	public void setEmployeesTable() {
-		ObservableList<Employee> content = FXCollections.observableArrayList(DMC.getEmployees());
+		ObservableList<Employee> content = FXCollections.observableArrayList(DMC.getEmployees(enableList));
 		employeesTable.setItems(content);
 		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		employeeLastNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
@@ -771,6 +787,11 @@ public class MainGUIController{
 		employeeCreatorColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("creatorName"));
 		employeeModifierColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("modifierName"));
 	}//End setEmployeesTable
+
+	public void listenChangeEmployeesTable() throws IOException {
+		enableList = !enableList;
+		showVisualizeEmployees();
+	}//End listenChangeEmployeesTable
 
 	@FXML
 	public void showVisualizeUsers() throws IOException {
@@ -782,13 +803,22 @@ public class MainGUIController{
 		stage.setTitle("Lista De Usuarios");
 		stage.setWidth(800);
 		stage.setHeight(510);
+		title = (enableList)?"Usuarios habilitados":"Usuarios deshabilitados";
+		menuText = (enableList)?"Ver usuarios deshabilitados":"Ver usuarios habilitados";
+		listTitle.setText(title);
+		showList.setText(menuText);
 		setUsersTable();
 		stage.setResizable(false);
 	}//End showVisualizeUsers
 
+	public void listenChangeUsersTable() throws IOException {
+		enableList = !enableList;
+		showVisualizeUsers();
+	}//End listenChangeUsersTable
+
 	@FXML
 	public void setUsersTable() throws IOException {
-		ObservableList<User> content = FXCollections.observableArrayList(DMC.getUsers());
+		ObservableList<User> content = FXCollections.observableArrayList(DMC.getUsers(enableList));
 		usersTable.setItems(content);
 		userNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
 		userLastNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
@@ -808,13 +838,17 @@ public class MainGUIController{
 		stage.setTitle("Lista De Clientes");
 		stage.setWidth(950);
 		stage.setHeight(510);
+		title = (enableList)?"Clientes habilitados":"Clientes deshabilitados";
+		menuText = (enableList)?"Ver clientes deshabilitados":"Ver clientes habilitados";
+		listTitle.setText(title);
+		showList.setText(menuText);
 		setCustomersTable();
 		stage.setResizable(false);
 	}//End showVisualizeCustomers
 
 	@FXML
 	public void setCustomersTable() throws IOException {
-		ObservableList<Customer> content = FXCollections.observableArrayList(DMC.getCustomers());
+		ObservableList<Customer> content = FXCollections.observableArrayList(DMC.getCustomers(enableList));
 		customersTable.setItems(content);
 		customerNameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		customerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
@@ -824,6 +858,12 @@ public class MainGUIController{
 		customerCreatorColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("creatorName"));
 		customerModifierColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("modifierName"));
 	}//End setCustomerTable
+
+	@FXML
+	public void listenChangeCustomersTable() throws IOException {
+		enableList = !enableList;
+		showVisualizeCustomers();
+	}//End listenChangeCustomersTable
 
 	@FXML
 	public void showSceneLogin() throws IOException{
@@ -964,14 +1004,14 @@ public class MainGUIController{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tama�o y precio ingresado ya existen para este producto";
+		String msg = "El tamaño y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "Tama�o y  precio agregados con exito";
+			msg = "Tamaño y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -1048,11 +1088,11 @@ public class MainGUIController{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
 		boolean worked = false;
-		String msg = "Datos erroneos.";
+		String msg = "Datos erróneos.";
 		if( !tIdEmployee.getText().isEmpty() && !tIdCustomer.getText().isEmpty() &&
 				cbStatus.getValue() != null && !taProducsAmount.getText().isEmpty() && !taRemark.getText().isEmpty()){
 			if(DMC.addOrder(product, amo, taRemark.getText(), cbStatus.getValue(), tIdCustomer.getText(), tIdEmployee.getText()) ){
-				msg = "Pedido registrado con exito";
+				msg = "Pedido registrado con éxito";
 				tIdEmployee.setText("");
 				tIdCustomer.setText("");
 				taProducsAmount.setText("");
@@ -1061,7 +1101,7 @@ public class MainGUIController{
 				amo = null;
 				worked = true;
 			}else
-				msg = "Id del cliente o empleado erroneo";
+				msg = "Id del cliente o empleado erróneo";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -1075,7 +1115,7 @@ public class MainGUIController{
 	public void addProductToOrder()throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "No se ha podido a�adir el producto al pedido";
+		String msg = "No se ha podido añadir el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
 		String amountAndProducts = taProducsAmount.getText();
 		if(EGC.getProduct() != null){
@@ -1083,7 +1123,7 @@ public class MainGUIController{
 				amountAndProducts += EGC.getProduct()+" x "+EGC.getAmount() + "\n";
 				product.add(EGC.getProduct());
 				amo.add(EGC.getAmount());
-				msg = "Producto ha sido a�adido correctamente al pedido";
+				msg = "Producto ha sido añadido correctamente al pedido";
 			}//End if
 		}//End if
 		EGC.clearAddProductData();
@@ -1128,10 +1168,12 @@ public class MainGUIController{
 			changeMainItemsContextMenuState(true);
 		
 	}//End ListenChangeProductEvent
+
 	private void changeMainItemsContextMenuState(boolean state){
 		DisableElement.setDisable(state);
 		removeElement.setDisable(state);
 	}//End changeContextMenuState
+
 	@FXML
 	public void ListenChangesEnableProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1151,11 +1193,13 @@ public class MainGUIController{
 		changeEnableInfo.setContentText(msg);
 		changeEnableInfo.showAndWait();
 	}//End ListenChangesEnableProduct
+
 	@FXML
 	public void ListenChangeProductList() throws IOException{
 		enableList = !enableList;
 		showProductsList();
 	}//End ListenChangeProductList
+
 	@FXML
 	public void ListenRemoveProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1190,11 +1234,13 @@ public class MainGUIController{
 		}else
 			changeMainItemsContextMenuState(true);
 	}//End ListenChangeProductEvent
+
 	@FXML
 	public void ListenChangeIngredientList() throws IOException{
 		enableList = !enableList;
 		showIngredientsList();
 	}//End ListenChangeProductList
+
 	@FXML
 	public void ListenChangesEnableIngredient(){
 		Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
@@ -1249,11 +1295,13 @@ public class MainGUIController{
 		}else
 			changeMainItemsContextMenuState(true);
 	}//End ListenChangeProductEvent
+
 	@FXML
 	public void ListenChangeDishTypeList() throws IOException{
 		enableList = !enableList;
 		showDishTypeList();
 	}//End ListenChangeProductList
+
 	@FXML
 	public void ListenChangesEnableDishType(){
 		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();
@@ -1306,7 +1354,7 @@ public class MainGUIController{
 		}else
 			showOrderInfo.showAndWait();
 	}//End ListenShowOrderRegister
-	
+
 	public void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts(enableList));
 		productTable.setItems(productsList);
