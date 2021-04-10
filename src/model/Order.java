@@ -178,7 +178,7 @@ public class Order implements Serializable, Comparable<Order>{
 	public double calculateTotalPrice() {
 		double totalPrice = 0;
 		for(int i = 0; i < products.size(); i ++) {
-			totalPrice += products.get(i).getPrice();
+			totalPrice += products.get(i).getPrice() * amount.get(i);
 		}//End for
 		return totalPrice;
 	}//End calculateTotalPrice

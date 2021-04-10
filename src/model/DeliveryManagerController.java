@@ -116,35 +116,38 @@ public class DeliveryManagerController implements Serializable {
 		oos.close();
 	}//End saveAllData
 
-	public void exportEmployeesData(File employeesData, String separator, Date initialDate, Date finalDate) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(employeesData);
-		List<Order> ords = getOrdersInRange(initialDate, finalDate);
-		String info = "Reporte creado con los datos recolectados desde " + initialDate + " hasta " + finalDate + "\n";
+	public void exportEmployeesData(File file, String s, Date initialDate, Date finishDate) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(file);
+		List<Order> ords = getOrdersInRange(initialDate, finishDate);
+		String info = "Reporte creado con los datos recolectados desde " + initialDate + " hasta " + finishDate + "\n";
+		String columns = "Nombre"+s+"Apellido"+s+"Identificación"+s+"Total pedidos entregados"+s+"Total pago de pedidos" + "\n";
 		pw.write(info);
-		String columns = "ID" + separator + "Nombre" + separator + "Apellido" + separator +
-				"Pedidos entregados" + separator + "Precio total" + "\n";
 		pw.write(columns);
-		int totalLines = 0;
+		double total = 0;
+		int delivered = 0;
 		for(int i = 0; i < employees.size(); i ++) {
-			int amount = 0;
-			int totalPrice = 0;
+			Employee employee = employees.get(i);
+			String name = employee.getName();
+			String lastName = employee.getLastName();
+			String id = employee.getId();
+			int totalOrders = 0;
+			double totalPaid = 0;
 			for(int j = 0; j < ords.size(); j ++) {
-				Employee employee = employees.get(i);
 				Order order = ords.get(j);
-				if(order.getStatus().equals("ENTREGADO")) {
-					if(order.getEmployee().getId().equals(employee.getId())) {
-						amount ++;
-						totalPrice += order.calculateTotalPrice();
-					}//End if
-					String toWrite = employee.getId() + separator + employee.getName() + separator +
-							employee.getLastName() + separator + amount + separator + totalPrice + "\n";
-					pw.write(toWrite);
-					totalLines ++;
-				}
+				if(order.getEmployee().getId().equalsIgnoreCase(id) && order.getStatus().equalsIgnoreCase("ENTREGADO")) {
+					totalOrders ++;
+					totalPaid += order.calculateTotalPrice();
+					delivered ++;
+				}//End if
 			}//End for
+			String toWrite = name+s+lastName+s+id+s+totalOrders+s+"$"+totalPaid + "\n";
+			total += totalPaid;
+			pw.write(toWrite);
 		}//End for
-		String lines = "Lineas totales: " + totalLines;
-		pw.write(lines);
+		String totalPaidOrders = s+s+s+delivered+s+"$" + total + "\n";
+		pw.write(totalPaidOrders);
+		String rows = "Registros totales: " + employees.size() + "\n";
+		pw.write(rows);
 		pw.close();
 	}//End exportEmployeesData
 
