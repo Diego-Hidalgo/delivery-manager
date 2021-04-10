@@ -787,34 +787,50 @@ public class DeliveryManagerController implements Serializable {
 		return removed;
 	}//End removeDishType
 
-	public void exportOrdersData(File ordersData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException {
-		int totalLines = 0;
-		PrintWriter pw = new PrintWriter(ordersData);
+	public void exportOrdersData(File file, String s,Date initialDate,Date finishDate) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(file);
 		List<Order> ords = getOrdersInRange(initialDate,finishDate);
+		int max = 0;
+		String toWrite = "";
 		String info = "Reporte creado con los datos recolectados desde: " + initialDate + " hasta " + finishDate + "\n";
-		pw.write(info);
-		String columns = "Nombre del cliente" + separator + "Apellido del cliente" + separator + "Dirección del cliente" +
-						  separator + "Telefono del cliente" + separator + "Nombre del empleado" + separator + "Apellido del empleado" +
-					      separator + "Fecha" + separator + "Hora" + separator + "Observaciones" + separator + "Nombre del producto" +
-						  separator + "Cantidad" + separator +"Precio" + "\n";
-		pw.write(columns);
-		String report = new String();
-		for(int i = 0; i < ords.size(); i++){
-			List<Product> pds = ords.get(i).getProducts();
-			List<Integer> amo = ords.get(i).getAmount();
-			report += ords.get(i).getCustomer().getName() + separator + ords.get(i).getCustomer().getLastName() + separator
-					+ ords.get(i).getCustomer().getAddress() + separator + ords.get(i).getCustomer().getNPhone() + separator
-					+ ords.get(i).getEmployee().getName() + separator + ords.get(i).getEmployee().getLastName() + separator
-					+ ords.get(i).getDate() + separator + ords.get(i).getHour() + separator + ords.get(i).getRemark() + separator;
-			for(int j = 0; j < ords.size(); j++){
-				report += pds.get(j).getProductBase().getName() + separator + amo.get(j) + separator + pds.get(j).getPrice();
+		String columns = "Fecha"+s+"Hora"+s+"Nombre del cliente"+s+"Apellido del cliente"+s+"Dirección del cliente"+
+						  s+"Telefono del cliente"+s+"Nombre del empleado"+s+"Apellido del empleado"+s+
+				         "Observaciones" +s+"Estado";
+		for(int i = 0; i < ords.size(); i ++) {
+			Order order = ords.get(i);
+			List<Product> products = order.getProducts();
+			if(products.size() > max) {
+				max = products.size();
+			}//End if
+			List<Integer> amounts = order.getAmount();
+			String date = order.getDate();
+			String hour = order.getHour();
+			String customerName = order.getCustomer().getName();
+			String customerLastName = order.getCustomer().getLastName();
+			String address = order.getCustomer().getAddress();
+			String nPhone = order.getCustomer().getNPhone();
+			String employeeName = order.getEmployee().getName();
+			String employeeLastName = order.getEmployee().getLastName();
+			String remark = order.getRemark();
+			String status = order.getStatus();
+			toWrite += date+s+hour+s+customerName+s+customerLastName+s+address+s+nPhone+s+
+					         employeeName+s+employeeLastName+s+remark+s+status;
+			for(int j = 0; j < products.size(); j ++) {
+				Product product = products.get(j);
+				String productName = product.getName();
+				double price = product.getPrice();
+				int amount = amounts.get(j);
+				toWrite += s+productName + s + price + s +amount;
 			}//End for
-			report += "\n";
-			totalLines ++;
+			toWrite += "\n";
 		}//End for
-		pw.print(report);
-		String lines = "lineas totales: " + totalLines;
-		pw.write(lines);
+		for(int i = 0; i < max; i ++) {
+			columns += s+"Producto"+s+"Precio"+s+"Cantidad";
+		}//End for
+		columns += "\n";
+		pw.write(info);
+		pw.write(columns);
+		pw.write(toWrite);
 		pw.close();
 	}//End exportOrderData
 
