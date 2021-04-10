@@ -222,7 +222,7 @@ public class MainGUIController{
 		window.setScene(scene);
 		window.setTitle("Bienvenido");
 		window.show();
-		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() + ". Acceda al menú para usar las opciones del sistema");
+		showSceneOrdersList();
 	}//End switchToSecondaryPane
 
 	@FXML
@@ -638,7 +638,7 @@ public class MainGUIController{
 		mainPane.getChildren().clear();
 		mainPane.setCenter(loginScene);
 		Stage stage = (Stage) mainPane.getScene().getWindow();
-		stage.setTitle("Iniciar sesión");
+		stage.setTitle("Iniciar sesi�n");
 		stage.setHeight(440);
 		stage.setResizable(false);
 	}//End showLoginScene

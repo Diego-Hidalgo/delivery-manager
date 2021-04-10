@@ -76,7 +76,7 @@ public class Order implements Serializable, Comparable<Order>{
 
 	@SuppressWarnings("deprecation")
 	public String getDate(){
-		return String.valueOf(date.getDate()+"/"+date.getMonth()+"/"+date.getYear());
+		return String.valueOf(date.getDate()+"/"+date.getMonth()+"/"+(date.getYear()+1900));
 	}//End getDate
 
 	@SuppressWarnings("deprecation")

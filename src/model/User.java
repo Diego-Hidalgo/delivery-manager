@@ -1,7 +1,5 @@
 package model;
 
-import java.io.Serializable;
-
 public class User extends Employee {
 
 	private static final long serialVersionUID = 1L;
