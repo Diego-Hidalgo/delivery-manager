@@ -372,7 +372,7 @@ public class MainGUIController{
 			}//End else
 			if(confirmActionAlert(msg)) {
 				if(DMC.countEnabledUsers() == 1 && employee.getId().equals(DMC.getLoggedUser().getId())) {
-					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el único existente";
+					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el único habilitado";
 					couldNotCompleteActionAlert(msg);
 				} else {
 					if(DMC.changeEmployeeEnabledStatus(employee)) {
@@ -386,6 +386,7 @@ public class MainGUIController{
 						}//End if
 					}//End else
 					successfulActionAlert(msg);
+					showVisualizeEmployees();
 				}//End else
 			}//End if
 		}//End if
@@ -768,13 +769,17 @@ public class MainGUIController{
 		stage.setTitle("Lista De Empleados");
 		stage.setWidth(700);
 		stage.setHeight(510);
+		title = (enableList)?"Empleados habilitados":"Empleados deshabilitados";
+		menuText = (enableList)?"Ver empleados deshabilitados":"Ver empleados habilitados";
+		listTitle.setText(title);
+		showList.setText(menuText);
 		setEmployeesTable();
 		stage.setResizable(false);
 	}//End showVisualizeEmployees
 
 	@FXML
 	public void setEmployeesTable() {
-		ObservableList<Employee> content = FXCollections.observableArrayList(DMC.getEmployees());
+		ObservableList<Employee> content = FXCollections.observableArrayList(DMC.getEmployees(enableList));
 		employeesTable.setItems(content);
 		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		employeeLastNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
@@ -782,6 +787,11 @@ public class MainGUIController{
 		employeeCreatorColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("creatorName"));
 		employeeModifierColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("modifierName"));
 	}//End setEmployeesTable
+
+	public void listenChangeEmployeesTable() throws IOException {
+		enableList = !enableList;
+		showVisualizeEmployees();
+	}//End listenChangeEmployeesTable
 
 	@FXML
 	public void showVisualizeUsers() throws IOException {

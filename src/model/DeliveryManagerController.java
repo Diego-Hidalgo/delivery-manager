@@ -30,8 +30,15 @@ public class DeliveryManagerController implements Serializable {
 		sizes = new ArrayList<ProductSize>();
 	}//End DeliveryManagerController
 	
-	public List<Employee> getEmployees() {
-		return employees;
+	public List<Employee> getEmployees(boolean enabled) {
+		List<Employee> employeeList = new ArrayList<>();
+		for(int i = 0; i < employees.size(); i ++) {
+			Employee employee = employees.get(i);
+			if(employee.getEnabled() == enabled) {
+				employeeList.add(employee);
+			}//End if
+		}//End for
+		return employeeList;
 	}//End getEmployee
 
 	public List<User> getUsers(boolean enabled) {
