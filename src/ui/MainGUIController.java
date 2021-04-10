@@ -403,6 +403,7 @@ public class MainGUIController{
 					msg = "Se ha deshabilitado al cliente correctamente";
 				}//End else
 				successfulActionAlert(msg);
+				showVisualizeCustomers();
 			}//End if
 		}//End if
 	}//End listenChangeCustomerStatusEvent
@@ -817,13 +818,17 @@ public class MainGUIController{
 		stage.setTitle("Lista De Clientes");
 		stage.setWidth(950);
 		stage.setHeight(510);
+		title = (enableList)?"Clientes habilitados":"Clientes deshabilitados";
+		menuText = (enableList)?"Ver clientes deshabilitados":"Ver clientes habilitados";
+		listTitle.setText(title);
+		showList.setText(menuText);
 		setCustomersTable();
 		stage.setResizable(false);
 	}//End showVisualizeCustomers
 
 	@FXML
 	public void setCustomersTable() throws IOException {
-		ObservableList<Customer> content = FXCollections.observableArrayList(DMC.getCustomers());
+		ObservableList<Customer> content = FXCollections.observableArrayList(DMC.getCustomers(enableList));
 		customersTable.setItems(content);
 		customerNameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		customerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
@@ -833,6 +838,12 @@ public class MainGUIController{
 		customerCreatorColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("creatorName"));
 		customerModifierColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("modifierName"));
 	}//End setCustomerTable
+
+	@FXML
+	public void listenChangeCustomersTable() throws IOException {
+		enableList = !enableList;
+		showVisualizeCustomers();
+	}//End listenChangeCustomersTable
 
 	@FXML
 	public void showSceneLogin() throws IOException{
@@ -1315,7 +1326,7 @@ public class MainGUIController{
 		}else
 			showOrderInfo.showAndWait();
 	}//End ListenShowOrderRegister
-	
+
 	public void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts(enableList));
 		productTable.setItems(productsList);

@@ -21,9 +21,10 @@
                     <contextMenu>
                     <ContextMenu>
                         <items>
-                            <MenuItem fx:id="change" onAction="#listenChangeCustomerEvent" mnemonicParsing="false" text="Modificar" />
-                            <MenuItem fx:id="disable" onAction="#listenChangeCustomerStatusEvent" mnemonicParsing="false" text="Habilitar/Deshabilitar" />
-                            <MenuItem fx:id="delete" onAction="#listenRemoveCustomerEvent" mnemonicParsing="false" text="Eliminar" />
+                            <MenuItem fx:id="change" mnemonicParsing="false" onAction="#listenChangeCustomerEvent" text="Modificar" />
+                            <MenuItem fx:id="disable" mnemonicParsing="false" onAction="#listenChangeCustomerStatusEvent" text="Habilitar/Deshabilitar" />
+                            <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#listenRemoveCustomerEvent" text="Eliminar" />
+                            <MenuItem fx:id="showList" mnemonicParsing="false" onAction="#listenChangeCustomersTable" text=""/>
                         </items>
                     </ContextMenu>
                     </contextMenu>
@@ -33,7 +34,7 @@
     <top>
         <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Label text="LISTA DE CLIENTES">
+                <Label fx:id="listTitle" text="LISTA DE CLIENTES">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>

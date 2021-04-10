@@ -38,8 +38,15 @@ public class DeliveryManagerController implements Serializable {
 		return users;
 	}//End getUsers
 
-	public List<Customer> getCustomers() {
-		return customers;
+	public List<Customer> getCustomers(boolean enabled) {
+		List<Customer> customerList = new ArrayList<>();
+		for(int i = 0; i < customers.size(); i ++) {
+			Customer customer = customers.get(i);
+			if(customer.getEnabled() == enabled) {
+				customerList.add(customer);
+			}//End if
+		}//End for
+		return customerList;
 	}//End getCustomers
 
 	public int getAmountUsers() {
