@@ -139,10 +139,13 @@ public class MainGUIController{
 	}//End constructor
 
 	@FXML
-	public void setCustomerContextMenuItems(MouseEvent me) {
+	public void listenCustomerMouseEvent(MouseEvent me) throws IOException {
 		change.setDisable(false);
 		disable.setDisable(false);
 		delete.setDisable(false);
+		if(me.getClickCount() == 2) {
+				listenChangeCustomerEvent();
+		}//End if
 		if(me.getButton() == MouseButton.SECONDARY) {
 			Customer selection = customersTable.getSelectionModel().getSelectedItem();
 			if(selection != null) {
@@ -160,10 +163,13 @@ public class MainGUIController{
 	}//End setCustomersTableMenuItemText
 
 	@FXML
-	public void setEmployeeContextMenuItems(MouseEvent me) {
+	public void listenEmployeeMouseEvent(MouseEvent me) throws IOException {
 		change.setDisable(false);
 		disable.setDisable(false);
 		delete.setDisable(false);
+		if(me.getClickCount() == 2) {
+			listenChangeEmployeeEvent();
+		}//End if
 		if(me.getButton() == MouseButton.SECONDARY) {
 			Employee selection = employeesTable.getSelectionModel().getSelectedItem();
 			if(selection != null) {
@@ -181,10 +187,13 @@ public class MainGUIController{
 	}//End setEmployeeContextMenuItems
 
 	@FXML
-	public void setUserContextMenuItems(MouseEvent me) {
+	public void listenUserMouseEvent(MouseEvent me) throws IOException {
 		change.setDisable(false);
 		disable.setDisable(false);
 		delete.setDisable(false);
+		if(me.getClickCount() == 2) {
+			listenChangeUserEvent();
+		}//End if
 		if(me.getButton() == MouseButton.SECONDARY) {
 			User selection = usersTable.getSelectionModel().getSelectedItem();
 			if(selection != null) {

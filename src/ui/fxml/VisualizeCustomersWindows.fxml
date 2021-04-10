@@ -8,7 +8,7 @@
     <center>
         <VBox prefHeight="330.0" prefWidth="570.0" BorderPane.alignment="CENTER">
             <children>
-                <TableView fx:id="customersTable" onMouseClicked="#setCustomerContextMenuItems" prefHeight="359.0" prefWidth="855.0">
+                <TableView fx:id="customersTable" onMouseClicked="#listenCustomerMouseEvent" prefHeight="359.0" prefWidth="855.0">
                     <columns>
                         <TableColumn fx:id="customerNameColumn" prefWidth="130.0" text="Nombre" />
                         <TableColumn fx:id="customerLastNameColumn" prefWidth="130.0" text="Apellido" />
