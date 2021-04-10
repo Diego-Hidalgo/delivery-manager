@@ -246,7 +246,7 @@ public class MainGUIController{
 	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Acci�n exitosa");
+		alert.setTitle("Acción exitosa");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -544,8 +544,8 @@ public class MainGUIController{
 	@FXML
 	public void passwordMisMatchAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Verificar Contrase�as");
-		alert.setHeaderText("LAS CONTRASE�AS NO COINCIDEN");
+		alert.setTitle("Verificar Contraseñas");
+		alert.setHeaderText("LAS CONTRASEÑAS NO COINCIDEN");
 		alert.setContentText("Las contrase{as deben ser iguales, vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
@@ -557,7 +557,7 @@ public class MainGUIController{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("La Id No Se Encuentra");
 		alert.setHeaderText("LA ID INGRESADA NO EXISTE");
-		alert.setContentText("La id ingresada no coincide con ning�n empleado, intente con otra o cree un nuevo empleado");
+		alert.setContentText("La id ingresada no coincide con ningún empleado, intente con otra o cree un nuevo empleado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -671,7 +671,7 @@ public class MainGUIController{
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("No se puede realizar la acci�n porque el " + entity + " se encuentra deshabilitado");
+		alert.setContentText("No se puede realizar la acción porque el " + entity + " se encuentra deshabilitado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -709,7 +709,7 @@ public class MainGUIController{
 	@FXML
 	public boolean confirmActionAlert(String text) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Confirmar Acci�n");
+		alert.setTitle("Confirmar Acción");
 		alert.setHeaderText(null);
 		alert.setContentText(text);
 		ButtonType acceptBtn = new ButtonType("Aceptar");
@@ -1004,14 +1004,14 @@ public class MainGUIController{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tama�o y precio ingresado ya existen para este producto";
+		String msg = "El tamaño y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "Tama�o y  precio agregados con exito";
+			msg = "Tamaño y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -1088,11 +1088,11 @@ public class MainGUIController{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
 		boolean worked = false;
-		String msg = "Datos erroneos.";
+		String msg = "Datos erróneos.";
 		if( !tIdEmployee.getText().isEmpty() && !tIdCustomer.getText().isEmpty() &&
 				cbStatus.getValue() != null && !taProducsAmount.getText().isEmpty() && !taRemark.getText().isEmpty()){
 			if(DMC.addOrder(product, amo, taRemark.getText(), cbStatus.getValue(), tIdCustomer.getText(), tIdEmployee.getText()) ){
-				msg = "Pedido registrado con exito";
+				msg = "Pedido registrado con éxito";
 				tIdEmployee.setText("");
 				tIdCustomer.setText("");
 				taProducsAmount.setText("");
@@ -1101,7 +1101,7 @@ public class MainGUIController{
 				amo = null;
 				worked = true;
 			}else
-				msg = "Id del cliente o empleado erroneo";
+				msg = "Id del cliente o empleado erróneo";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -1115,7 +1115,7 @@ public class MainGUIController{
 	public void addProductToOrder()throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "No se ha podido a�adir el producto al pedido";
+		String msg = "No se ha podido añadir el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
 		String amountAndProducts = taProducsAmount.getText();
 		if(EGC.getProduct() != null){
@@ -1123,7 +1123,7 @@ public class MainGUIController{
 				amountAndProducts += EGC.getProduct()+" x "+EGC.getAmount() + "\n";
 				product.add(EGC.getProduct());
 				amo.add(EGC.getAmount());
-				msg = "Producto ha sido a�adido correctamente al pedido";
+				msg = "Producto ha sido añadido correctamente al pedido";
 			}//End if
 		}//End if
 		EGC.clearAddProductData();
@@ -1168,10 +1168,12 @@ public class MainGUIController{
 			changeMainItemsContextMenuState(true);
 		
 	}//End ListenChangeProductEvent
+
 	private void changeMainItemsContextMenuState(boolean state){
 		DisableElement.setDisable(state);
 		removeElement.setDisable(state);
 	}//End changeContextMenuState
+
 	@FXML
 	public void ListenChangesEnableProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1191,11 +1193,13 @@ public class MainGUIController{
 		changeEnableInfo.setContentText(msg);
 		changeEnableInfo.showAndWait();
 	}//End ListenChangesEnableProduct
+
 	@FXML
 	public void ListenChangeProductList() throws IOException{
 		enableList = !enableList;
 		showProductsList();
 	}//End ListenChangeProductList
+
 	@FXML
 	public void ListenRemoveProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1230,11 +1234,13 @@ public class MainGUIController{
 		}else
 			changeMainItemsContextMenuState(true);
 	}//End ListenChangeProductEvent
+
 	@FXML
 	public void ListenChangeIngredientList() throws IOException{
 		enableList = !enableList;
 		showIngredientsList();
 	}//End ListenChangeProductList
+
 	@FXML
 	public void ListenChangesEnableIngredient(){
 		Ingredient i = ingredientTable.getSelectionModel().getSelectedItem();
@@ -1289,11 +1295,13 @@ public class MainGUIController{
 		}else
 			changeMainItemsContextMenuState(true);
 	}//End ListenChangeProductEvent
+
 	@FXML
 	public void ListenChangeDishTypeList() throws IOException{
 		enableList = !enableList;
 		showDishTypeList();
 	}//End ListenChangeProductList
+
 	@FXML
 	public void ListenChangesEnableDishType(){
 		DishType d = dishTypeTable.getSelectionModel().getSelectedItem();

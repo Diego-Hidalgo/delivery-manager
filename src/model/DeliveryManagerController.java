@@ -820,7 +820,7 @@ public class DeliveryManagerController implements Serializable {
 				String productName = product.getName();
 				double price = product.getPrice();
 				int amount = amounts.get(j);
-				toWrite += s+productName + s + price + s +amount;
+				toWrite += s+productName + s + "$" +price + s +amount;
 			}//End for
 			toWrite += "\n";
 		}//End for
