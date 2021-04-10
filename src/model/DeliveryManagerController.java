@@ -128,7 +128,7 @@ public class DeliveryManagerController implements Serializable {
 		for(int i = 0; i < employees.size(); i ++) {
 			int amount = 0;
 			int totalPrice = 0;
-			for(int j = 0; j < ords.size(); i ++) {
+			for(int j = 0; j < ords.size(); j ++) {
 				Employee employee = employees.get(i);
 				Order order = ords.get(j);
 				if(order.getStatus().equals("ENTREGADO")) {
@@ -441,34 +441,35 @@ public class DeliveryManagerController implements Serializable {
 		}//End else
 	}//End removeCustomerById
 
-	public void exportProductsData(File productsData, String separator,Date initialDate,Date finishDate) throws FileNotFoundException{
-		int totalLines = 0;
-		PrintWriter pw = new PrintWriter(productsData);
+	public void exportProductsData(File file, String s, Date initialDate, Date finishDate) throws FileNotFoundException {
+		double totalPaid = 0;
+		PrintWriter pw = new PrintWriter(file);
 		List<Order> ords = getOrdersInRange(initialDate, finishDate);
-		String columns = "Nombre" + separator + "Tamaño" + separator + "Precio" +
-				         separator + "Cantidad de veces pedido" + separator + "Total" + "\n";
 		String info = "Reporte creado con los datos recolectados desde " + initialDate + " hasta " + finishDate + "\n";
+		String columns = "Nombre"+s+"Tamaño"+s+"Precio"+s+"Cantidad de veces pedido"+s+"Total"+"\n";
 		pw.write(info);
 		pw.write(columns);
 		for(int i = 0; i < products.size(); i ++) {
-			int times = 0;
+			Product product = products.get(i);
+			String name = product.getName();
+			String size = product.getSize();
+			double price = product.getPrice();
+			int amount = 0;
 			for(int j = 0; j < ords.size(); j ++) {
-				Product product = products.get(i);
 				Order order = ords.get(j);
-				if(order.getStatus().equals("ENTREGADO")) {
-					if(order.findProductInOrder(product.getProductBase().getName())) {
-						times ++;
-					}//End if
+				int index = order.findProductInOrder(name, size);
+				if(index != -1 && order.getStatus().equalsIgnoreCase("ENTREGADO")) {
+					amount += order.findAmountProduct(index);
 				}//End if
-				String toWrite = product.getProductBase().getName() + separator + product.getSize() +
-						         separator + product.getPrice() + separator + times + separator +
-						         (times * product.getPrice()) + "\n";
-				pw.write(toWrite);
-				totalLines ++;
 			}//End for
+			String toWrite = name + s + size + s +"$"+price + s + amount + s + (price*amount) + "\n";
+			totalPaid += (price*amount);
+			pw.write(toWrite);
 		}//End for
-		String lines = "Lineas totales: " + totalLines;
-		pw.write(lines);
+		String total = s + s + s + s + "$" + totalPaid + "\n";
+		pw.write(total);
+		String rows = "Registros totales: " + products.size() + "\n";
+		pw.write(rows);
 		pw.close();
 	}//End exportProductsData
 
@@ -795,14 +796,14 @@ public class DeliveryManagerController implements Serializable {
 						  separator + "Cantidad" + separator +"Precio" + "\n";
 		pw.write(columns);
 		String report = new String();
-		for(int i = 0; i < ords.size();i++){
+		for(int i = 0; i < ords.size(); i++){
 			List<Product> pds = ords.get(i).getProducts();
 			List<Integer> amo = ords.get(i).getAmount();
-			report += ords.get(i).getCustomer().getName() + " " + ords.get(i).getCustomer().getLastName() + separator
+			report += ords.get(i).getCustomer().getName() + separator + ords.get(i).getCustomer().getLastName() + separator
 					+ ords.get(i).getCustomer().getAddress() + separator + ords.get(i).getCustomer().getNPhone() + separator
-					+ ords.get(i).getEmployee().getName() + " " + ords.get(i).getEmployee().getLastName() + separator
+					+ ords.get(i).getEmployee().getName() + separator + ords.get(i).getEmployee().getLastName() + separator
 					+ ords.get(i).getDate() + separator + ords.get(i).getHour() + separator + ords.get(i).getRemark() + separator;
-			for(int j = 0; j < ords.size();i++){
+			for(int j = 0; j < ords.size(); j++){
 				report += pds.get(j).getProductBase().getName() + separator + amo.get(j) + separator + pds.get(j).getPrice();
 			}//End for
 			report += "\n";
