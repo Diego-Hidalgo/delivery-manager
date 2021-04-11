@@ -39,6 +39,9 @@ public class ProductBase implements Serializable {
 		}//End for
 		return ing;
 	}//End getIngredients
+	public List<Ingredient> getIngredientsList(){
+		return ingredients;
+	}//End getIngredientsList 
 	public void setIngredient(List<Ingredient> ingredient){
 		ingredients = ingredient;
 	}//End addIngredients

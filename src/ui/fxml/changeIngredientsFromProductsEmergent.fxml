@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="241.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="544.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="120.0" layoutY="24.0" text="Cambiar producto">
+      <Label alignment="CENTER" layoutX="1.0" layoutY="24.0" prefHeight="32.0" prefWidth="544.0" text="Agregar ingrediente">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="48.0" layoutY="112.0" text="Nombre:">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tNewIngredientToProduct" layoutX="132.0" layoutY="109.0" prefHeight="25.0" prefWidth="230.0" />
-      <Button layoutX="308.0" layoutY="166.0" mnemonicParsing="false" onAction="#changesIngredients" text="Agregar">
+      <TextField fx:id="tNewIngredientToProduct" layoutX="296.0" layoutY="122.0" prefHeight="25.0" prefWidth="195.0" />
+      <Button layoutX="437.0" layoutY="190.0" mnemonicParsing="false" onAction="#addIngredientToProductList" text="Agregar">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
+      <Label layoutX="296.0" layoutY="95.0" text="Ingrediente seleccionado o a crear">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="95.0" text="Selecciona un ingrediente">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbIngredients" layoutX="25.0" layoutY="122.0" onAction="#showInfoFromIngredientsComboBoxSelectedItem" prefWidth="150.0" />
    </children>
 </Pane>

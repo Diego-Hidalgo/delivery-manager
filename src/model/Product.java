@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product implements Serializable {
@@ -59,6 +60,14 @@ public class Product implements Serializable {
 	public String getIngredients(){
 		return product.getIngredients();
 	}//End getIngredients
+	public List<String> getIngredientsList(){
+		List<String> il = new ArrayList<String>();
+		List<Ingredient> i = product.getIngredientsList();
+		for(int j = 0; j < i.size() ;j++){
+			il.add(i.get(j).getName());
+		}//End for
+		return il;
+	}//End getIngredientsList
 	public void setModifier(User modifier) {
 		this.modifier = modifier;
 		product.setModifier(modifier);

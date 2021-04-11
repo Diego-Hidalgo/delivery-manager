@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +41,7 @@ public class MainGUIController{
 	@FXML private TextField tProductName;
 	@FXML private TextField tDishtype;
 	@FXML private TextArea tSizesAndPices;
-	@FXML private TextArea tIngredients;
+	@FXML private ListView<String> lIngredients;
 	@FXML private MenuItem DisableElement;
 	@FXML private MenuItem removeElement;
 	@FXML private MenuItem showList;
@@ -988,13 +987,13 @@ public class MainGUIController{
 		addInfo.setHeaderText(null);
 		String msg = "No se ha podido agregar el producto, llena todos los campos.";
 		if( !tProductName.getText().isEmpty() && !tDishtype.getText().isEmpty() 
-				&& !tSizesAndPices.getText().isEmpty() && !tIngredients.getText().isEmpty()){
-			boolean added = DMC.addProduct(tProductName.getText(),getIngredientsToAdd(),getPrices(),getSizes(),tDishtype.getText());
+				&& !tSizesAndPices.getText().isEmpty() && lIngredients.getItems() != null){
+			boolean added = DMC.addProduct(tProductName.getText(),lIngredients.getItems(),getPrices(),getSizes(),tDishtype.getText());
 			msg = (added)?"Se ha agregado exitosamente.":"Ya existe un producto con ese nombre.";
 			tProductName.setText("");
 			tDishtype.setText("");
 			tSizesAndPices.setText("");
-			tIngredients.setText("");
+			lIngredients.setItems(FXCollections.observableArrayList(""));
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -1004,33 +1003,33 @@ public class MainGUIController{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tamaÃ±o y precio ingresado ya existen para este producto";
+		String msg = "El tamaño y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "TamaÃ±o y  precio agregados con exito";
+			msg = "Tamaño y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 	}//End showAddSizeEmergentScene
 
-	@FXML
+	@FXML //tIngredients
 	public void getIngredientsFromAddIngredientsToProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
 		String msg = "El ingrediente elegido ya se encuentra en la lista de ingredientes";
 		EGC.showAddIngredientToProductScene();
 		String ingredientSelected = EGC.getIngredientToadd();
-		String currentIngredients = new String();
+		ObservableList<String> currentIngredients = FXCollections.observableList(lIngredients.getItems());
 		if(ingredientSelected != null){
-			if(!checkIngredientToAdd(ingredientSelected) && !ingredientSelected.isEmpty()){
-				currentIngredients += (tIngredients.getText().isEmpty())?ingredientSelected:tIngredients.getText()+"\n"+ingredientSelected;
-				tIngredients.setText(currentIngredients);
+			if(!checkIngredientToAdd(ingredientSelected)){
+				currentIngredients.add(ingredientSelected);
+				lIngredients.setItems(currentIngredients);
 				msg = "Se agrego el ingrediente";
-			}//End if	
+			}//End if
 		}else
 			msg = "No se selecciono ningun ingrediente";
 		addInfo.setContentText(msg);
@@ -1039,20 +1038,13 @@ public class MainGUIController{
 
 	private boolean checkIngredientToAdd(String toCheck){
 		boolean exist = false;
-		String[] ingredients = tIngredients.getText().split("\n");
-		try {
-			for(int i = 0; i < ingredients.length && !exist; i++){
-				if(toCheck.equalsIgnoreCase(ingredients[i]))
-					exist = true;
-			}//End for
-		}catch(NullPointerException e){}
+		ObservableList<String> currentIngredients = FXCollections.observableList(lIngredients.getItems());
+		for(int i = 0; i < currentIngredients.size() && !exist; i++){
+			if(toCheck.equalsIgnoreCase(currentIngredients.get(i)) && !toCheck.isEmpty())
+				exist = true;
+		}//End for
  		return exist;
 	}//End checkSizeAndPrice
-
-	private List<String> getIngredientsToAdd(){
-		return Arrays.asList(tIngredients.getText().split("\n"));
-	}//End getIngredientsToAdd
-
 	private List<String> getSizes(){
 		List<String> sizes = new ArrayList<String>();
 		String[] pricesAndSizes = tSizesAndPices.getText().split("\n"); 
@@ -1354,7 +1346,21 @@ public class MainGUIController{
 		}else
 			showOrderInfo.showAndWait();
 	}//End ListenShowOrderRegister
-
+	@FXML
+	public void ListenAddIngredientToProductList(){
+		String i = lIngredients.getSelectionModel().getSelectedItem();
+		if(i == null)
+			removeElement.setDisable(true);
+		else
+			removeElement.setDisable(false);
+	}//End ListenAddIngredientToProductList
+	@FXML
+	public void removeIngredientFromAddIngredientToProductList(){
+		String i = lIngredients.getSelectionModel().getSelectedItem();
+		ObservableList<String> currentIngredients = FXCollections.observableList(lIngredients.getItems());
+		currentIngredients.remove(i);
+		lIngredients.setItems(currentIngredients);
+	}//End removeIngredientFromAddIngredientToProductList
 	public void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts(enableList));
 		productTable.setItems(productsList);
@@ -1395,8 +1401,4 @@ public class MainGUIController{
 		status.add("ENTREGADO");
 		cbStatus.setItems(status);
 	}//End initializeIngredientsComboBox
-/*
- * Arreglar el cambio de estado de la variable que controla la lista que se desplegara,
- * asi como el texto que se muestra en las etiquetas y en las opciones
- * */
 }//End MainGUIController
