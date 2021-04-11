@@ -1024,7 +1024,7 @@ public class MainGUIController{
 		EGC.showAddIngredientToProductScene();
 		String ingredientSelected = EGC.getIngredientToadd();
 		ObservableList<String> currentIngredients = FXCollections.observableList(lIngredients.getItems());
-		if(ingredientSelected != null){
+		if(!ingredientSelected.equals("")){
 			if(!checkIngredientToAdd(ingredientSelected)){
 				currentIngredients.add(ingredientSelected);
 				lIngredients.setItems(currentIngredients);
@@ -1040,7 +1040,7 @@ public class MainGUIController{
 		boolean exist = false;
 		ObservableList<String> currentIngredients = FXCollections.observableList(lIngredients.getItems());
 		for(int i = 0; i < currentIngredients.size() && !exist; i++){
-			if(toCheck.equalsIgnoreCase(currentIngredients.get(i)) && !toCheck.isEmpty())
+			if(toCheck.equalsIgnoreCase(currentIngredients.get(i)))
 				exist = true;
 		}//End for
  		return exist;

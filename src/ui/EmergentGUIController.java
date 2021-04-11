@@ -414,6 +414,7 @@ public class EmergentGUIController {
 
 	@FXML
 	public void showAddIngredientToProductScene() throws IOException{
+		ingredientToadd = "";
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"AddIngredienteToProductEmergent.fxml"));
 		fxml.setController(this);
 		Parent root = fxml.load();
@@ -543,25 +544,6 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End changeProductData
-/*
-	@FXML
-	public void changesIngredients(ActionEvent event){
-		Alert addInfo = new Alert(AlertType.INFORMATION);
-		addInfo.setHeaderText(null);
-		boolean worked = false;
-		String currentIngredients = taIngredientsToChanges.getText();
-		if(!tNewIngredientToProduct.getText().isEmpty()){
-			currentIngredients += (!currentIngredients.isEmpty())?"\n" + tNewIngredientToProduct.getText(): tNewIngredientToProduct.getText();
-			taIngredientsToChanges.setText(currentIngredients);
-			worked = true;
-		}else {
-			addInfo.setContentText("Datos erroneos");
-			addInfo.showAndWait();
-		}
-		if(worked)
-		 closeEmergentWindows(event);
-	}//End changesIngredients*/
-
 	@FXML
 	public void changesDishType(ActionEvent event) throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -598,7 +580,6 @@ public class EmergentGUIController {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		ingredientToadd = "";
 		String msg = "Ingrediente erroneo";
 		if(!tSelectedIngredient.getText().isEmpty()){
 			ingredientToadd = tSelectedIngredient.getText();
@@ -909,10 +890,11 @@ public class EmergentGUIController {
 	@FXML
 	public void removeIngredientFromChangeProduct(){
 		String ing = taIngredientsToChanges.getSelectionModel().getSelectedItem();
-		ObservableList<String> curretnIngredients = FXCollections.observableList(productToChanges.getIngredientsList());
+		ObservableList<String> curretnIngredients = FXCollections.observableList(taIngredientsToChanges.getItems());
 		curretnIngredients.remove(ing);
 		taIngredientsToChanges.setItems(curretnIngredients);
 	}//End removeIngredientFromChangeProduct
+	
 	private void initializeProductsListView(){
 		ObservableList<String> curretnIngredients = FXCollections.observableList(productToChanges.getIngredientsList());
 		taIngredientsToChanges.setItems(curretnIngredients);
