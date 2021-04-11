@@ -40,6 +40,7 @@ public class EmergentGUIController {
 	private Ingredient ingredientToChange;
 	private Product productToAdd;
 	private Order registerOrder;
+	@FXML private MenuItem removeElement;
 	@FXML private TextField tAmount;
 	@FXML private TextField tIngredientName;
 	@FXML private TextField tDishtypeName;
@@ -897,6 +898,21 @@ public class EmergentGUIController {
 		}//End switch
 		return progress;
 	}//End initializeSliderProgress
+	@FXML
+	public void ListenRemoveIngredientFromProduct(){
+		String ing = taIngredientsToChanges.getSelectionModel().getSelectedItem();
+		if(ing == null)
+			removeElement.setDisable(true);
+		else
+			removeElement.setDisable(false);
+	}//End ListenRemoveIngredientFromProduct
+	@FXML
+	public void removeIngredientFromChangeProduct(){
+		String ing = taIngredientsToChanges.getSelectionModel().getSelectedItem();
+		ObservableList<String> curretnIngredients = FXCollections.observableList(productToChanges.getIngredientsList());
+		curretnIngredients.remove(ing);
+		taIngredientsToChanges.setItems(curretnIngredients);
+	}//End removeIngredientFromChangeProduct
 	private void initializeProductsListView(){
 		ObservableList<String> curretnIngredients = FXCollections.observableList(productToChanges.getIngredientsList());
 		taIngredientsToChanges.setItems(curretnIngredients);
