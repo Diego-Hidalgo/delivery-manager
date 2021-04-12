@@ -1,13 +1,11 @@
 package ui;
 
 import java.io.IOException;
-import java.util.Optional;
-
+import java.util.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -30,7 +28,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
 
-public class MainGUIController{
+public class MainGUIController implements Runnable{
 	//Product
 	@FXML private TableView<Product> productTable;
 	@FXML private TableColumn<Product,String> productName;
@@ -120,6 +118,16 @@ public class MainGUIController{
 	@FXML private MenuItem change;
 	@FXML private MenuItem delete;
 
+	@FXML private Thread dateThread;
+	@FXML private Label dateLbl;
+	private boolean stop = false;
+	private int day;
+	private int month;
+	private int year;
+	private int hour;
+	private int minutes;
+	private int seconds;
+
 	private DeliveryManagerController DMC;
 	private EmergentGUIController EGC;
 	
@@ -127,7 +135,7 @@ public class MainGUIController{
 	private List<Product> product;
 	private List<Integer> amo;
 
-	public MainGUIController(DeliveryManagerController DMC,EmergentGUIController EGC){
+	public MainGUIController(DeliveryManagerController DMC,EmergentGUIController EGC) {
 		this.DMC = DMC;
 		this.EGC = EGC;
 		product = new ArrayList<Product>();
@@ -135,7 +143,31 @@ public class MainGUIController{
 		title = new String();
 		enableList = true;
 		menuText = "Ver elementos no disponibles";
+		dateThread = new Thread(this);
 	}//End constructor
+
+	@Override
+	public void run() {
+		dateThread = new Thread(()-> {
+			while (!stop) {
+				Platform.runLater(() -> {
+					Calendar cal = new GregorianCalendar();
+					cal.setTime(new Date());
+					day = cal.get(Calendar.DAY_OF_MONTH);
+					month = cal.get(Calendar.MONTH) + 1;
+					year = cal.get(Calendar.YEAR);
+					hour = cal.get(Calendar.HOUR_OF_DAY);
+					minutes = cal.get(Calendar.MINUTE);
+					seconds = cal.get(Calendar.SECOND);
+					dateLbl.setText(day+"/"+month+"/"+year+"  "+hour+":"+minutes+":"+seconds);
+				});
+				try {
+					Thread.sleep(250);
+				} catch (InterruptedException ie) {}
+			}//End while
+		});
+		dateThread.start();
+	}//End run
 
 	@FXML
 	public void listenCustomerMouseEvent(MouseEvent me) throws IOException {
@@ -229,8 +261,12 @@ public class MainGUIController{
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
 		window.setTitle("Bienvenido");
+		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() +
+				             ". Acceda al menu para usar las funciones del sistema");
+		if(!dateThread.isAlive()) {
+			dateThread.start();
+		}
 		window.show();
-		showSceneOrdersList();
 	}//End switchToSecondaryPane
 
 	@FXML
@@ -649,7 +685,7 @@ public class MainGUIController{
 		mainPane.getChildren().clear();
 		mainPane.setCenter(loginScene);
 		Stage stage = (Stage) mainPane.getScene().getWindow();
-		stage.setTitle("Iniciar sesión");
+		stage.setTitle("Iniciar sesiï¿½n");
 		stage.setHeight(440);
 		stage.setResizable(false);
 	}//End showLoginScene
@@ -1003,14 +1039,14 @@ public class MainGUIController{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tamaño y precio ingresado ya existen para este producto";
+		String msg = "El tamaï¿½o y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "Tamaño y  precio agregados con exito";
+			msg = "Tamaï¿½o y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
