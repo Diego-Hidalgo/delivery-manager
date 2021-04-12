@@ -8,7 +8,6 @@ public class Product implements Serializable {
 
 	public final static long serialVersionUID = 1L;
 
-	private int ntr;//number of times it has been ordered
 	private double price;
 	private ProductSize size;
 	private ProductBase product;
@@ -21,7 +20,6 @@ public class Product implements Serializable {
 		this.size = size;
 		this.price = price;
 		enable = true;
-		ntr = 0;
 	}//End Product
 
 	public void changesProductBase(String name,List<Ingredient> ingredients,DishType type){
@@ -49,14 +47,6 @@ public class Product implements Serializable {
 	public String getSize(){
 		return size.getSize();
 	}//End getPrice
-
-	public void updateNtr(){
-		ntr++;
-	}//End updateNtr
-
-	public int getNtr(){
-		return ntr;
-	}//End getNtr
 	public String getIngredients(){
 		return product.getIngredients();
 	}//End getIngredients

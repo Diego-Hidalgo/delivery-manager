@@ -27,7 +27,7 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                <children>
-                  <TableView fx:id="orderTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="orderTable" onMouseClicked="#ListenOrderEvents" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="orderCode" prefWidth="130.0" text="Código" />
                       <TableColumn fx:id="orderDate" prefWidth="118.0" text="Fecha" />
@@ -38,9 +38,10 @@
                      <contextMenu>
                         <ContextMenu>
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#ListenShowOrderRegister" text="Ver registro completo" />
-                              <MenuItem mnemonicParsing="false" text="Deshabilitar" />
-                              <MenuItem mnemonicParsing="false" text="Eliminar" />
+                            <MenuItem fx:id="showCompleteRegister" mnemonicParsing="false" onAction="#ListenShowOrderRegister" text="Ver registro completo" />
+                              <MenuItem fx:id="DisableElement" mnemonicParsing="false" text="Deshabilitar" />
+                              <MenuItem fx:id="removeElement" mnemonicParsing="false" text="Eliminar" />
+                              <MenuItem mnemonicParsing="false" text="Ver pedidos no disponibles" />
                           </items>
                         </ContextMenu>
                      </contextMenu>

@@ -12,18 +12,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -57,7 +49,7 @@ public class MainGUIController{
 	@FXML private TableColumn<DishType,String> dishTypeName;
 	
 	//Order
-	@FXML private ComboBox<String> cbStatus;
+	@FXML private ChoiceBox<String> cbStatus;
 	@FXML private TextField tIdEmployee;
 	@FXML private TextField tIdCustomer;
 	@FXML private TextArea taRemark;
@@ -68,6 +60,7 @@ public class MainGUIController{
 	@FXML private TableColumn<Order,String> orderStatus;
 	@FXML private TableColumn<Order,String> orderProducts;
 	@FXML private TableColumn<Order,String> orderRemark;
+	@FXML private MenuItem showCompleteRegister;
 	private ObservableList<String> status;
 	
 	//Login
@@ -1080,11 +1073,12 @@ public class MainGUIController{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
 		boolean worked = false;
-		String msg = "Datos erróneos.";
+		String msg = "Datos erroneos.";
 		if( !tIdEmployee.getText().isEmpty() && !tIdCustomer.getText().isEmpty() &&
 				cbStatus.getValue() != null && !taProducsAmount.getText().isEmpty() && !taRemark.getText().isEmpty()){
-			if(DMC.addOrder(product, amo, taRemark.getText(), cbStatus.getValue(), tIdCustomer.getText(), tIdEmployee.getText()) ){
-				msg = "Pedido registrado con éxito";
+			if(checkCustomer(tIdCustomer.getText()) && checkEmployee(tIdEmployee.getText())){
+				DMC.addOrder(product, amo, taRemark.getText(), cbStatus.getValue(), tIdCustomer.getText(), tIdEmployee.getText()); 
+				msg = "Pedido registrado con �xito";
 				tIdEmployee.setText("");
 				tIdCustomer.setText("");
 				taProducsAmount.setText("");
@@ -1092,16 +1086,30 @@ public class MainGUIController{
 				product = null;
 				amo = null;
 				worked = true;
-			}else
-				msg = "Id del cliente o empleado erróneo";
+			}//End if
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 		if(worked){
 			product = new ArrayList<Product>();
 			amo = new ArrayList<Integer>();
-		}	
+		}//End if
 	}//End registerOrder
+	
+	private boolean checkCustomer(String id){
+		boolean exist = false;
+		if(DMC.searchCustomerPosition(id) >= 0)
+			if(DMC.getCustomerEnabledStatus(id))
+				exist = true;
+		return exist;
+	}//End checkCustomer
+	private boolean checkEmployee(String id){
+		boolean exist = false;
+		if(DMC.searchEmployeePosition(id) >= 0)
+			if(DMC.getEmployeeEnabledStatus(id))
+				exist = true;
+		return exist;
+	}//End checkEmployee
 
 	@FXML
 	public void addProductToOrder()throws IOException{
@@ -1334,17 +1342,26 @@ public class MainGUIController{
 		removeInfo.setContentText(msg);
 		removeInfo.showAndWait();
 	}//End ListenChangesEnableProduct
-
+	@FXML
+	public void ListenOrderEvents(MouseEvent mouseEvent) throws IOException{
+		Order o = orderTable.getSelectionModel().getSelectedItem();
+		if(o != null){
+			if(mouseEvent.getClickCount() == 2){
+				EGC.showChangeOrder(o);
+			}//End if
+			showCompleteRegister.setDisable(false);
+			DisableElement.setDisable(false);
+			removeElement.setDisable(false);
+		}else {
+			showCompleteRegister.setDisable(true);
+			DisableElement.setDisable(true);
+			removeElement.setDisable(true);
+		}//End else
+	}//End ListenOrderEvents
 	@FXML
 	public void ListenShowOrderRegister() throws IOException{
 		Order o = orderTable.getSelectionModel().getSelectedItem();
-		Alert showOrderInfo = new Alert(AlertType.INFORMATION);
-		showOrderInfo.setHeaderText(null);
-		showOrderInfo.setContentText("No hay elementos seleccionados");
-		if(o != null){
-			EGC.showCompleteOrderScene(o);
-		}else
-			showOrderInfo.showAndWait();
+		EGC.showCompleteOrderScene(o);
 	}//End ListenShowOrderRegister
 	@FXML
 	public void ListenAddIngredientToProductList(){

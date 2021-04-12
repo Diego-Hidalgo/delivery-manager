@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import model.*;
@@ -40,6 +41,7 @@ public class EmergentGUIController {
 	private Ingredient ingredientToChange;
 	private Product productToAdd;
 	private Order registerOrder;
+	@FXML private ChoiceBox<String> cbStatus;
 	@FXML private MenuItem removeElement;
 	@FXML private TextField tAmount;
 	@FXML private TextField tIngredientName;
@@ -61,7 +63,6 @@ public class EmergentGUIController {
 	@FXML private TextField separatorTxt;
 	@FXML private TextField tNameToChanges;
 	@FXML private TextField tTypeToChanges;
-	//@FXML private TextArea taIngredientsToChanges;
 	@FXML private TextField employeeNameTxt;
 	@FXML private TextField employeeLastNameTxt;
 	@FXML private TextField employeeIdTxt;
@@ -85,6 +86,9 @@ public class EmergentGUIController {
 	@FXML private ListView<Product> Lproducts;
 	@FXML private ListView<Integer> LAmount;
 	@FXML private Slider statusProgress;
+	@FXML private TextField tOrderCustomerId;
+	@FXML private TextField tOrderEmployeeId;
+	@FXML private TextArea taOrdersRemark;
 	//Import data
 	@FXML private ChoiceBox<String> importType;
 	@FXML private TextField mSeparator;
@@ -444,7 +448,22 @@ public class EmergentGUIController {
 		initializeForm();
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
-
+	@FXML//changeProductData
+	public void showChangeOrder(Order o) throws IOException{
+		registerOrder = o;
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"ChangeOrderEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage formulario = new Stage();
+		initializeStatusChoiceBox();
+		initializeOrderForm();
+		formulario.initModality(Modality.APPLICATION_MODAL);
+		formulario.setTitle("Cambiar producto");
+		formulario.setScene(scene);
+		formulario.setResizable(false);
+		formulario.showAndWait();
+	}//End showRegisterDihstypeScene
 	@FXML
 	public void showAddProductsToOrderEmergent() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"GetProductEmergent.fxml"));
@@ -507,6 +526,16 @@ public class EmergentGUIController {
 		tTypeToChanges.setText(productToChanges.getType());
 		tSize.setText(productToChanges.getSize());
 		tPrice.setText(String.valueOf(productToChanges.getPrice()));
+	}//End initializeForm
+	public void initializeOrderForm(){ //registerOrder
+		tOrderCustomerId.setText(registerOrder.getCustomer().getId());
+		tOrderEmployeeId.setText(registerOrder.getEmployee().getId());
+		cbStatus.setValue(registerOrder.getStatus());
+		taOrdersRemark.setText(registerOrder.getRemark());
+		ObservableList<Product> products = FXCollections.observableList(registerOrder.getProducts());
+		ObservableList<Integer> amount = FXCollections.observableList(registerOrder.getAmount());
+		Lproducts.setItems(products);
+		LAmount.setItems(amount);
 	}//End initializeForm
 	@FXML
 	public void setSizeText(){
@@ -646,7 +675,7 @@ public class EmergentGUIController {
 						msg = "La contraseña debe contener al menos 7 caracteres";
 					}//End else
 				} else {
-					msg = "El nombre de usuario ya est� en uso";
+					msg = "El nombre de usuario ya esta en uso";
 				}//End else
 			} else {
 				msg = "Las contrase�as no coinciden";
@@ -790,6 +819,44 @@ public class EmergentGUIController {
 	}//End getAmount
 
 	@FXML
+	public void changeOrder(ActionEvent event) throws IOException{
+		boolean worked = false;
+		Alert info = new Alert(AlertType.INFORMATION);
+		info.setHeaderText(null);
+		String msg = "Datos erroneos";
+		if(!tOrderCustomerId.getText().equals("") && !tOrderEmployeeId.getText().equals("")
+		   && !cbStatus.getValue().equals("") && !taOrdersRemark.getText().equals("") &&
+		   !Lproducts.getItems().isEmpty() && !LAmount.getItems().isEmpty()){
+			if(checkCustomer(tOrderCustomerId.getText()) && checkEmployee(tOrderEmployeeId.getText())){ 
+				DMC.changeOrder(registerOrder,Lproducts.getItems(),LAmount.getItems(),
+				taOrdersRemark.getText(),cbStatus.getValue(),tOrderCustomerId.getText(),
+				tOrderEmployeeId.getText());
+				worked = true;
+				msg = "Pedido cambiado con exito";
+			}else
+				msg = "Id del empleado o cliente erroneo, es posible que el id este deshabilitado";
+		}//End if
+		info.setContentText(msg);
+		info.showAndWait();
+		if(worked)
+			closeEmergentWindows(event);
+	}//End changeOrder
+//changeOrder(String idCustomer,String idEmployee)
+	private boolean checkCustomer(String id){
+		boolean exist = false;
+		if(DMC.searchCustomerPosition(id) >= 0)
+			if(DMC.getCustomerEnabledStatus(id))
+				exist = true;
+		return exist;
+	}//End checkCustomer
+	private boolean checkEmployee(String id){
+		boolean exist = false;
+		if(DMC.searchEmployeePosition(id) >= 0)
+			if(DMC.getEmployeeEnabledStatus(id))
+				exist = true;
+		return exist;
+	}//End checkEmployee
+	@FXML
 	public void addIngredient(ActionEvent event) throws IOException{
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -907,4 +974,12 @@ public class EmergentGUIController {
 		ObservableList<ProductSize> sizes = FXCollections.observableArrayList(DMC.getSizes());
 		cbSizes.setItems(sizes);
 	}//End initializeSizesComboBox
+	private void initializeStatusChoiceBox(){
+		ObservableList<String> status = FXCollections.observableArrayList();
+		status.add("SOLICITADO");
+		status.add("EN_PROCESO");
+		status.add("ENVIADO");
+		status.add("ENTREGADO");
+		cbStatus.setItems(status);
+	}//End initializeIngredientsComboBox
 }//End EmergentGUIController

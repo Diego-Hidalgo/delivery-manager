@@ -857,16 +857,11 @@ public class DeliveryManagerController implements Serializable {
 		return or;
 	}//End getOrdersInRange
 
-	public boolean addOrder(List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
+	public void addOrder(List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
-		boolean added = false;
-		if(customerIndex >= 0 && employeeIndex >= 0){
-			orders.add(new Order(nProducts,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
-			added = true;
-			saveAllData();
-		}//End if
-		return added;
+		orders.add(new Order(nProducts,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
+		saveAllData();
 	}//End addOrder
 
 	public boolean importOrders(File file, String mSeparator, String sSeparator, String tSeparator) throws IOException {
@@ -882,10 +877,7 @@ public class DeliveryManagerController implements Serializable {
 			String status = parts[3].toUpperCase();
 			String idCustomer = parts[4];
 			String idEmployee = parts[5];
-			boolean aux = addOrder(products, amount, remark, status, idCustomer, idEmployee);
-			if(!aux) {
-				all = false;
-			}//End if
+			addOrder(products, amount, remark, status, idCustomer, idEmployee);
 			line = br.readLine();
 		}//End while
 		br.close();
@@ -925,7 +917,6 @@ public class DeliveryManagerController implements Serializable {
 	public void changeOrder(Order order,List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
-		updateProductsNtr(nProducts);
 		order.setProduct(nProducts);
 		order.setAmount(amount);
 		order.setRemark(remark);
@@ -935,13 +926,6 @@ public class DeliveryManagerController implements Serializable {
 		order.setModifier(getLoggedUser());
 		saveAllData();
 	}//End changeOrder
-
-	private void updateProductsNtr(List<Product> p) throws IOException {
-		for(int i = 0; i < p.size(); i++){
-			p.get(i).updateNtr();
-		}//End for
-		saveAllData();
-	}//End updateProductsNtr
 
 	public void disableOrder(Order order) throws IOException {
 		order.setEnable(false);
