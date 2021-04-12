@@ -11,7 +11,7 @@ public class DishType implements Comparable<DishType>, Serializable {
 	private boolean linked;
 	private boolean enabled;
 	private String name;
-
+	private int numberOflinks;
 	/**
 	 * Constructor for DishType class.<br>
 	 *     <b>pre:</b> parameter is initialized. <br>
@@ -24,7 +24,6 @@ public class DishType implements Comparable<DishType>, Serializable {
 		linked = false;
 		enabled = true;
 	}//End Constructor
-
 	/**
 	 * Constructor for DishType class. <br>
 	 *     <b> pre:</b> parameters are initialized. <br>
@@ -37,7 +36,16 @@ public class DishType implements Comparable<DishType>, Serializable {
 		this.name = name;
 		enabled = true;
 	}//End Constructor
-
+	public void updateNumberOfLinks(int n){
+		numberOflinks += n; 
+	}//End updateNumberOfLinks
+	
+	public void updateLinkStatus(){
+		linked = (numberOflinks > 0)?true:false;
+	}//end updateLinkStatus
+	public int getNumberOfLinks(){
+		return numberOflinks;
+	}
 	/**
 	 * Changes the name of the DishType object. <br>
 	 *     <b>pre:</b> <br>

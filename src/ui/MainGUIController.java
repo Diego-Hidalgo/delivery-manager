@@ -256,7 +256,8 @@ public class MainGUIController implements Runnable{
 		window.setScene(scene);
 		window.setTitle("Bienvenido");
 		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() +
-				             ". Acceda al menu para usar las funciones del sistema");
+	             ". Acceda al menu para usar las funciones del sistema");
+		showSceneOrdersList();
 		if(!dateThread.isAlive()) {
 			dateThread.start();
 		}//End if
@@ -1140,7 +1141,7 @@ public class MainGUIController implements Runnable{
 	public void addProductToOrder()throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "No se ha podido aÃ±adir el producto al pedido";
+		String msg = "No se ha podido añadir el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
 		String amountAndProducts = taProducsAmount.getText();
 		if(EGC.getProduct() != null){

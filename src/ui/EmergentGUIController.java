@@ -30,12 +30,13 @@ import javafx.stage.Stage;
 public class EmergentGUIController {
 	
 	private final String FOLDER = "fxml/";
-	
+	final String[] ST = {"SOLICITADO","EN_PROCESO","ENVIADO","ENTREGADO"};
 	private DeliveryManagerController DMC;
 	private String  size;
 	private double price;
 	private String ingredientToadd;
 	private int amount;
+	
 	private ObservableList<Ingredient> ingredients;
 	private ObservableList<Product> products;
 	private DishType dishtype;
@@ -55,6 +56,7 @@ public class EmergentGUIController {
 	@FXML private ComboBox<Ingredient> cbIngredients;
 	@FXML private ComboBox<ProductSize> cbSizes;
 	@FXML private ComboBox<Product> cbProducts;
+	@FXML private TextField tfPrices;
 	@FXML private ChoiceBox<String> reportType;
 	@FXML private ListView<String> taIngredientsToChanges;
 	@FXML private TextField pathTxt;
@@ -473,7 +475,7 @@ public class EmergentGUIController {
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
-		initializeProductsComboBox();
+		initializeProductsChoiceBox();
 		formulario.initModality(Modality.APPLICATION_MODAL);
 		formulario.setTitle("Agregar producto");
 		formulario.setScene(scene);
@@ -508,6 +510,11 @@ public class EmergentGUIController {
 			addInfo.showAndWait();
 		}//End else
 	}//End AddProduct
+	@FXML
+	public void setPriceTextField(){
+		if(cbProducts.getValue() != null)
+			tfPrices.setText(String.valueOf(cbProducts.getValue().getPrice()));
+	}//End setPriceTextField
 	@FXML
 	public void showCompleteOrderScene(Order o) throws IOException{
 		registerOrder = o;
@@ -926,7 +933,7 @@ public class EmergentGUIController {
 		dishtype = null;
 	}//End clearChangeDishTypeData
 
-	private void initializeProductsComboBox(){
+	private void initializeProductsChoiceBox(){
 		products = FXCollections.observableArrayList(DMC.getProducts(true));
 		cbProducts.setItems(products);
 	}//End initializeIngredientsComboBox
@@ -981,10 +988,21 @@ public class EmergentGUIController {
 	}//End initializeSizesComboBox
 	private void initializeStatusChoiceBox(){
 		ObservableList<String> status = FXCollections.observableArrayList();
-		status.add("SOLICITADO");
-		status.add("EN_PROCESO");
-		status.add("ENVIADO");
-		status.add("ENTREGADO");
+		for(int i = findStatus(); i < ST.length; i++){
+			status.add(ST[i]);
+		}//End for
 		cbStatus.setItems(status);
 	}//End initializeIngredientsComboBox
+	
+	private int findStatus(){
+		int index = 0;
+		boolean found = false;
+		for(int i = 0; i < ST.length && !found;i++){
+			if(registerOrder.getStatus().equals(ST[i])){
+				index = i;
+				found = true;
+			}//End if
+		}//End for
+		return index;
+	}//End findStatus
 }//End EmergentGUIController

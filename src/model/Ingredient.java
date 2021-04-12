@@ -11,7 +11,7 @@ public class Ingredient implements Comparable<Ingredient>, Serializable {
 	private boolean linked;
 	private boolean enable;
 	private String name;
-	
+	private int numberOflinks;
 	public Ingredient(User creator){
 		name = new String();
 		this.creator= creator;
@@ -25,7 +25,16 @@ public class Ingredient implements Comparable<Ingredient>, Serializable {
 		enable = true;
 		linked = false;
 	}//End Constructor
-
+	public void updateNumberOfLinks(int n){
+		numberOflinks += n; 
+	}//End updateNumberOfLinks
+	
+	public void updateLinkStatus(){
+		linked = (numberOflinks > 0)?true:false;
+	}//end updateLinkStatus
+	public int getNumberOfLinks(){
+		return numberOflinks;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}//End setIngredients
@@ -33,11 +42,6 @@ public class Ingredient implements Comparable<Ingredient>, Serializable {
 	public String getName() {
 		return name;
 	}//End getIngredients
-
-	public void setLinked(boolean linked) {
-		this.linked = linked;
-	}//End setLinked
-
 	public boolean getLinked() {
 		return linked;
 	}//End getLinked

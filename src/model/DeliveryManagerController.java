@@ -489,8 +489,8 @@ public class DeliveryManagerController implements Serializable {
 	public boolean addProduct(final String name,List<String> ingredients,final List<Double> price,final List<String> size,final String type)throws IOException{
 		boolean added = false;
 		if(findProductBase(name) < 0){
-			DishType dishType = dishTypeToAdd(type);
-			productBase.add(new ProductBase(getLoggedUser(),name,dishType,ingredientsToAdd(ingredients)));
+			DishType dishType = dishTypeToAdd(type,price.size());
+			productBase.add(new ProductBase(getLoggedUser(),name,dishType,ingredientsToAdd(ingredients,price.size()),price.size()));
 			createSubproduct(productBase.get(productBase.size() - 1),price,size);
 			added = true;
 			saveAllData();
@@ -554,22 +554,27 @@ public class DeliveryManagerController implements Serializable {
 		return index;
 	}//End findProductSize
 
-	private List<Ingredient> ingredientsToAdd(List<String> ingredients) throws IOException {
+	private List<Ingredient> ingredientsToAdd(List<String> ingredients, int numberLinks) throws IOException {
 		List<Ingredient> ingd = new ArrayList<Ingredient>();
 		for(int i = 0; i < ingredients.size();i++){
 			int ingdIndex = findIngredient(ingredients.get(i));
 			if(ingdIndex < 0){
 				Ingredient in = new Ingredient(getLoggedUser(),ingredients.get(i));
+				in.updateNumberOfLinks(numberLinks);
+				in.updateLinkStatus();
 				addIngredient(in);
 				ingd.add(in);
-			}else
+			}else{
+				this.ingredients.get(ingdIndex).updateNumberOfLinks(numberLinks);
+				this.ingredients.get(ingdIndex).updateLinkStatus();
 				ingd.add(this.ingredients.get(ingdIndex));
+			}
 		}//End for
 		saveAllData();
 		return ingd;
 	}//End ingredientsToAdd
 
-	private DishType dishTypeToAdd(String dish) throws IOException {
+	private DishType dishTypeToAdd(String dish,int numberLinks) throws IOException {
 		int dtIndex = findDishType(dish);
 		DishType t;
 		if(dtIndex < 0){
@@ -577,6 +582,8 @@ public class DeliveryManagerController implements Serializable {
 			addDishType(t);
 		}else
 			t = types.get(dtIndex);
+		t.updateNumberOfLinks(numberLinks);
+		t.updateLinkStatus();
 		saveAllData();
 		return t;
 	}//End dishTypeToAdd
@@ -584,6 +591,7 @@ public class DeliveryManagerController implements Serializable {
 	public boolean changeProduct(Product product,final String newName,final List<String> Newingredients,final double prices,final String sizes,final String typeName) throws IOException {
 		boolean changed = false;
 		String n = product.getName();
+		
 		if(!product.getName().equalsIgnoreCase(newName)){
 			int productIndex = findProductBase(newName);
 			if(productIndex < 0){
@@ -593,7 +601,8 @@ public class DeliveryManagerController implements Serializable {
 		}else
 			changed = true;
 		if(changed){
-			product.changesProductBase(n, ingredientsToAdd(Newingredients), dishTypeToAdd(typeName));
+			updateProductsOldObjectsLinks(product);
+			product.changesProductBase(n, ingredientsToAdd(Newingredients,product.getProductBase().getNumberOfSubproducts()), dishTypeToAdd(typeName,product.getProductBase().getNumberOfSubproducts()));
 			product.setPrice(prices);
 			product.setSize(sizes);
 			product.setModifier(loggedUser);
@@ -601,7 +610,16 @@ public class DeliveryManagerController implements Serializable {
 		}//End if
 		return changed;
 	}//End changeProduct
-
+	private void updateProductsOldObjectsLinks(Product product){
+		List<Ingredient> oldIng =  product.getProductBase().getIngredientsList();
+		DishType oldDish = product.getProductBase().getDishType();
+		for(int i = 0; i < oldIng.size();i++){
+			oldIng.get(i).updateNumberOfLinks(-product.getProductBase().getNumberOfSubproducts());
+			oldIng.get(i).updateLinkStatus();
+		}//End for
+		oldDish.updateNumberOfLinks((-product.getProductBase().getNumberOfSubproducts()));
+		oldDish.updateLinkStatus();
+	}//End updateProductsObjectsLinks
 
 	public void changeEnableProduct(Product product) throws IOException {
 		product.setEnable(!product.getEnable());

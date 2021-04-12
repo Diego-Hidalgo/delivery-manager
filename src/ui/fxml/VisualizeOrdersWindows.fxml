@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="CENTER" prefHeight="73.0" prefWidth="805.0" BorderPane.alignment="CENTER">
          <children>
@@ -23,11 +29,11 @@
                <children>
                   <TableView fx:id="orderTable" onMouseClicked="#ListenOrderEvents" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
-                      <TableColumn fx:id="orderCode" prefWidth="130.0" text="Código" />
-                      <TableColumn fx:id="orderDate" prefWidth="118.0" text="Fecha" />
-                        <TableColumn fx:id="orderStatus" prefWidth="126.0" text="Estado" />
-                        <TableColumn fx:id="orderProducts" prefWidth="220.0" text="Productos" />
-                        <TableColumn fx:id="orderRemark" prefWidth="155.0" text="Comentarios" />
+                      <TableColumn fx:id="orderCode" editable="false" prefWidth="130.0" resizable="false" sortable="false" text="Código" />
+                      <TableColumn fx:id="orderDate" editable="false" prefWidth="118.0" resizable="false" sortable="false" text="Fecha" />
+                        <TableColumn fx:id="orderStatus" editable="false" prefWidth="126.0" resizable="false" sortable="false" text="Estado" />
+                        <TableColumn fx:id="orderProducts" editable="false" prefWidth="220.0" resizable="false" sortable="false" text="Productos" />
+                        <TableColumn fx:id="orderRemark" editable="false" prefWidth="155.0" resizable="false" sortable="false" text="Comentarios" />
                     </columns>
                      <contextMenu>
                         <ContextMenu>

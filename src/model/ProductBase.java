@@ -12,21 +12,25 @@ public class ProductBase implements Serializable {
 	private String name;
 	private List<Ingredient> ingredients;
 	private DishType type;
-	
+	private int numberOfSubproducts;
 	public ProductBase(User creator){
 		name = new String();
 		type = new DishType(creator);
 		this.creator= creator;
 		ingredients = new ArrayList<Ingredient>();
+		numberOfSubproducts = 0;
 	}//End constructor1
 
-	public ProductBase(User creator,String name,DishType type,List<Ingredient> ingredients){
+	public ProductBase(User creator,String name,DishType type,List<Ingredient> ingredients,int numberOfSubproducts){
 		this.name = name;
 		this.creator= creator;
 		this.type = type;
 		this.ingredients = ingredients;
+		this.numberOfSubproducts = numberOfSubproducts;
 	}//End constructor2
-
+	public void updateNumberOfSubProducts(int n){
+		numberOfSubproducts += n;
+	}//End updateNumberOfSubProducts
 	public void addIngredient(Ingredient ingredient){
 		ingredients.add(ingredient);
 	}//End addIngredients
@@ -61,7 +65,9 @@ public class ProductBase implements Serializable {
 	public String getType(){
 		return type.getName();
 	}//End getName
-
+	public DishType getDishType(){
+		return type;
+	}//End getName
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}//End setCreator
@@ -78,11 +84,14 @@ public class ProductBase implements Serializable {
 		return modifier;
 	}//End getModifier
 	public String toString(){
-		String info = "Nombre: " + name + "\nIngredientes:";
-		for(int i = 0; i < ingredients.size();i++)
-			info += ingredients.get(i).getName()+"\n";
-		return info;
+		return name;
 	}
+	public void setNumberOfSubproducts(int n){
+		numberOfSubproducts = n;
+	}//End setNumberOfSubproducts
+	public int getNumberOfSubproducts(){
+		return numberOfSubproducts;
+	}//End getNumberOfSubProducts
 	/**@Override
 	public int compareTo(ProductBase tPrice) {
 		return (getTotalPrice()).compareTo(tPrice.getTotalPrice());

@@ -59,7 +59,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="345.0" prefWidth="270.0">
+            <VBox prefHeight="359.0" prefWidth="310.0">
                <children>
                   <TextField fx:id="tIdCustomer" prefHeight="25.0" prefWidth="246.0" />
                   <Pane prefHeight="39.0" prefWidth="239.0" />

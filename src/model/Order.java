@@ -13,6 +13,7 @@ public class Order implements Serializable, Comparable<Order>{
 	private String code;
 	private List<Integer> amount;
 	private List<Product> products;
+	private List<Double> productsPrices;
 	private String remark;
 	private Status status;
 	private Date date;
@@ -76,7 +77,7 @@ public class Order implements Serializable, Comparable<Order>{
 
 	@SuppressWarnings("deprecation")
 	public String getDate(){
-		return String.valueOf(date.getDate()+"/"+date.getMonth()+"/"+(date.getYear()+1900));
+		return String.valueOf(date.getDate()+"/"+(date.getMonth()+1)+"/"+(date.getYear()+1900));
 	}//End getDate
 
 	@SuppressWarnings("deprecation")
@@ -163,7 +164,17 @@ public class Order implements Serializable, Comparable<Order>{
 	public List<Product> getProducts(){
 		return products;
 	}//End getProducts
-	
+	public int getAmountByProduct(Product p){
+		int am = 0;
+		boolean found = false;
+		for(int i = 0; i < products.size() && !found;i++){
+			if(products.get(i) == p){
+				am = amount.get(i);
+				found = true;
+			}//End if
+		}//End for
+		return am;
+	}//End getAmountByProduct
 	public String getProductsList(){
 		String products = new String();
 		int size = this.products.size();
@@ -174,7 +185,12 @@ public class Order implements Serializable, Comparable<Order>{
 		products += (limit == 3)?"...\n":"";
 		return products;
 	}//End getProductsList
-	
+	public void setProductsPrices(List<Double> prices){
+		productsPrices = prices;
+	}//End setProductsPrices
+	public List<Double> getProductsPrices(){
+		return productsPrices;
+	}//End getProductsPrices
 	public double calculateTotalPrice() {
 		double totalPrice = 0;
 		for(int i = 0; i < products.size(); i ++) {

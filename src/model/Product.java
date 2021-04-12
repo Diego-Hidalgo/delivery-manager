@@ -12,14 +12,16 @@ public class Product implements Serializable {
 	private ProductSize size;
 	private ProductBase product;
 	private User modifier;
+	private int numberOflinks;
 	private boolean linked;
 	private boolean enable;
-	
 	public Product(ProductBase product,ProductSize size,double price){
 		this.product = product;
 		this.size = size;
 		this.price = price;
 		enable = true;
+		linked = false;
+		numberOflinks = 0;
 	}//End Product
 
 	public void changesProductBase(String name,List<Ingredient> ingredients,DishType type){
@@ -43,7 +45,16 @@ public class Product implements Serializable {
 	public double getPrice(){
 		return price;
 	}//End getPrice
-
+	public void updateNumberOfLinks(int n){
+		numberOflinks += n; 
+	}//End updateNumberOfLinks
+	
+	public void updateLinkStatus(){
+		linked = (numberOflinks > 0)?true:false;
+	}//end updateLinkStatus
+	public int getNumberOfLinks(){
+		return numberOflinks;
+	}
 	public String getSize(){
 		return size.getSize();
 	}//End getPrice
@@ -63,9 +74,9 @@ public class Product implements Serializable {
 		product.setModifier(modifier);
 	}//End setModifier
 
-	public void setLinked(boolean linked) {
+	/*public void setLinked(boolean linked) {
 		this.linked = linked;
-	}//End setLinked
+	}//End setLinked*/
 	public void setEnable(boolean enable){
 		 this.enable = enable;
 	}
@@ -87,7 +98,7 @@ public class Product implements Serializable {
 	}//End getModifier
 	@Override
 	public String toString(){
-		String info = getName() + " x " + price;
+		String info = getName() + " | " + getSize();
 		return info;
 	}//End toString
 }//End Product
