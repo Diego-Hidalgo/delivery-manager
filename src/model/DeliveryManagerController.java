@@ -119,9 +119,7 @@ public class DeliveryManagerController implements Serializable {
 	public void exportEmployeesData(File file, String s, Date initialDate, Date finishDate) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(file);
 		List<Order> ords = getOrdersInRange(initialDate, finishDate);
-		String info = "Reporte creado con los datos recolectados desde " + initialDate + " hasta " + finishDate + "\n";
-		String columns = "Nombre"+s+"Apellido"+s+"Identificación"+s+"Total pedidos entregados"+s+"Total pago de pedidos" + "\n";
-		pw.write(info);
+		String columns = "Nombre"+s+"Apellido"+s+"Identificacion"+s+"Total pedidos entregados"+s+"Total pago de pedidos" + "\n";
 		pw.write(columns);
 		double total = 0;
 		int delivered = 0;
@@ -449,9 +447,7 @@ public class DeliveryManagerController implements Serializable {
 		int delivered = 0;
 		PrintWriter pw = new PrintWriter(file);
 		List<Order> ords = getOrdersInRange(initialDate, finishDate);
-		String info = "Reporte creado con los datos recolectados desde " + initialDate + " hasta " + finishDate + "\n";
-		String columns = "Nombre"+s+"Tamaño"+s+"Precio"+s+"Cantidad de veces pedido"+s+"Total"+"\n";
-		pw.write(info);
+		String columns = "Nombre"+s+"Tamanio"+s+"Precio"+s+"Cantidad de veces pedido"+s+"Total"+"\n";
 		pw.write(columns);
 		for(int i = 0; i < products.size(); i ++) {
 			Product product = products.get(i);
@@ -794,8 +790,7 @@ public class DeliveryManagerController implements Serializable {
 		List<Order> ords = getOrdersInRange(initialDate,finishDate);
 		int max = 0;
 		String toWrite = "";
-		String info = "Reporte creado con los datos recolectados desde: " + initialDate + " hasta " + finishDate + "\n";
-		String columns = "Fecha"+s+"Hora"+s+"Nombre del cliente"+s+"Apellido del cliente"+s+"Dirección del cliente"+
+		String columns = "Fecha"+s+"Hora"+s+"Nombre del cliente"+s+"Apellido del cliente"+s+ "Direccion del cliente" +
 						  s+"Telefono del cliente"+s+"Nombre del empleado"+s+"Apellido del empleado"+s+
 				         "Observaciones" +s+"Estado";
 		for(int i = 0; i < ords.size(); i ++) {
@@ -830,7 +825,6 @@ public class DeliveryManagerController implements Serializable {
 			columns += s+"Producto"+s+"Precio"+s+"Cantidad";
 		}//End for
 		columns += "\n";
-		pw.write(info);
 		pw.write(columns);
 		pw.write(toWrite);
 		pw.close();
