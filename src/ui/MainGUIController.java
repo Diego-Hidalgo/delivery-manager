@@ -144,6 +144,7 @@ public class MainGUIController implements Runnable{
 		enableList = true;
 		menuText = "Ver elementos no disponibles";
 		dateThread = new Thread(this);
+		dateThread.setDaemon(true);
 	}//End constructor
 
 	@Override
