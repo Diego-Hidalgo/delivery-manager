@@ -446,6 +446,7 @@ public class DeliveryManagerController implements Serializable {
 
 	public void exportProductsData(File file, String s, Date initialDate, Date finishDate) throws FileNotFoundException {
 		double totalPaid = 0;
+		int delivered = 0;
 		PrintWriter pw = new PrintWriter(file);
 		List<Order> ords = getOrdersInRange(initialDate, finishDate);
 		String info = "Reporte creado con los datos recolectados desde " + initialDate + " hasta " + finishDate + "\n";
@@ -465,11 +466,12 @@ public class DeliveryManagerController implements Serializable {
 					amount += order.findAmountProduct(index);
 				}//End if
 			}//End for
-			String toWrite = name + s + size + s +"$"+price + s + amount + s + (price*amount) + "\n";
+			String toWrite = name + s + size + s + "$" + price + s + amount + s + "$" + (price*amount) + "\n";
 			totalPaid += (price*amount);
+			delivered += amount;
 			pw.write(toWrite);
 		}//End for
-		String total = s + s + s + s + "$" + totalPaid + "\n";
+		String total = s + s + s + delivered + s + "$" + totalPaid + "\n";
 		pw.write(total);
 		String rows = "Registros totales: " + products.size() + "\n";
 		pw.write(rows);
