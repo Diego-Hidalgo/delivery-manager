@@ -1348,6 +1348,7 @@ public class MainGUIController{
 		if(o != null){
 			if(mouseEvent.getClickCount() == 2){
 				EGC.showChangeOrder(o);
+				showSceneOrdersList();
 			}//End if
 			showCompleteRegister.setDisable(false);
 			DisableElement.setDisable(false);

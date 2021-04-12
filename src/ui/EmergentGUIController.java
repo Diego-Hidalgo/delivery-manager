@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -828,9 +830,12 @@ public class EmergentGUIController {
 		   && !cbStatus.getValue().equals("") && !taOrdersRemark.getText().equals("") &&
 		   !Lproducts.getItems().isEmpty() && !LAmount.getItems().isEmpty()){
 			if(checkCustomer(tOrderCustomerId.getText()) && checkEmployee(tOrderEmployeeId.getText())){ 
-				DMC.changeOrder(registerOrder,Lproducts.getItems(),LAmount.getItems(),
-				taOrdersRemark.getText(),cbStatus.getValue(),tOrderCustomerId.getText(),
-				tOrderEmployeeId.getText());
+				List<Product> products = new ArrayList<Product>();
+				List<Integer> amounts = new ArrayList<Integer>();
+				products.addAll(Lproducts.getItems());
+				amounts.addAll(LAmount.getItems());
+				DMC.changeOrder(registerOrder,products,amounts,taOrdersRemark.getText(),
+				cbStatus.getValue(),tOrderCustomerId.getText(),tOrderEmployeeId.getText());
 				worked = true;
 				msg = "Pedido cambiado con exito";
 			}else
