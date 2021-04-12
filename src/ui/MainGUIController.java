@@ -266,7 +266,7 @@ public class MainGUIController implements Runnable{
 				             ". Acceda al menu para usar las funciones del sistema");
 		if(!dateThread.isAlive()) {
 			dateThread.start();
-		}
+		}//End if
 		window.show();
 	}//End switchToSecondaryPane
 
@@ -686,7 +686,7 @@ public class MainGUIController implements Runnable{
 		mainPane.getChildren().clear();
 		mainPane.setCenter(loginScene);
 		Stage stage = (Stage) mainPane.getScene().getWindow();
-		stage.setTitle("Iniciar sesi�n");
+		stage.setTitle("Iniciar sesion");
 		stage.setHeight(440);
 		stage.setResizable(false);
 	}//End showLoginScene
@@ -696,8 +696,8 @@ public class MainGUIController implements Runnable{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("Verifique las credenciales de inicio de sesión");
-		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.setContentText("Verifique las credenciales de inicio de sesion");
+		ButtonType confirmation = new ButtonType("Aceptar");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
 	}//End incorrectCredentials
@@ -707,8 +707,8 @@ public class MainGUIController implements Runnable{
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("No se puede realizar la acción porque el " + entity + " se encuentra deshabilitado");
-		ButtonType confirmation = new ButtonType("ACEPTAR");
+		alert.setContentText("No se puede realizar la accion porque el " + entity + " se encuentra deshabilitado");
+		ButtonType confirmation = new ButtonType("Aceptar");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
 	}//End entityDisabledAlert
@@ -745,7 +745,7 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public boolean confirmActionAlert(String text) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Confirmar Acción");
+		alert.setTitle("Confirmar Accion");
 		alert.setHeaderText(null);
 		alert.setContentText(text);
 		ButtonType acceptBtn = new ButtonType("Aceptar");
@@ -804,7 +804,7 @@ public class MainGUIController implements Runnable{
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Lista De Empleados");
 		stage.setWidth(700);
-		stage.setHeight(510);
+		stage.setHeight(550);
 		title = (enableList)?"Empleados habilitados":"Empleados deshabilitados";
 		menuText = (enableList)?"Ver empleados deshabilitados":"Ver empleados habilitados";
 		listTitle.setText(title);
@@ -838,7 +838,7 @@ public class MainGUIController implements Runnable{
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Lista De Usuarios");
 		stage.setWidth(800);
-		stage.setHeight(510);
+		stage.setHeight(550);
 		title = (enableList)?"Usuarios habilitados":"Usuarios deshabilitados";
 		menuText = (enableList)?"Ver usuarios deshabilitados":"Ver usuarios habilitados";
 		listTitle.setText(title);
@@ -873,7 +873,7 @@ public class MainGUIController implements Runnable{
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Lista De Clientes");
 		stage.setWidth(950);
-		stage.setHeight(510);
+		stage.setHeight(550);
 		title = (enableList)?"Clientes habilitados":"Clientes deshabilitados";
 		menuText = (enableList)?"Ver clientes deshabilitados":"Ver clientes habilitados";
 		listTitle.setText(title);
@@ -900,18 +900,6 @@ public class MainGUIController implements Runnable{
 		enableList = !enableList;
 		showVisualizeCustomers();
 	}//End listenChangeCustomersTable
-
-	@FXML
-	public void showSceneLogin() throws IOException{
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"PantallaDePruebas.fxml"));
-		fxml.setController(this);
-		Parent loginScene = fxml.load();
-		secondaryPane.setCenter(loginScene);
-		Stage st = (Stage) secondaryPane.getScene().getWindow();
-		st.setHeight(400);
-		st.setWidth(500);
-		st.setResizable(false);
-	}//End showSceneLogin
 
 	@FXML
 	public void showImportDataScene() throws IOException {
@@ -949,7 +937,7 @@ public class MainGUIController implements Runnable{
 		showList.setText(menuText);
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		st.setTitle("Lista de pedidos");
-		st.setHeight(540);
+		st.setHeight(570);
 		st.setWidth(800);
 		st.setResizable(false);
 	}//End showSceneLogin
@@ -967,7 +955,7 @@ public class MainGUIController implements Runnable{
 		listTitle.setText(title);
 		showList.setText(menuText);
 		st.setTitle("Lista de ingredientes");
-		st.setHeight(450);
+		st.setHeight(500);
 		st.setWidth(550);
 		st.setResizable(false);
 	}//End showIngredientsList
@@ -985,7 +973,7 @@ public class MainGUIController implements Runnable{
 		listTitle.setText(title);
 		showList.setText(menuText);
 		st.setTitle("Lista de tipos de platos");
-		st.setHeight(450);
+		st.setHeight(500);
 		st.setWidth(550);
 		st.setResizable(false);
 	}//End showDishTypeList
@@ -1013,7 +1001,7 @@ public class MainGUIController implements Runnable{
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		initializeOrdersList();
 		st.setTitle("Registros de pedido");
-		st.setHeight(470);
+		st.setHeight(520);
 		st.setWidth(900);
 		st.setResizable(false);
 	}//End showSceneLogin
@@ -1040,14 +1028,14 @@ public class MainGUIController implements Runnable{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tama�o y precio ingresado ya existen para este producto";
+		String msg = "El tamano y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "Tama�o y  precio agregados con exito";
+			msg = "Tamano y  precio agregados con exito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -1383,6 +1371,7 @@ public class MainGUIController implements Runnable{
 		}else
 			showOrderInfo.showAndWait();
 	}//End ListenShowOrderRegister
+
 	@FXML
 	public void ListenAddIngredientToProductList(){
 		String i = lIngredients.getSelectionModel().getSelectedItem();
@@ -1391,6 +1380,7 @@ public class MainGUIController implements Runnable{
 		else
 			removeElement.setDisable(false);
 	}//End ListenAddIngredientToProductList
+
 	@FXML
 	public void removeIngredientFromAddIngredientToProductList(){
 		String i = lIngredients.getSelectionModel().getSelectedItem();
@@ -1398,6 +1388,7 @@ public class MainGUIController implements Runnable{
 		currentIngredients.remove(i);
 		lIngredients.setItems(currentIngredients);
 	}//End removeIngredientFromAddIngredientToProductList
+
 	public void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts(enableList));
 		productTable.setItems(productsList);
@@ -1438,4 +1429,5 @@ public class MainGUIController implements Runnable{
 		status.add("ENTREGADO");
 		cbStatus.setItems(status);
 	}//End initializeIngredientsComboBox
+
 }//End MainGUIController

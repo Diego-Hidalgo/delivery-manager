@@ -961,6 +961,7 @@ public class DeliveryManagerController implements Serializable {
 		}//End for
 		return enableProducts;
 	}//End getProducts
+
 	public List<Product> getDisableProducts(){
 		List<Product> disableProducts = new ArrayList<Product>();
 		for(int i = 0; i < products.size();i++){
@@ -969,6 +970,7 @@ public class DeliveryManagerController implements Serializable {
 		}//End for
 		return disableProducts;
 	}//End getProducts
+
 	public List<ProductSize> getSizes(){
 		return sizes;
 	}//End getSizes
