@@ -30,7 +30,7 @@
          </children></VBox>
    </center>
    <top>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="55.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="listTitle" text="LISTA DE EMPLEADOS">
                <font>
