@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -146,56 +148,73 @@ public class EmergentGUIController {
 
 	public void importData(ActionEvent event) throws IOException {
 		if(importType.getValue() != null) {
-			if(importType.getValue().equals("Clientes")) {
-				importCustomersData(event);
-			} else if (importType.getValue().equals("Productos")){
-				importProductsData(event);
+			if(importType.getValue().equalsIgnoreCase("Clientes")) {
+				if(!pathTxt.getText().isEmpty() && !mSeparator.getText().isEmpty()) {
+					importCustomersData(event);
+				} else {
+					emptyFieldAlert();
+				}//End else
+			} else if(importType.getValue().equalsIgnoreCase("Productos")) {
+				if(!pathTxt.getText().isEmpty() && !mSeparator.getText().isEmpty() && !sSeparator.getText().isEmpty()) {
+					importProductsData(event);
+				} else {
+					emptyFieldAlert();
+				}//End else
 			} else {
-				importOrdersData(event);
+				if(!pathTxt.getText().isEmpty() && !mSeparator.getText().isEmpty() && !sSeparator.getText().isEmpty() && !tSeparator.getText().isEmpty()) {
+					importOrdersData(event);
+				} else {
+					emptyFieldAlert();
+				}//End else
 			}//End else
 		} else {
 			emptyFieldAlert();
 		}//End else
 	}//End importData
 
-	public void importCustomersData(ActionEvent event) throws IOException {
-		if(!pathTxt.getText().isEmpty() && DMC.validateBlankChars(mSeparator.getText())) {
-			if(DMC.importCustomerData(new File(pathTxt.getText()), mSeparator.getText())) {
-				importDataStatusAlert("Se ha importado toda la informaciÃ³n del archivo correctamente,");
-			} else {
-				importDataStatusAlert("No se ha podido importar todos los datos del archivo.");
-			}//End else
-			closeEmergentWindows(event);
-		} else {
-			emptyFieldAlert();
-		}//End else
+	public void importCustomersData(ActionEvent event) {
+		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informacion...");
+		Runnable r = () -> {
+			try {
+				DMC.importCustomerData(new File(pathTxt.getText()), mSeparator.getText());
+			} catch (IOException exception) {
+				msg.set("Ha ocurrido un error");
+			}//End catch
+		};
+		Thread t = new Thread(r);
+		t.start();
+		importDataStatusAlert(msg.get());
+		closeEmergentWindows(event);
 	}//End importCustomersData
 
-	public void importProductsData(ActionEvent event) throws IOException {
-		if(!pathTxt.getText().isEmpty() && DMC.validateBlankChars(mSeparator.getText()) && DMC.validateBlankChars(sSeparator.getText())) {
-			if(DMC.importProducts(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText())) {
-				importDataStatusAlert("Se ha importado toda la informaciÃ³n del archivo correctamente,");
-			} else {
-				importDataStatusAlert("No se ha podido importar todos los datos del archivo.");
-			}//End else
-			closeEmergentWindows(event);
-		} else {
-			emptyFieldAlert();
-		}//End else
+	public void importProductsData(ActionEvent event) {
+		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informacion...");
+		Runnable r = () -> {
+			try {
+				DMC.importProducts(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText());
+			} catch (IOException exception) {
+				msg.set("Ha ocurrido un error");
+			}//End catch
+		};
+		Thread t = new Thread(r);
+		t.start();
+		importDataStatusAlert(msg.get());
+		closeEmergentWindows(event);
 	}//End importProductsData
 
-	public void importOrdersData(ActionEvent event) throws IOException {
-		if(!pathTxt.getText().isEmpty() && DMC.validateBlankChars(mSeparator.getText()) && DMC.validateBlankChars(sSeparator.getText()) &&
-			DMC.validateBlankChars(tSeparator.getText())) {
-			if(DMC.importOrders(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText(), tSeparator.getText())) {
-				importDataStatusAlert("Se ha importado toda la informaciÃ³n del archivo correctamente,");
-			} else {
-				importDataStatusAlert("No se ha podido importar todos los datos del archivo.");
-			}//End else
-			closeEmergentWindows(event);
-		} else {
-			emptyFieldAlert();
-		}//End else
+	public void importOrdersData(ActionEvent event) {
+		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informacion...");
+		Runnable r = () -> {
+			try {
+				DMC.importOrders(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText(), tSeparator.getText());
+			} catch (IOException exception) {
+				msg.set("Ha ocurrido un error");
+			}//End catch
+		};
+		Thread t = new Thread(r);
+		t.start();
+		importDataStatusAlert(msg.get());
+		closeEmergentWindows(event);
 	}//End importOrdersData
 
 	@FXML
@@ -429,7 +448,7 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaño del producto");
+		formulario.setTitle("Agregar tamaï¿½o del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		initializeIngredientsComboBox();
@@ -570,7 +589,7 @@ public class EmergentGUIController {
 						msg = "Se ha cambiado el producto con exito";
 						worked = true;
 					}else
-						msg = "No se pudó cambiar el producto, ya existe otro con ese nombre";
+						msg = "No se pudï¿½ cambiar el producto, ya existe otro con ese nombre";
 				}else
 					msg = "El precio no puede ser negativo";
 			}catch(NumberFormatException e){
@@ -792,7 +811,7 @@ public class EmergentGUIController {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "Tamaño o precio incorrecto.";
+		String msg = "Tamaï¿½o o precio incorrecto.";
 		if(!tSize.getText().isEmpty() && !tPrice.getText().isEmpty()){
 			try{
 				price = Double.parseDouble(tPrice.getText());
@@ -1005,4 +1024,5 @@ public class EmergentGUIController {
 		}//End for
 		return index;
 	}//End findStatus
+
 }//End EmergentGUIController
