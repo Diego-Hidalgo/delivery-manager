@@ -1000,7 +1000,6 @@ public class MainGUIController implements Runnable{
 		st.setWidth(550);
 		st.setResizable(false);
 	}//End showSceneLogin
-
 	@FXML
 	public void addProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
@@ -1035,7 +1034,12 @@ public class MainGUIController implements Runnable{
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 	}//End showAddSizeEmergentScene
-
+	@FXML
+	public void getDishTypeFromAddDishType() throws IOException{
+		EGC.showAddDishTypeToProduct();
+		tDishtype.setText((EGC.getDishTypeToAdd() != null)?EGC.getDishTypeToAdd():tDishtype.getText());
+		EGC.clearDishTypeToAdd();
+	}//End getDishTypeFromAddDishType
 	@FXML //tIngredients
 	public void getIngredientsFromAddIngredientsToProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);

@@ -46,7 +46,14 @@ public class EmergentGUIController {
 	private Ingredient ingredientToChange;
 	private Product productToAdd;
 	private Order registerOrder;
+	private String dishTypeToadd;
+	@FXML private Label receives;
+	@FXML private Label delivery;
+	@FXML private Label createdby;
+	@FXML private Label modifiedby;
 	@FXML private ChoiceBox<String> cbStatus;
+	@FXML private ComboBox<DishType> cbdishes;
+	@FXML private TextField tdish;
 	@FXML private MenuItem removeElement;
 	@FXML private TextField tAmount;
 	@FXML private TextField tIngredientName;
@@ -323,7 +330,20 @@ public class EmergentGUIController {
 		form.setResizable(false);
 		form.showAndWait();
 	}//End showRegisterDihstypeScene
-
+	@FXML
+	public void showAddDishTypeToProduct() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"getDishTypeEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage form = new Stage();
+		initializeDishTypesComboBox();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Agregar tipo de plato al producto");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
+	}//End showSceneLogin
 	@FXML
 	public void showChangeDihstypeScene(DishType d) throws IOException{
 		dishtype = d;
@@ -811,7 +831,7 @@ public class EmergentGUIController {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "Tamaï¿½o o precio incorrecto.";
+		String msg = "Tamaño o precio incorrecto.";
 		if(!tSize.getText().isEmpty() && !tPrice.getText().isEmpty()){
 			try{
 				price = Double.parseDouble(tPrice.getText());
@@ -845,7 +865,32 @@ public class EmergentGUIController {
 	public int getAmount(){
 		return amount;
 	}//End getAmount
-
+	public String getDishTypeToAdd(){
+		return dishTypeToadd;
+	}
+	public void clearDishTypeToAdd(){
+		dishTypeToadd = null;
+	}//End clearDishTypeToAdd
+	@FXML
+	public void addDishTypeToProduct(ActionEvent event){
+		Alert info = new Alert(AlertType.INFORMATION);
+		info.setHeaderText(null);
+		boolean worked = false;
+		String msg = "Datos erroneos";
+		if(!tdish.getText().equals("")){
+			dishTypeToadd = tdish.getText();
+			msg = "Agregado con exito";
+			worked = true;
+		}//End ifs
+		info.setContentText(msg);
+		info.showAndWait();
+		if(worked)
+			closeEmergentWindows(event);
+	}//End addDishTypeToProduct
+	@FXML
+	public void setDishTypeInTextField(){
+		tdish.setText((cbdishes.getValue()!= null)?cbdishes.getValue().getName():"");
+	}//End setDishTypeInTextField
 	@FXML
 	public void changeOrder(ActionEvent event) throws IOException{
 		boolean worked = false;
@@ -961,6 +1006,10 @@ public class EmergentGUIController {
 		ObservableList<Integer> amo = FXCollections.observableArrayList(registerOrder.getAmount());
 		Lproducts.setItems(pd);
 		LAmount.setItems(amo);
+		receives.setText(registerOrder.getCustomer().getName()+ " "+ registerOrder.getCustomer().getLastName());
+		delivery.setText(registerOrder.getEmployee().getName()+ " "+ registerOrder.getCustomer().getLastName());
+		createdby.setText(registerOrder.getCreator().getName()+ " "+registerOrder.getCreator().getLastName());
+		modifiedby.setText((registerOrder.getModifier()!=null)?registerOrder.getModifier().getName()+ " "+registerOrder.getModifier().getLastName():"No ha sido modificado");
 		code.setText(registerOrder.getCode());
 		date.setText(registerOrder.getDate());
 		status.setText(registerOrder.getStatus());
@@ -1012,7 +1061,10 @@ public class EmergentGUIController {
 		}//End for
 		cbStatus.setItems(status);
 	}//End initializeIngredientsComboBox
-	
+	private void initializeDishTypesComboBox(){
+		ObservableList<DishType> dish = FXCollections.observableList(DMC.getDishtype(true));
+		cbdishes.setItems(dish);
+	}//End initializeDishTypesComboBox
 	private int findStatus(){
 		int index = 0;
 		boolean found = false;
