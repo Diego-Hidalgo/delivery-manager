@@ -14,7 +14,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="73.0" prefWidth="805.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Registro de pedidos">
+            <Label fx:id="listTitle" text="Registro de pedidos">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
@@ -39,9 +39,9 @@
                         <ContextMenu>
                           <items>
                             <MenuItem fx:id="showCompleteRegister" mnemonicParsing="false" onAction="#ListenShowOrderRegister" text="Ver registro completo" />
-                              <MenuItem fx:id="DisableElement" mnemonicParsing="false" text="Deshabilitar" />
-                              <MenuItem fx:id="removeElement" mnemonicParsing="false" text="Eliminar" />
-                              <MenuItem mnemonicParsing="false" text="Ver pedidos no disponibles" />
+                              <MenuItem fx:id="DisableElement" mnemonicParsing="false" onAction="#ListenChangeEnableOrder" text="Cambiar  disponibilidad" />
+                              <MenuItem fx:id="removeElement" mnemonicParsing="false" onAction="#ListenRemoveOrder" text="Eliminar" />
+                              <MenuItem fx:id="showList" mnemonicParsing="false" onAction="#ListenChangeOrderList" text="Ver pedidos no disponibles" />
                           </items>
                         </ContextMenu>
                      </contextMenu>

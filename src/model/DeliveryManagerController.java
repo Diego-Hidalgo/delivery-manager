@@ -629,6 +629,8 @@ public class DeliveryManagerController implements Serializable {
 	public boolean removeProduct(Product product) throws IOException {
 		boolean removed = false;
 		if(!product.getLinked()){
+			updateProductsOldObjectsLinks(product);
+			product.getProductBase().updateNumberOfSubProducts(-1);
 			products.remove(product);
 			removed = true;
 			saveAllData();
@@ -874,10 +876,16 @@ public class DeliveryManagerController implements Serializable {
 	public void addOrder(List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
+		setOrderObjectsLinks(nProducts,1);
 		orders.add(new Order(nProducts,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
-		saveAllData();
+		saveAllData(); 
 	}//End addOrder
-
+	private void setOrderObjectsLinks(List<Product> nProducts,int numberLink){
+		for(int i = 0; i < nProducts.size();i++){
+			nProducts.get(i).updateNumberOfLinks(numberLink);
+			nProducts.get(i).updateLinkStatus();
+		}//End for
+	}//End updateOrderObjectsLinks
 	public boolean importOrders(File file, String mSeparator, String sSeparator, String tSeparator) throws IOException {
 		boolean all = true;
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -931,7 +939,9 @@ public class DeliveryManagerController implements Serializable {
 	public void changeOrder(Order order,List<Product> nProducts,List<Integer> amount,String remark,String status,String idCustomer,String idEmployee) throws IOException {
 		int customerIndex = searchCustomerPosition(idCustomer);
 		int employeeIndex = searchEmployeePosition(idEmployee);
+		setOrderObjectsLinks(order.getProducts(),-1);
 		order.setProduct(nProducts);
+		setOrderObjectsLinks(order.getProducts(),1);
 		order.setAmount(amount);
 		order.setRemark(remark);
 		order.setStatus(status);
@@ -940,17 +950,23 @@ public class DeliveryManagerController implements Serializable {
 		order.setModifier(getLoggedUser());
 		saveAllData();
 	}//End changeOrder
-
-	public void disableOrder(Order order) throws IOException {
-		order.setEnable(false);
+	
+	public void changeEnableOrder(Order order) throws IOException {
+		order.setEnable(!order.getEnable());
 		saveAllData();
 	}//End disableOrder
 
-	public List<Order> getOrders(){
-		return orders;
+	public List<Order> getOrders(boolean enable){
+		List<Order> enableOrders = new ArrayList<Order>();
+		for(int i = 0; i < orders.size();i++){
+			if(orders.get(i).getEnable() == enable)
+				enableOrders.add(orders.get(i));
+		}//End for
+		return enableOrders;
 	}//End getOrders
 
 	public void removeOrder(Order order) throws IOException {
+		setOrderObjectsLinks(order.getProducts(),-1);
 		orders.remove(order);
 		saveAllData();
 	}//End removeOrder

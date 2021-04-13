@@ -27,6 +27,7 @@ public class Order implements Serializable, Comparable<Order>{
 		status = Status.SOLICITADO;
 		date = new Date();
 		generateCode();
+		enable = true;
 	}//End constructor1
 
 	public Order(List<Product> products,List<Integer> amount,String remark,String status,Customer customer,Employee employee,User creator){
@@ -39,6 +40,7 @@ public class Order implements Serializable, Comparable<Order>{
 		this.creator = creator;
 		date = new Date();
 		generateCode();
+		enable = true;
 	}//End constructor2
 
 	private void generateCode(){

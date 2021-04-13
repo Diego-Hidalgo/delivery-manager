@@ -276,7 +276,7 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Acción exitosa");
+		alert.setTitle("Accion exitosa");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -934,8 +934,24 @@ public class MainGUIController implements Runnable{
 		st.setHeight(570);
 		st.setWidth(800);
 		st.setResizable(false);
+	}//End showProductsList
+	@FXML
+	public void showSceneOrdersList() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeOrdersWindows.fxml"));
+		fxml.setController(this);
+		Parent visualizeOrders = fxml.load();
+		secondaryPane.setCenter(visualizeOrders);
+		initializeOrdersList();
+		title = (enableList)?"Pedidos disponibles":"Pedidos no disponibles";
+		menuText = (enableList)?"Ver elementos no disponibles":"Ver elementos disponibles";
+		listTitle.setText(title);
+		showList.setText(menuText);
+		Stage st = (Stage) secondaryPane.getScene().getWindow();
+		st.setTitle("Registros de pedido");
+		st.setHeight(520);
+		st.setWidth(900);
+		st.setResizable(false);
 	}//End showSceneLogin
-
 	@FXML
 	public void showIngredientsList() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeIngredientsWindows.fxml"));
@@ -983,20 +999,6 @@ public class MainGUIController implements Runnable{
 		st.setTitle("Registrar pedido");
 		st.setHeight(610);
 		st.setWidth(550);
-		st.setResizable(false);
-	}//End showSceneLogin
-
-	@FXML
-	public void showSceneOrdersList() throws IOException{
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeOrdersWindows.fxml"));
-		fxml.setController(this);
-		Parent visualizeOrders = fxml.load();
-		secondaryPane.setCenter(visualizeOrders);
-		Stage st = (Stage) secondaryPane.getScene().getWindow();
-		initializeOrdersList();
-		st.setTitle("Registros de pedido");
-		st.setHeight(520);
-		st.setWidth(900);
 		st.setResizable(false);
 	}//End showSceneLogin
 
@@ -1390,7 +1392,34 @@ public class MainGUIController implements Runnable{
 		Order o = orderTable.getSelectionModel().getSelectedItem();
 		EGC.showCompleteOrderScene(o);
 	}//End ListenShowOrderRegister
-
+	@FXML
+	public void ListenRemoveOrder() throws IOException{
+		Order o = orderTable.getSelectionModel().getSelectedItem();
+		DMC.removeOrder(o);
+		showSceneOrdersList();
+	}//End ListenRomeveOrder
+	@FXML
+	public void ListenChangeEnableOrder(){
+		Alert info = new Alert(AlertType.INFORMATION);
+		info.setHeaderText(null);
+		String msg = new String();
+		Order o = orderTable.getSelectionModel().getSelectedItem();
+		try {
+			DMC.changeEnableOrder(o);
+			String enable = (o.getEnable())?"habilitado":"deshabilitado";
+			showSceneOrdersList();
+			msg = "Se ha cambiado la disponibilidad del elemento a " + enable;
+		} catch (IOException e) {
+			msg = "Ha ocurrido un error inesperado";
+		}
+		info.setContentText(msg);
+		info.showAndWait();
+	}//End ListenChangeEnableOrder
+	@FXML
+	public void ListenChangeOrderList() throws IOException{
+		enableList = !enableList;
+		showSceneOrdersList();
+	}//End ListenChangeProductList
 	@FXML
 	public void ListenAddIngredientToProductList(){
 		String i = lIngredients.getSelectionModel().getSelectedItem();
@@ -1419,13 +1448,14 @@ public class MainGUIController implements Runnable{
 	}//End initializeProductsList
 	
 	public void initializeOrdersList(){
-		ObservableList<Order> orderList = FXCollections.observableArrayList(DMC.getOrders());
+		ObservableList<Order> orderList = FXCollections.observableArrayList(DMC.getOrders(enableList));
 		orderTable.setItems(orderList);
 		orderCode.setCellValueFactory(new PropertyValueFactory<Order,String>("code"));
 		orderDate.setCellValueFactory(new PropertyValueFactory<Order,String>("date"));
 		orderStatus.setCellValueFactory(new PropertyValueFactory<Order,String>("status"));
 		orderProducts.setCellValueFactory(new PropertyValueFactory<Order,String>("productsList"));
 		orderRemark.setCellValueFactory(new PropertyValueFactory<Order,String>("remark"));
+		orderTable.refresh();
 	}//End initializeOrdersList
 	
 	public void initializeIngredientsList(){
