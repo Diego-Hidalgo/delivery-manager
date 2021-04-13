@@ -891,7 +891,11 @@ public class DeliveryManagerController implements Serializable {
 			String status = parts[3].toUpperCase();
 			String idCustomer = parts[4];
 			String idEmployee = parts[5];
-			addOrder(products, amount, remark, status, idCustomer, idEmployee);
+			if(!products.isEmpty() && !amount.isEmpty()) {
+				addOrder(products, amount, remark, status, idCustomer, idEmployee);
+			} else {
+				all = false;
+			}
 			line = br.readLine();
 		}//End while
 		br.close();

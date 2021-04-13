@@ -113,7 +113,6 @@ public class MainGUIController implements Runnable{
 
 	@FXML private Thread dateThread;
 	@FXML private Label dateLbl;
-	private boolean stop = false;
 	private int day;
 	private int month;
 	private int year;
@@ -143,7 +142,7 @@ public class MainGUIController implements Runnable{
 	@Override
 	public void run() {
 		dateThread = new Thread(()-> {
-			while (!stop) {
+			while (true) {
 				Platform.runLater(() -> {
 					Calendar cal = new GregorianCalendar();
 					cal.setTime(new Date());
@@ -257,7 +256,6 @@ public class MainGUIController implements Runnable{
 		window.setTitle("Bienvenido");
 		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() +
 	             ". Acceda al menu para usar las funciones del sistema");
-		showSceneOrdersList();
 		if(!dateThread.isAlive()) {
 			dateThread.start();
 		}//End if
@@ -1104,7 +1102,7 @@ public class MainGUIController implements Runnable{
 				cbStatus.getValue() != null && !taProducsAmount.getText().isEmpty() && !taRemark.getText().isEmpty()){
 			if(checkCustomer(tIdCustomer.getText()) && checkEmployee(tIdEmployee.getText())){
 				DMC.addOrder(product, amo, taRemark.getText(), cbStatus.getValue(), tIdCustomer.getText(), tIdEmployee.getText()); 
-				msg = "Pedido registrado con éxito";
+				msg = "Pedido registrado con ï¿½xito";
 				tIdEmployee.setText("");
 				tIdCustomer.setText("");
 				taProducsAmount.setText("");
@@ -1141,7 +1139,7 @@ public class MainGUIController implements Runnable{
 	public void addProductToOrder()throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "No se ha podido añadir el producto al pedido";
+		String msg = "No se ha podido aï¿½adir el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
 		String amountAndProducts = taProducsAmount.getText();
 		if(EGC.getProduct() != null){
