@@ -256,6 +256,7 @@ public class MainGUIController implements Runnable{
 		window.setTitle("Bienvenido");
 		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() +
 	             ". Acceda al menu para usar las funciones del sistema");
+		showSceneOrdersList();
 		if(!dateThread.isAlive()) {
 			dateThread.start();
 		}//End if
