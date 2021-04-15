@@ -1163,7 +1163,7 @@ public class MainGUIController implements Runnable{
 		addInfo.showAndWait();
 		taProducsAmount.setText(amountAndProducts);
 	}//End addProductToOrder
-
+	
 	private boolean checkProductToAdd(String np){
 		boolean exist = false;
 		String[] p =  taProducsAmount.getText().split("\n");
@@ -1196,11 +1196,25 @@ public class MainGUIController implements Runnable{
 				showProductsList();	
 			}//End if
 			changeMainItemsContextMenuState(false);
-		}else
+			showCompleteRegister.setDisable(false);
+		}else{
 			changeMainItemsContextMenuState(true);
+			showCompleteRegister.setDisable(true);
+		}//End else
 		
 	}//End ListenChangeProductEvent
-
+	@FXML
+	public void showSearchCustomerEmergent(){
+		
+		try{
+			EGC.showSearchAndAddCustomerScene();
+		}catch(IOException e){
+			Alert error = new Alert(AlertType.ERROR);
+			error.setHeaderText(null);
+			error.setContentText("Ha ocurrido un error inesperado");
+			error.showAndWait();
+		}//End catch
+	}//End showSearchCustomerEmergent
 	private void changeMainItemsContextMenuState(boolean state){
 		DisableElement.setDisable(state);
 		removeElement.setDisable(state);
@@ -1231,7 +1245,18 @@ public class MainGUIController implements Runnable{
 		enableList = !enableList;
 		showProductsList();
 	}//End ListenChangeProductList
-
+	@FXML
+	public void ListenShowCompleteProducts(){
+		Product p = productTable.getSelectionModel().getSelectedItem();
+		try{
+			EGC.showCompleteProductRegister(p);
+		}catch(IOException e){
+			Alert error = new Alert(AlertType.ERROR);
+			error.setHeaderText(null);
+			error.setContentText("Ha ocurrido un error inesperado");
+			error.showAndWait();
+		}//End catch
+	}//End ListenShowCompleteProducts
 	@FXML
 	public void ListenRemoveProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1464,7 +1489,7 @@ public class MainGUIController implements Runnable{
 			info.showAndWait();
 		}//End catch
 	}//End ListenSortProductsByPriceEvent
-	public void initializeProductsList(){
+	private void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts(enableList));
 		if(sort){
 			sortProductsByPrice(productsList);
@@ -1477,7 +1502,7 @@ public class MainGUIController implements Runnable{
 		productPrice.setCellValueFactory(new PropertyValueFactory<Product,Double>("price"));
 		productIngredients.setCellValueFactory(new PropertyValueFactory<Product,String>("ingredients"));
 	}//End initializeProductsList
-	public void sortProductsByPrice(List<Product> products){
+	private void sortProductsByPrice(List<Product> products){
 		for(int i = 1; i < products.size();i++){
 			for(int j = i;j > 0 && products.get(j-1).compareTo(products.get(j).getPrice()) < 0 ; j--){
 				Product temp = products.get(j);
@@ -1486,7 +1511,7 @@ public class MainGUIController implements Runnable{
 			}//End for
 		}//End for
 	}//End sortProductsByPrice
-	public void initializeOrdersList(){
+	private void initializeOrdersList(){
 		ObservableList<Order> orderList = FXCollections.observableArrayList(DMC.getOrders(enableList));
 		orderTable.setItems(orderList);
 		orderCode.setCellValueFactory(new PropertyValueFactory<Order,String>("code"));
@@ -1497,7 +1522,7 @@ public class MainGUIController implements Runnable{
 		orderTable.refresh();
 	}//End initializeOrdersList
 	
-	public void initializeIngredientsList(){
+	private void initializeIngredientsList(){
 		ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList(DMC.getIngredients(enableList));
 		if(sort){
 			sortIngredients(ingredientList);
@@ -1506,7 +1531,7 @@ public class MainGUIController implements Runnable{
 		ingredientTable.setItems(ingredientList);
 		ingredientName.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
 	}//End initializeIngredientsList
-	public void sortIngredients(List<Ingredient> ingredients){
+	private void sortIngredients(List<Ingredient> ingredients){
 		for(int i = 1; i < ingredients.size();i++){
 			for(int j = i;j > 0 && ingredients.get(j-1).compareTo(ingredients.get(j)) < 0 ; j--){
 				Ingredient temp = ingredients.get(j);
@@ -1515,7 +1540,7 @@ public class MainGUIController implements Runnable{
 			}//End for
 		}//End for
 	}//End sortProductsByPrice
-	public void initializeDishtypeList(){
+	private void initializeDishtypeList(){
 		ObservableList<DishType> dishTypeList = FXCollections.observableArrayList(DMC.getDishtype(enableList));
 		dishTypeTable.setItems(dishTypeList);
 		dishTypeName.setCellValueFactory(new PropertyValueFactory<DishType,String>("name"));

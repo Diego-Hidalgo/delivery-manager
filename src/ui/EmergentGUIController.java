@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javafx.scene.control.*;
@@ -23,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -47,6 +47,8 @@ public class EmergentGUIController {
 	private Product productToAdd;
 	private Order registerOrder;
 	private String dishTypeToadd;
+	@FXML private TextField customerToSearch;
+	@FXML private ListView<Customer> CustomersFound;
 	@FXML private Label receives;
 	@FXML private Label delivery;
 	@FXML private Label createdby;
@@ -102,12 +104,22 @@ public class EmergentGUIController {
 	@FXML private TextField tOrderCustomerId;
 	@FXML private TextField tOrderEmployeeId;
 	@FXML private TextArea taOrdersRemark;
+	@FXML private MenuItem remove;
+	@FXML private MenuItem change;
+	@FXML private TextField TFAmount;
 	//Import data
 	@FXML private ChoiceBox<String> importType;
 	@FXML private TextField mSeparator;
 	@FXML private TextField sSeparator;
 	@FXML private TextField tSeparator;
-	
+	//Product
+	@FXML private Label lpName;
+	@FXML private Label lpDish;
+	@FXML private Label lpSize;
+	@FXML private Label lpCreator;
+	@FXML private Label lpPrice;
+	@FXML private Label lpModified;
+	@FXML private ListView<String> lvpIngredients;
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
 		size = new String();
@@ -331,6 +343,19 @@ public class EmergentGUIController {
 		form.showAndWait();
 	}//End showRegisterDihstypeScene
 	@FXML
+	public void showSearchAndAddCustomerScene() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"SearchCustomerEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage searchCustomer = new Stage();
+		searchCustomer.initModality(Modality.APPLICATION_MODAL);
+		searchCustomer.setTitle("Buscar cliente");
+		searchCustomer.setScene(scene);
+		searchCustomer.setResizable(false);
+		searchCustomer.showAndWait();
+	}//End showSearchAndAddCustomerScene
+	@FXML
 	public void showAddDishTypeToProduct() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"getDishTypeEmergent.fxml"));
 		fxml.setController(this);
@@ -521,7 +546,31 @@ public class EmergentGUIController {
 		formulario.setResizable(false);
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
-
+	@FXML
+	public void showCompleteProductRegister(Product p) throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeCompleteProductWindows.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage form = new Stage();
+		initializeProductForm(p);
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Registro de producto");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
+	}//End showRegisterDihstypeScene
+	private void initializeProductForm(Product p){
+		lpName.setText(p.getName());
+		lpDish.setText(p.getType());
+		lpSize.setText(p.getSize());
+		lpPrice.setText(String.valueOf(p.getPrice()));
+		lpCreator.setText(p.getProductBase().getCreator().getName() + " " + p.getProductBase().getCreator().getLastName());
+		String mod = (p.getModifier() != null)?p.getModifier().getName() + " " + p.getModifier().getLastName():"Sin modificar";
+		lpModified.setText(mod);
+		ObservableList<String> list = FXCollections.observableList(p.getIngredientsList());
+		lvpIngredients.setItems(list);
+	}//End initializeProductForm
 	@FXML
 	public void AddProduct(ActionEvent event){
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -569,6 +618,46 @@ public class EmergentGUIController {
 		initializeRegisterOrder();
 		registerOrder.showAndWait();
 	}//End showRegisterIngredienteScene
+	@FXML
+	public void showCompleteOrderScene() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"GetProductInChangeOrderEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage addProduct = new Stage();
+		initializeProductsChoiceBox();
+		addProduct.initModality(Modality.APPLICATION_MODAL);
+		addProduct.setTitle("Ver registro");
+		addProduct.setScene(scene);
+		addProduct.setResizable(false);
+		addProduct.showAndWait();
+	}//End showRegisterIngredienteScene
+	@FXML
+	public void changeProductListInChangeOrder(ActionEvent event){
+		Alert info = new Alert(AlertType.INFORMATION);
+		info.setHeaderText(null);
+		String msg = "Datos erroneos";
+		boolean worked = false;
+		if(cbProducts.getValue() != null && !tAmount.getText().equals("")){
+			try{
+				Integer a = Integer.parseInt(tAmount.getText());
+				ObservableList<Integer> am = FXCollections.observableList(LAmount.getItems());
+				ObservableList<Product> pd = FXCollections.observableList(Lproducts.getItems());
+				pd.add(cbProducts.getValue());
+				am.add(a);
+				LAmount.setItems(am);
+				Lproducts.setItems(pd);
+				msg = "Producto agregado correctamente";
+				worked = true;
+			}catch(NumberFormatException e){
+				msg = "La cantidad debe ser un numero";
+			}//End catch
+		}//End if
+		info.setContentText(msg);
+		info.showAndWait();
+		if(worked)
+			closeEmergentWindows(event);
+	}//End changeProductListInChangeOrder
 	public void initializeForm(){
 		tNameToChanges.setText(productToChanges.getName());
 		tTypeToChanges.setText(productToChanges.getType());
@@ -585,6 +674,75 @@ public class EmergentGUIController {
 		Lproducts.setItems(products);
 		LAmount.setItems(amount);
 	}//End initializeForm
+	@FXML
+	public void ListenChangeProductsFromOrder(){
+		Product p = Lproducts.getSelectionModel().getSelectedItem();
+		if(p != null){
+			LAmount.getSelectionModel().select(Lproducts.getSelectionModel().getSelectedIndex());
+			changeMenuItemDisable(false);
+		}else
+			changeMenuItemDisable(true);
+	}//End ListenChangeProductsFromOrder
+	@FXML
+	public void ListenChangeAmountsFromOrder(MouseEvent mouseEvent) throws IOException{
+		Integer i = LAmount.getSelectionModel().getSelectedItem();
+		if(i != null){
+			Lproducts.getSelectionModel().select(LAmount.getSelectionModel().getSelectedIndex());
+			if(mouseEvent.getClickCount() == 2)
+				ShowchangeAmountFromOrder();
+			changeMenuItemDisable(false);
+		}else
+			changeMenuItemDisable(true);
+	}//End ListenChangeAmountsFromOrder
+	@FXML
+	public void ShowchangeAmountFromOrder() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"ChangeAmountEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage changeAmount = new Stage();
+		changeAmount.initModality(Modality.APPLICATION_MODAL);
+		changeAmount.setTitle("Cambiar cantidad");
+		changeAmount.setScene(scene);
+		changeAmount.setResizable(false);
+		changeAmount.showAndWait();
+	}//End changeAmountFromOrder
+	@FXML
+	public void changeAmountFromOrder(ActionEvent event){
+		Alert info = new Alert(AlertType.INFORMATION);
+		info.setHeaderText(null);
+		String msg = "Datos erroneos";
+		boolean worked = false;
+		if(!TFAmount.getText().equals("")){
+			try{
+				Integer amo = Integer.parseInt(TFAmount.getText());
+				ObservableList<Integer> ams = FXCollections.observableList(LAmount.getItems());
+				ams.set(LAmount.getSelectionModel().getSelectedIndex(),amo);
+				LAmount.setItems(ams);
+				worked = true;
+				msg = "Se ha modificado con exito"; 
+			}catch(NumberFormatException e){
+				msg = "La cantidad debe ser un numero";
+			}//End catch
+		}//End if
+		info.setContentText(msg);
+		info.showAndWait();
+		if(worked)
+			closeEmergentWindows(event);
+	}//End changeAmountFromOrder
+	@FXML
+	public void removeProductAndAmount(){
+		ObservableList<Product> ps = FXCollections.observableList(Lproducts.getItems());
+		ObservableList<Integer> as = FXCollections.observableList(LAmount.getItems());
+		ps.remove(Lproducts.getSelectionModel().getSelectedItem());
+		as.remove(LAmount.getSelectionModel().getSelectedItem());
+		Lproducts.setItems(ps);
+		LAmount.setItems(as);
+	}//End removeProductAndAmount
+	private void changeMenuItemDisable(boolean disable){
+		change.setDisable(disable);
+		remove.setDisable(disable);
+	}
 	@FXML
 	public void setSizeText(){
 		ProductSize ps = cbSizes.getValue();
@@ -609,7 +767,7 @@ public class EmergentGUIController {
 						msg = "Se ha cambiado el producto con exito";
 						worked = true;
 					}else
-						msg = "No se pud� cambiar el producto, ya existe otro con ese nombre";
+						msg = "No se pudo cambiar el producto, ya existe otro con ese nombre";
 				}else
 					msg = "El precio no puede ser negativo";
 			}catch(NumberFormatException e){
