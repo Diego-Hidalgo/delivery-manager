@@ -35,6 +35,7 @@ public class MainGUIController implements Runnable{
 	@FXML private MenuItem DisableElement;
 	@FXML private MenuItem removeElement;
 	@FXML private MenuItem showList;
+	private boolean sort;
 	//Ingredient
 	@FXML private TableView<Ingredient> ingredientTable;
 	@FXML private TableColumn<Ingredient,String> ingredientName;
@@ -999,7 +1000,6 @@ public class MainGUIController implements Runnable{
 		st.setWidth(550);
 		st.setResizable(false);
 	}//End showSceneLogin
-
 	@FXML
 	public void addProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
@@ -1034,7 +1034,12 @@ public class MainGUIController implements Runnable{
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 	}//End showAddSizeEmergentScene
-
+	@FXML
+	public void getDishTypeFromAddDishType() throws IOException{
+		EGC.showAddDishTypeToProduct();
+		tDishtype.setText((EGC.getDishTypeToAdd() != null)?EGC.getDishTypeToAdd():tDishtype.getText());
+		EGC.clearDishTypeToAdd();
+	}//End getDishTypeFromAddDishType
 	@FXML //tIngredients
 	public void getIngredientsFromAddIngredientsToProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
@@ -1434,9 +1439,36 @@ public class MainGUIController implements Runnable{
 		currentIngredients.remove(i);
 		lIngredients.setItems(currentIngredients);
 	}//End removeIngredientFromAddIngredientToProductList
-
+	@FXML 
+	public void ListenSortProductsByPriceEvent(){
+		sort = true;
+		try{
+			showProductsList();	
+		}catch(IOException e){
+			Alert info = new Alert(AlertType.ERROR);
+			info.setHeaderText(null);
+			info.setContentText("Ha ocurrido un error inesperado");
+			info.showAndWait();
+		}//End catch
+	}//End ListenSortProductsByPriceEvent
+	@FXML 
+	public void ListenSortIngredients(){
+		sort = true;
+		try{
+			showIngredientsList();	
+		}catch(IOException e){
+			Alert info = new Alert(AlertType.ERROR);
+			info.setHeaderText(null);
+			info.setContentText("Ha ocurrido un error inesperado");
+			info.showAndWait();
+		}//End catch
+	}//End ListenSortProductsByPriceEvent
 	public void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts(enableList));
+		if(sort){
+			sortProductsByPrice(productsList);
+			sort = false;
+		}//End if
 		productTable.setItems(productsList);
 		productName.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
 		productType.setCellValueFactory(new PropertyValueFactory<Product,String>("type"));
@@ -1444,7 +1476,15 @@ public class MainGUIController implements Runnable{
 		productPrice.setCellValueFactory(new PropertyValueFactory<Product,Double>("price"));
 		productIngredients.setCellValueFactory(new PropertyValueFactory<Product,String>("ingredients"));
 	}//End initializeProductsList
-	
+	public void sortProductsByPrice(List<Product> products){
+		for(int i = 1; i < products.size();i++){
+			for(int j = i;j > 0 && products.get(j-1).compareTo(products.get(j).getPrice()) < 0 ; j--){
+				Product temp = products.get(j);
+				products.set(j, products.get(j-1));
+				products.set(j-1, temp);
+			}//End for
+		}//End for
+	}//End sortProductsByPrice
 	public void initializeOrdersList(){
 		ObservableList<Order> orderList = FXCollections.observableArrayList(DMC.getOrders(enableList));
 		orderTable.setItems(orderList);
@@ -1458,10 +1498,22 @@ public class MainGUIController implements Runnable{
 	
 	public void initializeIngredientsList(){
 		ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList(DMC.getIngredients(enableList));
+		if(sort){
+			sortIngredients(ingredientList);
+			sort = false;
+		}//End if
 		ingredientTable.setItems(ingredientList);
 		ingredientName.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
 	}//End initializeIngredientsList
-	
+	public void sortIngredients(List<Ingredient> ingredients){
+		for(int i = 1; i < ingredients.size();i++){
+			for(int j = i;j > 0 && ingredients.get(j-1).compareTo(ingredients.get(j)) < 0 ; j--){
+				Ingredient temp = ingredients.get(j);
+				ingredients.set(j, ingredients.get(j-1));
+				ingredients.set(j-1, temp);
+			}//End for
+		}//End for
+	}//End sortProductsByPrice
 	public void initializeDishtypeList(){
 		ObservableList<DishType> dishTypeList = FXCollections.observableArrayList(DMC.getDishtype(enableList));
 		dishTypeTable.setItems(dishTypeList);

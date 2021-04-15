@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product implements Serializable {
+public class Product implements Serializable, Comparable<Double> {
 
 	public final static long serialVersionUID = 1L;
 
@@ -101,4 +101,9 @@ public class Product implements Serializable {
 		String info = getName() + " | " + getSize();
 		return info;
 	}//End toString
+
+	@Override
+	public int compareTo(Double price) {
+		return price.compareTo(this.price);
+	}//End compareTo
 }//End Product
