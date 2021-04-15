@@ -61,7 +61,7 @@
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Slider fx:id="statusProgress" blockIncrement="25.0" disable="true" layoutX="63.0" layoutY="249.0" minorTickCount="25" prefHeight="14.0" prefWidth="297.0" style="-fx-border-color: #999999;" />
+      <Slider fx:id="statusProgress" blockIncrement="25.0" layoutX="63.0" layoutY="249.0" minorTickCount="25" prefHeight="14.0" prefWidth="297.0" />
       <Label layoutX="60.0" layoutY="144.0" text="Recibe:">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -102,5 +102,6 @@
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
+      <Pane layoutX="52.0" layoutY="246.0" prefHeight="20.0" prefWidth="329.0" />
    </children>
 </Pane>
