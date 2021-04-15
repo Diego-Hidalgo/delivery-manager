@@ -146,6 +146,7 @@ public class EmergentGUIController {
 		alert.showAndWait();
 	}//End allDataImportedAlert
 
+	@FXML
 	public void importData(ActionEvent event) throws IOException {
 		if(importType.getValue() != null) {
 			if(importType.getValue().equalsIgnoreCase("Clientes")) {
