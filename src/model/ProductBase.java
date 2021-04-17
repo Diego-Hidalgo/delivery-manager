@@ -21,12 +21,12 @@ public class ProductBase implements Serializable {
 		numberOfSubproducts = 0;
 	}//End constructor1
 
-	public ProductBase(User creator,String name,DishType type,List<Ingredient> ingredients,int numberOfSubproducts){
+	public ProductBase(User creator,String name,DishType type,List<Ingredient> ingredients){
 		this.name = name;
 		this.creator= creator;
 		this.type = type;
 		this.ingredients = ingredients;
-		this.numberOfSubproducts = numberOfSubproducts;
+		numberOfSubproducts = 0;
 	}//End constructor2
 	public void updateNumberOfSubProducts(int n){
 		numberOfSubproducts += n;
@@ -79,7 +79,6 @@ public class ProductBase implements Serializable {
 	public void setModifier(User modifier) {
 		this.modifier = modifier;
 	}//End setModifier
-
 	public User getModifier() {
 		return modifier;
 	}//End getModifier

@@ -356,6 +356,21 @@ public class EmergentGUIController {
 		searchCustomer.showAndWait();
 	}//End showSearchAndAddCustomerScene
 	@FXML
+	public void searchCustomersAndPutInList(){
+		if(!customerToSearch.getText().equals("")){
+			initializeCustomersList(DMC.searchAngGetCustomerByName(customerToSearch.getText()));
+		}//End if
+	}//End searchCustomersAndPutInList
+	@FXML
+	public void show(){
+		Customer c = CustomersFound.getSelectionModel().getSelectedItem();
+		System.out.println(c.getId());
+	}//End show
+	private void initializeCustomersList(List<Customer> lcustomersFound){
+		ObservableList<Customer> customers = FXCollections.observableList(lcustomersFound);
+		CustomersFound.setItems(customers);
+	}//End initializeCustomersList
+	@FXML
 	public void showAddDishTypeToProduct() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"getDishTypeEmergent.fxml"));
 		fxml.setController(this);

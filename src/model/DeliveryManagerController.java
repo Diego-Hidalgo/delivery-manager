@@ -359,7 +359,69 @@ public class DeliveryManagerController implements Serializable {
 		}//End for
 		return -1;
 	}//End searchCustomerPositionById
-
+	public List<Customer> searchAngGetCustomerByName(final String name){
+		List<Customer> ct = new ArrayList<Customer>();
+		int initialIndex = getInitialIndex(name);
+		boolean right = false;
+		boolean left = false;
+		if(initialIndex >= 0){
+			ct.add(customers.get(initialIndex));
+			String aux = new String();
+			if( (initialIndex + 1) < customers.size()){
+				if( customers.get(initialIndex+1).getName().equalsIgnoreCase(name) ||
+					customers.get(initialIndex+1).getLastName().equalsIgnoreCase(name) ||
+				   (customers.get(initialIndex+1).getName() + " "+customers.get(initialIndex+1).getLastName()).equalsIgnoreCase(name)){
+					right = true;
+				}else
+					right = false;
+			}//End if
+			if( (initialIndex-1) >= 0){
+				if( customers.get(initialIndex-1).getName().equalsIgnoreCase(name) ||
+					customers.get(initialIndex-1).getLastName().equalsIgnoreCase(name) ||
+				   (customers.get(initialIndex-1).getName() + " "+customers.get(initialIndex-1).getLastName()).equalsIgnoreCase(name)){
+					left = true;
+					}else
+						left = false;
+			}//End if
+			for(int i = initialIndex + 1; i < customers.size() && right; i++){
+				aux = customers.get(i).getName() + " "+customers.get(i).getLastName();
+				if(aux.equalsIgnoreCase(name) || customers.get(i).getName().equalsIgnoreCase(name) ||
+				   customers.get(i).getLastName().equalsIgnoreCase(name)){
+					ct.add(customers.get(i));
+				}else
+					right = false;
+			}//End for
+			for(int i = initialIndex - 1; i >= 0 && left; i--){
+				aux = customers.get(i).getName() + " "+customers.get(i).getLastName();
+				if(aux.equalsIgnoreCase(name) || customers.get(i).getName().equalsIgnoreCase(name) || 
+				   customers.get(i).getLastName().equalsIgnoreCase(name)){
+					ct.add(customers.get(i));
+				}else
+					left = false;
+			}//End for
+		}//End if
+		return ct;
+	}//End searchAngGetCustomerByName
+	private int getInitialIndex(final String name){
+		int index = -1;
+		int start = 0;
+		int end = customers.size() - 1;
+		while( start <= end && index < 0) {
+			int half = (end + start)/2;
+			if(name.compareToIgnoreCase( ( customers.get(half).getName() + " " + customers.get(half).getLastName())) == 0 ||
+			   name.compareToIgnoreCase(customers.get(half).getName()) == 0 ||
+			   name.compareToIgnoreCase(customers.get(half).getLastName()) == 0){
+				index = half;
+			}else if(name.compareToIgnoreCase( ( customers.get(half).getName() + " " + customers.get(half).getLastName())) > 0 ||
+					name.compareToIgnoreCase(customers.get(half).getName() ) > 0 ||
+					name.compareToIgnoreCase(customers.get(half).getLastName() ) > 0){
+				end = half - 1;
+			}else{
+				start = half + 1;
+			}//End else
+		}//End while
+		return index;
+	}
 	public boolean getCustomerEnabledStatus(final String idToSearch) {
 		return customers.get(searchCustomerPosition(idToSearch)).getEnabled();
 	}//End getCustomerEnabledStatus
@@ -490,7 +552,7 @@ public class DeliveryManagerController implements Serializable {
 		boolean added = false;
 		if(findProductBase(name) < 0){
 			DishType dishType = dishTypeToAdd(type,price.size());
-			productBase.add(new ProductBase(getLoggedUser(),name,dishType,ingredientsToAdd(ingredients,price.size()),price.size()));
+			productBase.add(new ProductBase(getLoggedUser(),name,dishType,ingredientsToAdd(ingredients,price.size())));
 			createSubproduct(productBase.get(productBase.size() - 1),price,size);
 			added = true;
 			saveAllData();
@@ -527,7 +589,7 @@ public class DeliveryManagerController implements Serializable {
 		return doubleList;
 	}//End stringListToDouble
 
-	private void createSubproduct(ProductBase pd,List<Double> price,final List<String> size) throws IOException {
+	public void createSubproduct(ProductBase pd,List<Double> price,final List<String> size) throws IOException {
 		for(int i = 0; i < price.size();i++){
 			int sizeIndex = findProductSize(size.get(i));
 			ProductSize s;
@@ -537,6 +599,7 @@ public class DeliveryManagerController implements Serializable {
 			}else
 				s = sizes.get(sizeIndex);
 			Product p = new Product(pd,s,price.get(i));
+			pd.updateNumberOfSubProducts(1);
 			products.add(p);
 		}//End for
 		saveAllData();
@@ -647,7 +710,7 @@ public class DeliveryManagerController implements Serializable {
 		}//End for
 		return index;
 	}//End findSubProducts
-
+	
 	public int findIngredient(final String ingredient){
 		int index = -1;
 		int start = 0;
@@ -861,7 +924,9 @@ public class DeliveryManagerController implements Serializable {
 		}//End for
 		return index;
 	}//End findOrder
-
+	public List<ProductBase> getProductsBase(){
+		return productBase;
+	}//End getProductsBase
 	private List<Order> getOrdersInRange(Date initialDate, Date finishDate){
 		List<Order> or = new ArrayList<Order>();
 		for(int i = 0; i < orders.size();i++){

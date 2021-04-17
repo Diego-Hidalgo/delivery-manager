@@ -100,5 +100,8 @@ public class Customer extends Entity {
 	public String getRemark(){
 		return remark;
 	}//End getAddress
-
+	
+	public String toString(){
+		return super.getName() + " " + super.getLastName() + " con id:  "+ super.getId();
+	}
 }//End Customer

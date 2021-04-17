@@ -35,6 +35,12 @@ public class MainGUIController implements Runnable{
 	@FXML private MenuItem DisableElement;
 	@FXML private MenuItem removeElement;
 	@FXML private MenuItem showList;
+	@FXML private ComboBox<ProductBase> cbProductBase;
+	@FXML private RadioButton rdCreateNew;
+	@FXML private RadioButton rdCreateSub;
+	@FXML private Label LinfoLabel;
+	@FXML private Button btAddDishType;
+	@FXML private Button btAddIngredients;
 	private boolean sort;
 	//Ingredient
 	@FXML private TableView<Ingredient> ingredientTable;
@@ -911,10 +917,12 @@ public class MainGUIController implements Runnable{
 		fxml.setController(this);
 		Parent registerProduct = fxml.load();
 		secondaryPane.setCenter(registerProduct);
+		initializeProducBaseCB();
+		changeWidgetsStatusInARegisterProduct();
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		st.setTitle("Registrar productos");
-		st.setHeight(570);
-		st.setWidth(550);
+		st.setHeight(620);
+		st.setWidth(570);
 		st.setResizable(false);
 	}//End showSceneRegisterProduct
 
@@ -1005,20 +1013,64 @@ public class MainGUIController implements Runnable{
 	public void addProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
+		boolean worked = false;
 		String msg = "No se ha podido agregar el producto, llena todos los campos.";
-		if( !tProductName.getText().isEmpty() && !tDishtype.getText().isEmpty() 
-				&& !tSizesAndPices.getText().isEmpty() && lIngredients.getItems() != null){
-			boolean added = DMC.addProduct(tProductName.getText(),lIngredients.getItems(),getPrices(),getSizes(),tDishtype.getText());
-			msg = (added)?"Se ha agregado exitosamente.":"Ya existe un producto con ese nombre.";
-			tProductName.setText("");
-			tDishtype.setText("");
-			tSizesAndPices.setText("");
-			lIngredients.setItems(FXCollections.observableArrayList(""));
+		if( !tSizesAndPices.getText().isEmpty()){
+			if(rdCreateNew.isSelected() && !tProductName.getText().isEmpty() &&
+				!tDishtype.getText().isEmpty() && lIngredients.getItems() != null){
+				boolean added = DMC.addProduct(tProductName.getText(),lIngredients.getItems(),getPrices(),getSizes(),tDishtype.getText());
+				msg = (added)?"Se ha agregado exitosamente.":"Ya existe un producto con ese nombre.";
+				worked = true;
+			}else if(cbProductBase.getValue() != null){
+				DMC.createSubproduct(cbProductBase.getValue(),getPrices(),getSizes());
+				msg = "Se ha agregado el subproducto exitosamente.";
+				worked = true;
+			}//End else
+			if(worked){
+				tProductName.setText("");
+				tDishtype.setText("");
+				tSizesAndPices.setText("");
+				lIngredients.setItems(FXCollections.observableArrayList(""));
+				cbProductBase.setValue(null);
+			}//End if
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 	}//End addProduct
-
+	@FXML
+	public void changeWidgetsStatusInARegisterProduct(){
+		if(rdCreateNew.isSelected()){
+			LinfoLabel.setText("Nombre:");
+			tProductName.setDisable(false);
+			cbProductBase.setDisable(true);
+			tDishtype.setEditable(true);
+			btAddDishType.setDisable(false);
+			cbProductBase.setValue(null);
+			tDishtype.setText("");
+			lIngredients.setDisable(false);
+			btAddIngredients.setDisable(false);
+		}else{
+			LinfoLabel.setText("Selecciona el producto:");
+			tDishtype.setText("");
+			tProductName.setDisable(true);
+			cbProductBase.setDisable(false);
+			tDishtype.setEditable(false);
+			btAddDishType.setDisable(true);
+			tProductName.setText("");
+			lIngredients.setDisable(true);
+			btAddIngredients.setDisable(true);
+			lIngredients.setItems(FXCollections.observableArrayList(""));
+		}//End else
+	}//End changeWidgetsStatusInARegisterProduct
+	@FXML
+	public void setDishTypeInAddProduct(){
+		if(cbProductBase.getValue() != null)
+			tDishtype.setText(cbProductBase.getValue().getType());
+	}//End setDishTypeInAddProduct
+	private void initializeProducBaseCB(){
+		ObservableList<ProductBase> pb = FXCollections.observableArrayList(DMC.getProductsBase());
+		cbProductBase.setItems(pb);
+	}//End initializeProducBaseCB
 	@FXML
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
