@@ -47,6 +47,7 @@ public class EmergentGUIController {
 	private Product productToAdd;
 	private Order registerOrder;
 	private String dishTypeToadd;
+	private String customerId;
 	@FXML private TextField customerToSearch;
 	@FXML private ListView<Customer> CustomersFound;
 	@FXML private Label receives;
@@ -344,6 +345,7 @@ public class EmergentGUIController {
 	}//End showRegisterDihstypeScene
 	@FXML
 	public void showSearchAndAddCustomerScene() throws IOException{
+		customerId = "";
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"SearchCustomerEmergent.fxml"));
 		fxml.setController(this);
 		Parent root = fxml.load();
@@ -361,15 +363,29 @@ public class EmergentGUIController {
 			initializeCustomersList(DMC.searchAngGetCustomerByName(customerToSearch.getText()));
 		}//End if
 	}//End searchCustomersAndPutInList
-	@FXML
-	public void show(){
-		Customer c = CustomersFound.getSelectionModel().getSelectedItem();
-		System.out.println(c.getId());
-	}//End show
 	private void initializeCustomersList(List<Customer> lcustomersFound){
 		ObservableList<Customer> customers = FXCollections.observableList(lcustomersFound);
 		CustomersFound.setItems(customers);
 	}//End initializeCustomersList
+	@FXML
+	public void selectCustomer(ActionEvent event){
+		Customer c = CustomersFound.getSelectionModel().getSelectedItem();
+		Alert info = new Alert(AlertType.ERROR);
+		info.setHeaderText(null);
+		info.setContentText("No hay un cliente seleccionado");
+		boolean worked = false;
+		if(c != null){
+			customerId = c.getId();
+			worked = true;
+		}
+		if(worked)
+			closeEmergentWindows(event);
+		else
+			info.showAndWait();
+	}//End selectCustomer
+	public String getCustomerIdToAdd(){
+		return customerId;
+	}//End getCustomerIdToAdd
 	@FXML
 	public void showAddDishTypeToProduct() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"getDishTypeEmergent.fxml"));

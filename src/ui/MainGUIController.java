@@ -1199,7 +1199,7 @@ public class MainGUIController implements Runnable{
 	public void addProductToOrder()throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "No se ha podido a�adir el producto al pedido";
+		String msg = "No se ha podido agregar el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
 		String amountAndProducts = taProducsAmount.getText();
 		if(EGC.getProduct() != null){
@@ -1257,9 +1257,9 @@ public class MainGUIController implements Runnable{
 	}//End ListenChangeProductEvent
 	@FXML
 	public void showSearchCustomerEmergent(){
-		
 		try{
 			EGC.showSearchAndAddCustomerScene();
+			tIdCustomer.setText( (EGC.getCustomerIdToAdd().equals(""))?tIdCustomer.getText():EGC.getCustomerIdToAdd());
 		}catch(IOException e){
 			Alert error = new Alert(AlertType.ERROR);
 			error.setHeaderText(null);

@@ -19,7 +19,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <ListView fx:id="CustomersFound" layoutX="29.0" layoutY="189.0" onMouseClicked="#show" prefHeight="203.0" prefWidth="290.0" />
+      <ListView fx:id="CustomersFound" layoutX="29.0" layoutY="189.0" prefHeight="203.0" prefWidth="290.0" />
       <TextField fx:id="customerToSearch" layoutX="29.0" layoutY="110.0" prefHeight="25.0" prefWidth="191.0" promptText="Brian Stiven Romero" />
       <Pane layoutX="29.0" layoutY="169.0" prefHeight="20.0" prefWidth="290.0" style="-fx-background-color: #AAAAAA;">
          <children>
@@ -30,7 +30,7 @@
             </Label>
          </children>
       </Pane>
-      <Button layoutX="327.0" layoutY="167.0" mnemonicParsing="false" text="Elegir" />
+      <Button layoutX="327.0" layoutY="167.0" mnemonicParsing="false" onAction="#selectCustomer" text="Elegir" />
       <Button layoutX="230.0" layoutY="110.0" mnemonicParsing="false" onAction="#searchCustomersAndPutInList" text="Buscar" />
    </children>
 </Pane>
