@@ -248,6 +248,7 @@ public class MainGUIController implements Runnable{
 		Parent root = fxmlLoader.load();
 		Stage window = (Stage) menuBar.getScene().getWindow();
 		Scene scene = new Scene(root, null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		window.setScene(scene);
 		window.show();
 	}//End switchToMainPane
