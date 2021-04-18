@@ -27,8 +27,13 @@
 .combo-box > .list-cell {
 -fx-text-fill: white;
 }
+.combo-box-base{
+
+}
 .text-area .content{
 -fx-background-color: #333333;
+ -fx-text-fill: #FFFFFF;
+
 }
 .text-area{
 -fx-text-fill:#FFFFFF;

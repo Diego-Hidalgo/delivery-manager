@@ -1217,7 +1217,7 @@ public class EmergentGUIController {
 		Lproducts.setItems(pd);
 		LAmount.setItems(amo);
 		receives.setText(registerOrder.getCustomer().getName()+ " "+ registerOrder.getCustomer().getLastName());
-		delivery.setText(registerOrder.getEmployee().getName()+ " "+ registerOrder.getCustomer().getLastName());
+		delivery.setText(registerOrder.getEmployee().getName()+ " "+ registerOrder.getEmployee().getLastName());
 		createdby.setText(registerOrder.getCreator().getName()+ " "+registerOrder.getCreator().getLastName());
 		modifiedby.setText((registerOrder.getModifier()!=null)?registerOrder.getModifier().getName()+ " "+registerOrder.getModifier().getLastName():"No ha sido modificado");
 		code.setText(registerOrder.getCode());
@@ -1229,9 +1229,9 @@ public class EmergentGUIController {
 	private int initializeSliderProgress(String status){
 		int progress = 0;
 		switch(status){
-		case "SOLICITADO": progress = 25;break;
-		case "EN_PROCESO": progress = 50; break;
-		case "ENVIADO": progress = 75; break;
+		case "SOLICITADO": progress = 0;break;
+		case "EN_PROCESO": progress = 33; break;
+		case "ENVIADO": progress = 66; break;
 		case "ENTREGADO": progress = 100; break;
 		}//End switch
 		return progress;
