@@ -67,7 +67,6 @@ public class MainGUIController implements Runnable{
 	@FXML private TableColumn<Order,String> orderRemark;
 	@FXML private MenuItem showCompleteRegister;
 	private ObservableList<String> status;
-	
 	//Login
 	@FXML private TextField logInName;
 	@FXML private PasswordField logInPassword;
@@ -117,7 +116,7 @@ public class MainGUIController implements Runnable{
 	@FXML private MenuItem disable;
 	@FXML private MenuItem change;
 	@FXML private MenuItem delete;
-
+	//Thread
 	@FXML private Thread dateThread;
 	@FXML private Label dateLbl;
 	private int day;

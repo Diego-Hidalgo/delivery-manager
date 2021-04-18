@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="309.0" layoutY="417.0" prefHeight="20.0" prefWidth="87.0" style="-fx-background-color: #666666;" />
       <Pane layoutX="62.0" layoutY="417.0" prefHeight="20.0" prefWidth="249.0" style="-fx-background-color: #666666;" />
@@ -26,12 +23,12 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="date" layoutX="129.0" layoutY="107.0" prefHeight="19.0" prefWidth="87.0" text="13/04/2021">
+      <Label fx:id="date" layoutX="129.0" layoutY="107.0" prefHeight="19.0" prefWidth="87.0" text="Por definir">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="status" layoutX="129.0" layoutY="221.0" prefHeight="19.0" prefWidth="87.0" text="Sin decidir">
+      <Label fx:id="status" layoutX="129.0" layoutY="221.0" prefHeight="19.0" prefWidth="87.0" text="Por definir">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
@@ -65,7 +62,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="receives" layoutX="129.0" layoutY="134.0" prefHeight="38.0" prefWidth="87.0" text="Diego Hidalgo" wrapText="true">
+      <Label fx:id="receives" layoutX="129.0" layoutY="134.0" prefHeight="38.0" prefWidth="87.0" text="Cliente" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
@@ -75,7 +72,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="delivery" layoutX="129.0" layoutY="171.0" prefHeight="38.0" prefWidth="87.0" text="Brian Romero" wrapText="true">
+      <Label fx:id="delivery" layoutX="129.0" layoutY="171.0" prefHeight="38.0" prefWidth="87.0" text="Empleado" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
@@ -90,12 +87,12 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="createdby" layoutX="354.0" layoutY="103.0" prefHeight="38.0" prefWidth="72.0" text="Label" wrapText="true">
+      <Label fx:id="createdby" layoutX="354.0" layoutY="103.0" prefHeight="38.0" prefWidth="72.0" text="Por definir" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="modifiedby" layoutX="354.0" layoutY="145.0" prefHeight="38.0" prefWidth="72.0" text="No ha sido moficado" wrapText="true">
+      <Label fx:id="modifiedby" layoutX="354.0" layoutY="145.0" prefHeight="38.0" prefWidth="72.0" text="Por definir" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
