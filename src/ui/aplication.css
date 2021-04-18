@@ -8,6 +8,16 @@
 .context-menu{
 -fx-background-color: #333333;
 }
+.text-field{
+-fx-background-color: #333333;
+-fx-text-fill:#FFFFFF;
+}
+.text-area .content{
+-fx-background-color: #333333;
+}
+.text-area{
+-fx-text-fill:#FFFFFF;
+}
 .label{
 -fx-font-size:13;
 -fx-font-family:"Consolas";

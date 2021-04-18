@@ -73,9 +73,8 @@
       </HBox>
    </center>
    <bottom>
-      <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="428.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="51.0" prefWidth="428.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="68.0" prefWidth="325.0" />
             <Button mnemonicParsing="false" onAction="#addProduct" prefHeight="25.0" prefWidth="65.0" text="Agregar">
                <font>
                   <Font name="System Bold" size="12.0" />
