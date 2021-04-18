@@ -725,6 +725,7 @@ public class MainGUIController implements Runnable{
 				if(DMC.getUserEnabledStatus(userName)) {
 					DMC.setLoggedUser(userName);
 					switchToSecondaryPane(e);
+					showSceneOrdersList();
 				} else {
 					entityDisabledAlert("usuario");
 				}
