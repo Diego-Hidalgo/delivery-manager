@@ -34,7 +34,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Pane prefHeight="34.0" prefWidth="139.0" />
+                  <Pane prefHeight="39.0" prefWidth="126.0" />
                   <Label text="Tamaño y precios" wrapText="true">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -140,7 +140,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="72.0" prefWidth="428.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Agregar productos">
+            <Label fx:id="defaulttittle" text="Agregar productos">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>

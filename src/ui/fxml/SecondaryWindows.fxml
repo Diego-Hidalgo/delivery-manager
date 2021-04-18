@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="secondaryPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="secondaryPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar fx:id="menuBar" nodeOrientation="LEFT_TO_RIGHT">
          <menus>
@@ -42,13 +47,6 @@
                   </Menu>
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Usuario">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#showRegisterUserSceneInSecondaryPane" text="Agregar" />
-                  <MenuItem mnemonicParsing="false" onAction="#showVisualizeUsers" text="Gestionar" />
-                  <MenuItem mnemonicParsing="false" onAction="#logOutUser" text="Salir del sistema" />
-              </items>
-            </Menu>
             <Menu mnemonicParsing="false" text="Empleado">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#showRegisterEmployeesSceneInSecondaryPane" text="Agregar" />
@@ -59,6 +57,13 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#showAddCustomerScene" text="Agregar" />
                   <MenuItem mnemonicParsing="false" onAction="#showVisualizeCustomers" text="Gestionar" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Usuario">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showRegisterUserSceneInSecondaryPane" text="Agregar" />
+                  <MenuItem mnemonicParsing="false" onAction="#showVisualizeUsers" text="Gestionar" />
+                  <MenuItem mnemonicParsing="false" onAction="#logOutUser" text="Salir del sistema" />
               </items>
             </Menu>
          </menus>

@@ -132,6 +132,7 @@ public class EmergentGUIController {
 		fxmlLoader.setController(this);
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root, null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage form = new Stage();
 		setImportElements();
 		form.initModality(Modality.APPLICATION_MODAL);
@@ -243,6 +244,7 @@ public class EmergentGUIController {
 		fxmlLoader.setController(this);
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root, null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage form = new Stage();
 		setReportElements();
 		form.initModality(Modality.APPLICATION_MODAL);
@@ -322,6 +324,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage form = new Stage();
 		form.initModality(Modality.APPLICATION_MODAL);
 		form.setTitle("Agregar ingrediente");
@@ -336,6 +339,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage form = new Stage();
 		form.initModality(Modality.APPLICATION_MODAL);
 		form.setTitle("Agregar tipo de plato");
@@ -350,6 +354,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage searchCustomer = new Stage();
 		searchCustomer.initModality(Modality.APPLICATION_MODAL);
 		searchCustomer.setTitle("Buscar cliente");
@@ -392,6 +397,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage form = new Stage();
 		initializeDishTypesComboBox();
 		form.initModality(Modality.APPLICATION_MODAL);
@@ -407,6 +413,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage form = new Stage();
 		form.initModality(Modality.APPLICATION_MODAL);
 		form.setTitle("Cambiar tipo de plato");
@@ -421,10 +428,11 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		initializeSizesComboBox();
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaï¿½o del producto");
+		formulario.setTitle("Agregar tamaño del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		formulario.showAndWait();
@@ -437,6 +445,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage changeIngredient = new Stage();
 		changeIngredient.initModality(Modality.APPLICATION_MODAL);
 		changeIngredient.setTitle("Cambiar ingrediente.");
@@ -452,6 +461,7 @@ public class EmergentGUIController {
 		fxmlLoader.setController(this);
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root, null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage changeEmployee = new Stage();
 		changeEmployee.initModality(Modality.APPLICATION_MODAL);
 		employeeNameTxt.setText(employeeToChange.getName());
@@ -470,6 +480,7 @@ public class EmergentGUIController {
 		fxmlLoader.setController(this);
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root, null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage changeUser = new Stage();
 		changeUser.initModality(Modality.APPLICATION_MODAL);
 		userNameTxt.setText(userToChange.getUserName());
@@ -486,6 +497,7 @@ public class EmergentGUIController {
 		fxmlLoader.setController(this);
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root, null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage changeCustomer = new Stage();
 		changeCustomer.initModality(Modality.APPLICATION_MODAL);
 		customerNameTxt.setText(customerToChange.getName());
@@ -506,6 +518,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage formulario = new Stage();
 		initializeIngredientsComboBox();
 		formulario.initModality(Modality.APPLICATION_MODAL);
@@ -522,9 +535,10 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaï¿½o del producto");
+		formulario.setTitle("Agregar tamano del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		initializeIngredientsComboBox();
@@ -538,6 +552,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage formulario = new Stage();
 		initializeProductsListView();
 		formulario.initModality(Modality.APPLICATION_MODAL);
@@ -554,6 +569,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage formulario = new Stage();
 		initializeStatusChoiceBox();
 		initializeOrderForm();
@@ -569,6 +585,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage formulario = new Stage();
 		initializeProductsChoiceBox();
 		formulario.initModality(Modality.APPLICATION_MODAL);
@@ -583,6 +600,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage form = new Stage();
 		initializeProductForm(p);
 		form.initModality(Modality.APPLICATION_MODAL);
@@ -641,6 +659,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage registerOrder = new Stage();
 		registerOrder.initModality(Modality.APPLICATION_MODAL);
 		registerOrder.setTitle("Ver registro");
@@ -655,6 +674,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage addProduct = new Stage();
 		initializeProductsChoiceBox();
 		addProduct.initModality(Modality.APPLICATION_MODAL);
@@ -731,6 +751,7 @@ public class EmergentGUIController {
 		fxml.setController(this);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage changeAmount = new Stage();
 		changeAmount.initModality(Modality.APPLICATION_MODAL);
 		changeAmount.setTitle("Cambiar cantidad");

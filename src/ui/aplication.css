@@ -1,0 +1,76 @@
+.root{
+ -fx-background-color: #222222;
+}
+.menu-bar{
+-fx-background-color: #333333;
+-fx-text-fill:#DDDDDD;
+}
+.context-menu{
+-fx-background-color: #333333;
+}
+.label{
+-fx-font-size:13;
+-fx-font-family:"Consolas";
+-fx-font-weight:bold;
+-fx-text-fill:#FFFFFF;
+-fx-text-alignment:left;
+}
+.button{
+-fx-background-color:#FFE24E;
+-fx-text-fill: #222222;
+-fx-font-weight:bold;
+-fx-text-alignment:center;
+-fx-font-family:"Avenir Next LT Pro";
+}
+
+#titles{
+-fx-font-size:20;
+-fx-font-family:"Times New Roman";
+-fx-text-fill:#FFE24E;
+}
+
+#listTitle{
+-fx-font-size:20;
+-fx-font-family:"Times New Roman";
+-fx-text-fill:#FFE24E;
+}
+#defaulttittle{
+-fx-font-size:20;
+-fx-font-family:"Times New Roman";
+-fx-text-fill:#FFE24E;
+}
+.table-view {
+    -fx-base: #1d1d1d;
+    -fx-control-inner-background: #1d1d1d;
+    -fx-background-color: #1d1d1d;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 20;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color: 
+        transparent
+        transparent
+        derive(-fx-base, 80%) 
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Avenir Next LT Pro";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}

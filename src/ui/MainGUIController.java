@@ -159,7 +159,7 @@ public class MainGUIController implements Runnable{
 					hour = cal.get(Calendar.HOUR_OF_DAY);
 					minutes = cal.get(Calendar.MINUTE);
 					seconds = cal.get(Calendar.SECOND);
-					dateLbl.setText(day+"/"+month+"/"+year+"  "+hour+":"+minutes+":"+seconds);
+					dateLbl.setText(String.format("%02d/%02d",day,month)+"/"+year+"  "+String.format("%02d:%02d:%02d",hour,minutes,seconds));
 				});
 				try {
 					Thread.sleep(250);
@@ -259,6 +259,7 @@ public class MainGUIController implements Runnable{
 		Parent root = fxmlLoader.load();
 		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		window.setScene(scene);
 		window.setTitle("Bienvenido");
 		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() +

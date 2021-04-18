@@ -65,7 +65,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="receives" layoutX="129.0" layoutY="145.0" prefHeight="19.0" prefWidth="87.0" text="Diego Hidalgo">
+      <Label fx:id="receives" layoutX="129.0" layoutY="134.0" prefHeight="38.0" prefWidth="87.0" text="Diego Hidalgo" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
@@ -75,27 +75,27 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="delivery" layoutX="129.0" layoutY="181.0" prefHeight="19.0" prefWidth="87.0" text="Brian Romero">
+      <Label fx:id="delivery" layoutX="129.0" layoutY="171.0" prefHeight="38.0" prefWidth="87.0" text="Brian Romero" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="249.0" layoutY="107.0" text="Creado por:">
+      <Label layoutX="249.0" layoutY="107.0" prefHeight="30.0" prefWidth="72.0" text="Creado por:" wrapText="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="249.0" layoutY="145.0" text="Modificado por:">
+      <Label layoutX="249.0" layoutY="145.0" prefHeight="38.0" prefWidth="87.0" text="Modificado por:" wrapText="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="createdby" layoutX="354.0" layoutY="107.0" text="Label">
+      <Label fx:id="createdby" layoutX="354.0" layoutY="96.0" prefHeight="38.0" prefWidth="72.0" text="Label" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="modifiedby" layoutX="354.0" layoutY="145.0" text="No ha sido moficado">
+      <Label fx:id="modifiedby" layoutX="354.0" layoutY="145.0" prefHeight="38.0" prefWidth="72.0" text="No ha sido moficado" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>

@@ -17,6 +17,7 @@ public class Main extends Application{
 	private MainGUIController MGC;
 	private EmergentGUIController EGC;
 	private final String FOLDER = "fxml/";
+	//private final String FOLDER2 = "css/";
 	private static final String SAVE_PATH = "src/save-files/save-file.dm";
 
 	public Main() {
@@ -48,6 +49,7 @@ public class Main extends Application{
 		fxml.setController(MGC);
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		window.setTitle("Bienvenido");
 		window.setScene(scene);
 		window.show();
