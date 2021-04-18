@@ -12,6 +12,14 @@
 -fx-background-color: #333333;
 -fx-text-fill:#FFFFFF;
 }
+.choice-box{
+ -fx-background-color: #333333;
+ -fx-mark-color: #FFE24E; // arrow color
+}
+.combo-box{
+ -fx-background-color: #333333;
+ -fx-mark-color: #FFE24E; // arrow color
+}
 .text-area .content{
 -fx-background-color: #333333;
 }
@@ -32,19 +40,22 @@
 -fx-text-alignment:center;
 -fx-font-family:"Avenir Next LT Pro";
 }
-
+#lpName{
+-fx-font-size:20;
+-fx-font-family:"Times New Roman";
+-fx-text-fill:#FFE24E;
+}
 #titles{
 -fx-font-size:20;
 -fx-font-family:"Times New Roman";
 -fx-text-fill:#FFE24E;
 }
-
-#listTitle{
+#code{
 -fx-font-size:20;
 -fx-font-family:"Times New Roman";
 -fx-text-fill:#FFE24E;
 }
-#defaulttittle{
+#listTitle{
 -fx-font-size:20;
 -fx-font-family:"Times New Roman";
 -fx-text-fill:#FFE24E;
@@ -83,4 +94,23 @@
 }
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: -fx-focus-color;
+}
+.list-view {
+    -fx-background-color: #333333;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #434343;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #434343;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+}
+.list-view .label {
+    -fx-text-fill: white;
 }

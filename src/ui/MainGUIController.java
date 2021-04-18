@@ -335,6 +335,7 @@ public class MainGUIController implements Runnable{
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Registrar empleado");
 		stage.setHeight(450);
+		stage.setWidth(550);
 		stage.setResizable(false);
 	}//End showRegisterEmployeesSceneInSecondaryPane
 
@@ -371,8 +372,8 @@ public class MainGUIController implements Runnable{
 			} else {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setHeaderText(null);
-				alert.setTitle("Acción denegada");
-				alert.setContentText("Solo el usuario original puede realizar esta acción");
+				alert.setTitle("Accion denegada");
+				alert.setContentText("Solo el usuario original puede realizar esta accion");
 				alert.showAndWait();
 			}//Emd else
 		}//End if
@@ -391,7 +392,7 @@ public class MainGUIController implements Runnable{
 	public void couldNotCompleteActionAlert(String msg) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
-		alert.setTitle("No se pudo completar la acción");
+		alert.setTitle("No se pudo completar la accion");
 		alert.setContentText(msg);
 		alert.showAndWait();
 	}//End couldNotDisableAlert
@@ -402,14 +403,14 @@ public class MainGUIController implements Runnable{
 		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
 			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
 			if(employee.getEnabled()) {
-				msg = "¿Está seguro que desea deshabilitar al empleado seleccionado? " +
-						"Se deshabilitará también al usuario asociado en caso de haber uno";
+				msg = "Esta seguro que desea deshabilitar al empleado seleccionado? " +
+						"Se deshabilitara tambien al usuario asociado en caso de haber uno";
 			} else {
-				msg = "¿Está seguro que desea habilitar al empleado seleccionado?";
+				msg = "Esta seguro que desea habilitar al empleado seleccionado?";
 			}//End else
 			if(confirmActionAlert(msg)) {
 				if(DMC.countEnabledUsers() == 1 && employee.getId().equals(DMC.getLoggedUser().getId())) {
-					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el único habilitado";
+					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el unico habilitado";
 					couldNotCompleteActionAlert(msg);
 				} else {
 					if(DMC.changeEmployeeEnabledStatus(employee)) {
@@ -431,7 +432,7 @@ public class MainGUIController implements Runnable{
 
 	@FXML
 	public void listenChangeCustomerStatusEvent() throws IOException {
-		String msg = "¿Está seguro que desea cambiar el estado del cliente?";
+		String msg = "Esta seguro que desea cambiar el estado del cliente?";
 		if(customersTable.getSelectionModel().getSelectedItem() != null) {
 			Customer customer = customersTable.getSelectionModel().getSelectedItem();
 			if (confirmActionAlert(msg)) {
@@ -461,14 +462,14 @@ public class MainGUIController implements Runnable{
 		if(usersTable.getSelectionModel().getSelectedItem() != null) {
 			User user = usersTable.getSelectionModel().getSelectedItem();
 			if(user.getEnabled()) {
-				msg = "¿Está seguro que desea deshabilitar el usuario?";
+				msg = "Esta seguro que desea deshabilitar el usuario?";
 			} else {
-				msg = "¿Está seguro que desea habilitar el usuario? " +
-						"También se habilitará al empleado asociado a la cuenta";
+				msg = "Esta seguro que desea habilitar el usuario? " +
+						"Tambien se habilitara al empleado asociado a la cuenta";
 			}//End else
 			if(confirmActionAlert(msg)) {
 				if(DMC.countEnabledUsers() == 1 && user.getId().equals(DMC.getLoggedUser().getId())) {
-					String info = "No se puede deshabilitar al usuario porque es el único existente";
+					String info = "No se puede deshabilitar al usuario porque es el unico existente";
 					couldNotCompleteActionAlert(info);
 				} else {
 					if(DMC.changeUserEnabledStatus(user)) {
@@ -492,7 +493,7 @@ public class MainGUIController implements Runnable{
 	public void listenRemoveCustomerEvent() throws IOException {
 		if(customersTable.getSelectionModel().getSelectedItem() != null) {
 			Customer customer = customersTable.getSelectionModel().getSelectedItem();
-			String msg = "¿Está seguro que desea remover al cliente?";
+			String msg = "Esta seguro que desea remover al cliente?";
 			if(confirmActionAlert(msg)) {
 				if(DMC.removeCustomer(customer)) {
 					msg = "Cliente removido correctamente.";
@@ -572,6 +573,7 @@ public class MainGUIController implements Runnable{
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Registrar usuario");
 		stage.setHeight(500);
+		stage.setWidth(560);
 		if(DMC.getLoggedUser() != null) {
 			goBackBtn.setDisable(true);
 		}//End if
@@ -626,7 +628,7 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public void passwordTooShortAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Contraseña inválida");
+		alert.setTitle("Contraseña invalida");
 		alert.setHeaderText("LA CONTRASEÑA ES DEMASIADO CORTA");
 		alert.setContentText("La contraseña debe tener por lo menos 7 caracteres, intente con otra");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -736,7 +738,7 @@ public class MainGUIController implements Runnable{
 
 	@FXML
 	public void logOutUser() throws IOException {
-		if(confirmActionAlert("¿Está seguro de salir del sistema?")) {
+		if(confirmActionAlert("Esta seguro de salir del sistema?")) {
 			switchToMainPane();
 			showLoginScene();
 			DMC.logOutUser();
@@ -765,6 +767,7 @@ public class MainGUIController implements Runnable{
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Registrar empleado");
 		stage.setHeight(520);
+		stage.setWidth(550);
 		stage.setResizable(false);
 	}//End showAddEmployeeScene
 

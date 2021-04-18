@@ -139,7 +139,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="72.0" prefWidth="428.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="defaulttittle" text="Agregar productos">
+            <Label fx:id="titles" text="Agregar productos">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>

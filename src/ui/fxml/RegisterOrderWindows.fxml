@@ -15,7 +15,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Registrar pedido">
+            <Label fx:id="titles" text="Registrar pedido">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>

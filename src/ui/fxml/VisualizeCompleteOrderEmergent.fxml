@@ -9,8 +9,8 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="309.0" layoutY="417.0" prefHeight="20.0" prefWidth="87.0" style="-fx-background-color: #999999;" />
-      <Pane layoutX="62.0" layoutY="417.0" prefHeight="20.0" prefWidth="249.0" style="-fx-background-color: #999999;" />
+      <Pane layoutX="309.0" layoutY="417.0" prefHeight="20.0" prefWidth="87.0" style="-fx-background-color: #666666;" />
+      <Pane layoutX="62.0" layoutY="417.0" prefHeight="20.0" prefWidth="249.0" style="-fx-background-color: #666666;" />
       <Label fx:id="code" layoutX="159.0" layoutY="38.0" prefHeight="30.0" prefWidth="279.0" text="Label">
          <font>
             <Font name="System Bold Italic" size="20.0" />
@@ -54,7 +54,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="44.0" layoutY="38.0" prefHeight="30.0" prefWidth="144.0" text="Código: ">
+      <Label fx:id="titles" alignment="CENTER" layoutX="44.0" layoutY="38.0" prefHeight="30.0" prefWidth="144.0" text="Código: ">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
@@ -80,7 +80,7 @@
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="249.0" layoutY="107.0" prefHeight="30.0" prefWidth="72.0" text="Creado por:" wrapText="true">
+      <Label layoutX="249.0" layoutY="107.0" prefHeight="30.0" prefWidth="87.0" text="Creado por:" wrapText="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -90,7 +90,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="createdby" layoutX="354.0" layoutY="96.0" prefHeight="38.0" prefWidth="72.0" text="Label" wrapText="true">
+      <Label fx:id="createdby" layoutX="354.0" layoutY="103.0" prefHeight="38.0" prefWidth="72.0" text="Label" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>

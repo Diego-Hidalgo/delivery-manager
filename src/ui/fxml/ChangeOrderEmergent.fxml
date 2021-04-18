@@ -13,7 +13,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" layoutX="2.0" layoutY="27.0" prefHeight="30.0" prefWidth="441.0" text="Cambiar orden">
+      <Label fx:id="titles" alignment="CENTER" layoutX="2.0" layoutY="27.0" prefHeight="30.0" prefWidth="441.0" text="Cambiar orden">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
