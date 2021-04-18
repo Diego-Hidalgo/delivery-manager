@@ -12,7 +12,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <top>
-        <Label fx:id="titles" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="225.0" text="MODIFICAR USUARIO" textAlignment="CENTER" BorderPane.alignment="CENTER">
+        <Label fx:id="titles" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="418.0" text="MODIFICAR USUARIO" textAlignment="CENTER" BorderPane.alignment="CENTER">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
