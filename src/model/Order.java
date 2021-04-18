@@ -8,6 +8,7 @@ public class Order implements Serializable, Comparable<Order>{
 
 	private static final long serialVersionUID = 1L;
 
+	//Attributes
 	private User creator;
 	private User modifier;
 	private String code;
@@ -166,6 +167,7 @@ public class Order implements Serializable, Comparable<Order>{
 	public List<Product> getProducts(){
 		return products;
 	}//End getProducts
+
 	public int getAmountByProduct(Product p){
 		int am = 0;
 		boolean found = false;
@@ -177,6 +179,7 @@ public class Order implements Serializable, Comparable<Order>{
 		}//End for
 		return am;
 	}//End getAmountByProduct
+
 	public String getProductsList(){
 		String products = new String();
 		int size = this.products.size();
@@ -187,12 +190,15 @@ public class Order implements Serializable, Comparable<Order>{
 		products += (limit == 3)?"...\n":"";
 		return products;
 	}//End getProductsList
+
 	public void setProductsPrices(List<Double> prices){
 		productsPrices = prices;
 	}//End setProductsPrices
+
 	public List<Double> getProductsPrices(){
 		return productsPrices;
 	}//End getProductsPrices
+
 	public double calculateTotalPrice() {
 		double totalPrice = 0;
 		for(int i = 0; i < products.size(); i ++) {
