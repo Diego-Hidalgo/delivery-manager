@@ -1061,4 +1061,5 @@ public class DeliveryManagerController implements Serializable {
 	public List<ProductSize> getSizes(){
 		return sizes;
 	}//End getSizes
+
 }//End DeliveryManagerController

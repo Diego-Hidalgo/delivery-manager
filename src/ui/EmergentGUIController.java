@@ -167,6 +167,7 @@ public class EmergentGUIController {
 		alert.showAndWait();
 	}//End allDataImportedAlert
 
+	@FXML
 	public void importData(ActionEvent event) throws IOException {
 		if(importType.getValue() != null) {
 			if(importType.getValue().equalsIgnoreCase("Clientes")) {
@@ -432,7 +433,7 @@ public class EmergentGUIController {
 		initializeSizesComboBox();
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamaño del producto");
+		formulario.setTitle("Agregar tamaï¿½o del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		formulario.showAndWait();
@@ -652,6 +653,7 @@ public class EmergentGUIController {
 		if(cbProducts.getValue() != null)
 			tfPrices.setText(String.valueOf(cbProducts.getValue().getPrice()));
 	}//End setPriceTextField
+
 	@FXML
 	public void showCompleteOrderScene(Order o) throws IOException{
 		registerOrder = o;
@@ -668,6 +670,7 @@ public class EmergentGUIController {
 		initializeRegisterOrder();
 		registerOrder.showAndWait();
 	}//End showRegisterIngredienteScene
+
 	@FXML
 	public void showCompleteOrderScene() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"GetProductInChangeOrderEmergent.fxml"));
@@ -682,7 +685,8 @@ public class EmergentGUIController {
 		addProduct.setScene(scene);
 		addProduct.setResizable(false);
 		addProduct.showAndWait();
-	}//End showRegisterIngredienteScene
+	}//End showCompleteOrderScene
+
 	@FXML
 	public void changeProductListInChangeOrder(ActionEvent event){
 		Alert info = new Alert(AlertType.INFORMATION);
@@ -709,12 +713,14 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End changeProductListInChangeOrder
+
 	public void initializeForm(){
 		tNameToChanges.setText(productToChanges.getName());
 		tTypeToChanges.setText(productToChanges.getType());
 		tSize.setText(productToChanges.getSize());
 		tPrice.setText(String.valueOf(productToChanges.getPrice()));
 	}//End initializeForm
+
 	public void initializeOrderForm(){ //registerOrder
 		tOrderCustomerId.setText(registerOrder.getCustomer().getId());
 		tOrderEmployeeId.setText(registerOrder.getEmployee().getId());
@@ -725,6 +731,7 @@ public class EmergentGUIController {
 		Lproducts.setItems(products);
 		LAmount.setItems(amount);
 	}//End initializeForm
+
 	@FXML
 	public void ListenChangeProductsFromOrder(){
 		Product p = Lproducts.getSelectionModel().getSelectedItem();
@@ -734,6 +741,7 @@ public class EmergentGUIController {
 		}else
 			changeMenuItemDisable(true);
 	}//End ListenChangeProductsFromOrder
+
 	@FXML
 	public void ListenChangeAmountsFromOrder(MouseEvent mouseEvent) throws IOException{
 		Integer i = LAmount.getSelectionModel().getSelectedItem();
@@ -745,6 +753,7 @@ public class EmergentGUIController {
 		}else
 			changeMenuItemDisable(true);
 	}//End ListenChangeAmountsFromOrder
+
 	@FXML
 	public void ShowchangeAmountFromOrder() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"ChangeAmountEmergent.fxml"));
@@ -759,6 +768,7 @@ public class EmergentGUIController {
 		changeAmount.setResizable(false);
 		changeAmount.showAndWait();
 	}//End changeAmountFromOrder
+
 	@FXML
 	public void changeAmountFromOrder(ActionEvent event){
 		Alert info = new Alert(AlertType.INFORMATION);
@@ -782,6 +792,7 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End changeAmountFromOrder
+
 	@FXML
 	public void removeProductAndAmount(){
 		ObservableList<Product> ps = FXCollections.observableList(Lproducts.getItems());
@@ -791,16 +802,19 @@ public class EmergentGUIController {
 		Lproducts.setItems(ps);
 		LAmount.setItems(as);
 	}//End removeProductAndAmount
+
 	private void changeMenuItemDisable(boolean disable){
 		change.setDisable(disable);
 		remove.setDisable(disable);
-	}
+	}//End changeMenuItemDisable
+
 	@FXML
 	public void setSizeText(){
 		ProductSize ps = cbSizes.getValue();
 		if(ps != null)
 			tSize.setText(ps.toString());
 	}//End setSizeText
+
 	@FXML
 	public void changeProductData(ActionEvent event) throws IOException{
 		boolean worked = false;
@@ -831,6 +845,7 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End changeProductData
+
 	@FXML
 	public void changesDishType(ActionEvent event) throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -856,12 +871,14 @@ public class EmergentGUIController {
 		if(ing != null)
 			tSelectedIngredient.setText(ing.getName());
 	}//End showInfoFromComboBoxSelectedItem
+
 	@FXML
 	public void showInfoFromIngredientsComboBoxSelectedItem(){
 		Ingredient ing = cbIngredients.getValue();
 		if(ing != null)
 			tNewIngredientToProduct.setText(ing.getName());
 	}//End showInfoFromComboBoxSelectedItem
+
 	@FXML
 	public void setIngredientToadd(ActionEvent event){
 		boolean worked = false;
@@ -878,6 +895,7 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End setIngredientoToadd
+
 	@FXML
 	public void addIngredientToProductList(ActionEvent event){
 		Alert info = new Alert(AlertType.INFORMATION);
@@ -899,6 +917,7 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End addIngredientToProductList
+
 	private boolean checkNewIngredient(String toCheck){
 		boolean exist = false;
 		ObservableList<String> ing = FXCollections.observableList(taIngredientsToChanges.getItems());
@@ -909,6 +928,7 @@ public class EmergentGUIController {
 		}//End for
 		return exist;
 	}//End checkNewIngredient
+
 	@FXML
 	public void changeUser(ActionEvent event) {
 		Alert changeInfo = new Alert(AlertType.INFORMATION);
@@ -1041,7 +1061,7 @@ public class EmergentGUIController {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "Tamaño o precio incorrecto.";
+		String msg = "Tamaï¿½o o precio incorrecto.";
 		if(!tSize.getText().isEmpty() && !tPrice.getText().isEmpty()){
 			try{
 				price = Double.parseDouble(tPrice.getText());
@@ -1075,12 +1095,15 @@ public class EmergentGUIController {
 	public int getAmount(){
 		return amount;
 	}//End getAmount
+
 	public String getDishTypeToAdd(){
 		return dishTypeToadd;
-	}
+	}//End getDishTypeToAdd
+
 	public void clearDishTypeToAdd(){
 		dishTypeToadd = null;
 	}//End clearDishTypeToAdd
+
 	@FXML
 	public void addDishTypeToProduct(ActionEvent event){
 		Alert info = new Alert(AlertType.INFORMATION);
@@ -1097,10 +1120,12 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End addDishTypeToProduct
+
 	@FXML
 	public void setDishTypeInTextField(){
 		tdish.setText((cbdishes.getValue()!= null)?cbdishes.getValue().getName():"");
 	}//End setDishTypeInTextField
+
 	@FXML
 	public void changeOrder(ActionEvent event) throws IOException{
 		boolean worked = false;
@@ -1127,7 +1152,7 @@ public class EmergentGUIController {
 		if(worked)
 			closeEmergentWindows(event);
 	}//End changeOrder
-//changeOrder(String idCustomer,String idEmployee)
+
 	private boolean checkCustomer(String id){
 		boolean exist = false;
 		if(DMC.searchCustomerPosition(id) >= 0)
@@ -1135,6 +1160,7 @@ public class EmergentGUIController {
 				exist = true;
 		return exist;
 	}//End checkCustomer
+
 	private boolean checkEmployee(String id){
 		boolean exist = false;
 		if(DMC.searchEmployeePosition(id) >= 0)
@@ -1142,6 +1168,7 @@ public class EmergentGUIController {
 				exist = true;
 		return exist;
 	}//End checkEmployee
+
 	@FXML
 	public void addIngredient(ActionEvent event) throws IOException{
 		boolean worked = false;
@@ -1199,10 +1226,12 @@ public class EmergentGUIController {
 	public void clearChangeIngredientData(){
 		ingredientToChange = null;
 	}//End clearChangeIngredientData
+
 	public void clearAddProductData(){
 		productToAdd = null;
 		amount = 0;
 	}//End
+
 	public void clearChangeDishTypeData(){
 		dishtype = null;
 	}//End clearChangeDishTypeData
@@ -1211,6 +1240,7 @@ public class EmergentGUIController {
 		products = FXCollections.observableArrayList(DMC.getProducts(true));
 		cbProducts.setItems(products);
 	}//End initializeIngredientsComboBox
+
 	private void initializeRegisterOrder(){
 		ObservableList<Product> pd = FXCollections.observableArrayList(registerOrder.getProducts());
 		ObservableList<Integer> amo = FXCollections.observableArrayList(registerOrder.getAmount());
@@ -1226,6 +1256,7 @@ public class EmergentGUIController {
 		statusProgress.adjustValue(initializeSliderProgress(status.getText()));
 		remark.setText(registerOrder.getRemark());
 	}//End initializeRegisterOrder
+
 	private int initializeSliderProgress(String status){
 		int progress = 0;
 		switch(status){
@@ -1236,6 +1267,7 @@ public class EmergentGUIController {
 		}//End switch
 		return progress;
 	}//End initializeSliderProgress
+
 	@FXML
 	public void ListenRemoveIngredientFromProduct(){
 		String ing = taIngredientsToChanges.getSelectionModel().getSelectedItem();
@@ -1244,6 +1276,7 @@ public class EmergentGUIController {
 		else
 			removeElement.setDisable(false);
 	}//End ListenRemoveIngredientFromProduct
+
 	@FXML
 	public void removeIngredientFromChangeProduct(){
 		String ing = taIngredientsToChanges.getSelectionModel().getSelectedItem();
@@ -1256,14 +1289,17 @@ public class EmergentGUIController {
 		ObservableList<String> curretnIngredients = FXCollections.observableList(productToChanges.getIngredientsList());
 		taIngredientsToChanges.setItems(curretnIngredients);
 	}//End initializeProductsListView
+
 	private void initializeIngredientsComboBox(){
 		ingredients = FXCollections.observableArrayList(DMC.getIngredients(true));
 		cbIngredients.setItems(ingredients);
 	}//End initializeIngredientsComboBox
+
 	private void initializeSizesComboBox(){
 		ObservableList<ProductSize> sizes = FXCollections.observableArrayList(DMC.getSizes());
 		cbSizes.setItems(sizes);
 	}//End initializeSizesComboBox
+
 	private void initializeStatusChoiceBox(){
 		ObservableList<String> status = FXCollections.observableArrayList();
 		for(int i = findStatus(); i < ST.length; i++){
@@ -1271,10 +1307,12 @@ public class EmergentGUIController {
 		}//End for
 		cbStatus.setItems(status);
 	}//End initializeIngredientsComboBox
+
 	private void initializeDishTypesComboBox(){
 		ObservableList<DishType> dish = FXCollections.observableList(DMC.getDishtype(true));
 		cbdishes.setItems(dish);
 	}//End initializeDishTypesComboBox
+
 	private int findStatus(){
 		int index = 0;
 		boolean found = false;

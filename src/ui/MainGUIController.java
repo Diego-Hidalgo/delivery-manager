@@ -67,7 +67,6 @@ public class MainGUIController implements Runnable{
 	@FXML private TableColumn<Order,String> orderRemark;
 	@FXML private MenuItem showCompleteRegister;
 	private ObservableList<String> status;
-	
 	//Login
 	@FXML private TextField logInName;
 	@FXML private PasswordField logInPassword;
@@ -117,7 +116,7 @@ public class MainGUIController implements Runnable{
 	@FXML private MenuItem disable;
 	@FXML private MenuItem change;
 	@FXML private MenuItem delete;
-
+	//Thread
 	@FXML private Thread dateThread;
 	@FXML private Label dateLbl;
 	private int day;
@@ -265,7 +264,6 @@ public class MainGUIController implements Runnable{
 		window.setTitle("Bienvenido");
 		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() +
 	             ". Acceda al menu para usar las funciones del sistema");
-		showSceneOrdersList();
 		if(!dateThread.isAlive()) {
 			dateThread.start();
 		}//End if
@@ -726,6 +724,7 @@ public class MainGUIController implements Runnable{
 				if(DMC.getUserEnabledStatus(userName)) {
 					DMC.setLoggedUser(userName);
 					switchToSecondaryPane(e);
+					showSceneOrdersList();
 				} else {
 					entityDisabledAlert("usuario");
 				}
