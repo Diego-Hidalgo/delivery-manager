@@ -35,6 +35,12 @@ public class MainGUIController implements Runnable{
 	@FXML private MenuItem DisableElement;
 	@FXML private MenuItem removeElement;
 	@FXML private MenuItem showList;
+	@FXML private ComboBox<ProductBase> cbProductBase;
+	@FXML private RadioButton rdCreateNew;
+	@FXML private RadioButton rdCreateSub;
+	@FXML private Label LinfoLabel;
+	@FXML private Button btAddDishType;
+	@FXML private Button btAddIngredients;
 	private boolean sort;
 	//Ingredient
 	@FXML private TableView<Ingredient> ingredientTable;
@@ -153,7 +159,7 @@ public class MainGUIController implements Runnable{
 					hour = cal.get(Calendar.HOUR_OF_DAY);
 					minutes = cal.get(Calendar.MINUTE);
 					seconds = cal.get(Calendar.SECOND);
-					dateLbl.setText(day+"/"+month+"/"+year+"  "+hour+":"+minutes+":"+seconds);
+					dateLbl.setText(String.format("%02d/%02d",day,month)+"/"+year+"  "+String.format("%02d:%02d:%02d",hour,minutes,seconds));
 				});
 				try {
 					Thread.sleep(250);
@@ -253,6 +259,7 @@ public class MainGUIController implements Runnable{
 		Parent root = fxmlLoader.load();
 		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		window.setScene(scene);
 		window.setTitle("Bienvenido");
 		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() +
@@ -327,6 +334,7 @@ public class MainGUIController implements Runnable{
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Registrar empleado");
 		stage.setHeight(450);
+		stage.setWidth(550);
 		stage.setResizable(false);
 	}//End showRegisterEmployeesSceneInSecondaryPane
 
@@ -363,8 +371,8 @@ public class MainGUIController implements Runnable{
 			} else {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setHeaderText(null);
-				alert.setTitle("Acción denegada");
-				alert.setContentText("Solo el usuario original puede realizar esta acción");
+				alert.setTitle("Accion denegada");
+				alert.setContentText("Solo el usuario original puede realizar esta accion");
 				alert.showAndWait();
 			}//Emd else
 		}//End if
@@ -383,7 +391,7 @@ public class MainGUIController implements Runnable{
 	public void couldNotCompleteActionAlert(String msg) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
-		alert.setTitle("No se pudo completar la acción");
+		alert.setTitle("No se pudo completar la accion");
 		alert.setContentText(msg);
 		alert.showAndWait();
 	}//End couldNotDisableAlert
@@ -394,14 +402,14 @@ public class MainGUIController implements Runnable{
 		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
 			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
 			if(employee.getEnabled()) {
-				msg = "¿Está seguro que desea deshabilitar al empleado seleccionado? " +
-						"Se deshabilitará también al usuario asociado en caso de haber uno";
+				msg = "Esta seguro que desea deshabilitar al empleado seleccionado? " +
+						"Se deshabilitara tambien al usuario asociado en caso de haber uno";
 			} else {
-				msg = "¿Está seguro que desea habilitar al empleado seleccionado?";
+				msg = "Esta seguro que desea habilitar al empleado seleccionado?";
 			}//End else
 			if(confirmActionAlert(msg)) {
 				if(DMC.countEnabledUsers() == 1 && employee.getId().equals(DMC.getLoggedUser().getId())) {
-					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el único habilitado";
+					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el unico habilitado";
 					couldNotCompleteActionAlert(msg);
 				} else {
 					if(DMC.changeEmployeeEnabledStatus(employee)) {
@@ -423,7 +431,7 @@ public class MainGUIController implements Runnable{
 
 	@FXML
 	public void listenChangeCustomerStatusEvent() throws IOException {
-		String msg = "¿Está seguro que desea cambiar el estado del cliente?";
+		String msg = "Esta seguro que desea cambiar el estado del cliente?";
 		if(customersTable.getSelectionModel().getSelectedItem() != null) {
 			Customer customer = customersTable.getSelectionModel().getSelectedItem();
 			if (confirmActionAlert(msg)) {
@@ -453,14 +461,14 @@ public class MainGUIController implements Runnable{
 		if(usersTable.getSelectionModel().getSelectedItem() != null) {
 			User user = usersTable.getSelectionModel().getSelectedItem();
 			if(user.getEnabled()) {
-				msg = "¿Está seguro que desea deshabilitar el usuario?";
+				msg = "Esta seguro que desea deshabilitar el usuario?";
 			} else {
-				msg = "¿Está seguro que desea habilitar el usuario? " +
-						"También se habilitará al empleado asociado a la cuenta";
+				msg = "Esta seguro que desea habilitar el usuario? " +
+						"Tambien se habilitara al empleado asociado a la cuenta";
 			}//End else
 			if(confirmActionAlert(msg)) {
 				if(DMC.countEnabledUsers() == 1 && user.getId().equals(DMC.getLoggedUser().getId())) {
-					String info = "No se puede deshabilitar al usuario porque es el único existente";
+					String info = "No se puede deshabilitar al usuario porque es el unico existente";
 					couldNotCompleteActionAlert(info);
 				} else {
 					if(DMC.changeUserEnabledStatus(user)) {
@@ -484,7 +492,7 @@ public class MainGUIController implements Runnable{
 	public void listenRemoveCustomerEvent() throws IOException {
 		if(customersTable.getSelectionModel().getSelectedItem() != null) {
 			Customer customer = customersTable.getSelectionModel().getSelectedItem();
-			String msg = "¿Está seguro que desea remover al cliente?";
+			String msg = "Esta seguro que desea remover al cliente?";
 			if(confirmActionAlert(msg)) {
 				if(DMC.removeCustomer(customer)) {
 					msg = "Cliente removido correctamente.";
@@ -564,6 +572,7 @@ public class MainGUIController implements Runnable{
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Registrar usuario");
 		stage.setHeight(500);
+		stage.setWidth(560);
 		if(DMC.getLoggedUser() != null) {
 			goBackBtn.setDisable(true);
 		}//End if
@@ -618,7 +627,7 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public void passwordTooShortAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Contraseña inválida");
+		alert.setTitle("Contraseña invalida");
 		alert.setHeaderText("LA CONTRASEÑA ES DEMASIADO CORTA");
 		alert.setContentText("La contraseña debe tener por lo menos 7 caracteres, intente con otra");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -728,7 +737,7 @@ public class MainGUIController implements Runnable{
 
 	@FXML
 	public void logOutUser() throws IOException {
-		if(confirmActionAlert("¿Está seguro de salir del sistema?")) {
+		if(confirmActionAlert("Esta seguro de salir del sistema?")) {
 			switchToMainPane();
 			showLoginScene();
 			DMC.logOutUser();
@@ -757,6 +766,7 @@ public class MainGUIController implements Runnable{
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Registrar empleado");
 		stage.setHeight(520);
+		stage.setWidth(550);
 		stage.setResizable(false);
 	}//End showAddEmployeeScene
 
@@ -910,10 +920,12 @@ public class MainGUIController implements Runnable{
 		fxml.setController(this);
 		Parent registerProduct = fxml.load();
 		secondaryPane.setCenter(registerProduct);
+		initializeProducBaseCB();
+		changeWidgetsStatusInARegisterProduct();
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
 		st.setTitle("Registrar productos");
-		st.setHeight(570);
-		st.setWidth(550);
+		st.setHeight(620);
+		st.setWidth(570);
 		st.setResizable(false);
 	}//End showSceneRegisterProduct
 
@@ -1004,20 +1016,64 @@ public class MainGUIController implements Runnable{
 	public void addProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
+		boolean worked = false;
 		String msg = "No se ha podido agregar el producto, llena todos los campos.";
-		if( !tProductName.getText().isEmpty() && !tDishtype.getText().isEmpty() 
-				&& !tSizesAndPices.getText().isEmpty() && lIngredients.getItems() != null){
-			boolean added = DMC.addProduct(tProductName.getText(),lIngredients.getItems(),getPrices(),getSizes(),tDishtype.getText());
-			msg = (added)?"Se ha agregado exitosamente.":"Ya existe un producto con ese nombre.";
-			tProductName.setText("");
-			tDishtype.setText("");
-			tSizesAndPices.setText("");
-			lIngredients.setItems(FXCollections.observableArrayList(""));
+		if( !tSizesAndPices.getText().isEmpty()){
+			if(rdCreateNew.isSelected() && !tProductName.getText().isEmpty() &&
+				!tDishtype.getText().isEmpty() && lIngredients.getItems() != null){
+				boolean added = DMC.addProduct(tProductName.getText(),lIngredients.getItems(),getPrices(),getSizes(),tDishtype.getText());
+				msg = (added)?"Se ha agregado exitosamente.":"Ya existe un producto con ese nombre.";
+				worked = true;
+			}else if(cbProductBase.getValue() != null){
+				DMC.createSubproduct(cbProductBase.getValue(),getPrices(),getSizes());
+				msg = "Se ha agregado el subproducto exitosamente.";
+				worked = true;
+			}//End else
+			if(worked){
+				tProductName.setText("");
+				tDishtype.setText("");
+				tSizesAndPices.setText("");
+				lIngredients.setItems(FXCollections.observableArrayList(""));
+				cbProductBase.setValue(null);
+			}//End if
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 	}//End addProduct
-
+	@FXML
+	public void changeWidgetsStatusInARegisterProduct(){
+		if(rdCreateNew.isSelected()){
+			LinfoLabel.setText("Nombre:");
+			tProductName.setDisable(false);
+			cbProductBase.setDisable(true);
+			tDishtype.setEditable(true);
+			btAddDishType.setDisable(false);
+			cbProductBase.setValue(null);
+			tDishtype.setText("");
+			lIngredients.setDisable(false);
+			btAddIngredients.setDisable(false);
+		}else{
+			LinfoLabel.setText("Selecciona el producto:");
+			tDishtype.setText("");
+			tProductName.setDisable(true);
+			cbProductBase.setDisable(false);
+			tDishtype.setEditable(false);
+			btAddDishType.setDisable(true);
+			tProductName.setText("");
+			lIngredients.setDisable(true);
+			btAddIngredients.setDisable(true);
+			lIngredients.setItems(FXCollections.observableArrayList(""));
+		}//End else
+	}//End changeWidgetsStatusInARegisterProduct
+	@FXML
+	public void setDishTypeInAddProduct(){
+		if(cbProductBase.getValue() != null)
+			tDishtype.setText(cbProductBase.getValue().getType());
+	}//End setDishTypeInAddProduct
+	private void initializeProducBaseCB(){
+		ObservableList<ProductBase> pb = FXCollections.observableArrayList(DMC.getProductsBase());
+		cbProductBase.setItems(pb);
+	}//End initializeProducBaseCB
 	@FXML
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
@@ -1146,7 +1202,7 @@ public class MainGUIController implements Runnable{
 	public void addProductToOrder()throws IOException{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "No se ha podido a�adir el producto al pedido";
+		String msg = "No se ha podido agregar el producto al pedido";
 		EGC.showAddProductsToOrderEmergent();
 		String amountAndProducts = taProducsAmount.getText();
 		if(EGC.getProduct() != null){
@@ -1162,7 +1218,7 @@ public class MainGUIController implements Runnable{
 		addInfo.showAndWait();
 		taProducsAmount.setText(amountAndProducts);
 	}//End addProductToOrder
-
+	
 	private boolean checkProductToAdd(String np){
 		boolean exist = false;
 		String[] p =  taProducsAmount.getText().split("\n");
@@ -1195,11 +1251,25 @@ public class MainGUIController implements Runnable{
 				showProductsList();	
 			}//End if
 			changeMainItemsContextMenuState(false);
-		}else
+			showCompleteRegister.setDisable(false);
+		}else{
 			changeMainItemsContextMenuState(true);
+			showCompleteRegister.setDisable(true);
+		}//End else
 		
 	}//End ListenChangeProductEvent
-
+	@FXML
+	public void showSearchCustomerEmergent(){
+		try{
+			EGC.showSearchAndAddCustomerScene();
+			tIdCustomer.setText( (EGC.getCustomerIdToAdd().equals(""))?tIdCustomer.getText():EGC.getCustomerIdToAdd());
+		}catch(IOException e){
+			Alert error = new Alert(AlertType.ERROR);
+			error.setHeaderText(null);
+			error.setContentText("Ha ocurrido un error inesperado");
+			error.showAndWait();
+		}//End catch
+	}//End showSearchCustomerEmergent
 	private void changeMainItemsContextMenuState(boolean state){
 		DisableElement.setDisable(state);
 		removeElement.setDisable(state);
@@ -1230,7 +1300,18 @@ public class MainGUIController implements Runnable{
 		enableList = !enableList;
 		showProductsList();
 	}//End ListenChangeProductList
-
+	@FXML
+	public void ListenShowCompleteProducts(){
+		Product p = productTable.getSelectionModel().getSelectedItem();
+		try{
+			EGC.showCompleteProductRegister(p);
+		}catch(IOException e){
+			Alert error = new Alert(AlertType.ERROR);
+			error.setHeaderText(null);
+			error.setContentText("Ha ocurrido un error inesperado");
+			error.showAndWait();
+		}//End catch
+	}//End ListenShowCompleteProducts
 	@FXML
 	public void ListenRemoveProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1463,7 +1544,7 @@ public class MainGUIController implements Runnable{
 			info.showAndWait();
 		}//End catch
 	}//End ListenSortProductsByPriceEvent
-	public void initializeProductsList(){
+	private void initializeProductsList(){
 		ObservableList<Product> productsList = FXCollections.observableArrayList(DMC.getProducts(enableList));
 		if(sort){
 			sortProductsByPrice(productsList);
@@ -1476,7 +1557,7 @@ public class MainGUIController implements Runnable{
 		productPrice.setCellValueFactory(new PropertyValueFactory<Product,Double>("price"));
 		productIngredients.setCellValueFactory(new PropertyValueFactory<Product,String>("ingredients"));
 	}//End initializeProductsList
-	public void sortProductsByPrice(List<Product> products){
+	private void sortProductsByPrice(List<Product> products){
 		for(int i = 1; i < products.size();i++){
 			for(int j = i;j > 0 && products.get(j-1).compareTo(products.get(j).getPrice()) < 0 ; j--){
 				Product temp = products.get(j);
@@ -1485,7 +1566,7 @@ public class MainGUIController implements Runnable{
 			}//End for
 		}//End for
 	}//End sortProductsByPrice
-	public void initializeOrdersList(){
+	private void initializeOrdersList(){
 		ObservableList<Order> orderList = FXCollections.observableArrayList(DMC.getOrders(enableList));
 		orderTable.setItems(orderList);
 		orderCode.setCellValueFactory(new PropertyValueFactory<Order,String>("code"));
@@ -1496,7 +1577,7 @@ public class MainGUIController implements Runnable{
 		orderTable.refresh();
 	}//End initializeOrdersList
 	
-	public void initializeIngredientsList(){
+	private void initializeIngredientsList(){
 		ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList(DMC.getIngredients(enableList));
 		if(sort){
 			sortIngredients(ingredientList);
@@ -1505,7 +1586,7 @@ public class MainGUIController implements Runnable{
 		ingredientTable.setItems(ingredientList);
 		ingredientName.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
 	}//End initializeIngredientsList
-	public void sortIngredients(List<Ingredient> ingredients){
+	private void sortIngredients(List<Ingredient> ingredients){
 		for(int i = 1; i < ingredients.size();i++){
 			for(int j = i;j > 0 && ingredients.get(j-1).compareTo(ingredients.get(j)) < 0 ; j--){
 				Ingredient temp = ingredients.get(j);
@@ -1514,7 +1595,7 @@ public class MainGUIController implements Runnable{
 			}//End for
 		}//End for
 	}//End sortProductsByPrice
-	public void initializeDishtypeList(){
+	private void initializeDishtypeList(){
 		ObservableList<DishType> dishTypeList = FXCollections.observableArrayList(DMC.getDishtype(enableList));
 		dishTypeTable.setItems(dishTypeList);
 		dishTypeName.setCellValueFactory(new PropertyValueFactory<DishType,String>("name"));

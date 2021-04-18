@@ -25,7 +25,7 @@
          </font>
       </Label>
       <TextField fx:id="tAmount" layoutX="152.0" layoutY="132.0" prefHeight="25.0" prefWidth="214.0" />
-      <Button layoutX="494.0" layoutY="178.0" mnemonicParsing="false" onAction="#AddProduct" text="Agregar">
+      <Button layoutX="494.0" layoutY="178.0" mnemonicParsing="false" onAction="#changeProductListInChangeOrder" text="Agregar">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

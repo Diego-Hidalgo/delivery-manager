@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="517.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="lpName" alignment="CENTER" layoutX="-1.0" layoutY="25.0" prefHeight="30.0" prefWidth="477.0" text="Producto nombre">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="81.0" prefHeight="43.0" prefWidth="79.0" text="Tipo de plato:" wrapText="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="268.0" layoutY="99.0" text="Creado por:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="268.0" layoutY="126.0" prefHeight="43.0" prefWidth="93.0" text="Modificado por:" wrapText="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="lpDish" layoutX="116.0" layoutY="90.0" text="Por defecto">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="lpModified" layoutX="372.0" layoutY="132.0" prefHeight="30.0" prefWidth="133.0" text="Por defecto" wrapText="true">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="lpCreator" layoutX="372.0" layoutY="99.0" prefHeight="17.0" prefWidth="133.0" text="Por defecto">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="132.0" text="Tamaño:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="lpSize" layoutX="116.0" layoutY="132.0" text="Por defecto">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="170.0" text="Precio:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="lpPrice" layoutX="116.0" layoutY="170.0" text="Por defecto">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <ListView fx:id="lvpIngredients" layoutX="58.0" layoutY="257.0" prefHeight="200.0" prefWidth="310.0" />
+      <Pane layoutX="58.0" layoutY="239.0" prefHeight="19.0" prefWidth="310.0" style="-fx-background-color: #666666;">
+         <children>
+            <Label alignment="CENTER" layoutY="1.0" prefHeight="17.0" prefWidth="310.0" text="Ingredientes">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</Pane>

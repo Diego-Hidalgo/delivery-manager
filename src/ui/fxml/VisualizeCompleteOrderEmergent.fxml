@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.Pane?>
@@ -10,8 +9,8 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="309.0" layoutY="417.0" prefHeight="20.0" prefWidth="87.0" style="-fx-background-color: #999999;" />
-      <Pane layoutX="62.0" layoutY="417.0" prefHeight="20.0" prefWidth="249.0" style="-fx-background-color: #999999;" />
+      <Pane layoutX="309.0" layoutY="417.0" prefHeight="20.0" prefWidth="87.0" style="-fx-background-color: #666666;" />
+      <Pane layoutX="62.0" layoutY="417.0" prefHeight="20.0" prefWidth="249.0" style="-fx-background-color: #666666;" />
       <Label fx:id="code" layoutX="159.0" layoutY="38.0" prefHeight="30.0" prefWidth="279.0" text="Label">
          <font>
             <Font name="System Bold Italic" size="20.0" />
@@ -42,7 +41,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="remark" editable="false" layoutX="64.0" layoutY="310.0" prefHeight="90.0" prefWidth="347.0" wrapText="true" />
+      <TextArea fx:id="remark" editable="false" layoutX="64.0" layoutY="310.0" prefHeight="90.0" prefWidth="336.0" wrapText="true" />
       <ListView fx:id="Lproducts" layoutX="63.0" layoutY="435.0" prefHeight="200.0" prefWidth="249.0" />
       <ListView fx:id="LAmount" layoutX="310.0" layoutY="435.0" prefHeight="200.0" prefWidth="87.0" />
       <Label alignment="CENTER" layoutX="64.0" layoutY="417.0" prefHeight="20.0" prefWidth="249.0" text="Productos">
@@ -55,19 +54,18 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <ScrollBar layoutX="393.0" layoutY="420.0" orientation="VERTICAL" prefHeight="215.0" prefWidth="14.0" />
-      <Label alignment="CENTER" layoutX="44.0" layoutY="38.0" prefHeight="30.0" prefWidth="144.0" text="Código: ">
+      <Label fx:id="titles" alignment="CENTER" layoutX="44.0" layoutY="38.0" prefHeight="30.0" prefWidth="144.0" text="Código: ">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Slider fx:id="statusProgress" blockIncrement="25.0" disable="true" layoutX="63.0" layoutY="249.0" minorTickCount="25" prefHeight="14.0" prefWidth="297.0" style="-fx-border-color: #999999;" />
+      <Slider fx:id="statusProgress" blockIncrement="25.0" layoutX="63.0" layoutY="249.0" minorTickCount="25" prefHeight="14.0" prefWidth="297.0" />
       <Label layoutX="60.0" layoutY="144.0" text="Recibe:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="receives" layoutX="129.0" layoutY="145.0" prefHeight="19.0" prefWidth="87.0" text="Diego Hidalgo">
+      <Label fx:id="receives" layoutX="129.0" layoutY="134.0" prefHeight="38.0" prefWidth="87.0" text="Diego Hidalgo" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
@@ -77,30 +75,31 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="delivery" layoutX="129.0" layoutY="181.0" prefHeight="19.0" prefWidth="87.0" text="Brian Romero">
+      <Label fx:id="delivery" layoutX="129.0" layoutY="171.0" prefHeight="38.0" prefWidth="87.0" text="Brian Romero" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="249.0" layoutY="107.0" text="Creado por:">
+      <Label layoutX="249.0" layoutY="107.0" prefHeight="30.0" prefWidth="87.0" text="Creado por:" wrapText="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="249.0" layoutY="145.0" text="Modificado por:">
+      <Label layoutX="249.0" layoutY="145.0" prefHeight="38.0" prefWidth="87.0" text="Modificado por:" wrapText="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="createdby" layoutX="354.0" layoutY="107.0" text="Label">
+      <Label fx:id="createdby" layoutX="354.0" layoutY="103.0" prefHeight="38.0" prefWidth="72.0" text="Label" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="modifiedby" layoutX="354.0" layoutY="145.0" text="No ha sido moficado">
+      <Label fx:id="modifiedby" layoutX="354.0" layoutY="145.0" prefHeight="38.0" prefWidth="72.0" text="No ha sido moficado" wrapText="true">
          <font>
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
+      <Pane layoutX="52.0" layoutY="246.0" prefHeight="20.0" prefWidth="329.0" />
    </children>
 </Pane>

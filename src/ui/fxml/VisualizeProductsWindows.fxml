@@ -55,6 +55,7 @@
                      <contextMenu>
                         <ContextMenu>
                           <items>
+                              <MenuItem fx:id="showCompleteRegister" mnemonicParsing="false" onAction="#ListenShowCompleteProducts" text="Ver registro completo" />
                             <MenuItem fx:id="DisableElement" mnemonicParsing="false" onAction="#ListenChangesEnableProduct" text="Cambiar disponibilidad" />
                               <MenuItem fx:id="removeElement" mnemonicParsing="false" onAction="#ListenRemoveProduct" text="Eliminar elemento" />
                               <MenuItem fx:id="showList" mnemonicParsing="false" onAction="#ListenChangeProductList" text="Ver productos disponibles" />

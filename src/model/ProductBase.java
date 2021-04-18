@@ -37,14 +37,13 @@ public class ProductBase implements Serializable {
 	 * @param name
 	 * @param type
 	 * @param ingredients
-	 * @param numberOfSubproducts
 	 */
-	public ProductBase(User creator,String name,DishType type,List<Ingredient> ingredients,int numberOfSubproducts){
+	public ProductBase(User creator,String name,DishType type,List<Ingredient> ingredients){
 		this.name = name;
 		this.creator= creator;
 		this.type = type;
 		this.ingredients = ingredients;
-		this.numberOfSubproducts = numberOfSubproducts;
+		numberOfSubproducts = 0;
 	}//End constructor2
 
 	/**
@@ -222,10 +221,5 @@ public class ProductBase implements Serializable {
 	public int getNumberOfSubproducts(){
 		return numberOfSubproducts;
 	}//End getNumberOfSubProducts
-
-	/*@Override
-	public int compareTo(ProductBase tPrice) {
-		return (getTotalPrice()).compareTo(tPrice.getTotalPrice());
-	}//End compareTo*/
 
 }//End Product
