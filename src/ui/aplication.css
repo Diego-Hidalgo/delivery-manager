@@ -16,6 +16,10 @@
  -fx-background-color: #333333;
  -fx-mark-color: #FFE24E; // arrow color
 }
+.radio-button{
+ -fx-mark-color: #FFE24E; // arrow color
+ -fx-text-fill: #FFFFFF;
+}
 .combo-box{
  -fx-background-color: #333333;
  -fx-mark-color: #FFE24E; // arrow color
