@@ -359,6 +359,7 @@ public class DeliveryManagerController implements Serializable {
 		}//End for
 		return -1;
 	}//End searchCustomerPositionById
+
 	public List<Customer> searchAngGetCustomerByName(final String name){
 		List<Customer> ct = new ArrayList<Customer>();
 		int initialIndex = getInitialIndex(name);
@@ -402,6 +403,7 @@ public class DeliveryManagerController implements Serializable {
 		}//End if
 		return ct;
 	}//End searchAngGetCustomerByName
+
 	private int getInitialIndex(final String name){
 		int index = -1;
 		int start = 0;
@@ -421,7 +423,8 @@ public class DeliveryManagerController implements Serializable {
 			}//End else
 		}//End while
 		return index;
-	}
+	}//End getInitialIndex
+
 	public boolean getCustomerEnabledStatus(final String idToSearch) {
 		return customers.get(searchCustomerPosition(idToSearch)).getEnabled();
 	}//End getCustomerEnabledStatus
@@ -945,12 +948,14 @@ public class DeliveryManagerController implements Serializable {
 		orders.add(new Order(nProducts,amount,remark,status,customers.get(customerIndex),employees.get(employeeIndex),getLoggedUser()));
 		saveAllData(); 
 	}//End addOrder
+
 	private void setOrderObjectsLinks(List<Product> nProducts,int numberLink){
 		for(int i = 0; i < nProducts.size();i++){
 			nProducts.get(i).updateNumberOfLinks(numberLink);
 			nProducts.get(i).updateLinkStatus();
 		}//End for
 	}//End updateOrderObjectsLinks
+
 	public boolean importOrders(File file, String mSeparator, String sSeparator, String tSeparator) throws IOException {
 		boolean all = true;
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -964,7 +969,7 @@ public class DeliveryManagerController implements Serializable {
 			String status = parts[3].toUpperCase();
 			String idCustomer = parts[4];
 			String idEmployee = parts[5];
-			if(!products.isEmpty() && !amount.isEmpty()) {
+			if(!products.isEmpty() && !amount.isEmpty() && searchEmployeePosition(idEmployee) != -1 && searchCustomerPosition(idCustomer) != -1) {
 				addOrder(products, amount, remark, status, idCustomer, idEmployee);
 			} else {
 				all = false;
