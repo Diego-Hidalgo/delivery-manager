@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.DeliveryManagerController;
 import java.io.File;
@@ -17,7 +18,7 @@ public class Main extends Application{
 	private MainGUIController MGC;
 	private EmergentGUIController EGC;
 	private final String FOLDER = "fxml/";
-	//private final String FOLDER2 = "css/";
+	private final String ICONPATH = "/ui/ico/logo.jpg";
 	private static final String SAVE_PATH = "src/save-files/save-file.dm";
 
 	public Main() {
@@ -52,6 +53,7 @@ public class Main extends Application{
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		window.setTitle("Bienvenido");
 		window.setScene(scene);
+		window.getIcons().add(new Image(ICONPATH));
 		window.show();
 		MGC.showFirstScene();
 	}//End start

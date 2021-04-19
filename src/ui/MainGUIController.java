@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
@@ -21,7 +22,9 @@ import javafx.stage.Stage;
 import model.*;
 
 public class MainGUIController implements Runnable{
-	//Product
+	
+	private final String ICONPATH = "/ui/ico/logo.jpg";
+	//Productw
 	@FXML private TableView<Product> productTable;
 	@FXML private TableColumn<Product,String> productName;
 	@FXML private TableColumn<Product,String> productType;
@@ -249,6 +252,7 @@ public class MainGUIController implements Runnable{
 		Scene scene = new Scene(root, null);
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		window.setScene(scene);
+		window.getIcons().add(new Image(ICONPATH));
 		window.show();
 	}//End switchToMainPane
 
@@ -261,6 +265,7 @@ public class MainGUIController implements Runnable{
 		Scene scene = new Scene(root, null);
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		window.setScene(scene);
+		window.getIcons().add(new Image(ICONPATH));
 		window.setTitle("Bienvenido");
 		welcomeLabel.setText("Bienvenido " + DMC.getLoggedUser().getUserName() +
 	             ". Acceda al menu para usar las funciones del sistema");
@@ -293,7 +298,7 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public void emptyFieldAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Campo Vacio");
+		alert.setTitle("Campo Vacio");	
 		alert.setHeaderText("DEBEN LLENARSE TODOS LOS CAMPOS");
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");

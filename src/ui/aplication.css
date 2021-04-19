@@ -27,13 +27,35 @@
 .combo-box > .list-cell {
 -fx-text-fill: white;
 }
+.combo-box-base .button{
+    -fx-background-color: #333333;
+}
 .combo-box-base{
-
+    -fx-background-color: #FFE24E;
+}
+.date-picker-popup{
+    -fx-background-color: #FFE24E;
+}
+.date-picker-popup > .month-year-pane {
+    -fx-background-color: #333333;
+}
+.date-picker-popup > .calendar-grid {
+    -fx-background-color: #333333;
+}
+.date-picker-popup > * > .date-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFE24E;
+}
+.date-picker-popup > * > .day-cell {
+    -fx-border-color: transparent;
+    -fx-text-fill: #FFFFFF;
+}
+.date-picker-popup > * > .week-number-cell {
+    -fx-border-color: #333333;
 }
 .text-area .content{
 -fx-background-color: #333333;
- -fx-text-fill: #FFFFFF;
-
+-fx-text-fill: #FFFFFF;
 }
 .text-area{
 -fx-text-fill:#FFFFFF;
