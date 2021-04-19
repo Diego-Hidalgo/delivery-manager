@@ -1,9 +1,9 @@
 #Delivery Manager
-![](https://raw.githubusercontent.com/Diego-Hidalgo/delivery-manager/create-GUI/images/La-Casa-Dorada.jpg?token=AQ5226H5F66Y4DFMMN7YRT3APTYKW)
-###1. Introduction
+![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/La-Casa-Dorada.jpg?raw=true)
+##Introduction
 This application was developed to help with the administration of customers, employees, products and orders of the restaurant La Casa Dorada.
 
-### 2. Entities
+##Entities
 In order to fulfill the features required by the client, the following entities have been defined:
 ▶ Customer
 ▶ Employee
@@ -34,10 +34,10 @@ These menus are displayed after selecting a cell in the table and pressing the r
 ![](https://raw.githubusercontent.com/Diego-Hidalgo/delivery-manager/create-GUI/images/ingredientes-imgs/ingredients-table.PNG?token=AQ5226B5QTMTAUI5E5HRTDDAPTZTO)
 
 
-### 3. Files
+##Files
 The application is in the capacity of import and export information corresponding to the restaurant. These features are specified below.
 
-#### 3.1 Import
+###Import
 The application can import three types of data: customers, products and orders. In order to import data from a file, the file must have the extension .csv and a different amount of separators that indicates the position of the attributes depending on the type.
 ▶ **Order:** Three separators are required.
 **Example:**
@@ -49,17 +49,17 @@ Arroz con pollo/familiar;Arroz con pollo/grande,2;2,nada,ENTREGADO,111,123
 
 ![](https://raw.githubusercontent.com/Diego-Hidalgo/delivery-manager/create-GUI/images/files-imgs/import-img.PNG?token=AQ5226GYPI5JVMTE34DNZ5LAPT2MQ)
 
-#### 3.2 Export
+###Export
 The application can export three types of data: employees, products and orders. The extension of the file will be .csv. The user must choose a range of dates and hours, a save path and a separator.
 
 ![](https://raw.githubusercontent.com/Diego-Hidalgo/delivery-manager/create-GUI/images/files-imgs/export-img.PNG?token=AQ5226FBUFGHQFTIJPFMAMDAPT2KO)
 
-### 4. Changes
+##Changes
 The new changes can be found in the next link: file with changes.
 
-### 5. Contributors
+##Contributors
 ▶ Diego Hidalgo. [GitHub profile.](https://github.com/Diego-Hidalgo "GitHub profile.")
 ▶ Brian Romero. [GitHub profile](https://github.com/BrianR18 "GitHub profile")
 
-### 6. Additional information
+##Additional information
 This application was developed using Java 8, JavaFX and CSS
