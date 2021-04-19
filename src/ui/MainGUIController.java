@@ -510,7 +510,7 @@ public class MainGUIController implements Runnable{
 	public void listenRemoveEmployeeEvent() throws IOException {
 		if(employeesTable.getSelectionModel().getSelectedItem() != null) {
 			Employee employee = employeesTable.getSelectionModel().getSelectedItem();
-			String msg = "¿Está seguro que desea remover al empleado?";
+			String msg = "Est\u00e1 seguro que desea remover al empleado?";
 			if(confirmActionAlert(msg)) {
 				if(DMC.removeEmployee(employee)) {
 					msg = "Empleado removido correctamente.";
@@ -528,7 +528,7 @@ public class MainGUIController implements Runnable{
 	public void listenRemoveUserEvent() throws IOException {
 		if(usersTable.getSelectionModel().getSelectedItem() != null) {
 			User user = usersTable.getSelectionModel().getSelectedItem();
-			String msg = "Está seguro que desea remover al empleado?";
+			String msg = "Est\u00e1 seguro que desea remover al empleado?";
 			if(confirmActionAlert(msg)) {
 				if(DMC.removeUser(user)) {
 					showVisualizeUsers();
@@ -582,9 +582,9 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public void passwordMisMatchAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Verificar Contraseñas");
-		alert.setHeaderText("LAS CONTRASEÑAS NO COINCIDEN");
-		alert.setContentText("Las contrase{as deben ser iguales, vuelva a intentarlo");
+		alert.setTitle("Verificar Contrase\u00f1as");
+		alert.setHeaderText("LAS CONTRASE\u00d1AS NO COINCIDEN");
+		alert.setContentText("Las contrase\u00f1as deben ser iguales, vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -595,7 +595,7 @@ public class MainGUIController implements Runnable{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("La Id No Se Encuentra");
 		alert.setHeaderText("LA ID INGRESADA NO EXISTE");
-		alert.setContentText("La id ingresada no coincide con ningún empleado, intente con otra o cree un nuevo empleado");
+		alert.setContentText("La id ingresada no coincide con ning\u00fan empleado, intente con otra o cree un nuevo empleado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -627,9 +627,9 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public void passwordTooShortAlert() {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Contraseña invalida");
-		alert.setHeaderText("LA CONTRASEÑA ES DEMASIADO CORTA");
-		alert.setContentText("La contraseña debe tener por lo menos 7 caracteres, intente con otra");
+		alert.setTitle("Contrase\u00f1a invalida");
+		alert.setHeaderText("LA CONTRASE\u00d1A ES DEMASIADO CORTA");
+		alert.setContentText("La contrase\u00f1a debe tener por lo menos 7 caracteres, intente con otra");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -698,7 +698,7 @@ public class MainGUIController implements Runnable{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("Verifique las credenciales de inicio de sesion");
+		alert.setContentText("Verifique las credenciales de inicio de sesi\u00d3n");
 		ButtonType confirmation = new ButtonType("Aceptar");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
@@ -738,7 +738,7 @@ public class MainGUIController implements Runnable{
 
 	@FXML
 	public void logOutUser() throws IOException {
-		if(confirmActionAlert("Esta seguro de salir del sistema?")) {
+		if(confirmActionAlert("Est\u00e1 seguro de salir del sistema?")) {
 			switchToMainPane();
 			showLoginScene();
 			DMC.logOutUser();
@@ -748,7 +748,7 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public boolean confirmActionAlert(String text) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Confirmar Accion");
+		alert.setTitle("Confirmar Acci\u00f3n");
 		alert.setHeaderText(null);
 		alert.setContentText(text);
 		ButtonType acceptBtn = new ButtonType("Aceptar");
@@ -1079,14 +1079,14 @@ public class MainGUIController implements Runnable{
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "El tamano y precio ingresado ya existen para este producto";
+		String msg = "El tama\u00f1o y precio ingresado ya existen para este producto";
 		EGC.showAddSizeAndPriceScene();
 		String sizesAndPrices = tSizesAndPices.getText();
 		String sizeAndPrice = (!EGC.getSize().isEmpty())?EGC.getSize()+ "-" + EGC.getPrice():"";
 		if(!checkSizeAndPrice(sizeAndPrice)){
 			sizesAndPrices += (tSizesAndPices.getText().isEmpty())?sizeAndPrice:"\n"+sizeAndPrice;
 			tSizesAndPices.setText(sizesAndPrices);
-			msg = "Tamano y  precio agregados con exito";
+			msg = "Tama\u00f1o y  precio agregados con \u00e9xito";
 		}//End if
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
@@ -1112,7 +1112,7 @@ public class MainGUIController implements Runnable{
 				msg = "Se agrego el ingrediente";
 			}//End if
 		}else
-			msg = "No se selecciono ningun ingrediente";
+			msg = "No se seleccion\u00f3 ningun ingrediente";
 		addInfo.setContentText(msg);
 		addInfo.showAndWait();
 	}//End getIngredientsFromAddIngredientsToProduct
@@ -1166,7 +1166,7 @@ public class MainGUIController implements Runnable{
 				cbStatus.getValue() != null && !taProducsAmount.getText().isEmpty() && !taRemark.getText().isEmpty()){
 			if(checkCustomer(tIdCustomer.getText()) && checkEmployee(tIdEmployee.getText())){
 				DMC.addOrder(product, amo, taRemark.getText(), cbStatus.getValue(), tIdCustomer.getText(), tIdEmployee.getText()); 
-				msg = "Pedido registrado con �xito";
+				msg = "Pedido registrado con \u00e9xito";
 				tIdEmployee.setText("");
 				tIdCustomer.setText("");
 				taProducsAmount.setText("");
@@ -1211,7 +1211,7 @@ public class MainGUIController implements Runnable{
 				amountAndProducts += EGC.getProduct()+" x "+EGC.getAmount() + "\n";
 				product.add(EGC.getProduct());
 				amo.add(EGC.getAmount());
-				msg = "Producto ha sido añadido correctamente al pedido";
+				msg = "Producto ha sido a\u00f1adido correctamente al pedido";
 			}//End if
 		}//End if
 		EGC.clearAddProductData();
