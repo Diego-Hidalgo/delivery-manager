@@ -195,7 +195,7 @@ public class EmergentGUIController {
 	}//End importData
 
 	public void importCustomersData(ActionEvent event) {
-		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informacion...");
+		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informaci\u00f3n...");
 		Runnable r = () -> {
 			try {
 				DMC.importCustomerData(new File(pathTxt.getText()), mSeparator.getText());
@@ -210,7 +210,7 @@ public class EmergentGUIController {
 	}//End importCustomersData
 
 	public void importProductsData(ActionEvent event) {
-		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informacion...");
+		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informaci\u00f3n...");
 		Runnable r = () -> {
 			try {
 				DMC.importProducts(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText());
@@ -225,7 +225,7 @@ public class EmergentGUIController {
 	}//End importProductsData
 
 	public void importOrdersData(ActionEvent event) {
-		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informacion...");
+		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informaci\u00f3n...");
 		Runnable r = () -> {
 			try {
 				DMC.importOrders(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText(), tSeparator.getText());
@@ -433,7 +433,7 @@ public class EmergentGUIController {
 		initializeSizesComboBox();
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tama�o del producto");
+		formulario.setTitle("Agregar tama\u00f1o del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		formulario.showAndWait();
@@ -539,7 +539,7 @@ public class EmergentGUIController {
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		Stage formulario = new Stage();
 		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tamano del producto");
+		formulario.setTitle("Agregar tama\u00f1o del producto");
 		formulario.setScene(scene);
 		formulario.setResizable(false);
 		initializeIngredientsComboBox();
@@ -705,7 +705,7 @@ public class EmergentGUIController {
 				msg = "Producto agregado correctamente";
 				worked = true;
 			}catch(NumberFormatException e){
-				msg = "La cantidad debe ser un numero";
+				msg = "La cantidad debe ser un n\u00famero";
 			}//End catch
 		}//End if
 		info.setContentText(msg);
@@ -782,9 +782,9 @@ public class EmergentGUIController {
 				ams.set(LAmount.getSelectionModel().getSelectedIndex(),amo);
 				LAmount.setItems(ams);
 				worked = true;
-				msg = "Se ha modificado con exito"; 
+				msg = "Se ha modificado con \u00e9xito"; 
 			}catch(NumberFormatException e){
-				msg = "La cantidad debe ser un numero";
+				msg = "La cantidad debe ser un n\u00famero";
 			}//End catch
 		}//End if
 		info.setContentText(msg);
@@ -830,7 +830,7 @@ public class EmergentGUIController {
 					if(DMC.changeProduct(productToChanges,tNameToChanges.getText(),
 							taIngredientsToChanges.getItems(),price,tSize.getText(),
 							tTypeToChanges.getText())){
-						msg = "Se ha cambiado el producto con exito";
+						msg = "Se ha cambiado el producto con \u00e9xito";
 						worked = true;
 					}else
 						msg = "No se pudo cambiar el producto, ya existe otro con ese nombre";
@@ -854,7 +854,7 @@ public class EmergentGUIController {
 		boolean worked = false;
 		if(!tDishtypeName.getText().isEmpty()){
 			if(DMC.changeDishType(dishtype, tDishtypeName.getText())){
-				msg = "Se ha cambiado el tipo de plato con exito";
+				msg = "Se ha cambiado el tipo de plato con \u00e9xito";
 				worked = true;
 			}else
 				msg = "Ya existe ese tipo de plato";
@@ -907,7 +907,7 @@ public class EmergentGUIController {
 				ObservableList<String> ing = FXCollections.observableList(taIngredientsToChanges.getItems());
 				ing.add(tNewIngredientToProduct.getText());
 				taIngredientsToChanges.setItems(ing);
-				msg = "Ingrediente agregado con exito!";
+				msg = "Ingrediente agregado con \u00e9xito!";
 				worked = true;
 			}else
 				msg = "El ingrediente " + tNewIngredientToProduct.getText() + " ya se encuentra en la lista de ingredientes del producto.";
@@ -944,19 +944,19 @@ public class EmergentGUIController {
 					if (newPassword.length() >= 7) {
 						try {
 							DMC.changeUser(userToChange, newUserName, newPassword);
-							msg = "Datos del usuario modificados con exito";
+							msg = "Datos del usuario modificados con \u00e9xito";
 							worked = true;
 						} catch (IOException exception) {
 							msg = "Ha ocurrido un error inesperado";
 						}
 					} else {
-						msg = "La contraseña debe contener al menos 7 caracteres";
+						msg = "La contrase\u00f1a debe contener al menos 7 caracteres";
 					}//End else
 				} else {
 					msg = "El nombre de usuario ya esta en uso";
 				}//End else
 			} else {
-				msg = "Las contrase�as no coinciden";
+				msg = "Las contrase\u00f1as no coinciden";
 			}//End else
 		}//End if
 		changeInfo.setContentText(msg);
@@ -983,7 +983,7 @@ public class EmergentGUIController {
 			if(DMC.searchCustomerPosition(newId) == -1 || newId.equals(customerToChange.getId())) {
 				try {
 					DMC.changeCustomer(customerToChange, newName, newLastName, newId, newAddress, newNPhone, newRemark);
-					msg = "Datos del cliente modificados con �xito";
+					msg = "Datos del cliente modificados con \u00e9xito";
 					worked = true;
 				} catch (IOException exception) {
 					msg = "Ha ocurrido un error inesperado";
@@ -1003,7 +1003,7 @@ public class EmergentGUIController {
 	public void changeEmployee(ActionEvent event) {
 		Alert changeInfo = new Alert(AlertType.INFORMATION);
 		changeInfo.setHeaderText(null);
-		String msg = "No pueden haber campos vac�os";
+		String msg = "No pueden haber campos vac\u00edos";
 		String newName = employeeNameTxt.getText();
 		String newLastName = employeeLastNameTxt.getText();
 		String newId = employeeIdTxt.getText();
@@ -1012,7 +1012,7 @@ public class EmergentGUIController {
 			if(DMC.searchEmployeePosition(newId) == -1 || newId.equals(employeeToChange.getId())) {
 				try {
 					DMC.changeEmployee(employeeToChange, newName, newLastName, newId);
-					msg = "Datos del empleado modificados con �xito";
+					msg = "Datos del empleado modificados con \u00e9xito";
 					worked = true;
 				} catch (IOException exception) {
 					msg = "Ha ocurrido un error inesperado";
@@ -1037,7 +1037,7 @@ public class EmergentGUIController {
 		if(!tIngredientName.getText().isEmpty()){
 			try {
 				if(DMC.changeIngredient(ingredientToChange,tIngredientName.getText())){
-					msg = "Nombre del ingrediente cambiado con exito";
+					msg = "Nombre del ingrediente cambiado con \u00e9xito";
 					worked = true;
 				}else
 					msg = "Ya existe un ingrediente con ese nombre";
@@ -1061,14 +1061,14 @@ public class EmergentGUIController {
 		boolean worked = false;
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
-		String msg = "Tama�o o precio incorrecto.";
+		String msg = "Tama\u00f1o o precio incorrecto.";
 		if(!tSize.getText().isEmpty() && !tPrice.getText().isEmpty()){
 			try{
 				price = Double.parseDouble(tPrice.getText());
 				size = tSize.getText();
 				worked = true;
 			}catch(NumberFormatException e){
-				msg = "Valor numerico incorrecto";
+				msg = "Valor num\u00e9rico incorrecto";
 				addInfo.setContentText(msg);	
 				addInfo.showAndWait();
 			}//End catch
@@ -1112,7 +1112,7 @@ public class EmergentGUIController {
 		String msg = "Datos erroneos";
 		if(!tdish.getText().equals("")){
 			dishTypeToadd = tdish.getText();
-			msg = "Agregado con exito";
+			msg = "Agregado con \u00e9xito";
 			worked = true;
 		}//End ifs
 		info.setContentText(msg);
@@ -1143,7 +1143,7 @@ public class EmergentGUIController {
 				DMC.changeOrder(registerOrder,products,amounts,taOrdersRemark.getText(),
 				cbStatus.getValue(),tOrderCustomerId.getText(),tOrderEmployeeId.getText());
 				worked = true;
-				msg = "Pedido cambiado con exito";
+				msg = "Pedido cambiado con \u00e9xito";
 			}else
 				msg = "Id del empleado o cliente erroneo, es posible que el id este deshabilitado";
 		}//End if
@@ -1260,9 +1260,9 @@ public class EmergentGUIController {
 	private int initializeSliderProgress(String status){
 		int progress = 0;
 		switch(status){
-		case "SOLICITADO": progress = 25;break;
-		case "EN_PROCESO": progress = 50; break;
-		case "ENVIADO": progress = 75; break;
+		case "SOLICITADO": progress = 0;break;
+		case "EN_PROCESO": progress = 33; break;
+		case "ENVIADO": progress = 66; break;
 		case "ENTREGADO": progress = 100; break;
 		}//End switch
 		return progress;
