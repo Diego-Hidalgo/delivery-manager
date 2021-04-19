@@ -39,10 +39,22 @@ public class DishType implements Comparable<DishType>, Serializable {
 	public void updateNumberOfLinks(int n){
 		numberOflinks += n; 
 	}//End updateNumberOfLinks
-	
+
+	/**
+	 * Updates the status of the link attribute.<br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the linked variable status has been changed if the number of links is equal to zero. <br>
+	 */
 	public void updateLinkStatus(){
 		linked = (numberOflinks > 0)?true:false;
 	}//end updateLinkStatus
+
+	/**
+	 * Returns the number of links. <br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> number of links. <br>
+	 * @return
+	 */
 	public int getNumberOfLinks(){
 		return numberOflinks;
 	}
@@ -60,7 +72,6 @@ public class DishType implements Comparable<DishType>, Serializable {
 	 * Returns the name of the DishType. <br>
 	 *     <b>pre:</b> the object is initialized. <br>
 	 *     <b>post:</b> name of the object. <br>
-	 * @return the name of the dish type instance.
 	 */
 	public String getName() {
 		return name;
@@ -80,7 +91,6 @@ public class DishType implements Comparable<DishType>, Serializable {
 	 * returns the link status of the DishType. <br>
 	 *     <b>pre:</b> the object is initialized. <br>
 	 *     <b>post:</b> true if linked, false if no. <br>
-	 * @return The link status of the dish type
 	 */
 	public boolean getLinked() {
 		return linked;
@@ -100,7 +110,6 @@ public class DishType implements Comparable<DishType>, Serializable {
 	 * returns the enabled status for the DishType. <br>
 	 *     <b>pre:</b> the object is initialized. <br>
 	 *     <b>post:</b> the enabled status.
-	 * @return enabled status. true if enabled, false if not.
 	 */
 	public boolean getEnable() {
 		return enabled;
@@ -120,7 +129,6 @@ public class DishType implements Comparable<DishType>, Serializable {
 	 * returns the creator of the instance. <br>
 	 *     <b>pre:</b> the DishType object is initialized and creator != null. <br>
 	 *     <b>post:</b> returns the creator. <br>
-	 * @return the creator of the instance.
 	 */
 	public User getCreator() {
 		return creator;
@@ -140,7 +148,6 @@ public class DishType implements Comparable<DishType>, Serializable {
 	 * returns the last user that modified the DishType instance. <br>
 	 *     <b>pre:</b> object is initialized. <br>
 	 *     <b>post:</b> returns the user that modified the instance. <br>
-	 * @return the modifier of the instance.
 	 */
 	public User getModifier() {
 		return modifier;
@@ -151,13 +158,19 @@ public class DishType implements Comparable<DishType>, Serializable {
 	 *     <b>pre:</b> parameter is initialized. <br>
 	 *     <b>post:</b> a number used to sort the DishType list. <br>
 	 * @param dt the other DishType to compare. dt is initialized and.
-	 * @return A number according to the comparison using the name as parameter.
 	 */
 	@Override
 	public int compareTo(DishType dt) {
 		return name.toLowerCase().compareTo(dt.getName().toLowerCase());
-	}
+	}//End compareTo
+
+	/**
+	 * returns the name of the dishtype<br>
+	 *     <b>pre:</b> the object that uses the method is not null. <br>
+	 *     <b>post:</b> the name of the object DishType. <br>
+	 */
 	public String toString(){
 		return name;
 	}//End toString
-}//End PlateType
+
+}//End PlateType class
