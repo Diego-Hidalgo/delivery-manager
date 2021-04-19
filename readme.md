@@ -1,8 +1,11 @@
 #Delivery Manager
+
 ![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/La-Casa-Dorada.jpg?raw=true)
+
 
 ###Introduction
 This application was developed to help with the administration of customers, employees, products and orders of the restaurant La Casa Dorada.
+
 
 ###Entities
 In order to fulfill the features required by the client, the following entities
@@ -24,6 +27,7 @@ have been defined:
 
 For each entity, the application is in the capacity of manage it, this means add, modify, enable/disable and delete them. In order to do this, the user must acces to the different menus or double-click a selected cell (modify a field). These are:
 
+
 **Bar menu:**
 By using this menu the user can access to the add options and visualize the table of a selected entity, from there the user can modify, enalbe/unable and delete them.
 
@@ -32,14 +36,28 @@ By using this menu the user can access to the add options and visualize the tabl
 These menus are displayed after selecting a cell in the table and pressing the right button of the mouse.
 
 
+![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/menu-imgs/context-menu.png?raw=true)
+
+
+![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/menu-imgs/context-menu2.png?raw=true)
+
+
 **Add entity example:**
+
+
+![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/orders-imgs/add-order.PNG?raw=true)
 
 
 **Modify entity example:**
 
 
+![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/products-imgs/modify-product.PNG?raw=true)
+
+
 **Visualize entity example:**
 
+
+![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/ingredientes-imgs/ingredients-table.PNG?raw=true)
 
 
 ###Files
@@ -62,17 +80,26 @@ Arroz con pollo/familiar;Arroz con pollo/grande,2;2,nada,ENTREGADO,111,123
 **Example:** Diego,Hidalgo,12345,calle 25 #5-33,nada
 
 
+![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/files-imgs/import-img.PNG)
+
 
 ###Export
 The application can export three types of data: employees, products and orders. The extension of the file will be .csv. The user must choose a range of dates and hours, a save path and a separator.
 
+
+![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/files-imgs/export-img.PNG?raw=true)
+
+
 ###Changes
 The new changes can be found in the next link: file with changes.
 
+
 ###Contributors
+
 ▶ Diego Hidalgo. [GitHub profile.](https://github.com/Diego-Hidalgo "GitHub profile.")
 
 ▶ Brian Romero. [GitHub profile](https://github.com/BrianR18 "GitHub profile")
+
 
 ###Additional information
 This application was developed using Java 8, JavaFX and CSS
