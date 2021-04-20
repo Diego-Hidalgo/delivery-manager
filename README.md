@@ -97,7 +97,8 @@ The application can export three types of data: employees, products and orders. 
 
 ### 4. Changes
 
-The new changes can be found in the next link: file with changes.
+
+The new changes can be found in the next link: [file with changes](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/docs/changelog.pdf "changelog")
 
 
 ### 5. Contributors
