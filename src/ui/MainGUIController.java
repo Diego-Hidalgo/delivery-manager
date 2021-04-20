@@ -78,7 +78,7 @@ public class MainGUIController implements Runnable{
 	@FXML private BorderPane secondaryPane;
 	@FXML private MenuBar menuBar;
 	//Employee
-	@FXML private TextField employeeNameTxt;
+	@FXML private TextField employeeNameTxt;//Hasta aqui quede
 	@FXML private TextField employeeLastNameTxt;
 	@FXML private TextField employeeIdTxt;
 	@FXML private TableView<Employee> employeesTable;
