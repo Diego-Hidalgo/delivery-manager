@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="930.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="930.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <VBox prefHeight="330.0" prefWidth="570.0" BorderPane.alignment="CENTER">
             <children>
-                <TableView fx:id="customersTable" prefHeight="359.0" prefWidth="855.0">
+                <TableView fx:id="customersTable" onMouseClicked="#listenCustomerMouseEvent" prefHeight="359.0" prefWidth="855.0">
                     <columns>
                         <TableColumn fx:id="customerNameColumn" prefWidth="130.0" text="Nombre" />
                         <TableColumn fx:id="customerLastNameColumn" prefWidth="130.0" text="Apellido" />
@@ -18,13 +18,23 @@
                   <TableColumn fx:id="customerCreatorColumn" prefWidth="128.0" text="Creado por" />
                   <TableColumn fx:id="customerModifierColumn" prefWidth="123.0" text="Modificado por" />
                     </columns>
+                    <contextMenu>
+                    <ContextMenu>
+                        <items>
+                            <MenuItem fx:id="change" mnemonicParsing="false" onAction="#listenChangeCustomerEvent" text="Modificar" />
+                            <MenuItem fx:id="disable" mnemonicParsing="false" onAction="#listenChangeCustomerStatusEvent" text="Habilitar/Deshabilitar" />
+                            <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#listenRemoveCustomerEvent" text="Eliminar" />
+                            <MenuItem fx:id="showList" mnemonicParsing="false" onAction="#listenChangeCustomersTable" text=""/>
+                        </items>
+                    </ContextMenu>
+                    </contextMenu>
                 </TableView>
             </children></VBox>
     </center>
     <top>
         <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Label text="LISTA DE CLIENTES">
+                <Label fx:id="listTitle" text="LISTA DE CLIENTES">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>

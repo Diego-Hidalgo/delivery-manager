@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" prefHeight="108.0" prefWidth="544.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="listTitle" alignment="CENTER" prefHeight="30.0" prefWidth="464.0" text="Tipos de platos">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="255.0" prefWidth="59.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="dishTypeTable" onMouseClicked="#ListenChangeDishTypeEvent" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="dishTypeName" editable="false" prefWidth="383.0" resizable="false" sortable="false" text="Nombre" />
+                    </columns>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem fx:id="DisableElement" mnemonicParsing="false" onAction="#ListenChangesEnableDishType" text="Cambiar disponibilidad" />
+                              <MenuItem fx:id="removeElement" mnemonicParsing="false" onAction="#ListenRemoveDishType" text="Eliminar elemento" />
+                              <MenuItem fx:id="showList" mnemonicParsing="false" onAction="#ListenChangeDishTypeList" text="Ver elementos no disponibles" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="37.0" prefWidth="544.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

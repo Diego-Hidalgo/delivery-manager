@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="227.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="titles" alignment="CENTER" layoutX="3.0" layoutY="22.0" prefHeight="32.0" prefWidth="617.0" text="Agregar productos ">
+         <font>
+            <Font name="System Bold Italic" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="51.0" layoutY="83.0" text="Producto:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="51.0" layoutY="132.0" text="Cantidad:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tAmount" layoutX="152.0" layoutY="132.0" prefHeight="25.0" prefWidth="214.0" />
+      <Button layoutX="494.0" layoutY="178.0" mnemonicParsing="false" onAction="#changeProductListInChangeOrder" text="Agregar">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Label layoutX="399.0" layoutY="83.0" text="Precio:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfPrices" editable="false" layoutX="454.0" layoutY="81.0" prefHeight="25.0" prefWidth="118.0" />
+      <ComboBox fx:id="cbProducts" layoutX="152.0" layoutY="81.0" onAction="#setPriceTextField" prefHeight="25.0" prefWidth="214.0" />
+   </children>
+</Pane>

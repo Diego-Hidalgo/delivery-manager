@@ -1,14 +1,14 @@
 package model;
 
 public class Employee extends Entity  implements Comparable<Employee> {
-	
-	private static final long serialVersionUID = 1;
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor of the Employee class. <br>
 	 *     <b>pre:</b> parameters are initialized. <br>
 	 *     <b>post:</b> a new Employee object has been created. <br>
-	 * @param creator
+	 * @param creator User creator of the object
 	 */
 	public Employee(User creator){
 		super(creator);
@@ -28,14 +28,14 @@ public class Employee extends Entity  implements Comparable<Employee> {
 	}//End constructor2
 
 	/**
-	 * Compares the id of the current object with other employee.
+	 * Compares the id of the current object with other employee.<br>
+	 *     <b>pre;</b>
+	 *     <b>post:</b>
 	 * @param otherEmployee Employee to compare with.
-	 * @return A number according to the comparison. -1 if current is smaller than parameter, 0 if both are equal
-	 * and 1 if current is greater than parameter.
 	 */
 	@Override
 	public int compareTo(Employee otherEmployee) {
 		return getId().compareTo(otherEmployee.getId());
 	}//End compareTo
 
-}//End Employee
+}//End Employee class

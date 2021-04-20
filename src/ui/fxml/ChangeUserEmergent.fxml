@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <top>
-        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="225.0" text="MODIFICAR USUARIO" textAlignment="CENTER" BorderPane.alignment="CENTER">
+        <Label fx:id="titles" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="418.0" text="MODIFICAR USUARIO" textAlignment="CENTER" BorderPane.alignment="CENTER">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -44,7 +50,7 @@
                         <Pane prefHeight="35.0" prefWidth="145.0" />
                         <PasswordField fx:id="userPasswordTxt" />
                         <Pane prefHeight="35.0" prefWidth="145.0" />
-                        <PasswordField fx:id="passwordConfimationTxt" />
+                        <PasswordField fx:id="passwordConfirmationTxt" />
                     </children>
                 </VBox>
             </children>
@@ -55,13 +61,13 @@
          <children>
             <HBox alignment="CENTER" prefHeight="65.0" prefWidth="231.0">
                <children>
-                  <Button fx:id="acceptChangeUserBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Aceptar">
+                  <Button fx:id="acceptChangeUserBtn" mnemonicParsing="false" onAction="#changeUser" prefHeight="29.0" prefWidth="80.0" text="Aceptar">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
                   <Pane prefHeight="65.0" prefWidth="75.0" />
-                  <Button fx:id="cancelChangeUserBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Cancelar">
+                  <Button fx:id="cancelChangeUserBtn" mnemonicParsing="false" onAction="#closeEmergentWindows" prefHeight="29.0" prefWidth="80.0" text="Cancelar">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>

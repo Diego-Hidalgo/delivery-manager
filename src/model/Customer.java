@@ -1,8 +1,8 @@
 package model;
 
-public class Customer extends Entity{
+public class Customer extends Entity {
 
-	private static final long serialVersionUID = 1;
+	private static final long serialVersionUID = 1L;
 
 	//attributes
 	private String address; //Customer's address
@@ -55,7 +55,6 @@ public class Customer extends Entity{
 	 * returns the Customer's address. <br>
 	 *     <b>pre:</b> address is initialized. <br>
 	 *     <b>post:</b> returns the Customer's address. <br>
-	 * @return Customer's address
 	 */
 	public String getAddress(){
 		return address;
@@ -75,7 +74,6 @@ public class Customer extends Entity{
 	 * returns the Customer's phone number. <br>
 	 *     <b>pre:</b> <br>
 	 *     <b>post:</b> returns the phone number. <br>
-	 * @return Customer's phone number.
 	 */
 	public String getNPhone(){
 		return nPhone;
@@ -95,10 +93,18 @@ public class Customer extends Entity{
 	 * returns the Customer's remark
 	 *     <b>pre:</b> remark is initialized. <br>
 	 *     <b>post:</b> returns the Customer's remark<br>
-	 * @return The Customer's remark field.
 	 */
 	public String getRemark(){
 		return remark;
 	}//End getAddress
 
-}//End Customer
+	/**
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
+	 */
+	public String toString(){
+		return super.getName() + " " + super.getLastName() + " con id:  "+ super.getId();
+	}//End toString
+
+}//End Customer class

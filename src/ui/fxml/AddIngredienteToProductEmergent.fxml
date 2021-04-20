@@ -7,11 +7,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="544.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ComboBox fx:id="cbIngredients" layoutX="42.0" layoutY="126.0" onAction="#showInfoFromComboBoxSelectedItem" prefWidth="150.0" />
-      <Label layoutX="127.0" layoutY="37.0" text="Añadir ingrediente al producto">
+      <Label fx:id="titles" layoutX="127.0" layoutY="37.0" text="Añadir ingrediente al producto">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>

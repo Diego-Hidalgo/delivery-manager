@@ -1,8 +1,8 @@
 package model;
 
-public class User extends Employee implements Cloneable{
+public class User extends Employee {
 
-	private static final long serialVersionUID = 1;
+	private static final long serialVersionUID = 1L;
 
 	//attributes
 	private String userName; //User's user name
@@ -37,16 +37,6 @@ public class User extends Employee implements Cloneable{
 		this.password = password;
 	}//End constructor2
 
-	public Object clone() {
-		Object clone = null;
-		try {
-			clone = super.clone();
-		} catch(CloneNotSupportedException e) {
-			//Should not occur
-		}
-		return clone;
-	}//End clone;
-
 	/**
 	 * changes the username. <br>
 	 *     <b>pre:</b> <br>
@@ -61,7 +51,6 @@ public class User extends Employee implements Cloneable{
 	 * returns the User's username. <br>
 	 *     <b>pre:</b> <br>
 	 *     <b>post:</b> returns the User's username<br>
-	 * @return username.
 	 */
 	public String getUserName(){
 		return userName;
@@ -81,10 +70,9 @@ public class User extends Employee implements Cloneable{
 	 * returns the User's password. <br>
 	 *     <b>pre:</b> <br>
 	 *     <b>post:</b> returns the User's password<br>
-	 * @return User's password.
 	 */
 	public String getPassword(){
 		return password;
 	}//End getUserName
 
-}//End User
+}//End User class

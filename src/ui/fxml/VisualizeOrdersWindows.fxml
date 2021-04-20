@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="805.0" stylesheets="@../aplication.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" prefHeight="73.0" prefWidth="805.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="listTitle" text="Registro de pedidos">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="orderTable" onMouseClicked="#ListenOrderEvents" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="orderCode" editable="false" prefWidth="130.0" resizable="false" sortable="false" text="Código" />
+                      <TableColumn fx:id="orderDate" editable="false" prefWidth="118.0" resizable="false" sortable="false" text="Fecha" />
+                        <TableColumn fx:id="orderStatus" editable="false" prefWidth="126.0" resizable="false" sortable="false" text="Estado" />
+                        <TableColumn fx:id="orderProducts" editable="false" prefWidth="220.0" resizable="false" sortable="false" text="Productos" />
+                        <TableColumn fx:id="orderRemark" editable="false" prefWidth="155.0" resizable="false" sortable="false" text="Comentarios" />
+                    </columns>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem fx:id="showCompleteRegister" mnemonicParsing="false" onAction="#ListenShowOrderRegister" text="Ver registro completo" />
+                              <MenuItem fx:id="DisableElement" mnemonicParsing="false" onAction="#ListenChangeEnableOrder" text="Cambiar  disponibilidad" />
+                              <MenuItem fx:id="removeElement" mnemonicParsing="false" onAction="#ListenRemoveOrder" text="Eliminar" />
+                              <MenuItem fx:id="showList" mnemonicParsing="false" onAction="#ListenChangeOrderList" text="Ver pedidos no disponibles" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="37.0" prefWidth="805.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <VBox prefHeight="242.0" prefWidth="28.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="242.0" prefWidth="26.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>

@@ -1,51 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="150.0" layoutY="38.0" text="Registrar pedido">
-         <font>
-            <Font name="System Bold Italic" size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="27.0" layoutY="264.0" prefHeight="42.0" prefWidth="103.0" text="Productos y cantidad" wrapText="true">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="34.0" layoutY="109.0" text="Id del cliente:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="31.0" layoutY="134.0" prefHeight="58.0" prefWidth="114.0" text="Id del empleado que entrega " wrapText="true">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tIdCustomer" layoutX="173.0" layoutY="106.0" prefHeight="25.0" prefWidth="219.0" />
-      <TextField fx:id="tIdEmployee" layoutX="173.0" layoutY="150.0" prefHeight="25.0" prefWidth="219.0" />
-      <Label layoutX="31.0" layoutY="201.0" text="Estado:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="cbStatus" layoutX="173.0" layoutY="199.0" prefWidth="150.0" />
-      <TextArea fx:id="taProducsAmount" editable="false" layoutX="169.0" layoutY="254.0" prefHeight="116.0" prefWidth="237.0" wrapText="true" />
-      <Button layoutX="413.0" layoutY="260.0" mnemonicParsing="false" onAction="#addProductToOrder" text="+" />
-      <Label layoutX="27.0" layoutY="398.0" text="Comentarios:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextArea fx:id="taRemark" layoutX="173.0" layoutY="389.0" prefHeight="58.0" prefWidth="228.0" />
-      <Button layoutX="375.0" layoutY="487.0" mnemonicParsing="false" onAction="#registerOrder" text="Registrar" />
-   </children>
-</Pane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="titles" text="Registrar pedido">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="192.0">
+               <children>
+                  <Label text="Id del cliente:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="33.0" prefWidth="158.0" />
+                  <Label prefHeight="40.0" prefWidth="121.0" text="Id del empleado que entrega" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="27.0" prefWidth="158.0" />
+                  <Label text="Estado:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="46.0" prefWidth="158.0" />
+                  <Label prefHeight="40.0" prefWidth="121.0" text="Productos y cantidad" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="57.0" prefWidth="158.0" />
+                  <Label text="Comentarios:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="359.0" prefWidth="310.0">
+               <children>
+                  <TextField fx:id="tIdCustomer" prefHeight="25.0" prefWidth="246.0" />
+                  <Pane prefHeight="39.0" prefWidth="239.0" />
+                  <TextField fx:id="tIdEmployee" />
+                  <Pane prefHeight="41.0" prefWidth="236.0" />
+                  <ChoiceBox fx:id="cbStatus" prefWidth="150.0" />
+                  <Pane prefHeight="47.0" prefWidth="240.0" />
+                  <TextArea fx:id="taProducsAmount" editable="false" prefHeight="66.0" prefWidth="265.0" wrapText="true" />
+                  <Pane prefHeight="40.0" prefWidth="240.0" />
+                  <TextArea fx:id="taRemark" prefHeight="80.0" prefWidth="294.0" wrapText="true" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="359.0" prefWidth="91.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="361.0" prefWidth="91.0">
+               <children>
+                  <Button layoutX="8.0" layoutY="187.0" mnemonicParsing="false" onAction="#addProductToOrder" text="+">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="2.0" mnemonicParsing="false" onAction="#showSearchCustomerEmergent" text="+" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </right>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" prefHeight="86.0" prefWidth="485.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#registerOrder" text="Registrar">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Pane prefHeight="79.0" prefWidth="72.0" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
