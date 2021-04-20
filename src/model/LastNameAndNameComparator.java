@@ -10,7 +10,6 @@ public class LastNameAndNameComparator implements Comparator<Customer>{
      *     <b>post:</b> The number according to the comparison used to sort the Customer list. <br>
      * @param c1 Current customer to compare with. c1 is initialized and name != null and lastName != null
      * @param c2 Other customer to compare with. c2 is initialized and name != null and lastName != null
-     * @return a number according to the comparison
      */
     @Override
     public int compare(Customer c1, Customer c2){
@@ -19,5 +18,6 @@ public class LastNameAndNameComparator implements Comparator<Customer>{
         } else{
             return c1.getName().compareTo(c2.getName());
         }
-    }
-}
+    }//End compare
+
+}//End LastNameAndNameCoparator class

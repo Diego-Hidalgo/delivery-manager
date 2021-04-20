@@ -51,7 +51,6 @@ public class User extends Employee {
 	 * returns the User's username. <br>
 	 *     <b>pre:</b> <br>
 	 *     <b>post:</b> returns the User's username<br>
-	 * @return username.
 	 */
 	public String getUserName(){
 		return userName;
@@ -71,10 +70,9 @@ public class User extends Employee {
 	 * returns the User's password. <br>
 	 *     <b>pre:</b> <br>
 	 *     <b>post:</b> returns the User's password<br>
-	 * @return User's password.
 	 */
 	public String getPassword(){
 		return password;
 	}//End getUserName
 
-}//End User
+}//End User class

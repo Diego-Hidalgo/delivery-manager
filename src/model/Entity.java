@@ -52,7 +52,6 @@ public abstract class Entity implements Serializable {
 	 * returns the name of the user that created the instance. <br>
 	 *     <b>pre:</b>
 	 *     <b>post:</b> the name of the creator to be used in the TableView
-	 * @return name of the user creator
 	 */
 	public String getCreatorName() {
 		if(creator != null) {
@@ -66,7 +65,6 @@ public abstract class Entity implements Serializable {
 	 * returns the name of the last user that modified the instnace. <br>
 	 *     <b>pre:</b>
 	 *     <b>post:</b> the name of the modifier to be used in the TableView
-	 * @return name of the user that modified the instance
 	 */
 	public String getModifierName() {
 		if(modifier != null) {
@@ -90,7 +88,6 @@ public abstract class Entity implements Serializable {
 	 * returns the creator of the instance. <br>
 	 *     <b>pre:</b> creator is initialized. <br>
 	 *     <b>post:</b> Returns the creator of the instance. <br>
-	 * @return The user that created the instance.
 	 */
 	public User getCreator() {
 		return creator;
@@ -110,7 +107,6 @@ public abstract class Entity implements Serializable {
 	 * returns the creator of the instance. <br>
 	 *     <b>pre:</b> modifier is initialized. <br>
 	 *     <b>post:</b> returns the user that created the instance. <br>
-	 * @return The user that created the instance.
 	 */
 	public User getModifier() {
 		return modifier;
@@ -130,7 +126,6 @@ public abstract class Entity implements Serializable {
 	 * returns the name of the instance. <br>
 	 *     <b>pre:</b> the name is initialized. <br>
 	 *     <b>post:</b> returns the name of the instance. <br>
-	 * @return The name of the instance.
 	 */
 	public String getName(){
 		return name;
@@ -150,7 +145,6 @@ public abstract class Entity implements Serializable {
 	 * returns the lastName of the instance. <br>
 	 *     <b>pre:</b> the lastName is initialized. <br>
 	 *     <b>post:</b> returns the lastName of the instance. <br>
-	 * @return The lastName of the instance.
 	 */
 	public String getLastName(){
 		return lastName;
@@ -170,7 +164,6 @@ public abstract class Entity implements Serializable {
 	 * returns the id of the instance. <br>
 	 *     <b>pre:</b> the id is initialized. <br>
 	 *     <b>post:</b> returns the id of the instance. <br>
-	 * @return The id of the instance.
 	 */
 	public String getId(){
 		return id;
@@ -184,17 +177,16 @@ public abstract class Entity implements Serializable {
 	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-	}
+	}//End setEnabled
 
 	/**
 	 * returns the enabled status of the instance. <br>
 	 *     <b>pre:</b> the enabled is initialized. <br>
 	 *     <b>post:</b> returns the enabled status of the instance. <br>
-	 * @return The enabled status of the instance.
 	 */
 	public boolean getEnabled() {
 		return enabled;
-	}
+	}//End getEnabled
 
 	/**
 	 * changes the linked status of the instance. <br>
@@ -210,10 +202,9 @@ public abstract class Entity implements Serializable {
 	 * returns the linked status of the instance. <br>
 	 *     <b>pre:</b> the linked attribute is initialized. <br>
 	 *     <b>post:</b> returns the linked status of the instance. <br>
-	 * @return The linked status of the Entity instance.
 	 */
 	public boolean getLinked() {
 		return linked;
 	}//End getLinked
 
-}//End entity
+}//End Entity class

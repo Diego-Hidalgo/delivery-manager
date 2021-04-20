@@ -6,7 +6,7 @@
 
 
 ### 1. Introduction
-This application was developed to help with the administration of customers, employees, products and orders of the restaurant La Casa Dorada.
+This application was developed to help with the management of customers, employees, products and orders of the restaurant La Casa Dorada.
 
 
 ### 2. Entities

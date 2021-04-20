@@ -42,144 +42,136 @@ public class Ingredient implements Comparable<Ingredient>, Serializable {
 	}//End Constructor
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param n
+	 * Updates the number of links of the object Ingredient. <br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the number of links have been updated. <br>
+	 * @param n the number of links to be added.
 	 */
 	public void updateNumberOfLinks(int n){
 		numberOflinks += n; 
 	}//End updateNumberOfLinks
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
+	 * updates the links status.<br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the new status is true if the number of links is zero, otherwise is false. <br>
 	 */
 	public void updateLinkStatus(){
 		linked = (numberOflinks > 0)?true:false;
 	}//end updateLinkStatus
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @return
+	 * returns the number of links. <br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the number of links. <br>
 	 */
 	public int getNumberOfLinks(){
 		return numberOflinks;
 	}//End getNumberOfLinks
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param name
+	 * changes the name.<br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the name has been changed. <br>
+	 * @param name the new name of the object.
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}//End setIngredients
 
 	/**
-	 * <br>
-	 *     <b>pre</b>
-	 *     <b>post:</b>
-	 * @return
+	 * returns the name of the object.<br>
+	 *     <b>pre</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the name of the object. <br>
 	 */
 	public String getName() {
 		return name;
 	}//End getIngredients
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @return
+	 * returns the linked status of the object. <br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the linked status. <br>
 	 */
 	public boolean getLinked() {
 		return linked;
 	}//End getLinked
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param enable
+	 * changes the enabled status. <br>
+	 *     <b>pre:</b> the object that calls the method is not null.<br>
+	 *     <b>post:</b> the enabled status has been changed. <br>
+	 * @param enable the new enabled status. true if enabled, false if not.
 	 */
 	public void setEnable(boolean enable){
 		this.enable = enable;
 	}//End setEnable
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @return
+	 * returns the enabled status of the object<br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the enabled status.
 	 */
 	public boolean getEnable(){
 		return enable;
 	}//End setEnable
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param creator
+	 * changes the creator of the object. <br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the creator has been changed. <br>
+	 * @param creator the new creator of the object. creator != null.
 	 */
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}//End setCreator
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @return
+	 * returns the creator of the object. <br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the creator of the class. <br>
 	 */
 	public User getCreator() {
 		return creator;
 	}//End getCreator
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param modifier
+	 * changes the last user that modified the object.<br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the modifier of the object has been changed. <br>
+	 * @param modifier the new modifier of the object. modifier != null.
 	 */
 	public void setModifier(User modifier) {
 		this.modifier = modifier;
 	}//End setModifier
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @return
+	 * returns the modifier of the object. <br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the modifier of the object. <br>
 	 */
 	public User getModifier() {
 		return modifier;
 	}//End getModifier
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @return
+	 * returns the name of the object.<br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the name of the object. <br>
 	 */
 	public String toString(){
 		return name;
 	}//End toString
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param ingredient
-	 * @return
+	 * compares the name of the current object to ather Ingredient object. <br>
+	 *     <b>pre:</b> the method and the parameter are not null. <br>
+	 *     <b>post:</b> a number corresponding to the comparison usgin String.compareTo. <br>
+	 * @param ingredient the other object to compare to. ingredient != null.
 	 */
 	@Override
 	public int compareTo(Ingredient ingredient) {
 		return name.toLowerCase().compareTo(ingredient.getName().toLowerCase());
 	}//End compareTo
 	
-}//End Ingredients
+}//End Ingredients class
