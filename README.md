@@ -10,6 +10,13 @@
 
 -> Jar: [link.](https://github.com/Diego-Hidalgo/delivery-manager/tree/master/classes/artifacts/DeliveryManager_jar "link.")
 
+
+-> Link to promotional video: [link](https://www.youtube.com/watch?v=CHmAx1jz7gs "link")
+
+
+-> Link to instructions video: link
+
+
 ### 1. Introduction
 This application was developed to help with the management of customers, employees, products and orders of the restaurant La Casa Dorada.
 

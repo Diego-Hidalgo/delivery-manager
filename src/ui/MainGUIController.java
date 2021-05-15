@@ -276,7 +276,7 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Accion exitosa");
+		alert.setTitle("Acci\u00F3n exitosa");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
@@ -364,6 +364,7 @@ public class MainGUIController implements Runnable{
 							userPasswordTxt.clear();
 							passwordConfirmationTxt.clear();
 							successfulActionAlert("Se ha agregado al empleado y al usuario correctamente");
+							showLoginScene();
 						} else {
 							passwordTooShortAlert();
 						}//End if/else
@@ -749,7 +750,7 @@ public class MainGUIController implements Runnable{
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("No se puede realizar la accion porque el " + entity + " se encuentra deshabilitado");
+		alert.setContentText("No se puede realizar la acci\u00F3n porque el " + entity + " se encuentra deshabilitado");
 		ButtonType confirmation = new ButtonType("Aceptar");
 		alert.getButtonTypes().setAll(confirmation);
 		DialogPane dp = alert.getDialogPane();
@@ -1170,7 +1171,7 @@ public class MainGUIController implements Runnable{
 			if(!checkIngredientToAdd(ingredientSelected)){
 				currentIngredients.add(ingredientSelected);
 				lIngredients.setItems(currentIngredients);
-				msg = "Se agrego el ingrediente";
+				msg = "Se agreg\u00F3 el ingrediente";
 			}//End if
 		}else
 			msg = "No se seleccion\u00f3 ningun ingrediente";
@@ -1226,7 +1227,7 @@ public class MainGUIController implements Runnable{
 		Alert addInfo = new Alert(AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
 		boolean worked = false;
-		String msg = "Datos erroneos.";
+		String msg = "Datos err\u00F3neos.";
 		if( !tIdEmployee.getText().isEmpty() && !tIdCustomer.getText().isEmpty() &&
 				cbStatus.getValue() != null && !taProducsAmount.getText().isEmpty() && !taRemark.getText().isEmpty()){
 			if(checkCustomer(tIdCustomer.getText()) && checkEmployee(tIdEmployee.getText())){
@@ -1308,9 +1309,9 @@ public class MainGUIController implements Runnable{
 	@FXML
 	public void setCustomerAddressInTextBox() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Usar dirección del cliente");
+		alert.setTitle("Usar direcci\u00F3n del cliente");
 		alert.setHeaderText(null);
-		alert.setContentText("¿Desea usar la dirección del cliente ingresado?");
+		alert.setContentText("\u00BFDesea usar la direcci\u00F3n del cliente ingresado?");
 		ButtonType confirm = new ButtonType("Aceptar");
 		ButtonType cancel = new ButtonType("Cancelar");
 		alert.getButtonTypes().setAll(confirm, cancel);
