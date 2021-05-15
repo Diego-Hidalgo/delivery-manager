@@ -55,7 +55,6 @@ public class MainGUIController implements Runnable{
 	//DishType
 	@FXML private TableView<DishType> dishTypeTable;
 	@FXML private TableColumn<DishType,String> dishTypeName;
-	
 	//Order
 	@FXML private ChoiceBox<String> cbStatus;
 	@FXML private TextField tIdEmployee;
@@ -78,7 +77,7 @@ public class MainGUIController implements Runnable{
 	@FXML private BorderPane secondaryPane;
 	@FXML private MenuBar menuBar;
 	//Employee
-	@FXML private TextField employeeNameTxt;//Hasta aqui quede
+	@FXML private TextField employeeNameTxt;
 	@FXML private TextField employeeLastNameTxt;
 	@FXML private TextField employeeIdTxt;
 	@FXML private TableView<Employee> employeesTable;
@@ -276,15 +275,6 @@ public class MainGUIController implements Runnable{
 	}//End switchToSecondaryPane
 
 	@FXML
-	public void showFirstScene() throws IOException {
-		if(DMC.getAmountEmployees() == 0 && DMC.getAmountUsers() == 0) {
-			showRegisterEmployeesSceneInMainPane();
-		} else {
-			showLoginScene();
-		}//End else
-	}//End showFirstScene
-
-	@FXML
 	public void successfulActionAlert(String msg) throws IOException {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("Accion exitosa");
@@ -318,15 +308,16 @@ public class MainGUIController implements Runnable{
 	}//End idAlreadyInUseAlert
 
 	@FXML
-	public void showRegisterEmployeesSceneInMainPane() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterEmployeeWindows.fxml"));
+	public void showRegisterEmployeesAndUsersScene() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterEmployeeAndUser.fxml"));
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(registerScene);
 		Stage stage = (Stage) mainPane.getScene().getWindow();
-		stage.setTitle("Registrar empleado");
-		stage.setHeight(450);
+		stage.setTitle("Registrar empleado y usuario");
+		stage.setHeight(500);
+		stage.setWidth(600);
 		stage.setResizable(false);
 	}//End showRegisterEmployeesWindow
 
@@ -342,6 +333,45 @@ public class MainGUIController implements Runnable{
 		stage.setWidth(550);
 		stage.setResizable(false);
 	}//End showRegisterEmployeesSceneInSecondaryPane
+
+	@FXML
+	public void addEmployeeAndUser() throws IOException {
+		String name = employeeNameTxt.getText();
+		String lastName = employeeLastNameTxt.getText();
+		String id = userIdTxt.getText();
+		String userName = userNameTxt.getText();
+		String password = userPasswordTxt.getText();
+		String validationPassword = passwordConfirmationTxt.getText();
+		if (DMC.validateBlankChars(name) && DMC.validateBlankChars(lastName) && DMC.validateBlankChars(userName) && DMC.validateBlankChars(password)
+				&& DMC.validateBlankChars(validationPassword)) {
+			if(DMC.searchEmployeePosition(id) == -1) {
+				if(DMC.searchUserPositionByName(userName) == -1) {
+					if (password.equals(validationPassword)) {
+						if (password.length() >= 7) {
+							DMC.addEmployeeAndUser(name, lastName, id, userName, password);
+							employeeNameTxt.clear();
+							employeeLastNameTxt.clear();
+							userIdTxt.clear();
+							userNameTxt.clear();
+							userPasswordTxt.clear();
+							passwordConfirmationTxt.clear();
+							successfulActionAlert("Se ha agregado al empleado y al usuario correctamente");
+						} else {
+							passwordTooShortAlert();
+						}//End if/else
+					} else {
+						passwordMisMatchAlert();
+					}//End if/else
+				} else {
+					userNameAlreadyInUseAlert();
+				}//End if/else
+			} else {
+				idAlreadyInUseAlert();
+			}//End if/else
+		} else {
+			emptyFieldAlert();
+		}//End if/else
+	}//End addEmployeeAndUser
 
 	@FXML
 	public void addEmployee() throws IOException {
@@ -551,22 +581,6 @@ public class MainGUIController implements Runnable{
 			}//End if
 		}//End if
 	}//End listenRemoveUserEvent
-
-	@FXML
-	public void showRegisterUserSceneInMainPane() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindows.fxml"));
-		fxmlLoader.setController(this);
-		Parent registerScene = fxmlLoader.load();
-		mainPane.getChildren().clear();
-		mainPane.setCenter(registerScene);
-		Stage stage = (Stage) mainPane.getScene().getWindow();
-		stage.setTitle("Registrar usuario");
-		stage.setHeight(500);
-		if(DMC.getAmountEmployees() == 0 && DMC.getLoggedUser() == null) {
-			goBackBtn.setDisable(true);
-		}//End else
-		stage.setResizable(false);
-	}//End showRegisterFirstUserScene
 
 	@FXML
 	public void showRegisterUserSceneInSecondaryPane() throws IOException {

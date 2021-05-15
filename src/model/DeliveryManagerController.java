@@ -182,6 +182,21 @@ public class DeliveryManagerController implements Serializable {
 	}//End saveAllData
 
 	/**
+	 * adds a new employee and a new user<br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> an employee and its corresponding user has been successfully added with the given information. <br>
+	 * @param name the name of the new employee and user to be added.
+	 * @param lastName the last name of the new employee and user to be added.
+	 * @param id the id of the new employee and user to be added.
+	 * @param userName the name of the new user name to be added.
+	 * @param password the password of the new user to be added.
+	 */
+	public void addEmployeeAndUser(String name, String lastName, String id, String userName, String password) throws IOException {
+		addEmployee(name, lastName, id);
+		addUser(id, userName, password);
+	}//End addEmployeeAndUser
+
+	/**
 	 * writes a defined set of information about employees in a file with .csv extension. <br>
 	 *     <b>pre:</b> the object that calls the method is not null. <br>
 	 *     <b>post:</b> the information has been saved in the file. <br>

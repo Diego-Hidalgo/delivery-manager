@@ -55,7 +55,7 @@ public class Main extends Application{
 		window.setScene(scene);
 		window.getIcons().add(new Image(ICONPATH));
 		window.show();
-		MGC.showFirstScene();
+		MGC.showLoginScene();
 	}//End start
 
 }//End Main
