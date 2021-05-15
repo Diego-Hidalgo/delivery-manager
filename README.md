@@ -114,4 +114,4 @@ The new changes can be found in the next link: [file with changes](https://githu
 
 
 ### 6. Additional information
-This application was developed using Java 8, JavaFX and CSS
+This application was developed using Java 1.8.0_281, JavaFX and CSS
