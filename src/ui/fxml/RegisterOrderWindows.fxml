@@ -83,6 +83,7 @@
                   </Button>
                   <Button layoutX="8.0" mnemonicParsing="false" onAction="#showSearchCustomerEmergent" text="+" />
                   <Button layoutX="7.0" layoutY="282.0" mnemonicParsing="false" onAction="#setCustomerAddressInTextBox" prefHeight="25.0" prefWidth="26.0" text="+" />
+                  <Button layoutX="7.0" layoutY="59.0" mnemonicParsing="false" onAction="#showSearchEmployeesEmergent" prefHeight="25.0" prefWidth="27.0" text="+" />
                </children>
             </Pane>
          </children>

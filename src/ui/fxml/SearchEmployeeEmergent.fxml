@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label fx:id="titles" alignment="CENTER" contentDisplay="CENTER" layoutY="-1.0" prefHeight="75.0" prefWidth="387.0" text="Buscar empleado">
+            <font>
+                <Font name="System Bold Italic" size="20.0" />
+            </font>
+        </Label>
+        <Label layoutX="29.0" layoutY="74.0" prefHeight="20.0" prefWidth="254.0" text="Nombre del empleado:">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+        <ListView fx:id="employeesFound" layoutX="29.0" layoutY="189.0" prefHeight="203.0" prefWidth="290.0" />
+        <TextField fx:id="employeeToSearch" layoutX="29.0" layoutY="110.0" prefHeight="25.0" prefWidth="191.0" promptText="ej: Diego Hidalgo" />
+        <Pane layoutX="29.0" layoutY="169.0" prefHeight="20.0" prefWidth="290.0" style="-fx-background-color: #666666;">
+            <children>
+                <Label alignment="CENTER" layoutY="2.0" prefHeight="17.0" prefWidth="290.0" text="Empleados encontrados">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Button layoutX="327.0" layoutY="167.0" mnemonicParsing="false" onAction="#selectEmployee" text="Elegir" />
+        <Button layoutX="230.0" layoutY="110.0" mnemonicParsing="false" onAction="#searchEmployeesAndPutInList" text="Buscar" />
+        <Label fx:id="searchTimeLbl" layoutX="25.0" layoutY="144.0" prefHeight="17.0" prefWidth="353.0">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+    </children>
+</Pane>

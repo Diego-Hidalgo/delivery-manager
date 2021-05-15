@@ -996,6 +996,7 @@ public class MainGUIController implements Runnable{
 		st.setWidth(800);
 		st.setResizable(false);
 	}//End showProductsList
+
 	@FXML
 	public void showSceneOrdersList() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeOrdersWindows.fxml"));
@@ -1013,6 +1014,7 @@ public class MainGUIController implements Runnable{
 		st.setWidth(900);
 		st.setResizable(false);
 	}//End showSceneLogin
+
 	@FXML
 	public void showIngredientsList() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeIngredientsWindows.fxml"));
@@ -1062,6 +1064,7 @@ public class MainGUIController implements Runnable{
 		st.setWidth(550);
 		st.setResizable(false);
 	}//End showSceneLogin
+
 	@FXML
 	public void addProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
@@ -1088,8 +1091,12 @@ public class MainGUIController implements Runnable{
 			}//End if
 		}//End if
 		addInfo.setContentText(msg);
+		DialogPane dp = addInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		addInfo.showAndWait();
 	}//End addProduct
+
 	@FXML
 	public void changeWidgetsStatusInARegisterProduct(){
 		if(rdCreateNew.isSelected()){
@@ -1115,15 +1122,18 @@ public class MainGUIController implements Runnable{
 			lIngredients.setItems(FXCollections.observableArrayList(""));
 		}//End else
 	}//End changeWidgetsStatusInARegisterProduct
+
 	@FXML
 	public void setDishTypeInAddProduct(){
 		if(cbProductBase.getValue() != null)
 			tDishtype.setText(cbProductBase.getValue().getType());
 	}//End setDishTypeInAddProduct
+
 	private void initializeProducBaseCB(){
 		ObservableList<ProductBase> pb = FXCollections.observableArrayList(DMC.getProductsBase());
 		cbProductBase.setItems(pb);
 	}//End initializeProducBaseCB
+
 	@FXML
 	public void getSizeAndPriceFromAddSizeAndPriceEmergent() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
@@ -1138,15 +1148,20 @@ public class MainGUIController implements Runnable{
 			msg = "Tama\u00f1o y  precio agregados con \u00e9xito";
 		}//End if
 		addInfo.setContentText(msg);
+		DialogPane dp = addInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		addInfo.showAndWait();
 	}//End showAddSizeEmergentScene
+
 	@FXML
 	public void getDishTypeFromAddDishType() throws IOException{
 		EGC.showAddDishTypeToProduct();
 		tDishtype.setText((EGC.getDishTypeToAdd() != null)?EGC.getDishTypeToAdd():tDishtype.getText());
 		EGC.clearDishTypeToAdd();
 	}//End getDishTypeFromAddDishType
-	@FXML //tIngredients
+
+	@FXML
 	public void getIngredientsFromAddIngredientsToProduct() throws IOException{
 		Alert addInfo = new Alert(Alert.AlertType.INFORMATION);
 		addInfo.setHeaderText(null);
@@ -1163,6 +1178,9 @@ public class MainGUIController implements Runnable{
 		}else
 			msg = "No se seleccion\u00f3 ningun ingrediente";
 		addInfo.setContentText(msg);
+		DialogPane dp = addInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		addInfo.showAndWait();
 	}//End getIngredientsFromAddIngredientsToProduct
 
@@ -1175,6 +1193,7 @@ public class MainGUIController implements Runnable{
 		}//End for
  		return exist;
 	}//End checkSizeAndPrice
+
 	private List<String> getSizes(){
 		List<String> sizes = new ArrayList<String>();
 		String[] pricesAndSizes = tSizesAndPices.getText().split("\n"); 
@@ -1226,6 +1245,9 @@ public class MainGUIController implements Runnable{
 			}//End if
 		}//End if
 		addInfo.setContentText(msg);
+		DialogPane dp = addInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		addInfo.showAndWait();
 		if(worked){
 			product = new ArrayList<Product>();
@@ -1240,6 +1262,7 @@ public class MainGUIController implements Runnable{
 				exist = true;
 		return exist;
 	}//End checkCustomer
+
 	private boolean checkEmployee(String id){
 		boolean exist = false;
 		if(DMC.searchEmployeePosition(id) >= 0)
@@ -1265,6 +1288,9 @@ public class MainGUIController implements Runnable{
 		}//End if
 		EGC.clearAddProductData();
 		addInfo.setContentText(msg);
+		DialogPane dp = addInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		addInfo.showAndWait();
 		taProducsAmount.setText(amountAndProducts);
 	}//End addProductToOrder
@@ -1291,6 +1317,9 @@ public class MainGUIController implements Runnable{
 		ButtonType confirm = new ButtonType("Aceptar");
 		ButtonType cancel = new ButtonType("Cancelar");
 		alert.getButtonTypes().setAll(confirm, cancel);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.get() == confirm) {
 			String text = taRemark.getText() + " " + DMC.getCustomerAddressById(tIdCustomer.getText());
@@ -1324,6 +1353,23 @@ public class MainGUIController implements Runnable{
 		}//End else
 		
 	}//End ListenChangeProductEvent
+
+	@FXML
+	public void showSearchEmployeesEmergent() {
+		try {
+			EGC.showSearchAndAddEmployeeScene();
+			tIdEmployee.setText((EGC.getEmployeeIdToAdd().equals("")?tIdEmployee.getText():EGC.getEmployeeIdToAdd()));
+		} catch(IOException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setHeaderText(null);
+			error.setContentText("Ha ocurrido un error inesperado");
+			DialogPane dp = error.getDialogPane();
+			dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+			dp.getStyleClass().add("aplication");
+			error.showAndWait();
+		}
+	}
+
 	@FXML
 	public void showSearchCustomerEmergent(){
 		try{
@@ -1333,9 +1379,13 @@ public class MainGUIController implements Runnable{
 			Alert error = new Alert(AlertType.ERROR);
 			error.setHeaderText(null);
 			error.setContentText("Ha ocurrido un error inesperado");
+			DialogPane dp = error.getDialogPane();
+			dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+			dp.getStyleClass().add("aplication");
 			error.showAndWait();
 		}//End catch
 	}//End showSearchCustomerEmergent
+
 	private void changeMainItemsContextMenuState(boolean state){
 		DisableElement.setDisable(state);
 		removeElement.setDisable(state);
@@ -1358,6 +1408,9 @@ public class MainGUIController implements Runnable{
 		}
 		}//End if
 		changeEnableInfo.setContentText(msg);
+		DialogPane dp = changeEnableInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		changeEnableInfo.showAndWait();
 	}//End ListenChangesEnableProduct
 
@@ -1366,6 +1419,7 @@ public class MainGUIController implements Runnable{
 		enableList = !enableList;
 		showProductsList();
 	}//End ListenChangeProductList
+
 	@FXML
 	public void ListenShowCompleteProducts(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1375,9 +1429,13 @@ public class MainGUIController implements Runnable{
 			Alert error = new Alert(AlertType.ERROR);
 			error.setHeaderText(null);
 			error.setContentText("Ha ocurrido un error inesperado");
+			DialogPane dp = error.getDialogPane();
+			dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+			dp.getStyleClass().add("aplication");
 			error.showAndWait();
 		}//End catch
 	}//End ListenShowCompleteProducts
+
 	@FXML
 	public void ListenRemoveProduct(){
 		Product p = productTable.getSelectionModel().getSelectedItem();
@@ -1396,6 +1454,9 @@ public class MainGUIController implements Runnable{
 			} //End catch
 		}//End if
 		removeInfo.setContentText(msg);
+		DialogPane dp = removeInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		removeInfo.showAndWait();
 	}//End ListenChangesEnableProduct
 
@@ -1436,6 +1497,9 @@ public class MainGUIController implements Runnable{
 		}
 		}//End if
 		changeEnableInfo.setContentText(msg);
+		DialogPane dp = changeEnableInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		changeEnableInfo.showAndWait();
 	}//End ListenChangesEnableProduct
 
@@ -1457,6 +1521,9 @@ public class MainGUIController implements Runnable{
 			} //End catch
 		}//End if
 		removeInfo.setContentText(msg);
+		DialogPane dp = removeInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		removeInfo.showAndWait();
 	}//End ListenChangesEnableProduct
 
@@ -1497,6 +1564,9 @@ public class MainGUIController implements Runnable{
 		}
 		}//End if
 		changeEnableInfo.setContentText(msg);
+		DialogPane dp = changeEnableInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		changeEnableInfo.showAndWait();
 	}//End ListenChangesEnableProduct
 
@@ -1518,6 +1588,9 @@ public class MainGUIController implements Runnable{
 			} //End catch
 		}//End if
 		removeInfo.setContentText(msg);
+		DialogPane dp = removeInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		removeInfo.showAndWait();
 	}//End ListenChangesEnableProduct
 
@@ -1567,6 +1640,9 @@ public class MainGUIController implements Runnable{
 			msg = "Ha ocurrido un error inesperado";
 		}
 		info.setContentText(msg);
+		DialogPane dp = info.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		info.showAndWait();
 	}//End ListenChangeEnableOrder
 

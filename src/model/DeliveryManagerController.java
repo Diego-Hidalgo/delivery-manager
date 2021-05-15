@@ -593,6 +593,29 @@ public class DeliveryManagerController implements Serializable {
 	}//End searchCustomerPositionById
 
 	/**
+	 * Returns a list that contains the employees that meet the name, last name or full name given condition.<br>
+	 *     <b>pre:</b> the object that calls this method is not null.<br>
+	 *     <b>post:</b> returns a list with the employees that meet the given requirement.<br>
+	 * @param condition the condition that the employees of the list must meet.
+	 */
+	public List<Employee> searchEmployeesByCondition(String condition) {
+		long start = System.currentTimeMillis();
+		List<Employee> coincidents = new ArrayList<>();
+		for(int i = 0; i < employees.size(); i ++) {
+			Employee employee = employees.get(i);
+			String fullName = employee.getName() + " " + employee.getLastName();
+			if(employee.getName().equalsIgnoreCase(condition) || employee.getLastName().equalsIgnoreCase(condition) ||
+			fullName.equalsIgnoreCase(condition)) {
+				coincidents.add(employee);
+			}//End if
+		}//End for
+		long end = System.currentTimeMillis();
+		double searchTime = (double) (end - start) / 1000;
+		setBinarySearchTime(searchTime);
+		return coincidents;
+	}//End searchEmployeeByCondition
+
+	/**
 	 * calls the method that search the customers that meet a given condition.<br>
 	 *     <b>pre:</b> the object that calls this method is not null. <br>
 	 *     <b>post:</b> returns a list that contains the customers that meet the condition. <br>

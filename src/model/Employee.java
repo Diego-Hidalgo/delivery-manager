@@ -38,4 +38,8 @@ public class Employee extends Entity  implements Comparable<Employee> {
 		return getId().compareTo(otherEmployee.getId());
 	}//End compareTo
 
+	public String toString() {
+		return super.getName() + " " + super.getLastName() + " con id:  "+ super.getId();
+	}//End toString
+
 }//End Employee class

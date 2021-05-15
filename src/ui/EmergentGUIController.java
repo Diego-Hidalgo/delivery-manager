@@ -50,6 +50,7 @@ public class EmergentGUIController {
 	private String customerId;
 	@FXML private TextField customerToSearch;
 	@FXML private ListView<Customer> CustomersFound;
+	@FXML private ListView<Employee> employeesFound;
 	@FXML private Label receives;
 	@FXML private Label delivery;
 	@FXML private Label createdby;
@@ -109,6 +110,8 @@ public class EmergentGUIController {
 	@FXML private MenuItem change;
 	@FXML private TextField TFAmount;
 	@FXML private Label searchTimeLbl;
+	@FXML private TextField employeeToSearch;
+	private String employeeId;
 	//Import data
 	@FXML private ChoiceBox<String> importType;
 	@FXML private TextField mSeparator;
@@ -122,6 +125,7 @@ public class EmergentGUIController {
 	@FXML private Label lpPrice;
 	@FXML private Label lpModified;
 	@FXML private ListView<String> lvpIngredients;
+
 	public EmergentGUIController(DeliveryManagerController DMC){
 		this.DMC = DMC;
 		size = new String();
@@ -367,6 +371,60 @@ public class EmergentGUIController {
 		form.setResizable(false);
 		form.showAndWait();
 	}//End showRegisterDihstypeScene
+
+	@FXML
+	public void showSearchAndAddEmployeeScene() throws IOException {
+		employeeId = "";
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"SearchEmployeeEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		Stage searchCustomer = new Stage();
+		searchCustomer.initModality(Modality.APPLICATION_MODAL);
+		searchCustomer.setTitle("Buscar empleado");
+		searchCustomer.setScene(scene);
+		searchCustomer.setResizable(false);
+		searchCustomer.showAndWait();
+	}//End showSearchAndAddEmployeeScene
+
+	@FXML
+	public void searchEmployeesAndPutInList() {
+		if(!employeeToSearch.getText().equals("")) {
+			initializeEmployeesList(DMC.searchEmployeesByCondition(employeeToSearch.getText()));
+		}//End if
+		searchTimeLbl.setText("El tiempo de búsqueda fue (segundos): " + DMC.getBinarySearchTime());
+	}//End searchEmployeeAndPutInList
+
+	private void initializeEmployeesList(List<Employee> EmployeesFound) {
+		ObservableList<Employee> employees = FXCollections.observableList(EmployeesFound);
+		employeesFound.setItems(employees);
+	}//End initializeEmployeesList
+
+	public void selectEmployee(ActionEvent event) {
+		Employee e = employeesFound.getSelectionModel().getSelectedItem();
+		Alert info = new Alert(AlertType.ERROR);
+		info.setHeaderText(null);
+		info.setContentText("No hay un empleado seleccionado");
+		boolean worked = false;
+		if(e != null){
+			employeeId = e.getId();
+			worked = true;
+		}//End if
+		if(worked)
+			closeEmergentWindows(event);
+		else {
+			DialogPane dp = info.getDialogPane();
+			dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+			dp.getStyleClass().add("aplication");
+			info.showAndWait();
+		}//End if/else
+	}//End selectEmployee
+
+	public String getEmployeeIdToAdd() {
+		return employeeId;
+	}//End getEmployeeIdToAdd
+
 	@FXML
 	public void showSearchAndAddCustomerScene() throws IOException{
 		customerId = "";
@@ -382,6 +440,7 @@ public class EmergentGUIController {
 		searchCustomer.setResizable(false);
 		searchCustomer.showAndWait();
 	}//End showSearchAndAddCustomerScene
+
 	@FXML
 	public void searchCustomersAndPutInList(){
 		if(!customerToSearch.getText().equals("")){
@@ -408,8 +467,12 @@ public class EmergentGUIController {
 		}
 		if(worked)
 			closeEmergentWindows(event);
-		else
+		else {
+			DialogPane dp = info.getDialogPane();
+			dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+			dp.getStyleClass().add("aplication");
 			info.showAndWait();
+		}
 	}//End selectCustomer
 
 	public String getCustomerIdToAdd(){
