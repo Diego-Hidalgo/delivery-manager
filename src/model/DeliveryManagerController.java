@@ -1,11 +1,12 @@
 package model;
+
 import java.io.*;
 import java.util.*;
 
 public class DeliveryManagerController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final String SAVE_PATH = "save-files/save-file.dm";
+	private static final String SAVE_PATH = "save-file.dm";
 
 	private User loggedUser;
 	private List<Employee> employees;
@@ -212,7 +213,11 @@ public class DeliveryManagerController implements Serializable {
 	 *     <b>post:</b> the data has been saved. <br>
 	 */
 	public void saveAllData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_PATH));
+		File f = new File(SAVE_PATH);
+		if(!f.exists()) {
+			f.createNewFile();
+		}//End if
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
 		oos.writeObject(this);
 		oos.close();
 	}//End saveAllData

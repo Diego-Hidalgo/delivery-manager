@@ -19,7 +19,7 @@ public class Main extends Application{
 	private EmergentGUIController EGC;
 	private final String FOLDER = "fxml/";
 	private final String ICONPATH = "/ui/ico/logo.jpg";
-	private static final String SAVE_PATH = "save-files/save-file.dm";
+	private static final String SAVE_PATH = "save-file.dm";
 
 	public Main() {
 		try {
@@ -37,11 +37,12 @@ public class Main extends Application{
 
 	public void loadAllData() throws IOException, ClassNotFoundException {
 		File f = new File(SAVE_PATH);
-		if(f.exists()) {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			DMC = (DeliveryManagerController)ois.readObject();
-			ois.close();
+		if(!f.exists()) {
+			f.createNewFile();
 		}//End if
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+		DMC = (DeliveryManagerController)ois.readObject();
+		ois.close();
 	}//End loadAllData
 
 	@Override

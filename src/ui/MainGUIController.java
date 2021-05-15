@@ -741,7 +741,7 @@ public class MainGUIController implements Runnable{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("");
 		alert.setHeaderText(null);
-		alert.setContentText("Verifique las credenciales de inicio de sesi\u00d3n");
+		alert.setContentText("Verifique las credenciales de inicio de sesión");
 		ButtonType confirmation = new ButtonType("Aceptar");
 		alert.getButtonTypes().setAll(confirmation);
 		alert.showAndWait();
