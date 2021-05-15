@@ -364,6 +364,7 @@ public class MainGUIController implements Runnable{
 							userPasswordTxt.clear();
 							passwordConfirmationTxt.clear();
 							successfulActionAlert("Se ha agregado al empleado y al usuario correctamente");
+							showLoginScene();
 						} else {
 							passwordTooShortAlert();
 						}//End if/else

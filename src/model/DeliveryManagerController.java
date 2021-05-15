@@ -212,7 +212,7 @@ public class DeliveryManagerController implements Serializable {
 	 *     <b>pre:</b> the object that calls the method is not null. <br>
 	 *     <b>post:</b> the data has been saved. <br>
 	 */
-	public void saveAllData() throws IOException {
+	public synchronized void saveAllData() throws IOException {
 		File f = new File(SAVE_PATH);
 		if(!f.exists()) {
 			f.createNewFile();
