@@ -744,6 +744,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText("Verifique las credenciales de inicio de sesión");
 		ButtonType confirmation = new ButtonType("Aceptar");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End incorrectCredentials
 
