@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -31,6 +32,7 @@ import javafx.stage.Stage;
 
 public class EmergentGUIController {
 	
+	private final String ICONPATH = "/ui/ico/logo.jpg";
 	private final String FOLDER = "fxml/";
 	final String[] ST = {"SOLICITADO","EN_PROCESO","ENVIADO","ENTREGADO"};
 	private DeliveryManagerController DMC;
@@ -144,6 +146,7 @@ public class EmergentGUIController {
 		form.setTitle("Importar datos");
 		form.setScene(scene);
 		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
 		form.showAndWait();
 	}//End showImportScene
 
@@ -272,6 +275,7 @@ public class EmergentGUIController {
 		form.setTitle("Emitir Reportes");
 		form.setScene(scene);
 		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
 		form.showAndWait();
 	}//End showExportScene
 
@@ -354,6 +358,7 @@ public class EmergentGUIController {
 		form.setTitle("Agregar ingrediente");
 		form.setScene(scene);
 		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
 		form.showAndWait();
 	}//End showRegisterIngredienteScene
 
@@ -369,6 +374,7 @@ public class EmergentGUIController {
 		form.setTitle("Agregar tipo de plato");
 		form.setScene(scene);
 		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
 		form.showAndWait();
 	}//End showRegisterDihstypeScene
 
@@ -385,6 +391,7 @@ public class EmergentGUIController {
 		searchCustomer.setTitle("Buscar empleado");
 		searchCustomer.setScene(scene);
 		searchCustomer.setResizable(false);
+		searchCustomer.getIcons().add(new Image(ICONPATH));
 		searchCustomer.showAndWait();
 	}//End showSearchAndAddEmployeeScene
 
@@ -438,6 +445,7 @@ public class EmergentGUIController {
 		searchCustomer.setTitle("Buscar cliente");
 		searchCustomer.setScene(scene);
 		searchCustomer.setResizable(false);
+		searchCustomer.getIcons().add(new Image(ICONPATH));
 		searchCustomer.showAndWait();
 	}//End showSearchAndAddCustomerScene
 
@@ -492,6 +500,7 @@ public class EmergentGUIController {
 		form.setTitle("Agregar tipo de plato al producto");
 		form.setScene(scene);
 		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
 		form.showAndWait();
 	}//End showSceneLogin
 
@@ -508,6 +517,7 @@ public class EmergentGUIController {
 		form.setTitle("Cambiar tipo de plato");
 		form.setScene(scene);
 		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
 		form.showAndWait();
 	}//End showRegisterDihstypeScene
 
@@ -519,12 +529,13 @@ public class EmergentGUIController {
 		Scene scene = new Scene(root,null);
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
 		initializeSizesComboBox();
-		Stage formulario = new Stage();
-		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tama\u00f1o del producto");
-		formulario.setScene(scene);
-		formulario.setResizable(false);
-		formulario.showAndWait();
+		Stage form = new Stage();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Agregar tama\u00f1o del producto");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
+		form.showAndWait();
 	}//End showRegisterDihstypeScene
 
 	@FXML
@@ -540,6 +551,7 @@ public class EmergentGUIController {
 		changeIngredient.setTitle("Cambiar ingrediente.");
 		changeIngredient.setScene(scene);
 		changeIngredient.setResizable(false);
+		changeIngredient.getIcons().add(new Image(ICONPATH));
 		changeIngredient.showAndWait();
 	}//End changeIngredientEmergentScene
 
@@ -559,6 +571,7 @@ public class EmergentGUIController {
 		changeEmployee.setTitle("Modificar empleado");
 		changeEmployee.setScene(scene);
 		changeEmployee.setResizable(false);
+		changeEmployee.getIcons().add(new Image(ICONPATH));
 		changeEmployee.showAndWait();
 	}//End changeEmployeeEmergentScene
 
@@ -576,6 +589,7 @@ public class EmergentGUIController {
 		changeUser.setTitle("Modificar usuario");
 		changeUser.setScene(scene);
 		changeUser.setResizable(false);
+		changeUser.getIcons().add(new Image(ICONPATH));
 		changeUser.showAndWait();
 	}//End changeUserEmergentScene
 
@@ -598,6 +612,7 @@ public class EmergentGUIController {
 		changeCustomer.setTitle("Modificar cliente");
 		changeCustomer.setScene(scene);
 		changeCustomer.setResizable(false);
+		changeCustomer.getIcons().add(new Image(ICONPATH));
 		changeCustomer.showAndWait();
 	}//End changeCustomerEmergentScene
 
@@ -608,13 +623,14 @@ public class EmergentGUIController {
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
-		Stage formulario = new Stage();
+		Stage form = new Stage();
 		initializeIngredientsComboBox();
-		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Cambiar ingrediente");
-		formulario.setScene(scene);
-		formulario.setResizable(false);
-		formulario.showAndWait();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Cambiar ingrediente");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
+		form.showAndWait();
 	}//End showRegisterDihstypeScene
 
 	@FXML
@@ -625,13 +641,14 @@ public class EmergentGUIController {
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
-		Stage formulario = new Stage();
-		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar tama\u00f1o del producto");
-		formulario.setScene(scene);
-		formulario.setResizable(false);
+		Stage form = new Stage();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Agregar tama\u00f1o del producto");
+		form.setScene(scene);
+		form.setResizable(false);
 		initializeIngredientsComboBox();
-		formulario.showAndWait();
+		form.getIcons().add(new Image(ICONPATH));
+		form.showAndWait();
 	}//End showRegisterDihstypeScene
 
 	@FXML//changeProductData
@@ -642,14 +659,15 @@ public class EmergentGUIController {
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
-		Stage formulario = new Stage();
+		Stage form = new Stage();
 		initializeProductsListView();
-		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Cambiar producto");
-		formulario.setScene(scene);
-		formulario.setResizable(false);
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Cambiar producto");
+		form.setScene(scene);
+		form.setResizable(false);
 		initializeForm();
-		formulario.showAndWait();
+		form.getIcons().add(new Image(ICONPATH));
+		form.showAndWait();
 	}//End showRegisterDihstypeScene
 
 	@FXML//changeProductData
@@ -660,14 +678,15 @@ public class EmergentGUIController {
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
-		Stage formulario = new Stage();
+		Stage form = new Stage();
 		initializeStatusChoiceBox();
 		initializeOrderForm();
-		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Cambiar producto");
-		formulario.setScene(scene);
-		formulario.setResizable(false);
-		formulario.showAndWait();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Cambiar producto");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
+		form.showAndWait();
 	}//End showRegisterDihstypeScene
 
 	@FXML
@@ -677,13 +696,14 @@ public class EmergentGUIController {
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
 		scene.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
-		Stage formulario = new Stage();
+		Stage form = new Stage();
 		initializeProductsChoiceBox();
-		formulario.initModality(Modality.APPLICATION_MODAL);
-		formulario.setTitle("Agregar producto");
-		formulario.setScene(scene);
-		formulario.setResizable(false);
-		formulario.showAndWait();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Agregar producto");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
+		form.showAndWait();
 	}//End showRegisterDihstypeScene
 
 	@FXML
@@ -699,6 +719,7 @@ public class EmergentGUIController {
 		form.setTitle("Registro de producto");
 		form.setScene(scene);
 		form.setResizable(false);
+		form.getIcons().add(new Image(ICONPATH));
 		form.showAndWait();
 	}//End showRegisterDihstypeScene
 
@@ -765,6 +786,7 @@ public class EmergentGUIController {
 		registerOrder.setScene(scene);
 		registerOrder.setResizable(false);
 		initializeRegisterOrder();
+		registerOrder.getIcons().add(new Image(ICONPATH));
 		registerOrder.showAndWait();
 	}//End showRegisterIngredienteScene
 
@@ -781,6 +803,7 @@ public class EmergentGUIController {
 		addProduct.setTitle("Ver registro");
 		addProduct.setScene(scene);
 		addProduct.setResizable(false);
+		addProduct.getIcons().add(new Image(ICONPATH));
 		addProduct.showAndWait();
 	}//End showCompleteOrderScene
 
@@ -866,6 +889,7 @@ public class EmergentGUIController {
 		changeAmount.setTitle("Cambiar cantidad");
 		changeAmount.setScene(scene);
 		changeAmount.setResizable(false);
+		changeAmount.getIcons().add(new Image(ICONPATH));
 		changeAmount.showAndWait();
 	}//End changeAmountFromOrder
 
