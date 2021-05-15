@@ -87,7 +87,6 @@ public class MainGUIController implements Runnable{
 	@FXML private TableColumn<Employee, String> employeeCreatorColumn;
 	@FXML private TableColumn<Employee, String> employeeModifierColumn;
 	//User
-	@FXML private Button goBackBtn;
 	@FXML private Label welcomeLabel;
 	@FXML private TextField userIdTxt;
 	@FXML private TextField userNameTxt;
@@ -592,9 +591,6 @@ public class MainGUIController implements Runnable{
 		stage.setTitle("Registrar usuario");
 		stage.setHeight(500);
 		stage.setWidth(560);
-		if(DMC.getLoggedUser() != null) {
-			goBackBtn.setDisable(true);
-		}//End if
 		stage.setResizable(false);
 	}//End showRegisterUserSceneInSecondaryPane
 
@@ -708,6 +704,7 @@ public class MainGUIController implements Runnable{
 		mainPane.setCenter(loginScene);
 		Stage stage = (Stage) mainPane.getScene().getWindow();
 		stage.setTitle("Iniciar sesion");
+		stage.setWidth(600);
 		stage.setHeight(440);
 		stage.setResizable(false);
 	}//End showLoginScene

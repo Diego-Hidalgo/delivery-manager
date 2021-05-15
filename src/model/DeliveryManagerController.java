@@ -288,7 +288,9 @@ public class DeliveryManagerController implements Serializable {
 				i ++;
 			}//End while
 			employees.add(i, newEmployee);
-			loggedUser.setLinked(true);
+			if(loggedUser != null) {
+				loggedUser.setLinked(true);
+			}//End if
 		}//End else
 		saveAllData();
 	}//End addEmployee
