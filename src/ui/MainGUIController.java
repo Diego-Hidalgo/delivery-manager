@@ -1260,7 +1260,8 @@ public class MainGUIController implements Runnable{
 		alert.getButtonTypes().setAll(confirm, cancel);
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.get() == confirm) {
-			taRemark.setText(DMC.getCustomerAddressById(tIdCustomer.getText()));
+			String text = taRemark.getText() + " " + DMC.getCustomerAddressById(tIdCustomer.getText());
+			taRemark.setText(text);
 		}//End if
 	}//End setCustomerAddressInTextBoxAlert
 

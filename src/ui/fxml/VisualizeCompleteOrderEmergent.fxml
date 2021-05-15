@@ -33,7 +33,7 @@
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="63.0" layoutY="282.0" text="Comentarios:">
+      <Label layoutX="64.0" layoutY="281.0" prefHeight="20.0" prefWidth="213.0" text="Dirección/Comentarios:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
