@@ -281,6 +281,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText(msg);
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End successfulActionAlert
 
@@ -292,6 +295,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End emptyFieldAlert
 
@@ -303,6 +309,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText("Prueba con una distinta y vuelva a intentar");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End idAlreadyInUseAlert
 
@@ -427,6 +436,9 @@ public class MainGUIController implements Runnable{
 		alert.setHeaderText(null);
 		alert.setTitle("No se pudo completar la accion");
 		alert.setContentText(msg);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End couldNotDisableAlert
 
@@ -602,6 +614,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText("Las contrase\u00f1as deben ser iguales, vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End passwordMisMatchAlert
 
@@ -613,6 +628,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText("La id ingresada no coincide con ning\u00fan empleado, intente con otra o cree un nuevo empleado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End idNotFoundAlert
 
@@ -625,6 +643,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText("Vuelva a intentarlo con un nuevo nombre");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End userNameAlreadyInUseAlert
 
@@ -636,6 +657,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText("Vuelva a intentarlo con un nuevo empleado");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End employeeAlreadyHasAnUserAlert
 
@@ -647,6 +671,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText("La contrase\u00f1a debe tener por lo menos 7 caracteres, intente con otra");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End passwordTooShortAlert
 
@@ -728,6 +755,9 @@ public class MainGUIController implements Runnable{
 		alert.setContentText("No se puede realizar la accion porque el " + entity + " se encuentra deshabilitado");
 		ButtonType confirmation = new ButtonType("Aceptar");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End entityDisabledAlert
 
@@ -770,6 +800,9 @@ public class MainGUIController implements Runnable{
 		ButtonType acceptBtn = new ButtonType("Aceptar");
 		ButtonType cancelBtn = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 		alert.getButtonTypes().setAll(acceptBtn, cancelBtn);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		Optional<ButtonType> result = alert.showAndWait();
 		return result.get() == acceptBtn;
 	}//End confirmationAlert

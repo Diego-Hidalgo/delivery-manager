@@ -8,8 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
+import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import model.*;
@@ -165,6 +165,9 @@ public class EmergentGUIController {
 		alert.setTitle("Mensaje");
 		alert.setHeaderText(null);
 		alert.setContentText(msg);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End allDataImportedAlert
 
@@ -196,47 +199,59 @@ public class EmergentGUIController {
 	}//End importData
 
 	public void importCustomersData(ActionEvent event) {
-		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informaci\u00f3n...");
 		Runnable r = () -> {
 			try {
 				DMC.importCustomerData(new File(pathTxt.getText()), mSeparator.getText());
+				Platform.runLater(()->{
+					importDataStatusAlert("Se ha importado toda la información");
+				});
 			} catch (IOException exception) {
-				msg.set("Ha ocurrido un error");
+				Platform.runLater(()->{
+					importDataStatusAlert("Ha ocurrido un error inesperado.");
+				});
 			}//End catch
 		};
 		Thread t = new Thread(r);
 		t.start();
-		importDataStatusAlert(msg.get());
+		importDataStatusAlert("Se está importando la información...");
 		closeEmergentWindows(event);
 	}//End importCustomersData
 
 	public void importProductsData(ActionEvent event) {
-		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informaci\u00f3n...");
 		Runnable r = () -> {
 			try {
 				DMC.importProducts(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText());
+				Platform.runLater(()->{
+					importDataStatusAlert("Se ha importado toda la información");
+				});
 			} catch (IOException exception) {
-				msg.set("Ha ocurrido un error");
+				Platform.runLater(()->{
+					importDataStatusAlert("Ha ocurrido un error inesperado.");
+				});
 			}//End catch
 		};
 		Thread t = new Thread(r);
 		t.start();
-		importDataStatusAlert(msg.get());
+		importDataStatusAlert("Se está importando la información...");
 		closeEmergentWindows(event);
 	}//End importProductsData
 
 	public void importOrdersData(ActionEvent event) {
-		AtomicReference<String> msg = new AtomicReference<>("Se esta importando la informaci\u00f3n...");
 		Runnable r = () -> {
 			try {
 				DMC.importOrders(new File(pathTxt.getText()), mSeparator.getText(), sSeparator.getText(), tSeparator.getText());
+				Platform.runLater(()->{
+					importDataStatusAlert("Se ha importado toda la información.");
+				});
 			} catch (IOException exception) {
-				msg.set("Ha ocurrido un error");
+				Platform.runLater(()->{
+					importDataStatusAlert("Ha ocurrido un error inesperado.");
+				});
 			}//End catch
 		};
 		Thread t = new Thread(r);
 		t.start();
-		importDataStatusAlert(msg.get());
+		importDataStatusAlert("Se está importando la información...");
 		closeEmergentWindows(event);
 	}//End importOrdersData
 
@@ -294,6 +309,9 @@ public class EmergentGUIController {
 		alert.setContentText("Rellene todos los campos y vuelva a intentarlo");
 		ButtonType confirmation = new ButtonType("ACEPTAR");
 		alert.getButtonTypes().setAll(confirmation);
+		DialogPane dp = alert.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		alert.showAndWait();
 	}//End emptyFieldAlert
 
@@ -397,6 +415,7 @@ public class EmergentGUIController {
 	public String getCustomerIdToAdd(){
 		return customerId;
 	}//End getCustomerIdToAdd
+
 	@FXML
 	public void showAddDishTypeToProduct() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"getDishTypeEmergent.fxml"));
@@ -569,6 +588,7 @@ public class EmergentGUIController {
 		initializeForm();
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	@FXML//changeProductData
 	public void showChangeOrder(Order o) throws IOException{
 		registerOrder = o;
@@ -586,6 +606,7 @@ public class EmergentGUIController {
 		formulario.setResizable(false);
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	@FXML
 	public void showAddProductsToOrderEmergent() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"GetProductEmergent.fxml"));
@@ -601,6 +622,7 @@ public class EmergentGUIController {
 		formulario.setResizable(false);
 		formulario.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	@FXML
 	public void showCompleteProductRegister(Product p) throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"VisualizeCompleteProductWindows.fxml"));
@@ -616,6 +638,7 @@ public class EmergentGUIController {
 		form.setResizable(false);
 		form.showAndWait();
 	}//End showRegisterDihstypeScene
+
 	private void initializeProductForm(Product p){
 		lpName.setText(p.getName());
 		lpDish.setText(p.getType());
@@ -627,6 +650,7 @@ public class EmergentGUIController {
 		ObservableList<String> list = FXCollections.observableList(p.getIngredientsList());
 		lvpIngredients.setItems(list);
 	}//End initializeProductForm
+
 	@FXML
 	public void AddProduct(ActionEvent event){
 		Alert addInfo = new Alert(AlertType.INFORMATION);
@@ -651,9 +675,13 @@ public class EmergentGUIController {
 			closeEmergentWindows(event);
 		else {
 			addInfo.setContentText(msg);
+			DialogPane dp = addInfo.getDialogPane();
+			dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+			dp.getStyleClass().add("aplication");
 			addInfo.showAndWait();
 		}//End else
 	}//End AddProduct
+
 	@FXML
 	public void setPriceTextField(){
 		if(cbProducts.getValue() != null)
@@ -715,6 +743,9 @@ public class EmergentGUIController {
 			}//End catch
 		}//End if
 		info.setContentText(msg);
+		DialogPane dp = info.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		info.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
@@ -794,6 +825,9 @@ public class EmergentGUIController {
 			}//End catch
 		}//End if
 		info.setContentText(msg);
+		DialogPane dp = info.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		info.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
@@ -847,6 +881,9 @@ public class EmergentGUIController {
 			}//End catch
 		}//End if
 		addInfo.setContentText(msg);
+		DialogPane dp = addInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		addInfo.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
@@ -866,6 +903,9 @@ public class EmergentGUIController {
 				msg = "Ya existe ese tipo de plato";
 		}//End if
 		addInfo.setContentText(msg);
+		DialogPane dp = addInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		addInfo.showAndWait();
 		if(worked)
 			 closeEmergentWindows(event);
@@ -896,6 +936,9 @@ public class EmergentGUIController {
 			worked = true;
 		}else {
 			addInfo.setContentText(msg);
+			DialogPane dp = addInfo.getDialogPane();
+			dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+			dp.getStyleClass().add("aplication");
 			addInfo.showAndWait();
 		}
 		if(worked)
@@ -919,6 +962,9 @@ public class EmergentGUIController {
 				msg = "El ingrediente " + tNewIngredientToProduct.getText() + " ya se encuentra en la lista de ingredientes del producto.";
 		}//End if
 		info.setContentText(msg);
+		DialogPane dp = info.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		info.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
@@ -966,6 +1012,9 @@ public class EmergentGUIController {
 			}//End else
 		}//End if
 		changeInfo.setContentText(msg);
+		DialogPane dp = changeInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		changeInfo.showAndWait();
 		if(worked) {
 			closeEmergentWindows(event);
@@ -999,6 +1048,9 @@ public class EmergentGUIController {
 			}//End else
 		}//End if
 		changeInfo.setContentText(msg);
+		DialogPane dp = changeInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		changeInfo.showAndWait();
 		if(worked) {
 			closeEmergentWindows(event);
@@ -1028,6 +1080,9 @@ public class EmergentGUIController {
 			}//End else
 		}//End if
 		changeInfo.setContentText(msg);
+		DialogPane dp = changeInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		changeInfo.showAndWait();
 		if(worked) {
 			closeEmergentWindows(event);
@@ -1052,6 +1107,9 @@ public class EmergentGUIController {
 			}//End if
 		}//End if
 		changeInfo.setContentText(msg);
+		DialogPane dp = changeInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		changeInfo.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
@@ -1079,7 +1137,10 @@ public class EmergentGUIController {
 				addInfo.showAndWait();
 			}//End catch
 		}else{
-			addInfo.setContentText(msg);	
+			addInfo.setContentText(msg);
+			DialogPane dp = addInfo.getDialogPane();
+			dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+			dp.getStyleClass().add("aplication");
 			addInfo.showAndWait();
 		}//End else
 		if(worked)
@@ -1122,6 +1183,9 @@ public class EmergentGUIController {
 			worked = true;
 		}//End ifs
 		info.setContentText(msg);
+		DialogPane dp = info.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		info.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
@@ -1154,6 +1218,9 @@ public class EmergentGUIController {
 				msg = "Id del empleado o cliente erroneo, es posible que el id este deshabilitado";
 		}//End if
 		info.setContentText(msg);
+		DialogPane dp = info.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		info.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
@@ -1195,6 +1262,9 @@ public class EmergentGUIController {
 			}//End if
 		}//End if
 		addInfo.setContentText(msg);
+		DialogPane dp = addInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		addInfo.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);
@@ -1217,6 +1287,9 @@ public class EmergentGUIController {
 				}
 			}//End if
 		}//End if
+		DialogPane dp = addInfo.getDialogPane();
+		dp.getStylesheets().add(getClass().getResource("aplication.css").toExternalForm());
+		dp.getStyleClass().add("aplication");
 		addInfo.showAndWait();
 		if(worked)
 			closeEmergentWindows(event);

@@ -148,3 +148,16 @@
 .list-view .label {
     -fx-text-fill: white;
 }
+
+.dialog-pane {
+    -fx-background-color: #434343;
+    -fx-text-fill: white;
+}
+.dialog-pane .button {
+    -fx-background-color: #FFED3B;
+    -fx-text-fill: black;
+}
+.dialog-pane:header .header-panel {
+    -fx-background-color: #434343;
+    -fx-text-fill: white;
+}
