@@ -393,7 +393,7 @@ public class EmergentGUIController {
 		if(!employeeToSearch.getText().equals("")) {
 			initializeEmployeesList(DMC.searchEmployeesByCondition(employeeToSearch.getText()));
 		}//End if
-		searchTimeLbl.setText("El tiempo de búsqueda fue (segundos): " + DMC.getBinarySearchTime());
+		searchTimeLbl.setText("Tiempo de b\u00FAsqueda (segundos): " + DMC.getBinarySearchTime());
 	}//End searchEmployeeAndPutInList
 
 	private void initializeEmployeesList(List<Employee> EmployeesFound) {
@@ -446,7 +446,7 @@ public class EmergentGUIController {
 		if(!customerToSearch.getText().equals("")){
 			initializeCustomersList(DMC.searchCustomersByCondition(customerToSearch.getText()));
 		}//End if
-		searchTimeLbl.setText("Tiempo de búsqueda (segundos): " + DMC.getBinarySearchTime());
+		searchTimeLbl.setText("Tiempo de b\u00FAsqueda (segundos): " + DMC.getBinarySearchTime());
 	}//End searchCustomersAndPutInList
 
 	private void initializeCustomersList(List<Customer> lcustomersFound){
