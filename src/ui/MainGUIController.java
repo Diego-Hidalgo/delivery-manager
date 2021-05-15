@@ -395,7 +395,7 @@ public class MainGUIController implements Runnable{
 				successfulActionAlert("Empleado registrado correctamente");
 				if(DMC.getLoggedUser() == null) {
 					showLoginScene();
-				}
+				}//End if
 			} else {
 				idAlreadyInUseAlert();
 			}//End else
@@ -454,23 +454,20 @@ public class MainGUIController implements Runnable{
 				msg = "Esta seguro que desea habilitar al empleado seleccionado?";
 			}//End else
 			if(confirmActionAlert(msg)) {
-				if(DMC.countEnabledUsers() == 1 && employee.getId().equals(DMC.getLoggedUser().getId())) {
-					msg = "No se puede deshabilitar al empleado porque su usuario asociado es el unico habilitado";
-					couldNotCompleteActionAlert(msg);
-				} else {
-					if(DMC.changeEmployeeEnabledStatus(employee)) {
-						msg = "Se ha habilitado al empleado correctamente";
-					} else {
-						msg = "Se ha deshabilitado al empleado correctamente";
-						if(employee.getId().equals(DMC.getLoggedUser().getId())) {
-							switchToMainPane();
-							showLoginScene();
-							DMC.logOutUser();
-						}//End if
-					}//End else
-					successfulActionAlert(msg);
+				if(DMC.changeEmployeeEnabledStatus(employee)) {
+					msg = "Se ha habilitado al empleado correctamente";
 					showVisualizeEmployees();
+				} else {
+					msg = "Se ha deshabilitado al empleado correctamente";
+					if(employee.getId().equals(DMC.getLoggedUser().getId())) {
+						switchToMainPane();
+						showLoginScene();
+						DMC.logOutUser();
+					} else {
+						showVisualizeEmployees();
+					}//End if/else
 				}//End else
+				successfulActionAlert(msg);
 			}//End if
 		}//End if
 	}//End listenChangeEmployeeStatusEvent
@@ -513,23 +510,20 @@ public class MainGUIController implements Runnable{
 						"Tambien se habilitara al empleado asociado a la cuenta";
 			}//End else
 			if(confirmActionAlert(msg)) {
-				if(DMC.countEnabledUsers() == 1 && user.getId().equals(DMC.getLoggedUser().getId())) {
-					String info = "No se puede deshabilitar al usuario porque es el unico existente";
-					couldNotCompleteActionAlert(info);
-				} else {
-					if(DMC.changeUserEnabledStatus(user)) {
-						msg = "Se ha habilitado al usuario correctamente";
-					} else {
-						msg = "Se ha deshabilitado al usuario correctamente";
-						if(user.getId().equals(DMC.getLoggedUser().getId())) {
-							switchToMainPane();
-							showLoginScene();
-							DMC.logOutUser();
-						}//End if
-					}//End else
-					successfulActionAlert(msg);
+				if(DMC.changeUserEnabledStatus(user)) {
+					msg = "Se ha habilitado al usuario correctamente";
 					showVisualizeUsers();
-				}//End else
+				} else {
+					msg = "Se ha deshabilitado al usuario correctamente";
+					if(user.getId().equals(DMC.getLoggedUser().getId())) {
+						switchToMainPane();
+						showLoginScene();
+						DMC.logOutUser();
+					} else {
+						showVisualizeUsers();
+					}//End else
+				}//End if
+				successfulActionAlert(msg);
 			}//End if
 		}//End if
 	}//End listenChangeUserStatusEvent
