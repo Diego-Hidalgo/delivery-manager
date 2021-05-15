@@ -14,7 +14,7 @@
 -> Link to promotional video: [link](https://www.youtube.com/watch?v=CHmAx1jz7gs "link")
 
 
--> Link to instructions video: link
+-> Link to instructions video: [link](https://www.youtube.com/watch?v=j_FFmjI8z54 "link")
 
 
 ### 1. Introduction
