@@ -19,14 +19,14 @@ public class Main extends Application{
 	private EmergentGUIController EGC;
 	private final String FOLDER = "fxml/";
 	private final String ICONPATH = "/ui/ico/logo.jpg";
-	private static final String SAVE_PATH = "src/save-files/save-file.dm";
+	private static final String SAVE_PATH = "save-files/save-file.dm";
 
 	public Main() {
 		try {
 			loadAllData();
 		} catch(IOException | ClassNotFoundException e) {
 			DMC = new DeliveryManagerController();
-		}
+		}//End try/catch
 		EGC = new EmergentGUIController(DMC);
 		MGC = new MainGUIController(DMC, EGC);
 	}//End Constructor

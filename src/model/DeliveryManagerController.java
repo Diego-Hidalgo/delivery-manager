@@ -5,7 +5,7 @@ import java.util.*;
 public class DeliveryManagerController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final String SAVE_PATH = "src/save-files/save-file.dm";
+	private static final String SAVE_PATH = "save-files/save-file.dm";
 
 	private User loggedUser;
 	private List<Employee> employees;
