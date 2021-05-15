@@ -81,7 +81,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button layoutX="2.0" mnemonicParsing="false" onAction="#showSearchCustomerEmergent" text="+" />
+                  <Button layoutX="8.0" mnemonicParsing="false" onAction="#showSearchCustomerEmergent" text="+" />
                   <Button layoutX="7.0" layoutY="282.0" mnemonicParsing="false" onAction="#setCustomerAddressInTextBox" prefHeight="25.0" prefWidth="26.0" text="+" />
                </children>
             </Pane>
