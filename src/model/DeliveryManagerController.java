@@ -140,6 +140,21 @@ public class DeliveryManagerController implements Serializable {
 	}//End logOutUser
 
 	/**
+	 * Returns the address of a customer given its identification. <br>
+	 *     <b>pre:</b> the object that calls the method is not null. <br>
+	 *     <b>post:</b> the address of the customer if the id is in use, an empty text if not. <br>
+	 * @param id the id of the customer to search and return its id.
+	 */
+	public String getCustomerAddressById(String id) {
+		int index = searchCustomerPosition(id);
+		if(index != -1) {
+			return customers.get(index).getAddress();
+		} else {
+			return "";
+		}//End if/else
+	}//End getCustomerAddressById
+
+	/**
 	 * counts the amount of users that are enabled.<br>
 	 *     <b>pre:</b> the object that calls the method is not null. <br>
 	 *     <b>post:</b> the amount of enabled users. <br>
