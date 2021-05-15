@@ -108,6 +108,7 @@ public class EmergentGUIController {
 	@FXML private MenuItem remove;
 	@FXML private MenuItem change;
 	@FXML private TextField TFAmount;
+	@FXML private Label searchTimeLbl;
 	//Import data
 	@FXML private ChoiceBox<String> importType;
 	@FXML private TextField mSeparator;
@@ -366,13 +367,16 @@ public class EmergentGUIController {
 	@FXML
 	public void searchCustomersAndPutInList(){
 		if(!customerToSearch.getText().equals("")){
-			initializeCustomersList(DMC.searchAngGetCustomerByName(customerToSearch.getText()));
+			initializeCustomersList(DMC.searchCustomersByCondition(customerToSearch.getText()));
 		}//End if
+		searchTimeLbl.setText("Tiempo de búsqueda (segundos): " + DMC.getBinarySearchTime());
 	}//End searchCustomersAndPutInList
+
 	private void initializeCustomersList(List<Customer> lcustomersFound){
 		ObservableList<Customer> customers = FXCollections.observableList(lcustomersFound);
 		CustomersFound.setItems(customers);
 	}//End initializeCustomersList
+
 	@FXML
 	public void selectCustomer(ActionEvent event){
 		Customer c = CustomersFound.getSelectionModel().getSelectedItem();
@@ -389,6 +393,7 @@ public class EmergentGUIController {
 		else
 			info.showAndWait();
 	}//End selectCustomer
+
 	public String getCustomerIdToAdd(){
 		return customerId;
 	}//End getCustomerIdToAdd
@@ -407,6 +412,7 @@ public class EmergentGUIController {
 		form.setResizable(false);
 		form.showAndWait();
 	}//End showSceneLogin
+
 	@FXML
 	public void showChangeDihstypeScene(DishType d) throws IOException{
 		dishtype = d;

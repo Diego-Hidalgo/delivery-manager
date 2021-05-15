@@ -16,6 +16,7 @@ public class DeliveryManagerController implements Serializable {
 	private List<DishType> types;
 	private List<Ingredient> ingredients;
 	private List<Order> orders;
+	private transient double binarySearchTime;
 
 	/**
 	 * constructor of the DeliveryManagerController. This is the main class of the model.<br>
@@ -34,6 +35,25 @@ public class DeliveryManagerController implements Serializable {
 		orders = new ArrayList<Order>();
 		sizes = new ArrayList<ProductSize>();
 	}//End DeliveryManagerController
+
+	/**
+	 * changes the search time made by the methods that search a customer given a condition.<br>
+	 *     <b>pre:</b> the object that calls this method is not null. <br>
+	 *     <b>post:</b> the binarySearchTime has been changed. <br>
+	 * @param binarySearchTime the new binarySearchTime.
+	 */
+	public void setBinarySearchTime(double binarySearchTime) {
+		this.binarySearchTime = binarySearchTime;
+	}//End setBinarySearchTime
+
+	/**
+	 * returns the search time made by the methods that search a customer given a condition.<br>
+	 *     <b>pre:</b> the object that calls this method is not null. <br>
+	 *     <b>post:</b> the binarySearchTime. <br>
+	 */
+	public double getBinarySearchTime() {
+		return binarySearchTime;
+	}//End getBinarySearchTime
 
 	/**
 	 * returns a list of the employees that meet the boolean enabled condition.<br>
@@ -572,81 +592,104 @@ public class DeliveryManagerController implements Serializable {
 	}//End searchCustomerPositionById
 
 	/**
-	 * searches the customer that meet the given condition.<br>
-	 *     <b>pre:</b> the object that calls the method is not null. <br>
-	 *     <b>post:</b> returns a list with the found customers that meet the given condition. <br>
-	 * @param name the condition to be used.
+	 * calls the method that search the customers that meet a given condition.<br>
+	 *     <b>pre:</b> the object that calls this method is not null. <br>
+	 *     <b>post:</b> returns a list that contains the customers that meet the condition. <br>
+	 * @param condition the condition used to made the multiple binary searches.
 	 */
-	public List<Customer> searchAngGetCustomerByName(final String name){
-		List<Customer> ct = new ArrayList<Customer>();
-		int initialIndex = getInitialIndex(name);
-		boolean right = false;
-		boolean left = false;
-		if(initialIndex >= 0){
-			ct.add(customers.get(initialIndex));
-			String aux = new String();
-			if( (initialIndex + 1) < customers.size()){
-				if( customers.get(initialIndex+1).getName().equalsIgnoreCase(name) ||
-					customers.get(initialIndex+1).getLastName().equalsIgnoreCase(name) ||
-				   (customers.get(initialIndex+1).getName() + " "+customers.get(initialIndex+1).getLastName()).equalsIgnoreCase(name)){
-					right = true;
-				}else
-					right = false;
-			}//End if
-			if( (initialIndex-1) >= 0){
-				if( customers.get(initialIndex-1).getName().equalsIgnoreCase(name) ||
-					customers.get(initialIndex-1).getLastName().equalsIgnoreCase(name) ||
-				   (customers.get(initialIndex-1).getName() + " "+customers.get(initialIndex-1).getLastName()).equalsIgnoreCase(name)){
-					left = true;
-					}else
-						left = false;
-			}//End if
-			for(int i = initialIndex + 1; i < customers.size() && right; i++){
-				aux = customers.get(i).getName() + " "+customers.get(i).getLastName();
-				if(aux.equalsIgnoreCase(name) || customers.get(i).getName().equalsIgnoreCase(name) ||
-				   customers.get(i).getLastName().equalsIgnoreCase(name)){
-					ct.add(customers.get(i));
-				}else
-					right = false;
-			}//End for
-			for(int i = initialIndex - 1; i >= 0 && left; i--){
-				aux = customers.get(i).getName() + " "+customers.get(i).getLastName();
-				if(aux.equalsIgnoreCase(name) || customers.get(i).getName().equalsIgnoreCase(name) || 
-				   customers.get(i).getLastName().equalsIgnoreCase(name)){
-					ct.add(customers.get(i));
-				}else
-					left = false;
-			}//End for
-		}//End if
-		return ct;
-	}//End searchAngGetCustomerByName
+	public List<Customer> searchCustomersByCondition(String condition) {
+		long start = System.currentTimeMillis();
+		List<Customer> coincidents = new ArrayList<>();
+		coincidents.addAll(searchCustomersByName(condition.toLowerCase()));
+		coincidents.addAll(searchCustomersByLastName(condition.toLowerCase()));
+		coincidents.addAll(searchCustomersByFullName(condition.toLowerCase()));
+		long end = System.currentTimeMillis();
+		double searchTime = (double) (end - start) / 1000;
+		setBinarySearchTime(searchTime);
+		return coincidents;
+	}//End searchCustomersByName
 
 	/**
-	 * gets the initial index of a customer given its name. <br>
-	 *     <b>pre:</b> the object that calls the method is not null. <br>
-	 *     <b>post:</b> returns the initial index of the customer. <br>
-	 * @param name the name of the customer to be searched.
+	 * searches the customers whose name is equal to the given.<br>
+	 *     <b>pre:</b> the object that calls this method is not null. <br>
+	 *     <b>post:</b> returns a list with the customers that meet the given name condition. <br>
+	 * @param name the name of the customers to be searched.
 	 */
-	private int getInitialIndex(final String name){
-		int index = -1;
+	private List<Customer> searchCustomersByName(String name) {
+		List<Customer> aux = new ArrayList<>(customers);
+		List<Customer> added = new ArrayList<>();
+			int start = 0;
+			int end = aux.size() - 1;
+			while(start <= end) {
+				int mid = (start + end) / 2;
+				if(aux.get(mid).getName().toLowerCase().compareTo(name) == 0) {
+					added.add(aux.get(mid));
+				} else if (aux.get(mid).getName().toLowerCase().compareTo(name) < 0) {
+					start = mid + 1;
+				} else {
+					end = mid - 1;
+				}
+				aux.remove(aux.get(mid));
+				start = 0;
+				end = aux.size() - 1;
+			}//End while
+		return added;
+	}//End searchByName
+
+	/**
+	 * searches the customers whose last name is equal to the given<br>
+	 *     <b>pre:</b> the object that calls this method is not null. <br>
+	 *     <b>post:</b> returns a list with the customers that meet the given last name condition. <br>
+	 * @param lastName the last name of the customers to be searched.
+	 */
+	private List<Customer> searchCustomersByLastName(String lastName) {
+		List<Customer> aux = new ArrayList<>(customers);
+		List<Customer> added = new ArrayList<>();
+			int start = 0;
+			int end = aux.size() - 1;
+			while(start <= end) {
+				int mid = (start + end) / 2;
+				if(aux.get(mid).getLastName().toLowerCase().compareTo(lastName) == 0) {
+					added.add(aux.get(mid));
+				} else if (aux.get(mid).getLastName().toLowerCase().compareTo(lastName) < 0) {
+					start = mid + 1;
+				} else {
+					end = mid - 1;
+				}
+				aux.remove(aux.get(mid));
+				start = 0;
+				end = aux.size() - 1;
+			}//End while
+		return added;
+	}//End searchByLastName
+
+	/**
+	 * searches the customers whose full name is equal to the given<br>
+	 *     <b>pre:</b> the object that calls this method is not null. <br>
+	 *     <b>post:</b> returns a list with the customers that meet the given full name condition. <br>
+	 * @param fullName the full name of the customers to be changed.
+	 */
+	private List<Customer> searchCustomersByFullName(String fullName) {
+		List<Customer> aux = new ArrayList<>(customers);
+		List<Customer> added = new ArrayList<>();
 		int start = 0;
-		int end = customers.size() - 1;
-		while( start <= end && index < 0) {
-			int half = (end + start)/2;
-			if(name.compareToIgnoreCase( ( customers.get(half).getName() + " " + customers.get(half).getLastName())) == 0 ||
-			   name.compareToIgnoreCase(customers.get(half).getName()) == 0 ||
-			   name.compareToIgnoreCase(customers.get(half).getLastName()) == 0){
-				index = half;
-			}else if(name.compareToIgnoreCase( ( customers.get(half).getName() + " " + customers.get(half).getLastName())) > 0 ||
-					name.compareToIgnoreCase(customers.get(half).getName() ) > 0 ||
-					name.compareToIgnoreCase(customers.get(half).getLastName() ) > 0){
-				end = half - 1;
-			}else{
-				start = half + 1;
-			}//End else
+		int end = aux.size() - 1;
+		while(start <= end) {
+			int mid = (start + end) / 2;
+			String auxFullName = aux.get(mid).getName().toLowerCase() + " " + aux.get(mid).getLastName().toLowerCase();
+			if(auxFullName.compareTo(fullName) == 0) {
+				added.add(aux.get(mid));
+			} else if (auxFullName.compareTo(fullName) < 0) {
+				start = mid + 1;
+			} else {
+				end = mid - 1;
+			}
+			aux.remove(aux.get(mid));
+			start = 0;
+			end = aux.size() - 1;
 		}//End while
-		return index;
-	}//End getInitialIndex
+		return added;
+	}//End searchByFullName
 
 	/**
 	 * returns the enabled status of a customer given its id.<br>
