@@ -5,6 +5,11 @@
 ![](https://github.com/Diego-Hidalgo/delivery-manager/blob/create-GUI/images/La-Casa-Dorada.jpg?raw=true)
 
 
+-> Windows executable: [link.](https://github.com/Diego-Hidalgo/delivery-manager/tree/master/classes/Windows-Executable "link.")
+
+
+-> Jar: [link.](https://github.com/Diego-Hidalgo/delivery-manager/tree/master/classes/artifacts/DeliveryManager_jar "link.")
+
 ### 1. Introduction
 This application was developed to help with the management of customers, employees, products and orders of the restaurant La Casa Dorada.
 
